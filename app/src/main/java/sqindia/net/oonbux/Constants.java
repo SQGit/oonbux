@@ -4,6 +4,10 @@ package sqindia.net.oonbux;
  * Created by Salman on 4/6/2016.
  */
 public class Constants {
+
+
+     public String slsm;
+
     public static String[] state_lists = {"alabama", "alaska",
             "arizona",
             "arkansas",

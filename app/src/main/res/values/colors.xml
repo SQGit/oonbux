@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#24253d</color>
+    <color name="colorPrimaryDark">#FF24263E</color>
+    <color name="colorAccent">#c8f57f17</color>
+    <color name="splash_button_color">#d97810</color>
+    <color name="text_color_hint">#a3f57f17</color>
+    <color name="text_divider">#bdbdbd</color>
+    <color name="bg_color">#FF24263E</color>
+    <color name="text_divider_light">#FFFFFF</color>
+    <color name="text_color_hint_light">#FFFfFF</color>
+    <color name="hint_floating">#a2a8e6</color>
+    <color name="text_color">#FFEF8C21</color>
+</resources>

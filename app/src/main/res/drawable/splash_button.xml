@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+   <!-- <size
+        android:width="150dp"
+        android:height="35dp" />-->
+    <solid android:color="@color/splash_button_color" />
+    <corners
+        android:bottomLeftRadius="25dp"
+        android:bottomRightRadius="25dp"
+        android:topLeftRadius="25dp"
+        android:topRightRadius="25dp" />
+</shape>

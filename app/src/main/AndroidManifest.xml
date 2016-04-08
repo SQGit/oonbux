@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="sqindia.net.oonbux">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".RegisterActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".DashBoardActivity" />
+        <activity android:name=".DashboardTab1Activity"/>
+        <activity android:name=".Tab2Activity"/>
+        <activity android:name=".Tab3Activity"/>
+    </application>
+
+</manifest>

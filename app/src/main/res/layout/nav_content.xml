@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#10142d"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/nav_header_main" />
+
+
+    <LinearLayout
+        android:id="@+id/content1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/lft_loc_ico"
+                android:drawablePadding="10dp"
+                android:text="Houston"
+                android:textColor="@color/text_divider"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/lft_logo_ico" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/zip_ico"
+            android:drawablePadding="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="5800,White Line Avenue, Houston, Texas 55372"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/phone_ico"
+            android:drawablePadding="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="713-555-5555"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content1"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorAccent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+
+            <com.rey.material.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="#080a1e"
+                android:drawableLeft="@drawable/lft_btn_1_ico"
+                android:paddingLeft="10dp"
+                android:text="77498/n Houston"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp" />
+
+            <com.rey.material.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="#080a1e"
+                android:drawableLeft="@drawable/lft_btn_2_ico"
+                android:paddingLeft="10dp"
+                android:text="Lagos Nigeria"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp" />
+
+            <com.rey.material.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#080a1e"
+                android:drawableLeft="@drawable/lft_btn_3_ico"
+                android:paddingLeft="10dp"
+                android:text="Add Location"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lft_pro_ico"
+            android:drawablePadding="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="Profile"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lft_pal_ico"
+            android:drawablePadding="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="Pal Request"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lft_howit_ico"
+            android:drawablePadding="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="How It Works?"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorAccent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content2"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lft_helpline_ico"
+            android:drawablePadding="10dp"
+            android:text="Helpline"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lft_share_ico"
+            android:drawablePadding="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="Share"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lft_receive_ico"
+            android:drawablePadding="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="Received Package"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lft_payment_ico"
+            android:drawablePadding="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="Payments"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lft_wallet_ico"
+            android:drawablePadding="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="Digital Wallet"
+            android:textColor="@color/text_divider"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

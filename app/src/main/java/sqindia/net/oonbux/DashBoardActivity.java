@@ -15,7 +15,7 @@ import android.widget.TabHost;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*salman khan kha edit*/
 
 public class DashBoardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     TabHost tabHost;

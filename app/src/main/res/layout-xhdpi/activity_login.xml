@@ -66,6 +66,8 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
+
+
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edittext_pass"
                 android:layout_width="match_parent"

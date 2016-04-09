@@ -19,17 +19,19 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp">
+            android:paddingBottom="7dp"
+            android:paddingTop="5dp">
 
             <TextView
+                android:id="@+id/txt1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/lft_loc_ico"
                 android:drawablePadding="10dp"
+                android:paddingLeft="2dp"
                 android:text="Houston"
                 android:textColor="@color/text_divider"
                 android:textSize="18sp" />
@@ -37,27 +39,31 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/lft_logo_ico" />
+                android:layout_marginLeft="120dp"
+                android:background="@drawable/lft_logo_ico"
+                android:gravity="right" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/txt2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/zip_ico"
             android:drawablePadding="10dp"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:text="5800,White Line Avenue, Houston, Texas 55372"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/txt3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/phone_ico"
             android:drawablePadding="10dp"
             android:paddingBottom="3dp"
+            android:paddingLeft="2dp"
             android:paddingTop="3dp"
             android:text="713-555-5555"
             android:textColor="@color/text_divider"
@@ -86,6 +92,7 @@
 
 
             <com.rey.material.widget.Button
+                android:id="@+id/btn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
@@ -93,11 +100,12 @@
                 android:background="#080a1e"
                 android:drawableLeft="@drawable/lft_btn_1_ico"
                 android:paddingLeft="10dp"
-                android:text="77498/n Houston"
+                android:text="77498 Houston"
                 android:textColor="@color/colorAccent"
                 android:textSize="12sp" />
 
             <com.rey.material.widget.Button
+                android:id="@+id/btn2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
@@ -110,12 +118,14 @@
                 android:textSize="12sp" />
 
             <com.rey.material.widget.Button
+                android:id="@+id/btn3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#080a1e"
                 android:drawableLeft="@drawable/lft_btn_3_ico"
                 android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="Add Location"
                 android:textColor="@color/colorAccent"
                 android:textSize="12sp" />
@@ -140,34 +150,38 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txt4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_pro_ico"
             android:drawablePadding="10dp"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
+            android:paddingBottom="7dp"
+            android:paddingLeft="2dp"
+            android:paddingTop="7dp"
             android:text="Profile"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/txt5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_pal_ico"
             android:drawablePadding="10dp"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp"
             android:text="Pal Request"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/txt6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_howit_ico"
             android:drawablePadding="10dp"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp"
             android:text="How It Works?"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
@@ -190,53 +204,65 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txt7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_helpline_ico"
             android:drawablePadding="10dp"
+            android:paddingBottom="7dp"
+            android:paddingLeft="1dp"
+            android:paddingTop="7dp"
             android:text="Helpline"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/txt8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_share_ico"
             android:drawablePadding="10dp"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
+            android:paddingBottom="7dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="7dp"
             android:text="Share"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/txt9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_receive_ico"
             android:drawablePadding="10dp"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
+            android:paddingBottom="7dp"
+            android:paddingLeft="1dp"
+            android:paddingTop="7dp"
             android:text="Received Package"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/txt10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_payment_ico"
             android:drawablePadding="10dp"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
+            android:paddingBottom="7dp"
+            android:paddingLeft="1dp"
+            android:paddingTop="7dp"
             android:text="Payments"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/txt11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_wallet_ico"
             android:drawablePadding="10dp"
-            android:paddingBottom="3dp"
+            android:paddingBottom="7dp"
+            android:paddingLeft="7dp"
             android:paddingTop="3dp"
             android:text="Digital Wallet"
             android:textColor="@color/text_divider"

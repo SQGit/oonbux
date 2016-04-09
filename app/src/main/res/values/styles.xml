@@ -10,4 +10,10 @@
     </style>
 
 
+    <style name="EditTextCustomHolo" parent="android:Widget.EditText">
+
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+
 </resources>

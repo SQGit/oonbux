@@ -11,4 +11,8 @@
     <color name="text_color_hint_light">#FFFfFF</color>
     <color name="hint_floating">#a2a8e6</color>
     <color name="text_color">#FFEF8C21</color>
+    <color name="bottom_page">#0a0c19</color>
+    <color name="tab_brown">#4d3a26</color>
+    <color name="tab_default">#e47b0a</color>
+
 </resources>

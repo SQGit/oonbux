@@ -24,7 +24,7 @@
             android:src="@drawable/photo_ico" />
 
         <com.rey.material.widget.TextView
-            android:id="@+id/text_login"
+            android:id="@+id/htxt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -34,12 +34,13 @@
             android:textColor="#ffffff"
             android:textSize="14sp" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:layout_width="60dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
+            android:id="@+id/htxt2"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorAccent"
+            android:background="@drawable/login_reg_button"
             android:gravity="center"
             android:textSize="12sp"
             android:padding="5dp"
@@ -48,7 +49,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1.5dp"
         android:layout_marginTop="5dp"
         android:background="@color/colorAccent"/>
 </LinearLayout>

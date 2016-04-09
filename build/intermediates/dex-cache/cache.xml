@@ -1,3 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6e3578f92f7462d1a935a1d36173e3bdd1234976">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.2.0_8a119c05a2da0bc657b4a946ee02fb1b8adaaa8e.jar" />
+    </item>
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e5f32fa48a3eb2de0c987025c11b6e3864b634d9">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.2.0_bce1703471761931a1714acb7e096b68f505746c.jar" />
+    </item>
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8c108c22c99e794eff255bb34d2a461200c4cbb0">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.2.0_fa443d9582e4c620cc8b0f6ea1301b39efd419c7.jar" />
+    </item>
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.android.support\design\23.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="1aa5b025efe97f5006f5be16d6ca67c6c3c0c0d8">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.2.0_2bd3eae3074fcfd68fa13a4627baf45834d04835.jar" />
+    </item>
+    <item
+        jar="F:\Android_SDK\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.0\support-annotations-23.2.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="c5bf571bb10462bd90e5419ade67793f71acbc87">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\support-annotations-23.2.0_8f61658bfa38eb2c6b099efe26f5d3369a29f9ef.jar" />
+    </item>
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.rengwuxian.materialedittext\library\2.1.4\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="288913b440a3c61c30aa171095453a605432277a">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\com.rengwuxian.materialedittext-library-2.1.4_1ef4fcc3030577393e8754fe5ac330b5d841cdff.jar" />
+    </item>
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d4c936aa8c7d2522c82e3f1829c791d9e367f009">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.2.0_cd4fc6e6021ebbf5879bce0eff9733d1b07259eb.jar" />
+    </item>
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="292a9fa091757208efa65e77eef63088247e51f3">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.2.0_c2d138215e6c42f38ed8dfcb52ef84bd542d48bf.jar" />
+    </item>
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.0\jars\libs\internal_impl-23.2.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6e239441500605809818997dd63b62a947195f8c">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\internal_impl-23.2.0_0ee8582b189672576c62d766ae34213d5758225a.jar" />
+    </item>
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.github.rey5137\material\1.2.2\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="dde1ea8573633db3da4e8c42d541bfa7d03d6720">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\com.github.rey5137-material-1.2.2_15886151de4ced00ddce1e1b3e1e9031437a7ceb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Salman\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\library-2.4.0_f5ddaa51326d05c02793a4251bfb8585f86835fd.jar" />
+    </item>
+    <item
+        jar="F:\Oonbux\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="F:\Oonbux\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.1.1_bf1066f9280883f202f6ba0fe9e8be2a8d0e971b.jar" />
+    </item>
+
+</items>

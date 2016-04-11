@@ -17,14 +17,11 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".RegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".DashBoardActivity" />
-        <activity android:name=".DashboardTab1Activity"/>
-        <activity android:name=".Tab2Activity"/>
-        <activity android:name=".Tab3Activity"/>
     </application>
 
 </manifest>

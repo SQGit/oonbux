@@ -4,17 +4,17 @@
     android:layout_height="wrap_content"
     android:background="#10142d"
     android:gravity="center"
-    android:paddingBottom="10dp"
-
     android:orientation="vertical"
+
+    android:paddingBottom="10dp"
 
     android:paddingTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/photo_ico" />
 
-        <com.rey.material.widget.TextView
+        <TextView
             android:id="@+id/htxt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,18 +34,18 @@
             android:textColor="#ffffff"
             android:textSize="14sp" />
 
-        <com.rey.material.widget.TextView
+        <TextView
+            android:id="@+id/htxt2"
             android:layout_width="60dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
-            android:id="@+id/htxt2"
             android:layout_marginLeft="10dp"
             android:background="@drawable/login_reg_button"
             android:gravity="center"
-            android:textSize="12sp"
             android:padding="5dp"
             android:text="HQQTRY"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"

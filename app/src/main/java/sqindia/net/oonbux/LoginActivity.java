@@ -52,11 +52,32 @@ public class LoginActivity extends Activity {
         });
 
         btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
-                startActivity(login_intent);
-            }
-        });
+                                         @Override
+                                         public void onClick(View v) {
+
+                                             String email = et_email.getText().toString();
+                                             String phone = et_phone.getText().toString();
+                                             String password = et_pass.getText().toString();
+
+                                             if (!(email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+                                                 if (!(phone.isEmpty() || phone.length() < 10)) {
+                                                     if (!(password.isEmpty() || password.length() < 4 || password.length() > 10)) {
+                                                         Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+                                                         startActivity(login_intent);
+                                                         finish();
+                                                     } else {
+                                                         et_pass.setError("between 4 and 10 alphanumeric characters");
+                                                     }
+                                                 } else {
+                                                     et_phone.setError("Enter valid phone number");
+                                                 }
+                                             } else {
+                                                 et_email.setError("Enter a valid email address!");
+
+                                             }
+                                         }
+                                     }
+
+        );
     }
 }

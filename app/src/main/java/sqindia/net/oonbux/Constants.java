@@ -1,8 +1,5 @@
 package sqindia.net.oonbux;
 
-/**
- * Created by Salman on 4/6/2016.
- */
 public class Constants {
 
     public static String[] state_lists = {"alabama", "alaska",
@@ -54,6 +51,6 @@ public class Constants {
             "washington",
             "west virginia",
             "wisconsin",
-            "wyoming" };
+            "wyoming"};
 
 }

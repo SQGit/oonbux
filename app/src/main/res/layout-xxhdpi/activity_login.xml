@@ -3,19 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF24263E"
+    android:background="@drawable/bg_login_reg"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imgv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/header_img" />
+    <!--   <ImageView
+           android:id="@+id/imgv"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/imgig" />-->
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/imgv">
+        android:layout_below="@+id/imgv"
+        android:layout_marginTop="290dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,8 +76,8 @@
                 android:inputType="textPassword"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
-                app:met_accentTypeface="fonts/prox.otf"
                 android:textSize="20sp"
+                app:met_accentTypeface="fonts/prox.otf"
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
                 app:met_floatingLabelTextColor="@color/hint_floating"

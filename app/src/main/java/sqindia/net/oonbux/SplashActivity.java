@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.rey.material.widget.Button;
 
 public class SplashActivity extends AppCompatActivity {
     Button btn_submit;
-    ImageView img_splash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/header"
+        android:id="@+id/tv_hd_txt"
         layout="@layout/nav_header_main" />
 
 
@@ -14,7 +14,7 @@
         android:id="@+id/content1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/tv_hd_txt"
         android:layout_marginLeft="5dp"
         android:orientation="vertical">
 

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ import com.rey.material.widget.Button;
 @SuppressWarnings("deprecation")
 public class DashBoardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public ProgressBar progressBar;
+    public int progressStatus = 0;
     TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet;
     Button btn_nav_cont_loc, btn_nav_cont_area, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop;
     com.rey.material.widget.TextView tv_dash_hd_txt;
@@ -32,6 +35,9 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.app_name, R.string.app_name);
@@ -92,10 +98,12 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_container, fragment).commit();
 
+        progressBar.setProgress(33);
+
         btn_dash_ship.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                progressBar.setProgress(33);
                 btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_brown));
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_default));
                 btn_dash_shop.setBackgroundColor(getResources().getColor(R.color.tab_default));
@@ -105,13 +113,14 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment).commit();
 
+
             }
         });
 
         btn_dash_deliver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                progressBar.setProgress(66);
                 btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_brown));
                 btn_dash_shop.setBackgroundColor(getResources().getColor(R.color.tab_default));
@@ -120,6 +129,7 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment).commit();
+
 
             }
         });
@@ -137,6 +147,7 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment).commit();
+                progressBar.setProgress(100);
 
             }
         });

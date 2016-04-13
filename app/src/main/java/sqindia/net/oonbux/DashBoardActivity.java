@@ -1,8 +1,10 @@
 package sqindia.net.oonbux;
 
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,12 +27,16 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
     TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet;
     Button btn_nav_cont_loc, btn_nav_cont_area, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop;
     com.rey.material.widget.TextView tv_dash_hd_txt;
+    String str_oonbux_id;
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
+        str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -92,6 +98,8 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         btn_dash_ship.setTypeface(tf);
         btn_dash_deliver.setTypeface(tf);
         btn_dash_shop.setTypeface(tf);
+
+        tv_nav_hd_ship_id.setText(str_oonbux_id);
 
         ShipPkgFragment fragment = new ShipPkgFragment();
         FragmentManager fragmentManager = getFragmentManager();

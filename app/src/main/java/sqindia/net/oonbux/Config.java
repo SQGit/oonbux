@@ -1,7 +1,10 @@
 package sqindia.net.oonbux;
 
-public class Constants {
+public class Config {
 
+
+    static final String REG_URL = "http://oonbux.sqindia.net/";
+    public static String[] countries = {"Africa", "India", "America"};
     public static String[] state_lists = {"alabama", "alaska",
             "arizona",
             "arkansas",
@@ -52,5 +55,25 @@ public class Constants {
             "west virginia",
             "wisconsin",
             "wyoming"};
+
+    public static boolean isStringNullOrWhiteSpace(String value) {
+        if (value == null) {
+            return true;
+        }
+
+        for (int i = 0; i < value.length(); i++) {
+            if (!Character.isWhitespace(value.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+
+
+
 
 }

@@ -1,6 +1,7 @@
 package sqindia.net.oonbux;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 
@@ -151,7 +151,8 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_default));
                 btn_dash_shop.setBackgroundColor(getResources().getColor(R.color.tab_brown));
 
-                ShopOnlineFragment fragment = new ShopOnlineFragment();
+
+                ShopOnline_Fragment fragment = new ShopOnline_Fragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment).commit();
@@ -161,10 +162,18 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         });
 
 
+        tv_nav_cont_prof.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(inte);
+            }
+        });
+
         btn_nav_cont_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "button worked", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "button worked", Toast.LENGTH_LONG).show();
             }
         });
     }

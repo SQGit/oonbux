@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -213,9 +212,9 @@ public class RegisterActivity extends Activity {
                     finish();*/
 
 
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                    // Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 } else if (status.equals(null)) {
-                    Toast.makeText(getApplicationContext(), "network available", Toast.LENGTH_LONG).show();
+                    //  Toast.makeText(getApplicationContext(), "network available", Toast.LENGTH_LONG).show();
                 } else if (status.equals("fail")) {
 
 

@@ -15,5 +15,6 @@
     <color name="tab_brown">#4d3a26</color>
     <color name="tab_default">#e47b0a</color>
     <color name="progress_bg">#61c561</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>

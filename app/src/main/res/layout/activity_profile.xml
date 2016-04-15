@@ -1,56 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#10142d"
-    android:gravity="center"
     android:orientation="vertical"
+    android:paddingBottom="10dp">
 
-    android:paddingBottom="10dp"
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#070b23">
 
-    android:paddingTop="10dp">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/back_ico" />
+
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/tv_hd_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="Profile"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
+        android:background="@drawable/pro_header"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
             android:src="@drawable/photo_ico" />
 
-        <TextView
-            android:id="@+id/htxt1"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:text=" Oonbux shipping Id:"
-            android:textColor="#ffffff"
-            android:textSize="11sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/htxt2"
-            android:layout_width="80dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/htxt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text=" Oonbux shipping Id:"
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/htxt2"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/login_reg_button"
+                    android:gravity="center"
+                    android:padding="1dp"
+                    android:text="HQQTRY"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/login_reg_button"
-            android:gravity="center"
-            android:padding="1dp"
-            android:text="HQQTRY"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+                android:drawableLeft="@drawable/lft_loc_ico"
+                android:drawablePadding="10dp"
+                android:paddingLeft="2dp"
+                android:text="Houston"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:drawablePadding="10dp"
+                android:paddingLeft="20dp"
+                android:text="77498"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|"
+            android:padding="30dp"
+            android:src="@drawable/lft_logo_ico" />
+
     </LinearLayout>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorAccent" />
+        android:layout_height="wrap_content"
+        android:background="#cc7820"
+        android:orientation="horizontal">
+
+        <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+            android:id="@+id/edittext_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/pro_wt_ico"
+            android:drawablePadding="10dp"
+            android:hint="Firstname"
+            android:imeOptions="actionNext"
+            android:inputType="textPersonName"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:textSize="16sp"
+            app:met_accentTypeface="fonts/prox.otf"
+            app:met_baseColor="@color/text_divider_light"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextColor="@color/hint_floating"
+            app:met_primaryColor="@color/text_divider_light"
+            app:met_textColor="@color/text_color"
+            app:met_textColorHint="@color/text_color_hint"
+            app:met_underlineColor="@color/text_divider" />
+
+        <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+            android:id="@+id/edittext_countfry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="25dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/pro_wt_ico"
+            android:drawablePadding="10dp"
+            android:hint="Lastname"
+            android:imeOptions="actionNext"
+            android:inputType="textPersonName"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:textSize="16sp"
+            app:met_accentTypeface="fonts/prox.otf"
+            app:met_baseColor="@color/text_divider_light"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextColor="@color/hint_floating"
+            app:met_primaryColor="@color/text_divider_light"
+            app:met_textColor="@color/text_color"
+            app:met_textColorHint="@color/text_color_hint"
+            app:met_underlineColor="@color/text_divider" />
+
+
+        <com.rey.material.widget.Button
+            android:id="@+id/btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:background="#cc7820"
+            android:drawableLeft="@drawable/logout_ico"
+            android:paddingLeft="10dp"
+            android:text="Logout"
+            android:textColor="@color/text_divider_light"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/pda_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#090c1e"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt1ss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+
+            android:paddingBottom="8dp"
+            android:paddingLeft="2dp"
+            android:paddingTop="8dp"
+            android:text="Physical Delivery Address"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/back_rt_ico" />
+
+    </LinearLayout>
+
+
+    <!--
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            class="com.google.android.gms.maps.MapFragment" />-->
+
+
+    <LinearLayout
+        android:id="@+id/pi_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#090c1e"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt1dss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="2dp"
+            android:paddingTop="8dp"
+            android:text="Profile Info"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/back_rt_ico" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#090c1e"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt1ddss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="2dp"
+            android:paddingTop="8dp"
+            android:text="Personal Preferences"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/back_rt_ico" />
+
+    </LinearLayout>
+
+
 </LinearLayout>

@@ -1,5 +1,6 @@
 package sqindia.net.oonbux;
 
+
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,9 +24,8 @@ import com.rey.material.widget.Button;
 public class DashBoardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public ProgressBar progressBar;
-    public int progressStatus = 0;
     TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet;
-    Button btn_nav_cont_loc, btn_nav_cont_area, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop;
+    Button btn_nav_cont_loc, btn_nav_cont_area, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop, shop_online;
     com.rey.material.widget.TextView tv_dash_hd_txt;
     String str_oonbux_id;
     Toolbar toolbar;
@@ -72,9 +72,11 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         btn_nav_cont_area = (Button) findViewById(R.id.btn2);
         btn_nav_cont_add_loc = (Button) findViewById(R.id.btn3);
 
+        shop_online = (Button) findViewById(R.id.btn_dash_shop_online);
+
         btn_dash_ship = (Button) findViewById(R.id.btn_dash_ship);
         btn_dash_deliver = (Button) findViewById(R.id.btn_dash_deliver);
-        btn_dash_shop = (Button) findViewById(R.id.btn_dash_shop);
+        btn_dash_shop = (Button) findViewById(R.id.btn_dash_shop_online);
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
@@ -97,16 +99,17 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         btn_nav_cont_add_loc.setTypeface(tf);
         btn_dash_ship.setTypeface(tf);
         btn_dash_deliver.setTypeface(tf);
-        btn_dash_shop.setTypeface(tf);
+        shop_online.setTypeface(tf);
 
         tv_nav_hd_ship_id.setText(str_oonbux_id);
 
-        ShipPkgFragment fragment = new ShipPkgFragment();
+
+        ShipYourLuggage fragment = new ShipYourLuggage();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
 
         progressBar.setProgress(33);
+
 
         btn_dash_ship.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,9 +117,9 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 progressBar.setProgress(33);
                 btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_brown));
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_default));
-                btn_dash_shop.setBackgroundColor(getResources().getColor(R.color.tab_default));
+                shop_online.setBackgroundColor(getResources().getColor(R.color.tab_default));
 
-                ShipPkgFragment fragment = new ShipPkgFragment();
+                ShipYourLuggage fragment = new ShipYourLuggage();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment).commit();
@@ -131,7 +134,7 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 progressBar.setProgress(66);
                 btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_brown));
-                btn_dash_shop.setBackgroundColor(getResources().getColor(R.color.tab_default));
+                shop_online.setBackgroundColor(getResources().getColor(R.color.tab_default));
 
                 DeliverPkgFragment fragment = new DeliverPkgFragment();
                 FragmentManager fragmentManager = getFragmentManager();
@@ -143,7 +146,25 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         });
 
 
-        btn_dash_shop.setOnClickListener(new View.OnClickListener() {
+        shop_online.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
+                btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_default));
+                shop_online.setBackgroundColor(getResources().getColor(R.color.tab_brown));
+
+
+                DeliverPkgFragment fragment = new DeliverPkgFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_container, fragment).commit();
+                progressBar.setProgress(100);
+            }
+        });
+
+
+    /*    btn_dash_shop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -159,13 +180,29 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 progressBar.setProgress(100);
 
             }
-        });
+        });*/
 
 
         tv_nav_cont_prof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(inte);
+            }
+        });
+
+        tv_nav_cont_how_it.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(), HowItWorks.class);
+                startActivity(inte);
+            }
+        });
+
+        tv_nav_cont_help_line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(), ContactUs.class);
                 startActivity(inte);
             }
         });

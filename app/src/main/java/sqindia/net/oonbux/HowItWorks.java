@@ -7,15 +7,17 @@ import android.view.View;
 import android.widget.ImageButton;
 
 /**
- * Created by Salman on 4/15/2016.
+ * Created by Salman on 4/18/2016.
  */
-public class ProfileInfo extends Activity {
+public class HowItWorks extends Activity {
 
     ImageButton btn_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profileinfo);
+        setContentView(R.layout.howitworks);
+
 
         btn_back = (ImageButton) findViewById(R.id.btn_back);
 
@@ -26,6 +28,5 @@ public class ProfileInfo extends Activity {
                 startActivity(inte);
             }
         });
-
     }
 }

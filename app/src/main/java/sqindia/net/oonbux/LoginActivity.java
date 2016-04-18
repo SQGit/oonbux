@@ -55,7 +55,7 @@ public class LoginActivity extends Activity {
         et_pass.setTypeface(tf);
 
         tmanager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        str_deviceid = tmanager.getDeviceId();
+        str_deviceid = "EMU035Id45";//tmanager.getDeviceId();
 
 
         ll_register.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +78,11 @@ public class LoginActivity extends Activity {
                                              if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
                                                  if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
                                                      if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
-                                                         new LoginTask().execute();
+                                                         //new LoginTask().execute();
+
+                                                         Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+                                                         startActivity(login_intent);
+
                                                      } else {
                                                          et_pass.setError("between 4 and 10 alphanumeric characters");
                                                          et_pass.requestFocus();

@@ -14,6 +14,7 @@
         android:background="#070b23">
 
         <ImageButton
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -91,7 +92,7 @@
                 android:id="@+id/txt1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+                android:layout_marginLeft="10dp"
                 android:drawableLeft="@drawable/lft_loc_ico"
                 android:drawablePadding="10dp"
                 android:paddingLeft="2dp"
@@ -147,11 +148,11 @@
             app:met_accentTypeface="fonts/prox.otf"
             app:met_baseColor="@color/text_divider_light"
             app:met_floatingLabel="normal"
-            app:met_floatingLabelTextColor="@color/hint_floating"
-            app:met_primaryColor="@color/text_divider_light"
-            app:met_textColor="@color/text_color"
-            app:met_textColorHint="@color/text_color_hint"
-            app:met_underlineColor="@color/text_divider" />
+            app:met_floatingLabelTextColor="#0b0e20"
+            app:met_primaryColor="#f5f5f5"
+            app:met_textColor="#FFFFFF"
+            app:met_textColorHint="@color/text_color_hint_light"
+            app:met_underlineColor="#eeeeee" />
 
         <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
             android:id="@+id/edittext_countfry"
@@ -172,17 +173,17 @@
             app:met_accentTypeface="fonts/prox.otf"
             app:met_baseColor="@color/text_divider_light"
             app:met_floatingLabel="normal"
-            app:met_floatingLabelTextColor="@color/hint_floating"
-            app:met_primaryColor="@color/text_divider_light"
-            app:met_textColor="@color/text_color"
-            app:met_textColorHint="@color/text_color_hint"
-            app:met_underlineColor="@color/text_divider" />
+            app:met_floatingLabelTextColor="#0b0e20"
+            app:met_primaryColor="#f5f5f5"
+            app:met_textColor="#FFFFFF"
+            app:met_textColorHint="@color/text_color_hint_light"
+            app:met_underlineColor="#eeeeee" />
 
 
         <com.rey.material.widget.Button
             android:id="@+id/btn1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_weight="1"
             android:background="#cc7820"
@@ -229,12 +230,11 @@
     </LinearLayout>
 
 
-    <!--
-        <fragment
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            class="com.google.android.gms.maps.MapFragment" />-->
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
 
 
     <LinearLayout

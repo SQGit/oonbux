@@ -126,14 +126,15 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/edittext_zipcode"
+
+            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                android:id="@+id/edittext_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/zip_ico"
-                android:hint="Zipcode"
-                android:inputType="phone"
-                android:maxLength="6"
+                android:drawableRight="@drawable/state_ico"
+                android:hint="State"
+                android:inputType="textPersonName"
+                android:maxLength="10"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
                 android:textSize="20sp"
@@ -146,14 +147,16 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/edittext_state"
+
+            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                android:id="@+id/edittext_zipcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/state_ico"
-                android:hint="State"
-                android:inputType="textPersonName"
-                android:maxLength="10"
+                android:drawableRight="@drawable/zip_ico"
+                android:hint="Zipcode"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:maxLength="6"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
                 android:textSize="20sp"

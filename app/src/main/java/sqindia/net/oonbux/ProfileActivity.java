@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +20,7 @@ public class ProfileActivity extends Activity {
 
     static final LatLng TutorialsPoint = new LatLng(21, 57);
     LinearLayout phy_layout, prof_layout;
+    ImageButton btn_back;
     private GoogleMap googleMap;
 
     @Override
@@ -29,6 +31,16 @@ public class ProfileActivity extends Activity {
 
         phy_layout = (LinearLayout) findViewById(R.id.pda_layout);
         prof_layout = (LinearLayout) findViewById(R.id.pi_layout);
+
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                startActivity(inte);
+            }
+        });
 
         phy_layout.setOnClickListener(new View.OnClickListener() {
             @Override

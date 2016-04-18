@@ -4,6 +4,9 @@ public class Config {
 
 
     static final String REG_URL = "http://oonbux.sqindia.net/";
+
+    static final String CSS_URL = "http://oonbux.sqindia.net/region";
+
     public static String[] countries = {"Africa", "India", "America"};
     public static String[] state_lists = {"alabama", "alaska",
             "arizona",
@@ -77,3 +80,9 @@ public class Config {
 
 
 }
+
+
+
+
+
+

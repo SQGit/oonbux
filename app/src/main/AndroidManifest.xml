@@ -41,6 +41,8 @@
 
         <activity android:name=".ProfileInfo" />
         <activity android:name=".PhysicalDeliveryAddress" />
+        <activity android:name=".HowItWorks" />
+        <activity android:name=".ContactUs" />
 
     </application>
 

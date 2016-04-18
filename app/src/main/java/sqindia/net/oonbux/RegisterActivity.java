@@ -16,8 +16,11 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -27,9 +30,12 @@ public class RegisterActivity extends Activity {
     TextView tv_donthav, tv_register, tv_footer;
     LinearLayout ll_register;
     MaterialEditText et_email, et_phone, et_pass, et_repass, et_zip, et_state;
-    MaterialAutoCompleteTextView aet_cont;
+    MaterialAutoCompleteTextView aet_cont, aet_state, aet_zip;
     String str_country, str_email, str_phone, str_pass, str_repass, str_state, str_zip;
     SweetAlertDialog sweetAlertDialog;
+    ArrayList<String> country = new ArrayList<>();
+    ArrayList<String> states = new ArrayList<>();
+    ArrayList<String> zip = new ArrayList<>();
 
 
     @Override
@@ -42,13 +48,16 @@ public class RegisterActivity extends Activity {
         tv_donthav = (TextView) findViewById(R.id.text_dont);
         tv_register = (TextView) findViewById(R.id.text_login);
         tv_footer = (TextView) findViewById(R.id.terms);
-        aet_cont = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_country);
+
         et_email = (MaterialEditText) findViewById(R.id.edittext_email);
         et_pass = (MaterialEditText) findViewById(R.id.edittext_pass);
         et_repass = (MaterialEditText) findViewById(R.id.edittext_repass);
         et_phone = (MaterialEditText) findViewById(R.id.edittext_phone);
-        et_zip = (MaterialEditText) findViewById(R.id.edittext_zipcode);
-        et_state = (MaterialEditText) findViewById(R.id.edittext_state);
+
+
+        aet_cont = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_country);
+        aet_state = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_state);
+        aet_zip = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_zipcode);
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
@@ -62,11 +71,20 @@ public class RegisterActivity extends Activity {
         et_pass.setTypeface(tf);
         et_repass.setTypeface(tf);
         et_phone.setTypeface(tf);
-        et_zip.setTypeface(tf);
-        et_state.setTypeface(tf);
+        aet_zip.setTypeface(tf);
+        aet_state.setTypeface(tf);
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, Config.state_lists);
+        new GetCountry().execute();
+
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, country);
         aet_cont.setAdapter(adapter1);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, states);
+        aet_state.setAdapter(adapter2);
+
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, zip);
+        aet_zip.setAdapter(adapter3);
 
 
         ll_register.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +258,215 @@ public class RegisterActivity extends Activity {
         }
 
     }
+
+
+    class GetCountry extends AsyncTask<String, Void, String> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+            try {
+
+                JSONObject jsonobject = HttpUtils.getData("http://oonbux.sqindia.net/region/country");
+
+                Log.e("tag", "jj" + jsonobject);
+
+                json = jsonobject.toString();
+
+                return json;
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+            return jsonStr;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            super.onPostExecute(jsonStr);
+
+            try {
+                JSONObject jo = new JSONObject(jsonStr);
+                String status = jo.getString("country");
+                String msg = jo.getString("message");
+                Log.d("tag", "<-----aasd----->" + status);
+
+                String json = jo.toString();
+
+
+                JSONObject jaa = new JSONObject(jsonStr);
+                JSONArray jj = jaa.getJSONArray("country");
+                Log.d("tag", "<-----S---->" + jj);
+
+                for (int i1 = 0; i1 < jj.length(); i1++) {
+
+                    String daa = jj.getString(i1);
+                    country.add(daa);
+                    Log.d("tag", "<-----Statusss----->" + daa);
+
+                }
+
+                new GetState().execute();
+
+
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+    class GetState extends AsyncTask<String, Void, String> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+
+            try {
+                JSONObject jsonobject = HttpUtils.getData2("http://oonbux.sqindia.net/region/state");
+
+                Log.e("tag", "jj" + jsonobject);
+
+                json = jsonobject.toString();
+
+                return json;
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            super.onPostExecute(jsonStr);
+            if (jsonStr == "") {
+
+            } else {
+
+                try {
+                    JSONObject jo = new JSONObject(jsonStr);
+                    String status = jo.getString("state");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Statasdfus----->" + status);
+
+                    String json = jo.toString();
+
+
+                    JSONObject jaa = new JSONObject(jsonStr);
+                    JSONArray jj = jaa.getJSONArray("state");
+                    Log.d("tag", "<-----S---->" + jj);
+
+                    //JSONArray ja = jo.getJSONArray(status);
+
+                    for (int i1 = 0; i1 < jj.length(); i1++) {
+
+                        // JSONObject data = jj.getJSONObject(i1);
+
+                        String daa = jj.getString(i1);
+
+                        //countries[jj.length()] =
+                        states.add(daa);
+                        Log.d("tag", "<-----Statusss----->" + daa);
+
+                    }
+
+                    new GetZip().execute();
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+
+    class GetZip extends AsyncTask<String, Void, String> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+
+            try {
+                JSONObject jsonobject = HttpUtils.getData3("http://oonbux.sqindia.net/region/zip");
+
+                Log.e("tag", "jj" + jsonobject);
+
+                json = jsonobject.toString();
+
+                return json;
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            super.onPostExecute(jsonStr);
+            if (jsonStr == "") {
+
+            } else {
+
+                try {
+                    JSONObject jo = new JSONObject(jsonStr);
+                    String status = jo.getString("zip");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Statasdfus----->" + status);
+
+                    String json = jo.toString();
+
+
+                    JSONObject jaa = new JSONObject(jsonStr);
+                    JSONArray jj = jaa.getJSONArray("zip");
+                    Log.d("tag", "<-----S---->" + jj);
+
+                    //JSONArray ja = jo.getJSONArray(status);
+
+                    for (int i1 = 0; i1 < jj.length(); i1++) {
+
+                        // JSONObject data = jj.getJSONObject(i1);
+
+                        String daa = jj.getString(i1);
+
+                        //countries[jj.length()] =
+                        zip.add(daa);
+                        Log.d("tag", "<-----Statusss----->" + daa);
+
+                    }
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+
+
 
 
 }

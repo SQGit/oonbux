@@ -65,7 +65,7 @@
             android:textSize="15sp" />
 
         <com.rey.material.widget.Button
-            android:id="@+id/btn_dash_shop"
+            android:id="@+id/btn_dash_shop_online"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="2dp"

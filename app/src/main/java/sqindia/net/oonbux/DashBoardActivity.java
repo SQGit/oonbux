@@ -1,7 +1,10 @@
 package sqindia.net.oonbux;
 
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -10,7 +13,6 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +23,7 @@ import com.rey.material.widget.Button;
 
 
 @SuppressWarnings("deprecation")
-public class DashBoardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DashBoardActivity extends Activity implements NavigationView.OnNavigationItemSelectedListener {
 
     public ProgressBar progressBar;
     TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet;
@@ -29,6 +31,7 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
     com.rey.material.widget.TextView tv_dash_hd_txt;
     String str_oonbux_id;
     Toolbar toolbar;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +107,14 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         tv_nav_hd_ship_id.setText(str_oonbux_id);
 
 
-        ShipYourLuggage fragment = new ShipYourLuggage();
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+   /*     ShipPkgFragment fragment = new ShipPkgFragment();
+      *//*  FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();*//*
 
-        progressBar.setProgress(33);
+        FragmentManager fragmentManager1 = getFragmentManager();
+        fragmentManager1.beginTransaction().replace(R.id.frame_container, fragment);
+
+        progressBar.setProgress(33);*/
 
 
         btn_dash_ship.setOnClickListener(new View.OnClickListener() {
@@ -119,10 +125,27 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_default));
                 shop_online.setBackgroundColor(getResources().getColor(R.color.tab_default));
 
-                ShipYourLuggage fragment = new ShipYourLuggage();
+                // Toast.makeText(getApplicationContext(), "aa", Toast.LENGTH_LONG).show();
+
+              /*  ShipPkgFragment fragment = new ShipPkgFragment();
+      *//*  FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();*//*
+
+                FragmentManager fragmentManager1 = getFragmentManager();
+                fragmentManager1.beginTransaction().replace(R.id.frame_container, fragment)*/
+
+                progressBar.setProgress(33);
+
+
+                Fragment fragment = new ShipPkgFragment();
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment).commit();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                // fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out,android.R.animator.fade_in, android.R.animator.fade_out);
+                fragmentTransaction.replace(R.id.frame_container, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+
 
 
             }
@@ -136,10 +159,18 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_brown));
                 shop_online.setBackgroundColor(getResources().getColor(R.color.tab_default));
 
-                DeliverPkgFragment fragment = new DeliverPkgFragment();
+               /* DeliveryPackage frag = new DeliveryPackage();
+                FragmentManager fragm = getFragmentManager();
+                fragm.beginTransaction().add(R.id.frame_container, frag);
+                fragm.beginTransaction().commit();*/
+
+
+                Fragment fragment = new DeliveryPackage();
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment).commit();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                // fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out,android.R.animator.fade_in, android.R.animator.fade_out);
+                fragmentTransaction.replace(R.id.frame_container, fragment);
+                fragmentTransaction.commit();
 
 
             }
@@ -186,7 +217,7 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         tv_nav_cont_prof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                Intent inte = new Intent(getApplicationContext(), MapFrag.class);
                 startActivity(inte);
             }
         });
@@ -211,6 +242,14 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "button worked", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        tv_nav_cont_pal_req.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(), Test1.class);
+                startActivity(inte);
             }
         });
     }

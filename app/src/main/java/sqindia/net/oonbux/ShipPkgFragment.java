@@ -39,6 +39,11 @@ public class ShipPkgFragment extends Fragment {
 
         //  btn_add_ship = (Button) getView.findViewById(R.id.add_sp_btn);
 
+        /*ShipLuggageFragment fragment = new ShipLuggageFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment).commit();*/
+
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/prox.otf");
 
         // tv_ship_header.setTypeface(tf);
@@ -56,16 +61,16 @@ public class ShipPkgFragment extends Fragment {
         // btn_add_ship.setTypeface(tf);
 
 
-     /*   btn_sp_lkg.setOnClickListener(new View.OnClickListener() {
+        btn_sp_lkg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btn_sp_lkg.setTextColor(getResources().getColor(R.color.colorAccent));
                 btn_snd2_pal.setTextColor(getResources().getColor(R.color.text_color_hint_light));
 
-             *//*   ShipLuggageFragment fragment = new ShipLuggageFragment();
+              /*  ShipLuggageFragment fragment = new ShipLuggageFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment).commit();*//*
+                        .replace(R.id.frame_container, fragment).commit();*/
 
             }
         });
@@ -76,13 +81,13 @@ public class ShipPkgFragment extends Fragment {
                 btn_sp_lkg.setTextColor(getResources().getColor(R.color.text_color_hint_light));
                 btn_snd2_pal.setTextColor(getResources().getColor(R.color.text_color));
 
-              *//*  ShipPkgFragment fragment = new ShipPkgFragment();
+           /*     SendPkgtoPalFragment fragment = new SendPkgtoPalFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment).commit();*//*
+                        .replace(R.id.frame_container, fragment).commit();*/
 
             }
-        });*/
+        });
 
 
         return getView;

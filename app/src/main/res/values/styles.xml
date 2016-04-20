@@ -16,4 +16,29 @@
     </style>
 
 
+    <style name="spin2" parent="Material.Widget.Spinner.Light">
+        <item name="rd_style">@style/wave1</item>
+        <item name="spn_labelEnable">true</item>
+        <item name="spn_arrowSwitchMode">true</item>
+        <item name="spn_labelTextColor">@color/text_color</item>
+        <item name="spn_arrowSize">8dp</item>
+        <item name="spn_arrowPadding">5dp</item>
+        <item name="spn_labelTextSize">12sp</item>
+        <item name="spn_dividerHeight">1dp</item>
+        <item name="spn_dividerColor">@color/text_color_hint_light</item>
+        <item name="spn_arrowAnimDuration">@android:integer/config_shortAnimTime</item>
+        <item name="spn_arrowInterpolator">@android:anim/decelerate_interpolator</item>
+        <item name="spn_arrowColor">@color/text_color</item>
+        <item name="spn_popupItemAnimation">@anim/abc_slide_in_bottom</item>
+        <item name="spn_popupItemAnimOffset">120</item>
+        <item name="android:popupBackground">@color/text_color_hint_light</item>
+    </style>
+
+    <style name="wave1" parent="Material.Drawable.Ripple.Touch">
+        <item name="rd_maxRippleRadius">48dp</item>
+        <item name="rd_rippleColor">#70d6246b</item>
+        <item name="rd_rippleAnimDuration">200</item>
+        <item name="rd_rippleType">wave</item>
+    </style>
+
 </resources>

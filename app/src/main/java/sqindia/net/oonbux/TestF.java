@@ -9,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by Salman on 4/18/2016.
+ * Created by Salman on 4/19/2016.
  */
-public class Ship_Pkg_Pkg extends Fragment {
+public class TestF extends Fragment {
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.ship_pakage, container, false);
+        View v = inflater.inflate(R.layout.sendtopal, container, false);
 
         return v;
     }

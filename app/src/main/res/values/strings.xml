@@ -3,4 +3,5 @@
     <string name="splash_btn_text">Check Us Out</string>
     <string name="terms">By creating an account, you agree to Oonbux\'s terms &amp; Conditions. Privacy Policy and Content Policies</string>
     <string name="splash_terms">Shop online and ship your package to your oonbux virtual packages address and we make sure it gets to you at you at your own time</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

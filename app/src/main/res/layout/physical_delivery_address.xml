@@ -7,31 +7,44 @@
 
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#070b23">
 
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/back_ico" />
+            <LinearLayout
+                android:id="@+id/bck_layout"
+                android:layout_width="50dp"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/back_ico" />
+            </LinearLayout>
 
 
         <com.rey.material.widget.TextView
             android:id="@+id/tv_hd_txt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="17dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Physical Delivery Address"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
     </LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -62,7 +75,7 @@
 
 
                 <com.rey.material.widget.TextView
-                    android:id="@+id/tv_hd_txt1"
+                    android:id="@+id/tv_shd_txt1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -96,7 +109,7 @@
                         android:orientation="vertical">
 
                         <com.rengwuxian.materialedittext.MaterialEditText
-                            android:id="@+id/edittext_demail"
+                            android:id="@+id/et_lc_str"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -115,7 +128,7 @@
                             app:met_underlineColor="@color/text_divider" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
-                            android:id="@+id/edittext_emdail"
+                            android:id="@+id/et_lc_apr"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -135,7 +148,7 @@
                             app:met_underlineColor="@color/text_divider" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
-                            android:id="@+id/edittext_edmaifl"
+                            android:id="@+id/et_lc_zip"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -169,15 +182,15 @@
                             android:layout_gravity="center_vertical|center_horizontal" />
 
                         <com.rey.material.widget.Button
-                            android:id="@+id/button_ldogin"
+                            android:id="@+id/button_save_lc"
                             style="@style/Material.Drawable.Ripple.Wave.Light"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:background="@drawable/black_but"
                             android:drawableLeft="@drawable/save_ico"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:text="Save"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp" />
@@ -191,7 +204,7 @@
                     android:background="@drawable/border">
 
                     <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/edittext_edmail"
+                        android:id="@+id/et_lc_note"
                     android:layout_width="match_parent"
                     android:layout_height="105dp"
                     android:gravity="top|left"
@@ -229,7 +242,7 @@
 
 
                 <com.rey.material.widget.TextView
-                    android:id="@+id/tv_hdd_txtd1"
+                    android:id="@+id/tv_shd_txt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -263,7 +276,7 @@
                         android:orientation="vertical">
 
                         <com.rengwuxian.materialedittext.MaterialEditText
-                            android:id="@+id/edittext_dedmail"
+                            android:id="@+id/et_int_str"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Street"
@@ -279,7 +292,7 @@
                             app:met_underlineColor="@color/text_divider" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
-                            android:id="@+id/edittext_demdail"
+                            android:id="@+id/et_int_apr"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -299,7 +312,7 @@
                             app:met_underlineColor="@color/text_divider" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
-                            android:id="@+id/edittext_edmdaifl"
+                            android:id="@+id/et_int_zip"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -333,16 +346,16 @@
                             android:layout_gravity="center_vertical|center_horizontal" />
 
                         <com.rey.material.widget.Button
-                            android:id="@+id/button_login"
+                            android:id="@+id/button_save_ic"
                             style="@style/Material.Drawable.Ripple.Wave.Light"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
                             android:background="@drawable/black_but"
                             android:drawableLeft="@drawable/save_ico"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:text="Save"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp" />
@@ -355,7 +368,7 @@
                     android:background="@drawable/border">
 
                     <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/edittext_eddmail"
+                        android:id="@+id/et_int_note"
                     android:layout_width="match_parent"
                     android:layout_height="105dp"
                     android:background="@drawable/border"
@@ -382,5 +395,5 @@
         </LinearLayout>
 
     </ScrollView>
-
+    </LinearLayout>
 </RelativeLayout>

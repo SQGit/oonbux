@@ -45,6 +45,7 @@ public class LoginActivity extends Activity {
         et_phone = (MaterialEditText) findViewById(R.id.edittext_phone);
         et_pass = (MaterialEditText) findViewById(R.id.edittext_pass);
 
+
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
         btn_login.setTypeface(tf);
@@ -71,6 +72,12 @@ public class LoginActivity extends Activity {
                                          @Override
                                          public void onClick(View v) {
 
+
+                                             Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+                                             startActivity(login_intent);
+
+
+                                /*
                                              str_email = et_email.getText().toString();
                                              str_phone = et_phone.getText().toString();
                                              str_pass = et_pass.getText().toString();
@@ -80,8 +87,6 @@ public class LoginActivity extends Activity {
                                                      if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
                                                          //new LoginTask().execute();
 
-                                                         Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
-                                                         startActivity(login_intent);
 
                                                      } else {
                                                          et_pass.setError("between 4 and 10 alphanumeric characters");
@@ -95,7 +100,7 @@ public class LoginActivity extends Activity {
                                                  et_email.setError("Enter a valid email address!");
                                                  et_email.requestFocus();
 
-                                             }
+                                             }*/
                                          }
                                      }
 

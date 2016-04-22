@@ -50,7 +50,7 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".HowItWorks" />
         <activity android:name=".ContactUs" />
-        <activity android:name=".PalRequest" />
+        <activity android:name=".PalRequest" android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
         <activity android:name=".MapFrag" />
         <activity android:name=".Test1" />

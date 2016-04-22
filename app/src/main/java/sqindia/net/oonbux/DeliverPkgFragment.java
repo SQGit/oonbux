@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.rey.material.widget.ListView;
+import android.widget.ListView;
 
 
 public class DeliverPkgFragment extends Fragment {
@@ -21,7 +20,7 @@ public class DeliverPkgFragment extends Fragment {
 
         lv_deliver_list = (ListView) getview.findViewById(R.id.deliver_list);
 
-        Shipment_Adapter adapter = new Shipment_Adapter(getActivity().getParent());
+        Shipment_Adapter adapter = new Shipment_Adapter(getActivity());
         lv_deliver_list.setAdapter(adapter);
 
 

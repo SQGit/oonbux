@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <com.rey.material.widget.TextView
@@ -20,7 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
             android:gravity="center"
             android:text=" What to Ship &amp; Where?"
             android:textColor="#ffffff"
@@ -45,63 +44,37 @@
             android:background="@drawable/backo"
             android:padding="1dp">
 
-            <TabHost
-                android:id="@android:id/tabhost"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:id="@+id/LinearLayout01"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical">
+            <com.rey.material.widget.Button
+                android:id="@+id/tbtn1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ship_ico"
+                android:padding="10dp"
+                android:text="Ship your Luggage"
+                android:textColor="#af7735"
+                android:textSize="12sp" />
 
-                    <TabWidget
-                        android:id="@android:id/tabs"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"></TabWidget>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
 
-                    <FrameLayout
-                        android:id="@android:id/tabcontent"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginBottom="10dp"></FrameLayout>
+                android:background="#9b550f" />
 
-                </LinearLayout>
-
-            </TabHost>
-
-
-            <!-- <com.rey.material.widget.Button
-                 android:id="@+id/tbtn1"
-                 android:layout_width="0dp"
-                 android:layout_height="match_parent"
-                 android:layout_weight="1"
-                 android:background="@android:color/transparent"
-                 android:drawableLeft="@drawable/ship_ico"
-                 android:padding="10dp"
-                 android:text="Ship your Luggage"
-                 android:textColor="#af7735"
-                 android:textSize="12sp" />
-
-             <View
-                 android:layout_width="1dp"
-                 android:layout_height="match_parent"
-                 android:layout_gravity="center"
-
-                 android:background="#9b550f" />
-
-             <com.rey.material.widget.Button
-                 android:id="@+id/tbtn2"
-                 android:layout_width="0dp"
-                 android:layout_height="match_parent"
-                 android:layout_weight="1"
-                 android:background="@android:color/transparent"
-                 android:drawableLeft="@drawable/pack_ico"
-                 android:padding="10dp"
-                 android:text="Send your packages to pal"
-                 android:textColor="#FFFFFF"
-                 android:textSize="12sp" />-->
+            <com.rey.material.widget.Button
+                android:id="@+id/tbtn2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/pack_ico"
+                android:padding="10dp"
+                android:text="Send your packages to pal"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />-->
 
 
         </LinearLayout>
@@ -109,12 +82,207 @@
     </LinearLayout>
 
 
-    <FrameLayout
-        android:id="@+id/frame_container"
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ll"
-        android:layout_marginTop="10dp"></FrameLayout>
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="05dp"
+            android:orientation="vertical">
 
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/camera" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/txt_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+
+                    android:gravity="center"
+                    android:text=" 1."
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/txt_1_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:gravity="center"
+                    android:text="@string/txt_1_1"
+                    android:textColor="#ffffff"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/imageViedw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/des" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/txt_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text=" 2."
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/txt_2_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/txt_1_2"
+                    android:textColor="#ffffff"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/imgview_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/txt_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+
+                    android:gravity="center"
+                    android:text=" 3."
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/txt_3_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/txt_1_3"
+                    android:textColor="#ffffff"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/imagesdfView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/per" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/txt_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+
+                    android:gravity="center"
+                    android:text=" 4."
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/txt_4_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/txt_1_4"
+                    android:textColor="#ffffff"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/scroll">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/add_sp_btn"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center|center_horizontal"
+            android:background="@drawable/backo"
+            android:drawableLeft="@drawable/ship"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:text="Add Shipment"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 </RelativeLayout>

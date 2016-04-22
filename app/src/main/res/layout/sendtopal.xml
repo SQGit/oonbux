@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f324ad"
     android:orientation="vertical">
 
 
@@ -56,7 +57,7 @@
                     android:layout_gravity="center"
 
                     android:gravity="center"
-                    android:text="  Send An Oonbux mobile Virtual Address Account Setup Request To Your Pal Abroad"
+                    android:text="@string/txt_1"
                     android:textColor="#ffffff"
                     android:textSize="13sp" />
 
@@ -97,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text=" Take a picture of waht You want to Ship &amp; weight it"
+                    android:text="@string/txt_2"
                     android:textColor="#ffffff"
                     android:textSize="13sp" />
 
@@ -138,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text=" Select An oonbux Delivery Virtual Address"
+                    android:text="@string/txt_3"
                     android:textColor="#ffffff"
                     android:textSize="13sp" />
 
@@ -179,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="Request for a pictup/payment \n We Take it from there"
+                    android:text="@string/txt_4"
                     android:textColor="#ffffff"
                     android:textSize="13sp" />
 

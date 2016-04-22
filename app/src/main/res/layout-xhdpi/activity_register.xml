@@ -8,16 +8,11 @@
     android:orientation="vertical"
     tools:context=".RegisterActivity">
 
-    <!-- <ImageView
-         android:id="@+id/imgv"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:src="@drawable/header_img" />-->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="270dp"
+        android:layout_above="@+id/bottom"
         android:paddingTop="20dp">
 
         <LinearLayout
@@ -169,61 +164,69 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-
-            <com.rey.material.widget.Button
-                android:id="@+id/button_submit"
-                style="@style/Material.Drawable.Ripple.Wave.Light"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/login_reg_button"
-                android:drawableRight="@drawable/arrow_ico"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Submit"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp" />
-
-            <LinearLayout
-                android:id="@+id/linear_login_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.rey.material.widget.TextView
-                    android:id="@+id/text_dont"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Already have an Account?"
-                    android:textColor="#FFFFFF" />
-
-                <com.rey.material.widget.TextView
-                    android:id="@+id/text_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=" Login"
-                    android:textColor="#d97810" />
-            </LinearLayout>
-
-            <com.rey.material.widget.TextView
-                android:id="@+id/terms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/terms"
-                android:textColor="#e0e0e0"
-                android:textSize="10sp" />
-
-
         </LinearLayout>
     </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_submit"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_reg_button"
+            android:drawableRight="@drawable/arrow_ico"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Submit"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:id="@+id/linear_login_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/text_dont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Already have an Account?"
+                android:textColor="#FFFFFF" />
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/text_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=" Login"
+                android:textColor="#d97810" />
+        </LinearLayout>
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/terms"
+            android:textColor="#e0e0e0"
+            android:textSize="10sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -107,14 +107,14 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_hd_ship_id.setText(str_oonbux_id);
 
 
-   /*     ShipPkgFragment fragment = new ShipPkgFragment();
-      *//*  FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();*//*
+       /* ShipPkgFragment fragment = new ShipPkgFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
 
         FragmentManager fragmentManager1 = getFragmentManager();
-        fragmentManager1.beginTransaction().replace(R.id.frame_container, fragment);
+        fragmentManager1.beginTransaction().replace(R.id.frame_container, fragment);*/
 
-        progressBar.setProgress(33);*/
+        progressBar.setProgress(33);
 
 
         btn_dash_ship.setOnClickListener(new View.OnClickListener() {
@@ -127,25 +127,27 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
                 // Toast.makeText(getApplicationContext(), "aa", Toast.LENGTH_LONG).show();
 
-              /*  ShipPkgFragment fragment = new ShipPkgFragment();
-      *//*  FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();*//*
+               /* ShipPkgFragment fragment = new ShipPkgFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
 
                 FragmentManager fragmentManager1 = getFragmentManager();
-                fragmentManager1.beginTransaction().replace(R.id.frame_container, fragment)*/
+                fragmentManager1.beginTransaction().replace(R.id.frame_container, fragment);*/
+
+                First_Fragment fragment = new First_Fragment();
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().replace(R.id.frame_container,fragment).commit();
 
                 progressBar.setProgress(33);
 
-
+/*
                 Fragment fragment = new ShipPkgFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 // fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out,android.R.animator.fade_in, android.R.animator.fade_out);
                 fragmentTransaction.replace(R.id.frame_container, fragment);
                 fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-
-
+                fragmentTransaction.commit();*/
 
 
             }
@@ -165,12 +167,11 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 fragm.beginTransaction().commit();*/
 
 
-                Fragment fragment = new DeliveryPackage();
+                Fragment fragment = new First_Fragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 // fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out,android.R.animator.fade_in, android.R.animator.fade_out);
                 fragmentTransaction.replace(R.id.frame_container, fragment);
-                fragmentTransaction.commit();
 
 
             }
@@ -186,7 +187,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 shop_online.setBackgroundColor(getResources().getColor(R.color.tab_brown));
 
 
-                DeliverPkgFragment fragment = new DeliverPkgFragment();
+               DeliverPkgFragment fragment = new DeliverPkgFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment).commit();
@@ -248,7 +249,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_pal_req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getApplicationContext(), Test1.class);
+                Intent inte = new Intent(getApplicationContext(), PalRequest.class);
                 startActivity(inte);
             }
         });

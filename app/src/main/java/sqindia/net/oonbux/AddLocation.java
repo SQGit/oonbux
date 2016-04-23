@@ -2,20 +2,14 @@ package sqindia.net.oonbux;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TabHost;
 
 /**
- * Created by Salman on 4/20/2016.
+ * Created by Salman on 4/22/2016.
  */
-public class Test1 extends Activity {
-
-    TabHost tabHost;
-
+public class AddLocation extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.testac);
-
-
+        setContentView(R.layout.activity_addloction);
     }
 }

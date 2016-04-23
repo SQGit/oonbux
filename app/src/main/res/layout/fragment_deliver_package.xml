@@ -21,12 +21,12 @@
         android:textColor="@color/colorAccent"
         android:textSize="14sp" />
 
-    <ListView
+    <com.rey.material.widget.ListView
         android:id="@+id/deliver_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </ListView>
+    </com.rey.material.widget.ListView>
 
 
     <com.rey.material.widget.Button
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="150dp"
         android:layout_marginTop="20dp"
         android:background="#e6851d"
         android:drawableLeft="@drawable/done_ico"
@@ -45,9 +45,5 @@
         android:textColor="@color/text_color_hint_light"
         android:textSize="14sp" />
 
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
 
 </LinearLayout>

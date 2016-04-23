@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#10142d"
+    android:paddingTop="25dp"
     android:orientation="vertical">
 
     <include
@@ -25,13 +26,14 @@
             android:paddingBottom="7dp"
             android:paddingTop="5dp">
 
-            <TextView
+            <com.rey.material.widget.TextView
                 android:id="@+id/txt1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/lft_loc_ico"
                 android:drawablePadding="10dp"
                 android:paddingLeft="2dp"
+                style="@style/Material.Drawable.Ripple.Wave.Light"
                 android:text="Houston"
                 android:textColor="@color/text_divider"
                 android:textSize="18sp" />
@@ -44,7 +46,7 @@
                 android:gravity="right" />
         </LinearLayout>
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,17 +54,19 @@
             android:drawablePadding="10dp"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:text="5800,White Line Avenue, Houston, Texas 55372"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/phone_ico"
             android:drawablePadding="10dp"
             android:paddingBottom="3dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:paddingLeft="2dp"
             android:paddingTop="3dp"
             android:text="713-555-5555"
@@ -95,6 +99,7 @@
                 android:id="@+id/btn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/Material.Drawable.Ripple.Wave.Light"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="#080a1e"
@@ -109,6 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
+                style="@style/Material.Drawable.Ripple.Wave.Light"
                 android:layout_weight="1"
                 android:background="#080a1e"
                 android:drawableLeft="@drawable/lft_btn_2_ico"
@@ -123,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#080a1e"
+                style="@style/Material.Drawable.Ripple.Wave.Light"
                 android:drawableLeft="@drawable/lft_btn_3_ico"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -149,13 +156,14 @@
         android:layout_marginTop="10dp"
         android:orientation="vertical">
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:drawableLeft="@drawable/lft_pro_ico"
             android:drawablePadding="10dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:paddingBottom="7dp"
             android:paddingLeft="2dp"
             android:paddingTop="7dp"
@@ -163,26 +171,28 @@
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:drawableLeft="@drawable/lft_pal_ico"
             android:drawablePadding="10dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"
             android:text="Pal Request"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:drawableLeft="@drawable/lft_howit_ico"
             android:drawablePadding="10dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"
             android:text="How It Works?"
@@ -206,12 +216,13 @@
         android:layout_marginTop="10dp"
         android:orientation="vertical">
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_helpline_ico"
             android:drawablePadding="10dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:paddingBottom="7dp"
             android:paddingLeft="1dp"
             android:paddingTop="7dp"
@@ -219,7 +230,7 @@
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -228,16 +239,18 @@
             android:paddingBottom="7dp"
             android:paddingLeft="4dp"
             android:paddingTop="7dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:text="Share"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_receive_ico"
             android:drawablePadding="10dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:paddingBottom="7dp"
             android:paddingLeft="1dp"
             android:paddingTop="7dp"
@@ -245,7 +258,7 @@
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -253,17 +266,19 @@
             android:drawablePadding="10dp"
             android:paddingBottom="7dp"
             android:paddingLeft="1dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:paddingTop="7dp"
             android:text="Payments"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/txt11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/lft_wallet_ico"
             android:drawablePadding="10dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:paddingBottom="7dp"
             android:paddingLeft="3dp"
             android:paddingTop="3dp"

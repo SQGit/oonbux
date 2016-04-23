@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
@@ -25,6 +26,7 @@ import com.rey.material.widget.TextView;
 public class PalRequest extends Activity {
 
     ImageButton btn_back;
+    LinearLayout bck_lt;
     Button btn_send;
     TextView tv_header, tv_sheader, tv_comment;
     MaterialEditText et_fname, et_lname, et_email, et_phone, et_comment;
@@ -36,6 +38,8 @@ public class PalRequest extends Activity {
         setContentView(R.layout.palrequest);
 
         spin = (com.rey.material.widget.Spinner) findViewById(R.id.spinner);
+
+        bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
 
         btn_back = (ImageButton) findViewById(R.id.btn_back);
         btn_send = (Button) findViewById(R.id.button_send);
@@ -67,7 +71,7 @@ public class PalRequest extends Activity {
         adapter.setDropDownViewResource(R.layout.dropdown_lists);
         spin.setAdapter(adapter);
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        bck_lt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);

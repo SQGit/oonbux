@@ -22,18 +22,19 @@
             android:layout_height="wrap_content"
             android:src="@drawable/photo_ico" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/htxt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text=" Oonbux shipping Id:"
             android:textColor="#ffffff"
             android:textSize="11sp" />
 
-        <TextView
+        <com.rey.material.widget.TextView
             android:id="@+id/htxt2"
             android:layout_width="80dp"
             android:layout_height="25dp"
@@ -42,6 +43,7 @@
             android:background="@drawable/login_reg_button"
             android:gravity="center"
             android:padding="1dp"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
             android:text="HQQTRY"
             android:textColor="#FFFFFF"
             android:textSize="12sp" />

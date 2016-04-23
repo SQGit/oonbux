@@ -17,7 +17,7 @@ public class Shipment_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return 3;
     }
 
     @Override

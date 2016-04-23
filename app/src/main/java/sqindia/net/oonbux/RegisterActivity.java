@@ -66,11 +66,12 @@ public class RegisterActivity extends Activity {
         tv_donthav.setTypeface(tf);
         tv_register.setTypeface(tf);
         tv_footer.setTypeface(tf);
-        aet_cont.setTypeface(tf);
         et_email.setTypeface(tf);
         et_pass.setTypeface(tf);
         et_repass.setTypeface(tf);
         et_phone.setTypeface(tf);
+
+        aet_cont.setTypeface(tf);
         aet_zip.setTypeface(tf);
         aet_state.setTypeface(tf);
 
@@ -104,8 +105,8 @@ public class RegisterActivity extends Activity {
                 str_pass = et_pass.getText().toString();
                 str_repass = et_repass.getText().toString();
                 str_phone = et_phone.getText().toString();
-                str_zip = et_zip.getText().toString();
-                str_state = et_state.getText().toString();
+                str_zip = aet_zip.getText().toString();
+                str_state = aet_state.getText().toString();
 
                 if (!str_country.isEmpty()) {
                     if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {

@@ -34,10 +34,10 @@
 
             <com.rey.material.widget.TextView
                 android:id="@+id/tv_hd_txt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="70dp"
+                android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Profile"
@@ -211,7 +211,7 @@
 
         <LinearLayout
             android:id="@+id/pda_layout"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#090c1e"
             android:orientation="horizontal">
@@ -222,9 +222,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="50dp"
                 android:layout_weight="1"
                 android:drawablePadding="10dp"
-
                 android:paddingBottom="8dp"
                 android:paddingLeft="2dp"
                 android:paddingTop="8dp"
@@ -232,12 +232,12 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-            <ImageButton
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/arrow_ico" />
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bckr_ico" />
 
         </LinearLayout>
 
@@ -253,7 +253,7 @@
 
         <LinearLayout
             android:id="@+id/pi_layout"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#090c1e"
             android:orientation="horizontal">
@@ -273,12 +273,12 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-            <ImageButton
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/arrow_ico" />
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bckr_ico" />
 
         </LinearLayout>
 
@@ -308,12 +308,12 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-            <ImageButton
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/arrow_ico" />
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bckr_ico" />
 
         </LinearLayout>
 

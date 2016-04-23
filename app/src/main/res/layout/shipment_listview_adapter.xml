@@ -7,9 +7,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#070b23"
+        android:background="@drawable/listview_drawable"
+        android:layout_marginTop="5dp"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:gravity="center_vertical"
-                    android:text="Add to Pickup"
+                    android:text="Large"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
 
@@ -76,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:gravity="center_vertical"
-                    android:text="Add to Pickup"
+                    android:text="Medium"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
 
@@ -85,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:gravity="center_vertical"
-                    android:text="Add to Pickup"
+                    android:text="Small"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
 

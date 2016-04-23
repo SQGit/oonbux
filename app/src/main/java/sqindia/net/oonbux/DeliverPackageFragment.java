@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 
-public class DeliverPkgFragment extends Fragment {
+public class DeliverPackageFragment extends Fragment {
 
 
     ListView lv_deliver_list;
@@ -16,7 +16,7 @@ public class DeliverPkgFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View getview = inflater.inflate(R.layout.deliver_pkg_fragment, container, false);
+        View getview = inflater.inflate(R.layout.fragment_deliver_package, container, false);
 
         lv_deliver_list = (ListView) getview.findViewById(R.id.deliver_list);
 

@@ -13,13 +13,19 @@
         android:layout_height="50dp"
         android:background="#070b23">
 
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/back_ico" />
+        <LinearLayout
+            android:id="@+id/bck_layout"
+            android:layout_width="70dp"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/back_ico" />
+        </LinearLayout>
 
 
         <com.rey.material.widget.TextView
@@ -27,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Profile Info"
             android:textColor="#FFFFFF"
@@ -159,9 +166,9 @@
 
 
         <com.rey.material.widget.Button
-            android:id="@+id/button_login"
+            android:id="@+id/button_submit"
             style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
@@ -169,7 +176,7 @@
             android:drawableRight="@drawable/arrow_ico"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="Save &amp; Submit"
+            android:text="Save"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 

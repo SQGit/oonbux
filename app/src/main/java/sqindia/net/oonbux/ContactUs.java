@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 /**
  * Created by Salman on 4/18/2016.
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 public class ContactUs extends Activity {
 
     ImageButton btn_back;
+    LinearLayout bck_lt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,9 @@ public class ContactUs extends Activity {
 
         btn_back = (ImageButton) findViewById(R.id.btn_back);
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
+
+        bck_lt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);

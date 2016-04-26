@@ -31,7 +31,7 @@
                     android:background="@drawable/photo_ico" />
 
                 <com.rey.material.widget.TextView
-                    android:id="@+id/tv_shd_txt"
+                    android:id="@+id/tv_per"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -53,7 +53,7 @@
 
 
                 <com.rey.material.widget.TextView
-                    android:id="@+id/tv_shd_tfxt"
+                    android:id="@+id/tv_ship_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -67,28 +67,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:id="@+id/cb_large"
                     android:gravity="center_vertical"
                     android:text="Large"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+                    style="@style/checkbox"  />
 
                 <com.rey.material.widget.CheckBox
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:id="@+id/cb_medium"
                     android:gravity="center_vertical"
                     android:text="Medium"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+                    style="@style/checkbox"  />
 
                 <com.rey.material.widget.CheckBox
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:id="@+id/cb_small"
                     android:gravity="center_vertical"
                     android:text="Small"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+                    style="@style/checkbox"  />
 
 
             </LinearLayout>
@@ -107,7 +107,7 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/lft_logo_ico" />
 
-                <com.rey.material.widget.TextView
+            <!--    <com.rey.material.widget.TextView
                     android:id="@+id/tv_shd_txgt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,6 +116,18 @@
                     android:background="@drawable/login_reg_button"
                     android:gravity="center"
                     android:padding="2dp"
+                    android:text="Add Oonbux \nId"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />-->
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/button_addid"
+                    style="@style/Material.Drawable.Ripple.Wave.Light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/text_color"
                     android:text="Add Oonbux \nId"
                     android:textColor="#FFFFFF"
                     android:textSize="10sp" />
@@ -130,9 +142,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:id="@+id/cb_addto"
             android:gravity="center_vertical"
             android:text="Add to Pickup"
-            android:textColor="#FFFFFF" />
+            style="@style/checkbox"  />
+
+
 
     </LinearLayout>
 

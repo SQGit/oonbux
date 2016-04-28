@@ -62,7 +62,9 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
-        tv_header.setTypeface(tf);
+        Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
+
+        tv_header.setTypeface(tf1);
         tv_htxt1.setTypeface(tf);
         tv_htxt2.setTypeface(tf);
         tv_htxt3.setTypeface(tf);

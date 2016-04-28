@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -75,7 +77,32 @@ public class RegisterActivity extends Activity {
         aet_zip.setTypeface(tf);
         aet_state.setTypeface(tf);
 
-        new GetCountry().execute();
+
+        if (!Config.isNetworkAvailable(RegisterActivity.this)) {
+
+            new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Oops!")
+                    .setContentText("No network Available!")
+                    .setConfirmText("OK")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                            // sweetAlertDialog.setCancelable(false);
+
+                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                            finish();
+                        }
+                    })
+
+                    .show();
+
+
+        } else {
+            new GetCountry().execute();
+        }
+
+
 
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, country);
@@ -233,20 +260,24 @@ public class RegisterActivity extends Activity {
 
                     // Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 } else if (status.equals(null)) {
-                    //  Toast.makeText(getApplicationContext(), "network available", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "network available", Toast.LENGTH_LONG).show();
                 } else if (status.equals("fail")) {
 
 
-                    if (msg.equals("Email ID is already registered")) {
+   /*                 if (msg.equals("Email ID is already registered")) {*/
                         new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
                                 .setTitleText("Oops!")
-                                .setContentText("Email Already Registered")
+                                .setContentText(msg)
                                 .setConfirmText("OK")
                                 .show();
-                        et_email.setText("");
+                    //et_email.setText("");
+                    if (msg.contains("Email")) {
                         et_email.requestFocus();
-                        et_email.setError("");
+                    } else if (msg.contains("Region")) {
+                        aet_cont.requestFocus();
                     }
+                    // et_email.setError("");
+
 
                     // Toast.makeText(getApplicationContext(), "Check your internet or try again", Toast.LENGTH_LONG).show();
                 }
@@ -465,9 +496,6 @@ public class RegisterActivity extends Activity {
         }
 
     }
-
-
-
 
 
 }

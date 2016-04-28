@@ -42,7 +42,7 @@ public class LoginActivity extends Activity {
         tv_donthav = (TextView) findViewById(R.id.text_dont);
         tv_register = (TextView) findViewById(R.id.text_login);
         et_email = (MaterialEditText) findViewById(R.id.edittext_email);
-        et_phone = (MaterialEditText) findViewById(R.id.edittext_phone);
+        //et_phone = (MaterialEditText) findViewById(R.id.edittext_phone);
         et_pass = (MaterialEditText) findViewById(R.id.edittext_pass);
 
 
@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
         tv_donthav.setTypeface(tf);
         tv_register.setTypeface(tf);
         et_email.setTypeface(tf);
-        et_phone.setTypeface(tf);
+//        et_phone.setTypeface(tf);
         et_pass.setTypeface(tf);
 
         tmanager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
@@ -85,7 +85,35 @@ public class LoginActivity extends Activity {
                                              if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
                                                  if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
                                                      if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
-                                                         //new LoginTask().execute();
+
+
+                                                      if(!Config.isNetworkAvailable(LoginActivity.this)){
+
+            new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Oops!")
+                    .setContentText("No network Available!")
+                    .setConfirmText("OK")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                            sweetAlertDialog.setCancelable(false);
+
+                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        }
+                    })
+
+                    .show();
+
+
+        }
+        else {
+            //new LoginTask().execute();
+        }
+
+
+
+
 
 
                                                      } else {

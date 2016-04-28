@@ -56,6 +56,10 @@ public class PalRequest extends Activity {
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
+        Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
+
+
+
         btn_send.setTypeface(tf);
         et_fname.setTypeface(tf);
         et_lname.setTypeface(tf);
@@ -63,7 +67,7 @@ public class PalRequest extends Activity {
         et_phone.setTypeface(tf);
         et_comment.setTypeface(tf);
         tv_comment.setTypeface(tf);
-        tv_header.setTypeface(tf);
+        tv_header.setTypeface(tf1);
         tv_sheader.setTypeface(tf);
 
 

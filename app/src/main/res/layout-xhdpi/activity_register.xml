@@ -11,8 +11,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="270dp"
         android:layout_above="@+id/bottom"
+        android:layout_marginTop="270dp"
         android:paddingTop="20dp">
 
         <LinearLayout
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/state_ico"
                 android:hint="State"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 android:inputType="textPersonName"
                 android:maxLength="10"
                 android:paddingLeft="5dp"
@@ -150,6 +150,7 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/zip_ico"
                 android:hint="Zipcode"
+                android:imeOptions="actionDone"
                 android:inputType="phone"
                 android:maxLength="6"
                 android:paddingLeft="5dp"
@@ -169,11 +170,11 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
         android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <com.rey.material.widget.Button
             android:id="@+id/button_submit"

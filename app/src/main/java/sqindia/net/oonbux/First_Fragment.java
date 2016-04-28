@@ -2,6 +2,7 @@ package sqindia.net.oonbux;
 
 import android.app.Fragment;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,14 +16,14 @@ import com.rey.material.widget.TextView;
 
 public class First_Fragment extends Fragment {
 
-    TextView htxt,txt1, txt_one,txt3, txt_two,txt5, txt_three,txt7, txt_four;
-    Button btn1,btn2,gobtn;
+    TextView htxt, txt1, txt_one, txt3, txt_two, txt5, txt_three, txt7, txt_four;
+    Button btn1, btn2, gobtn;
     ImageView imgview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_ship_package,container,false);
+        View v = inflater.inflate(R.layout.fragment_ship_package, container, false);
 
 
         htxt = (TextView) v.findViewById(R.id.htext);
@@ -59,14 +60,19 @@ public class First_Fragment extends Fragment {
 //        gobtn.setTypeface(tf);
 
 
-
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btn1.setTextColor(getResources().getColor(R.color.colorAccent));
                 btn2.setTextColor(getResources().getColor(R.color.text_color_hint_light));
-               // btn1.setCompoundDrawables(getResources().getDrawable(R.drawable.ship_ico), null, null, null);
-               // btn2.setCompoundDrawables(getResources().getDrawable(R.drawable.ship_ico_hover),null,null,null);
+                // btn1.setCompoundDrawables(getResources().getDrawable(R.drawable.ship_ico), null, null, null);
+                // btn2.setCompoundDrawables(getResources().getDrawable(R.drawable.ship_ico_hover),null,null,null);
+
+
+                Drawable img = getActivity().getResources().getDrawable(R.drawable.ship_ico);
+                btn1.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                Drawable img1 = getActivity().getResources().getDrawable(R.drawable.pack_ico);
+                btn2.setCompoundDrawablesWithIntrinsicBounds(img1, null, null, null);
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -79,8 +85,6 @@ public class First_Fragment extends Fragment {
                 txt_four.setText(getText(R.string.txt_1_4));
 
 
-
-
             }
         });
 
@@ -89,8 +93,14 @@ public class First_Fragment extends Fragment {
             public void onClick(View v) {
                 btn1.setTextColor(getResources().getColor(R.color.text_color_hint_light));
                 btn2.setTextColor(getResources().getColor(R.color.text_color));
-               // btn1.setCompoundDrawables(getResources().getDrawable(R.drawable.pack_ico), null, null, null);
-               // btn2.setCompoundDrawables(getResources().getDrawable(R.drawable.pack_ico_hover), null, null, null);
+                // btn1.setCompoundDrawables(getResources().getDrawable(R.drawable.pack_ico), null, null, null);
+                // btn2.setCompoundDrawables(getResources().getDrawable(R.drawable.pack_ico_hover), null, null, null);
+
+
+                Drawable img = getActivity().getResources().getDrawable(R.drawable.ship_ico_hover);
+                btn1.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+                Drawable img1 = getActivity().getResources().getDrawable(R.drawable.pack_ico_hover);
+                btn2.setCompoundDrawablesWithIntrinsicBounds(img1, null, null, null);
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -103,15 +113,8 @@ public class First_Fragment extends Fragment {
                 txt_four.setText(getText(R.string.txt_4));
 
 
-
-
             }
         });
-
-
-
-
-
 
 
         return v;

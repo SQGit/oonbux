@@ -1,5 +1,9 @@
 package sqindia.net.oonbux;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 public class Config {
 
 
@@ -74,8 +78,12 @@ public class Config {
     }
 
 
-
-
+    public static boolean isNetworkAvailable(Context c1) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) c1.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
 
 

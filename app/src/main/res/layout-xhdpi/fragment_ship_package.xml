@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_dash"
+
     android:orientation="vertical">
 
     <LinearLayout
@@ -188,6 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/doller"
                  />
 
             <LinearLayout
@@ -265,24 +266,24 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/scroll">
+    <!--    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/scroll">
 
-        <com.rey.material.widget.Button
-            android:id="@+id/add_sp_btn"
-            android:layout_width="150dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center|center_horizontal"
-            android:background="@drawable/backo"
-            android:drawableLeft="@drawable/ship"
-            android:gravity="center"
-            android:paddingLeft="15dp"
-            android:text="Add Shipment"
-            android:textColor="@color/colorAccent"
-            android:textSize="14sp" />
+            <com.rey.material.widget.Button
+                android:id="@+id/add_sp_btn"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center|center_horizontal"
+                android:background="@drawable/backo"
+                android:drawableLeft="@drawable/ship"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:text="Add Shipment"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp" />
 
-    </LinearLayout>
+        </LinearLayout>-->
 </RelativeLayout>

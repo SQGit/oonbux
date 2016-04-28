@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -15,30 +16,56 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.rey.material.widget.Button;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import me.iwf.photopicker.PhotoPickerActivity;
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 
 @SuppressWarnings("deprecation")
 public class DashBoardActivity extends Activity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public final static int REQUEST_CODE = 1;
     public ProgressBar progressBar;
     com.rey.material.widget.TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet;
-    Button btn_nav_cont_loc_adr, btn_nav_cont_int_adr, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop, btn_shop_online;
+    Button btn_nav_cont_loc_adr, btn_nav_cont_int_adr, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop, btn_shop_online, btn_add_shipment, btn_done_shipment;
     com.rey.material.widget.TextView tv_dash_hd_txt;
     String str_oonbux_id;
     Toolbar toolbar;
     Fragment fragment;
     Context context;
+    ImageView btm_cam;
+    ArrayList<String> selectedPhotos = new ArrayList<>();
+    PhotoAdapter photoAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+
+        photoAdapter = new PhotoAdapter(this, selectedPhotos);
+
+        try {
+            btm_cam.setImageURI(photoAdapter.uri);
+        } catch (NullPointerException e) {
+
+            Log.d("tag", String.valueOf(e));
+
+        }
+
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
         str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
@@ -74,6 +101,9 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_payment = (com.rey.material.widget.TextView) findViewById(R.id.txt10);
         tv_nav_cont_d_wallet = (com.rey.material.widget.TextView) findViewById(R.id.txt11);
 
+        btn_add_shipment = (Button) findViewById(R.id.add_ship_button);
+        btn_done_shipment = (Button) findViewById(R.id.add_done_button);
+
         btn_nav_cont_loc_adr = (Button) findViewById(R.id.btn1);
         btn_nav_cont_int_adr = (Button) findViewById(R.id.btn2);
         btn_nav_cont_add_loc = (Button) findViewById(R.id.btn3);
@@ -84,9 +114,15 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         btn_dash_deliver = (Button) findViewById(R.id.btn_dash_deliver);
         btn_dash_shop = (Button) findViewById(R.id.btn_dash_shop_online);
 
+        btm_cam = (ImageView) findViewById(R.id.cam);
+
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
-        tv_dash_hd_txt.setTypeface(tf);
+
+        Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
+
+
+        tv_dash_hd_txt.setTypeface(tf1);
         tv_nav_hd_ship_txt.setTypeface(tf);
         tv_nav_hd_ship_id.setTypeface(tf);
         tv_nav_cont_loc.setTypeface(tf);
@@ -106,9 +142,11 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         btn_dash_ship.setTypeface(tf);
         btn_dash_deliver.setTypeface(tf);
         btn_shop_online.setTypeface(tf);
+        btn_add_shipment.setTypeface(tf);
 
         tv_nav_hd_ship_id.setText(str_oonbux_id);
-
+        btn_add_shipment.setVisibility(View.VISIBLE);
+        btn_done_shipment.setVisibility(View.GONE);
         progressBar.setProgress(33);
         First_Fragment fragment = new First_Fragment();
         FragmentManager fm = getFragmentManager();
@@ -118,6 +156,9 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         btn_dash_ship.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                btn_add_shipment.setVisibility(View.VISIBLE);
+                btn_done_shipment.setVisibility(View.GONE);
                 progressBar.setProgress(33);
                 btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_brown));
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_default));
@@ -133,6 +174,10 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         btn_dash_deliver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                btn_add_shipment.setVisibility(View.GONE);
+                btn_done_shipment.setVisibility(View.VISIBLE);
+
                 progressBar.setProgress(66);
                 btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_brown));
@@ -149,6 +194,10 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
 
+                btn_add_shipment.setVisibility(View.GONE);
+                btn_done_shipment.setVisibility(View.GONE);
+
+
                 progressBar.setProgress(100);
                 btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_default));
@@ -160,6 +209,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 ShopOn fragment = new ShopOn();
                 FragmentManager fm = getFragmentManager();
                 fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
+
+
             }
         });
 
@@ -226,6 +277,15 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         });
 
 
+        tv_nav_cont_payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(), Invite_Pal.class);
+                startActivity(inte);
+            }
+        });
+
+
         btn_nav_cont_add_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,7 +301,73 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 startActivity(inte);*/
             }
         });
+
+
+        btm_cam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "tsdf", Toast.LENGTH_LONG).show();
+
+                PhotoPickerIntent intent = new PhotoPickerIntent(DashBoardActivity.this);
+                intent.setPhotoCount(1);
+                intent.setColumn(4);
+                intent.setShowCamera(true);
+                startActivityForResult(intent, REQUEST_CODE);
+
+            }
+        });
+
+
+        btn_add_shipment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PhotoPickerIntent intent = new PhotoPickerIntent(DashBoardActivity.this);
+                intent.setPhotoCount(1);
+                intent.setColumn(4);
+                intent.setShowCamera(true);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
+
+
+
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        List<String> photos = null;
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+
+            Log.d("tag", "worked");
+            if (data != null) {
+                photos = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+            }
+            selectedPhotos.clear();
+
+            if (photos != null) {
+
+                selectedPhotos.addAll(photos);
+            }
+            photoAdapter.notifyDataSetChanged();
+
+            Uri uri = Uri.fromFile(new File(selectedPhotos.get(0)));
+
+            Log.d("tag", selectedPhotos.get(0));
+            Log.d("tag", "" + uri);
+
+            //btm_cam.setImageURI(uri);
+        }
+    }
+
+
+    public void previewPhoto(Intent intent) {
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {

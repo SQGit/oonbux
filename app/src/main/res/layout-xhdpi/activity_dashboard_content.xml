@@ -98,67 +98,115 @@
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/ll5"
         android:layout_below="@id/progressBar1"></FrameLayout>
 
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
+        android:id="@+id/ll5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/bottom_page"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/chat"
-            android:layout_width="wrap_content"
+
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/chat_ico" />
+            android:padding="2dp">
 
-        <ImageView
-            android:id="@+id/grp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@+id/chat"
-            android:background="@drawable/group_ico" />
+            <com.rey.material.widget.Button
+                android:id="@+id/add_ship_button"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
 
-        <ImageView
-            android:id="@+id/cam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/cam_ico" />
+                android:layout_gravity="center|center_horizontal"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/backo"
+                android:drawableLeft="@drawable/ship"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:text="Add Shipment"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/receive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@+id/cam"
-            android:background="@drawable/receive_ico" />
 
-        <ImageView
-            android:id="@+id/pkg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="20dp"
-            android:layout_toRightOf="@+id/receive"
-            android:background="@drawable/pkg_ico" />
+            <com.rey.material.widget.Button
+                android:id="@+id/add_done_button"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:background="#e6851d"
+                android:drawableLeft="@drawable/done_ico"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:text="Done"
+                android:textColor="@color/text_color_hint_light"
+                android:textSize="14sp" />
 
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/btm_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:background="@color/bottom_page"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+
+            <ImageView
+                android:id="@+id/chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/chat_ico" />
+
+            <ImageView
+                android:id="@+id/grp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_toRightOf="@+id/chat"
+                android:background="@drawable/group_ico" />
+
+            <ImageView
+                android:id="@+id/cam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/cam_ico" />
+
+            <ImageView
+                android:id="@+id/receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_toRightOf="@+id/cam"
+                android:background="@drawable/receive_ico" />
+
+            <ImageView
+                android:id="@+id/pkg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_toRightOf="@+id/receive"
+                android:background="@drawable/pkg_ico" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
     <!-- <include
          android:id="@+id/footer"
          layout="@layout/dash_bottom_tools" />-->

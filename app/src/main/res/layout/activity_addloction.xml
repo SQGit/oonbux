@@ -89,82 +89,101 @@
             app:met_underlineColor="@color/text_divider" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll3"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_below="@id/ll2"
-        android:layout_marginTop="5dp"
-        android:background="#f47a20"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="5dp"
+                android:background="#f47a20"
+                android:gravity="center">
 
 
-        <ImageButton
-            android:id="@+id/btn_backa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/des" />
+                <ImageButton
+                    android:id="@+id/btn_backa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/des" />
 
 
-        <com.rey.material.widget.TextView
-            android:id="@+id/tv_hd_txat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="30dp"
-            android:gravity="center"
-            android:text="USA"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-    </LinearLayout>
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_hd_txat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center"
+                    android:text="USA"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
-    <GridView
-        android:id="@+id/grd_usa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll3">
+            <GridView
+                android:id="@+id/grd_usa"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll3"
+                android:numColumns="2"
+                android:overScrollMode="ifContentScrolls"
+                android:stretchMode="columnWidth">
 
-    </GridView>
-
-
-    <LinearLayout
-        android:id="@+id/ll4"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_below="@id/grd_usa"
-        android:layout_marginTop="5dp"
-        android:background="#f47a20"
-        android:gravity="center">
+            </GridView>
 
 
-        <ImageButton
-            android:id="@+id/btn_bacdka"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/des" />
+            <LinearLayout
+                android:id="@+id/ll4"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/grd_usa"
+                android:layout_marginTop="10dp"
+                android:background="#f47a20"
+                android:gravity="center">
 
 
-        <com.rey.material.widget.TextView
-            android:id="@+id/tv_hd_tdxat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="30dp"
-            android:gravity="center"
-            android:text="NIGERIA"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-    </LinearLayout>
+                <ImageButton
+                    android:id="@+id/btn_bacdka"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/des" />
 
-    <GridView
-        android:layout_width="match_parent"
-        android:id="@+id/grd_nig"
-        android:layout_height="wrap_content">
 
-    </GridView>
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_hd_tdxat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center"
+                    android:text="NIGERIA"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/grd_nig"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll4"
+                android:numColumns="2">
+
+            </GridView>
+        </RelativeLayout>
+
+    </ScrollView>
+
 
 </RelativeLayout>

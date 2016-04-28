@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_dash"
-    android:orientation="vertical">
+
+    android:orientation="vertical"
+    android:paddingBottom="15dp">
 
 
     <com.rey.material.widget.Button
@@ -11,8 +12,8 @@
         android:layout_width="150dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/backo"
         android:drawableLeft="@drawable/ship"
         android:gravity="center"
@@ -25,25 +26,22 @@
         android:id="@+id/deliver_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </com.rey.material.widget.ListView>
 
-
-    <com.rey.material.widget.Button
-        android:id="@+id/add_sp_btn2"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="150dp"
-        android:layout_marginTop="20dp"
-        android:background="#e6851d"
-        android:drawableLeft="@drawable/done_ico"
-        android:gravity="center"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp"
-        android:text="Done"
-        android:textColor="@color/text_color_hint_light"
-        android:textSize="14sp" />
+    <!--
+        <com.rey.material.widget.Button
+            android:id="@+id/add_sp_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:background="#e6851d"
+            android:drawableLeft="@drawable/done_ico"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:text="Done"
+            android:textColor="@color/text_color_hint_light"
+            android:textSize="14sp" />-->
 
 
 </LinearLayout>

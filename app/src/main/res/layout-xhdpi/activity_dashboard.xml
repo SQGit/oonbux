@@ -8,22 +8,25 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
         app:layout_collapseMode="pin" />
 
     <include
         android:id="@+id/nav_container"
         layout="@layout/activity_dashboard_content" />
 
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="false">
 
         <include layout="@layout/nav_content" />
     </android.support.design.widget.NavigationView>

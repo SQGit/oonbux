@@ -10,6 +10,19 @@
     </style>
 
 
+    <style name="img_Picker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="actionBarTheme">@style/myTheme.actionBar</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="actionBarSize">@dimen/iwf_actionBarSize</item>
+    </style>
+
+
+    <style name="myTheme.actionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/text_color_hint_light</item>
+        <item name="actionBarSize">@dimen/iwf_actionBarSize</item>
+    </style>
+
+
     <style name="EditTextCustomHolo" parent="android:Widget.EditText">
 
         <item name="android:textColor">#ffffff</item>

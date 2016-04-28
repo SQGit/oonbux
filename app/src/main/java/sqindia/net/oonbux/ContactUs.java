@@ -1,9 +1,7 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -18,9 +16,9 @@ public class ContactUs extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.contactus);
+        setContentView(R.layout.smks);
 
-
+/*
         btn_back = (ImageButton) findViewById(R.id.btn_back);
 
         bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
@@ -31,6 +29,6 @@ public class ContactUs extends Activity {
                 Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
                 startActivity(inte);
             }
-        });
+        });*/
     }
 }

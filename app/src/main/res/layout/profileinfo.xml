@@ -60,6 +60,7 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:src="@drawable/photo_ico" />
 
+
             <ImageView
                 android:id="@+id/imageViedw"
                 android:layout_width="wrap_content"

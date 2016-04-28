@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.UnknownHostException;
 
 
 @SuppressWarnings("deprecation")
@@ -40,6 +41,7 @@ public class HttpUtils {
 
             HttpResponse httpResponse = new DefaultHttpClient().execute(httpPost);
 
+
             // receive response as inputStream
             InputStream inputStream = httpResponse.getEntity().getContent();
             // convert inputstream to string
@@ -54,6 +56,8 @@ public class HttpUtils {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -210,17 +214,6 @@ public class HttpUtils {
 
         return jArray;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     public static String makeRequest1(String url, String json, String token) {

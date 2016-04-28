@@ -46,25 +46,25 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/edittext_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/phone_ico"
-                android:hint="Phone No"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp"
-                android:textSize="20sp"
-                app:met_accentTypeface="fonts/prox.otf"
-                app:met_baseColor="@color/text_divider_light"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
-                app:met_textColor="@color/text_color"
-                app:met_textColorHint="@color/text_color_hint"
-                app:met_underlineColor="@color/text_divider" />
+            <!--          <com.rengwuxian.materialedittext.MaterialEditText
+                          android:id="@+id/edittext_phone"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:drawableRight="@drawable/phone_ico"
+                          android:hint="Phone No"
+                          android:inputType="phone"
+                          android:maxLength="10"
+                          android:paddingLeft="5dp"
+                          android:paddingRight="10dp"
+                          android:textSize="20sp"
+                          app:met_accentTypeface="fonts/prox.otf"
+                          app:met_baseColor="@color/text_divider_light"
+                          app:met_floatingLabel="normal"
+                          app:met_floatingLabelTextColor="@color/hint_floating"
+                          app:met_primaryColor="@color/text_divider_light"
+                          app:met_textColor="@color/text_color"
+                          app:met_textColorHint="@color/text_color_hint"
+                          app:met_underlineColor="@color/text_divider" />-->
 
 
 
@@ -94,7 +94,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/login_reg_button"
                 android:drawableRight="@drawable/arrow_ico"
                 android:paddingLeft="20dp"

@@ -10,8 +10,13 @@
     <com.github.siyamed.shapeimageview.CircularImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/photo_ico"
+        android:src="@drawable/des"
         app:siBorderColor="@color/colorAccent"
         app:siBorderWidth="3dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/round_img" />
 
 </LinearLayout>

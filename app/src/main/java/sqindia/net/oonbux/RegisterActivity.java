@@ -2,13 +2,19 @@ package sqindia.net.oonbux;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -30,10 +36,10 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class RegisterActivity extends Activity {
     Button btn_submit;
     TextView tv_donthav, tv_register, tv_footer;
-    LinearLayout ll_register;
-    MaterialEditText et_email, et_phone, et_pass, et_repass, et_zip, et_state;
+    LinearLayout ll_login;
+    MaterialEditText et_fname, et_lname, et_email, et_phone, et_pass, et_repass, et_zip, et_state;
     MaterialAutoCompleteTextView aet_cont, aet_state, aet_zip;
-    String str_country, str_email, str_phone, str_pass, str_repass, str_state, str_zip;
+    String str_fname, str_lname, str_country, str_email, str_phone, str_pass, str_repass, str_state, str_zip;
     SweetAlertDialog sweetAlertDialog;
     ArrayList<String> country = new ArrayList<>();
     ArrayList<String> states = new ArrayList<>();
@@ -46,11 +52,13 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
 
         btn_submit = (Button) findViewById(R.id.button_submit);
-        ll_register = (LinearLayout) findViewById(R.id.linear_login_text);
+        ll_login = (LinearLayout) findViewById(R.id.linear_login_text);
         tv_donthav = (TextView) findViewById(R.id.text_dont);
         tv_register = (TextView) findViewById(R.id.text_login);
         tv_footer = (TextView) findViewById(R.id.terms);
 
+        et_fname = (MaterialEditText) findViewById(R.id.edittext_fname);
+        et_lname = (MaterialEditText) findViewById(R.id.edittext_lname);
         et_email = (MaterialEditText) findViewById(R.id.edittext_email);
         et_pass = (MaterialEditText) findViewById(R.id.edittext_pass);
         et_repass = (MaterialEditText) findViewById(R.id.edittext_repass);
@@ -68,6 +76,9 @@ public class RegisterActivity extends Activity {
         tv_donthav.setTypeface(tf);
         tv_register.setTypeface(tf);
         tv_footer.setTypeface(tf);
+
+        et_fname.setTypeface(tf);
+        et_lname.setTypeface(tf);
         et_email.setTypeface(tf);
         et_pass.setTypeface(tf);
         et_repass.setTypeface(tf);
@@ -100,8 +111,8 @@ public class RegisterActivity extends Activity {
 
         } else {
             new GetCountry().execute();
+            aet_cont.requestFocus();
         }
-
 
 
 
@@ -115,7 +126,50 @@ public class RegisterActivity extends Activity {
         aet_zip.setAdapter(adapter3);
 
 
-        ll_register.setOnClickListener(new View.OnClickListener() {
+        et_phone.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    str_country = aet_cont.getText().toString();
+                    new GetState().execute();
+                    aet_state.requestFocus();
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        aet_state.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    str_country = aet_cont.getText().toString();
+                    str_state = aet_state.getText().toString();
+                    new GetZip().execute();
+                    aet_zip.requestFocus();
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        aet_zip.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    validatedatas();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        ll_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -127,7 +181,31 @@ public class RegisterActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                str_country = aet_cont.getText().toString();
+
+          /*    Intent goD = new Intent(getApplicationContext(), ProfileInfo.class);
+                startActivity(goD);
+                finish();*/
+
+             /*   String txt ="Please verify your registerd mail id for oonbux id";
+
+                Dialog_new cdd = new Dialog_new(RegisterActivity.this,txt);
+                cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                cdd.show();*/
+
+
+                validatedatas();
+
+            }
+        });
+    }
+
+
+    public void validatedatas() {
+
+
+        str_country = aet_cont.getText().toString();
+        str_fname = et_fname.getText().toString();
+        str_lname = et_lname.getText().toString();
                 str_email = et_email.getText().toString();
                 str_pass = et_pass.getText().toString();
                 str_repass = et_repass.getText().toString();
@@ -136,45 +214,55 @@ public class RegisterActivity extends Activity {
                 str_state = aet_state.getText().toString();
 
                 if (!str_country.isEmpty()) {
-                    if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
-                        if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
-                            if (str_repass.matches(str_pass)) {
-                                if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
-                                    if (!(str_zip.isEmpty() || str_zip.length() < 3)) {
-                                        if (!str_state.isEmpty()) {
-                                            new RegisterTask().execute();
+                    if (!str_fname.isEmpty()) {
+                        if (!str_lname.isEmpty()) {
+                            if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
+                                if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
+                                    if (str_repass.matches(str_pass)) {
+                                        if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
+                                            if (!str_state.isEmpty()) {
+                                                if (!(str_zip.isEmpty() || str_zip.length() < 3)) {
+                                                    new RegisterTask().execute();
+                                                } else {
+                                                    aet_zip.setError("Enter zipcode");
+                                                    aet_zip.requestFocus();
+
+                                                }
+                                            } else {
+                                                aet_state.setError("Enter State");
+                                                aet_state.requestFocus();
+                                            }
                                         } else {
-                                            et_state.setError("Enter State");
-                                            et_state.requestFocus();
+                                            et_phone.setError("Enter valid phone number");
+                                            et_phone.requestFocus();
+
                                         }
                                     } else {
-                                        et_zip.setError("Enter zipcode");
-                                        et_zip.requestFocus();
+                                        et_repass.setError("Password not matches!");
+                                        et_repass.requestFocus();
                                     }
                                 } else {
-                                    et_phone.setError("Enter valid phone number");
-                                    et_phone.requestFocus();
+                                    et_pass.setError("between 4 and 10 alphanumeric characters");
+                                    et_pass.requestFocus();
 
                                 }
                             } else {
-                                et_repass.setError("Password not matches!");
-                                et_repass.requestFocus();
+                                et_email.setError("Enter a valid email address!");
+                                et_email.requestFocus();
                             }
                         } else {
-                            et_pass.setError("between 4 and 10 alphanumeric characters");
-                            et_pass.requestFocus();
-
+                            et_lname.setError("Enter a Last Name!");
+                            et_lname.requestFocus();
                         }
                     } else {
-                        et_email.setError("Enter a valid email address!");
-                        et_email.requestFocus();
+                        et_fname.setError("Enter a First Name!");
+                        et_fname.requestFocus();
                     }
                 } else {
                     aet_cont.setError("Enter a valid Country!");
                     aet_cont.requestFocus();
                 }
-            }
-        });
+
     }
 
 
@@ -198,7 +286,8 @@ public class RegisterActivity extends Activity {
             try {
 
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("name", "salman");
+                jsonObject.accumulate("firstname", str_fname);
+                jsonObject.accumulate("lastname", str_lname);
                 jsonObject.accumulate("email", str_email);
                 jsonObject.accumulate("phone", str_phone);
                 jsonObject.accumulate("password", str_pass);
@@ -234,7 +323,21 @@ public class RegisterActivity extends Activity {
 
                 if (status.equals("success")) {
 
-                    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+
+                    Dialog_new cdd = new Dialog_new(RegisterActivity.this, msg);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("register", "SUCCESS");
+                    editor.commit();
+
+
+
+
+                /*    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Message Alert")
                             .setContentText(msg)
                             .setConfirmText("OK")
@@ -243,14 +346,20 @@ public class RegisterActivity extends Activity {
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
 
                                     sweetAlertDialog.cancel();
-                                    Intent goD = new Intent(getApplicationContext(), LoginActivity.class);
+                                    Intent goD = new Intent(getApplicationContext(), ProfileInfo.class);
                                     startActivity(goD);
                                     finish();
 
 
+                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("register", "SUCCESS");
+                                    editor.commit();
+
+
                                 }
                             })
-                            .show();
+                            .show();*/
 
 
                    /* Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -264,12 +373,19 @@ public class RegisterActivity extends Activity {
                 } else if (status.equals("fail")) {
 
 
+                    Dialog_Msg cdd = new Dialog_Msg(RegisterActivity.this, msg);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
+
+
+
    /*                 if (msg.equals("Email ID is already registered")) {*/
-                        new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
-                                .setTitleText("Oops!")
-                                .setContentText(msg)
-                                .setConfirmText("OK")
-                                .show();
+                   /* new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText(msg)
+                            .setConfirmText("OK")
+                            .show();*/
                     //et_email.setText("");
                     if (msg.contains("Email")) {
                         et_email.requestFocus();
@@ -295,6 +411,11 @@ public class RegisterActivity extends Activity {
     class GetCountry extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
+            sweetAlertDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetAlertDialog.setTitleText("Loading");
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.show();
         }
 
         protected String doInBackground(String... params) {
@@ -320,6 +441,7 @@ public class RegisterActivity extends Activity {
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
+            sweetAlertDialog.dismiss();
 
             try {
                 JSONObject jo = new JSONObject(jsonStr);
@@ -342,8 +464,6 @@ public class RegisterActivity extends Activity {
 
                 }
 
-                new GetState().execute();
-
 
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
@@ -357,6 +477,12 @@ public class RegisterActivity extends Activity {
 
     class GetState extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
+
+            sweetAlertDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetAlertDialog.setTitleText("Loading");
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.show();
             super.onPreExecute();
         }
 
@@ -365,7 +491,7 @@ public class RegisterActivity extends Activity {
             String json = "", jsonStr = "";
 
             try {
-                JSONObject jsonobject = HttpUtils.getData2("http://oonbux.sqindia.net/region/state");
+                JSONObject jsonobject = HttpUtils.getData2("http://oonbux.sqindia.net/region/state", str_country);
 
                 Log.e("tag", "jj" + jsonobject);
 
@@ -383,6 +509,9 @@ public class RegisterActivity extends Activity {
         @Override
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
+            sweetAlertDialog.dismiss();
+            aet_state.requestFocus();
+
             super.onPostExecute(jsonStr);
             if (jsonStr == "") {
 
@@ -415,7 +544,6 @@ public class RegisterActivity extends Activity {
 
                     }
 
-                    new GetZip().execute();
 
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
@@ -429,6 +557,13 @@ public class RegisterActivity extends Activity {
 
     class GetZip extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
+
+            sweetAlertDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetAlertDialog.setTitleText("Loading");
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.show();
+
             super.onPreExecute();
         }
 
@@ -437,7 +572,7 @@ public class RegisterActivity extends Activity {
             String json = "", jsonStr = "";
 
             try {
-                JSONObject jsonobject = HttpUtils.getData3("http://oonbux.sqindia.net/region/zip");
+                JSONObject jsonobject = HttpUtils.getData3("http://oonbux.sqindia.net/region/zip", str_country, str_state);
 
                 Log.e("tag", "jj" + jsonobject);
 
@@ -455,6 +590,7 @@ public class RegisterActivity extends Activity {
         @Override
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
+            sweetAlertDialog.dismiss();
             super.onPostExecute(jsonStr);
             if (jsonStr == "") {
 

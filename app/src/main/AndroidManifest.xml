@@ -48,7 +48,9 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".DashBoardActivity" />
 
-        <activity android:name=".ProfileInfo" />
+        <activity
+            android:name=".ProfileInfo"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".PhysicalDeliveryAddress"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
@@ -63,6 +65,11 @@
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/img_Picker" />
+
+        <activity
+            android:name=".DeliveryAddress"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

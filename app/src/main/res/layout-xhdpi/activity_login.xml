@@ -15,7 +15,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="280dp">
+        android:layout_marginTop="290dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,47 +87,58 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-
-            <com.rey.material.widget.Button
-                android:id="@+id/button_login"
-                style="@style/Material.Drawable.Ripple.Wave.Light"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/login_reg_button"
-                android:drawableRight="@drawable/arrow_ico"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Login"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp" />
-
-            <LinearLayout
-                android:id="@+id/linear_login_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.rey.material.widget.TextView
-                    android:id="@+id/text_dont"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Don't have an Account?"
-                    android:textColor="#FFFFFF" />
-
-                <com.rey.material.widget.TextView
-                    android:id="@+id/text_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=" Create Account"
-                    android:textColor="#d97810" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_login"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/login_reg_button"
+            android:drawableRight="@drawable/arrow_ico"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Login"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:id="@+id/linear_login_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/text_dont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Don't have an Account?"
+                android:textColor="#FFFFFF" />
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/text_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=" Create Account"
+                android:textColor="#d97810" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

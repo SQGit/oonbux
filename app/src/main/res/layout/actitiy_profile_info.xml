@@ -1,55 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_login_reg"
-    android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    android:background="@drawable/bg_profile"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#070b23">
+
+        <com.rey.material.widget.LinearLayout
+            android:id="@+id/layout_back"
+            style="@style/Material.Drawable.Ripple.Touch"
+            android:layout_width="70dp"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/back_ico" />
+        </com.rey.material.widget.LinearLayout>
+
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/tv_hd_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Profile Info"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_edit"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ll"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="@color/text_color"
+            android:drawableLeft="@drawable/edit_ico"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:text="Edit"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/ll1"
+        android:gravity="center">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/imageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_margin="15dp"
+                android:padding="10dp"
+                app:siBorderColor="@color/colorAccent"
+                app:siBorderWidth="3dp" />
+
+
+            <ImageView
+                android:id="@+id/img_change"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/cam_plus_ico" />
+
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
 
     <ScrollView
+        android:id="@+id/scrview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/bottom"
-        android:layout_marginTop="270dp"
-        android:paddingTop="20dp">
+        android:layout_below="@+id/ll">
 
         <LinearLayout
+            android:id="@+id/ll2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:orientation="vertical">
-
-            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
-                android:id="@+id/edittext_country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/country_ico"
-                android:hint="Country"
-                android:imeOptions="actionNext"
-                android:inputType="textPersonName"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp"
-                android:textSize="20sp"
-                app:met_accentTypeface="fonts/prox.otf"
-                app:met_baseColor="@color/text_divider_light"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
-                app:met_textColor="@color/text_color"
-                app:met_textColorHint="@color/text_color_hint"
-                app:met_underlineColor="@color/text_divider" />
 
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edittext_fname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:drawableRight="@drawable/lft_pro_ico"
-                android:hint="First Name"
+                android:enabled="false"
+                android:hint="Firstname"
                 android:inputType="textPersonName"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
@@ -62,13 +137,15 @@
                 app:met_textColor="@color/text_color"
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
+
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edittext_lname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/lft_pro_ico"
-                android:hint="Last Name"
+                android:enabled="false"
+                android:hint="Lastname"
                 android:inputType="textPersonName"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
@@ -81,15 +158,16 @@
                 app:met_textColor="@color/text_color"
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
-
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edittext_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/email_ico"
+                android:enabled="false"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
+                android:maxLength="10"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
                 android:textSize="20sp"
@@ -102,53 +180,15 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/edittext_pass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/pass_ico"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp"
-                android:textSize="20sp"
-                app:met_accentTypeface="fonts/prox.otf"
-                app:met_baseColor="@color/text_divider_light"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
-                app:met_textColor="@color/text_color"
-                app:met_textColorHint="@color/text_color_hint"
-                app:met_underlineColor="@color/text_divider" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/edittext_repass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/pass_ico"
-                android:hint="Retype Password"
-                android:inputType="textPassword"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp"
-                android:textSize="20sp"
-                app:met_accentTypeface="fonts/prox.otf"
-                app:met_baseColor="@color/text_divider_light"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
-                app:met_textColor="@color/text_color"
-                app:met_textColorHint="@color/text_color_hint"
-                app:met_underlineColor="@color/text_divider" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edittext_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/phone_ico"
-                android:hint="Phone No"
-                android:imeOptions="actionNext"
+                android:drawableRight="@drawable/mobile_ico"
+                android:enabled="false"
+                android:hint="Phone"
                 android:inputType="phone"
-                android:maxLength="10"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
                 android:textSize="20sp"
@@ -162,16 +202,34 @@
                 app:met_underlineColor="@color/text_divider" />
 
 
-            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edittext_zip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/zip_ico"
+                android:enabled="false"
+                android:hint="Zip"
+                android:inputType="phone"
+                android:paddingLeft="5dp"
+                android:paddingRight="10dp"
+                android:textSize="20sp"
+                app:met_accentTypeface="fonts/prox.otf"
+                app:met_baseColor="@color/text_divider_light"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelTextColor="@color/hint_floating"
+                app:met_primaryColor="@color/text_divider_light"
+                app:met_textColor="@color/text_color"
+                app:met_textColorHint="@color/text_color_hint"
+                app:met_underlineColor="@color/text_divider" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edittext_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/state_ico"
+                android:enabled="false"
                 android:hint="State"
-
-                android:imeOptions="actionNext"
                 android:inputType="textPersonName"
-                android:maxLength="10"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
                 android:textSize="20sp"
@@ -184,91 +242,33 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-
-            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
-                android:id="@+id/edittext_zipcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/zip_ico"
-                android:hint="Zipcode"
-                android:imeOptions="actionDone"
-                android:inputType="phone"
-                android:maxLength="6"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp"
-                android:textSize="20sp"
-                app:met_accentTypeface="fonts/prox.otf"
-                app:met_baseColor="@color/text_divider_light"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
-                app:met_textColor="@color/text_color"
-                app:met_textColorHint="@color/text_color_hint"
-                app:met_underlineColor="@color/text_divider" />
 
         </LinearLayout>
     </ScrollView>
 
-
     <LinearLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:layout_marginBottom="10dp"
+        android:gravity="center">
 
         <com.rey.material.widget.Button
             android:id="@+id/button_submit"
             style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/login_reg_button"
-            android:drawableRight="@drawable/arrow_ico"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="Submit"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp" />
-
-        <LinearLayout
-            android:id="@+id/linear_login_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.rey.material.widget.TextView
-                android:id="@+id/text_dont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Already have an Account?"
-                android:textColor="#FFFFFF" />
-
-            <com.rey.material.widget.TextView
-                android:id="@+id/text_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text=" Login"
-                android:textColor="#d97810" />
-        </LinearLayout>
-
-        <com.rey.material.widget.TextView
-            android:id="@+id/terms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:background="@drawable/login_reg_button"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/arrow_ico"
             android:gravity="center"
-            android:text="@string/terms"
-            android:textColor="#e0e0e0"
-            android:textSize="10sp" />
-
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Next"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </RelativeLayout>

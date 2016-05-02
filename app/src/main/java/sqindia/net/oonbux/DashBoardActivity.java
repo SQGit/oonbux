@@ -86,8 +86,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
         tv_dash_hd_txt = (com.rey.material.widget.TextView) findViewById(R.id.tv_hd_txt);
 
-        tv_nav_hd_ship_txt = (com.rey.material.widget.TextView) findViewById(R.id.htxt1);
-        tv_nav_hd_ship_id = (com.rey.material.widget.TextView) findViewById(R.id.htxt2);
+        tv_nav_hd_ship_txt = (com.rey.material.widget.TextView) findViewById(R.id.textview_id_txt);
+        tv_nav_hd_ship_id = (com.rey.material.widget.TextView) findViewById(R.id.textview_id);
         tv_nav_cont_loc = (com.rey.material.widget.TextView) findViewById(R.id.txt1);
         tv_nav_cont_address = (com.rey.material.widget.TextView) findViewById(R.id.txt2);
         tv_nav_cont_phone = (com.rey.material.widget.TextView) findViewById(R.id.txt3);

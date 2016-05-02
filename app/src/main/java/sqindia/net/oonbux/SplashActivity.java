@@ -14,7 +14,7 @@ import com.rey.material.widget.Button;
 
 public class SplashActivity extends AppCompatActivity {
     Button btn_submit;
-    String get_sts;
+    String get_login_sts, get_register_sts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,11 @@ public class SplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
-        get_sts = sharedPreferences.getString("login", "");
-        Log.d("tag", "status" + get_sts);
+        get_login_sts = sharedPreferences.getString("login", "");
+        get_register_sts = sharedPreferences.getString("register", "");
+
+        Log.d("tag", "login_status" + get_login_sts);
+        Log.d("tag", "register_status" + get_register_sts);
 
         btn_submit = (Button) findViewById(R.id.button_submit);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
@@ -34,16 +37,23 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                if ((get_sts == "")) {
-                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                if ((get_register_sts.equals(""))) {
+                    Intent login_intent = new Intent(getApplicationContext(), RegisterActivity.class);
                     startActivity(login_intent);
                     finish();
                 } else {
 
-                    Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
-                    startActivity(login_intent);
-                    finish();
+                    if ((get_login_sts.equals(""))) {
+                        Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(login_intent);
+                        finish();
+                    } else {
+
+                        Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+                        startActivity(login_intent);
+                        finish();
+
+                    }
 
                 }
 

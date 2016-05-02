@@ -33,9 +33,9 @@ public class PhysicalDeliveryAddress extends Activity {
         btn_sav_loc = (Button) findViewById(R.id.button_save_lc);
         btn_sav_int = (Button) findViewById(R.id.button_save_ic);
 
-        et_lc_str = (MaterialEditText) findViewById(R.id.et_lc_str);
-        et_lc_apr = (MaterialEditText) findViewById(R.id.et_lc_apr);
-        et_lc_zip = (MaterialEditText) findViewById(R.id.et_lc_zip);
+        et_lc_str = (MaterialEditText) findViewById(R.id.edittext_loc_address1);
+        et_lc_apr = (MaterialEditText) findViewById(R.id.edittext_loc_address2);
+        et_lc_zip = (MaterialEditText) findViewById(R.id.edittext_loc_city);
         et_lc_not = (MaterialEditText) findViewById(R.id.et_lc_note);
 
         et_int_str = (MaterialEditText) findViewById(R.id.et_int_str);

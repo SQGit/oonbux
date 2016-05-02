@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -28,21 +30,24 @@ public class LoginActivity extends Activity {
     TextView tv_donthav, tv_register;
     LinearLayout ll_register;
     TelephonyManager tmanager;
-    String str_email, str_phone, str_pass, str_deviceid;
+    String str_email, str_pass, str_deviceid, get_profile_sts;
     SweetAlertDialog sweetAlertDialog;
-    MaterialEditText et_email, et_phone, et_pass;
+    MaterialEditText et_email, et_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        get_profile_sts = sharedPreferences.getString("login", "");
+
         btn_login = (Button) findViewById(R.id.button_login);
         ll_register = (LinearLayout) findViewById(R.id.linear_login_text);
         tv_donthav = (TextView) findViewById(R.id.text_dont);
         tv_register = (TextView) findViewById(R.id.text_login);
         et_email = (MaterialEditText) findViewById(R.id.edittext_email);
-        //et_phone = (MaterialEditText) findViewById(R.id.edittext_phone);
         et_pass = (MaterialEditText) findViewById(R.id.edittext_pass);
 
 
@@ -52,7 +57,6 @@ public class LoginActivity extends Activity {
         tv_donthav.setTypeface(tf);
         tv_register.setTypeface(tf);
         et_email.setTypeface(tf);
-//        et_phone.setTypeface(tf);
         et_pass.setTypeface(tf);
 
         tmanager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
@@ -73,66 +77,59 @@ public class LoginActivity extends Activity {
                                          public void onClick(View v) {
 
 
-                                             Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
-                                             startActivity(login_intent);
+                                             validate_datas();
 
 
-                                /*
-                                             str_email = et_email.getText().toString();
-                                             str_phone = et_phone.getText().toString();
-                                             str_pass = et_pass.getText().toString();
-
-                                             if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
-                                                 if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
-                                                     if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
-
-
-                                                      if(!Config.isNetworkAvailable(LoginActivity.this)){
-
-            new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Oops!")
-                    .setContentText("No network Available!")
-                    .setConfirmText("OK")
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-
-                            sweetAlertDialog.setCancelable(false);
-
-                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-                        }
-                    })
-
-                    .show();
-
-
-        }
-        else {
-            //new LoginTask().execute();
-        }
-
-
-
-
-
-
-                                                     } else {
-                                                         et_pass.setError("between 4 and 10 alphanumeric characters");
-                                                         et_pass.requestFocus();
-                                                     }
-                                                 } else {
-                                                     et_phone.setError("Enter valid phone number");
-                                                     et_phone.requestFocus();
-                                                 }
-                                             } else {
-                                                 et_email.setError("Enter a valid email address!");
-                                                 et_email.requestFocus();
-
-                                             }*/
                                          }
                                      }
 
         );
+    }
+
+
+    public void validate_datas() {
+
+
+        str_email = et_email.getText().toString();
+        str_pass = et_pass.getText().toString();
+
+        if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
+            if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
+
+
+                if (!Config.isNetworkAvailable(LoginActivity.this)) {
+
+                    new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("No network Available!")
+                            .setConfirmText("OK")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                    sweetAlertDialog.setCancelable(false);
+
+                                    startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                                }
+                            })
+
+                            .show();
+
+
+                } else {
+                    new LoginTask().execute();
+                }
+            } else {
+                et_pass.setError("between 4 and 10 alphanumeric characters");
+                et_pass.requestFocus();
+            }
+        } else {
+            et_email.setError("Enter a valid email address!");
+            et_email.requestFocus();
+
+        }
+
+
     }
 
 
@@ -157,9 +154,8 @@ public class LoginActivity extends Activity {
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("email", str_email);
-                jsonObject.accumulate("phone", str_phone);
                 jsonObject.accumulate("password", str_pass);
-                jsonObject.accumulate("device_id", str_deviceid);
+                jsonObject.accumulate("device_gcm_id", str_deviceid);
                 // 4. convert JSONObject to JSON to String
                 json = jsonObject.toString();
                 return jsonStr = HttpUtils.makeRequest(Config.REG_URL + "login", json);
@@ -223,30 +219,54 @@ public class LoginActivity extends Activity {
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
 
                                     sweetAlertDialog.cancel();
-                                    Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
-                                    startActivity(login_intent);
-                                    finish();
+
+                                    if ((get_profile_sts.equals(""))) {
+                                        Intent login_intent = new Intent(getApplicationContext(), ProfileInfo.class);
+                                        startActivity(login_intent);
+                                        finish();
+                                    } else {
+
+                                        Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+                                        startActivity(login_intent);
+                                        finish();
+
+                                    }
+
                                 }
                             })
                             .show();
 
                 } else if (status.equals("fail")) {
                     Log.d("tag", "<-----msg----->" + msg);
+
+
                     if (msg.equals("Invalid login Credentials provided")) {
-                        new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
+
+
+                        Dialog_Msg cdd = new Dialog_Msg(LoginActivity.this, msg);
+                        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        cdd.show();
+
+
+
+                      /*  new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
                                 .setTitleText("Oops!")
                                 .setContentText("Invalid login Credentials provided")
                                 .setConfirmText("OK")
-                                .show();
+                                .show();*/
                         et_pass.setText("");
                         et_pass.requestFocus();
                         et_pass.setError("");
                     } else if (msg.equals("Account not activated, Activation Email sent to you.")) {
-                        new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
+
+                        Dialog_Msg cdd = new Dialog_Msg(LoginActivity.this, msg);
+                        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        cdd.show();
+                   /*     new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
                                 .setTitleText("Oops!")
                                 .setContentText("Account Not Activated! Please check your mail")
                                 .setConfirmText("OK")
-                                .show();
+                                .show();*/
                     }
 
                 }

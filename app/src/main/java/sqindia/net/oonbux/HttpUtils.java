@@ -111,7 +111,7 @@ public class HttpUtils {
     }
 
 
-    public static JSONObject getData2(String url) {
+    public static JSONObject getData2(String url, String country) {
         InputStream is = null;
         String json, result = "";
         JSONObject jArray = null;
@@ -120,7 +120,7 @@ public class HttpUtils {
         try {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("country", "us");
+            jsonObject.accumulate("country", country);
             json = jsonObject.toString();
 
 
@@ -163,7 +163,7 @@ public class HttpUtils {
     }
 
 
-    public static JSONObject getData3(String url) {
+    public static JSONObject getData3(String url, String country, String state) {
         InputStream is = null;
         String json, result = "";
         JSONObject jArray = null;
@@ -171,9 +171,10 @@ public class HttpUtils {
         // Download JSON data from URL
         try {
 
+
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("country", "us");
-            jsonObject.accumulate("state", "pr");
+            jsonObject.accumulate("country", country);
+            jsonObject.accumulate("state", state);
             json = jsonObject.toString();
 
 

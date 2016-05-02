@@ -6,16 +6,15 @@
     android:background="@drawable/bg_login_reg"
     android:orientation="vertical">
 
-    <!--   <ImageView
-           android:id="@+id/imgv"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:src="@drawable/imgig" />-->
+    <!--<ImageView
+        android:id="@+id/imgv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/header_img" />-->
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/imgv"
         android:layout_marginTop="290dp">
 
         <LinearLayout
@@ -47,25 +46,26 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-            <!--       <com.rengwuxian.materialedittext.MaterialEditText
-                       android:id="@+id/edittext_phone"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:drawableRight="@drawable/phone_ico"
-                       android:hint="Phone No"
-                       android:inputType="phone"
-                       android:maxLength="10"
-                       android:paddingLeft="5dp"
-                       android:paddingRight="10dp"
-                       android:textSize="20sp"
-                       app:met_accentTypeface="fonts/prox.otf"
-                       app:met_baseColor="@color/text_divider_light"
-                       app:met_floatingLabel="normal"
-                       app:met_floatingLabelTextColor="@color/hint_floating"
-                       app:met_primaryColor="@color/text_divider_light"
-                       app:met_textColor="@color/text_color"
-                       app:met_textColorHint="@color/text_color_hint"
-                       app:met_underlineColor="@color/text_divider" />-->
+            <!--          <com.rengwuxian.materialedittext.MaterialEditText
+                          android:id="@+id/edittext_phone"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:drawableRight="@drawable/phone_ico"
+                          android:hint="Phone No"
+                          android:inputType="phone"
+                          android:maxLength="10"
+                          android:paddingLeft="5dp"
+                          android:paddingRight="10dp"
+                          android:textSize="20sp"
+                          app:met_accentTypeface="fonts/prox.otf"
+                          app:met_baseColor="@color/text_divider_light"
+                          app:met_floatingLabel="normal"
+                          app:met_floatingLabelTextColor="@color/hint_floating"
+                          app:met_primaryColor="@color/text_divider_light"
+                          app:met_textColor="@color/text_color"
+                          app:met_textColorHint="@color/text_color_hint"
+                          app:met_underlineColor="@color/text_divider" />-->
+
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edittext_pass"
@@ -86,47 +86,59 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-
-            <com.rey.material.widget.Button
-                android:id="@+id/button_login"
-                style="@style/Material.Drawable.Ripple.Wave.Light"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/login_reg_button"
-                android:drawableRight="@drawable/arrow_ico"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Login"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp" />
-
-            <LinearLayout
-                android:id="@+id/linear_login_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.rey.material.widget.TextView
-                    android:id="@+id/text_dont"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Don't have an Account?"
-                    android:textColor="#FFFFFF" />
-
-                <com.rey.material.widget.TextView
-                    android:id="@+id/text_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=" Create Account"
-                    android:textColor="#d97810" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical">
+
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_login"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_reg_button"
+            android:drawableRight="@drawable/arrow_ico"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Login"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:id="@+id/linear_login_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/text_dont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Don't have an Account?"
+                android:textColor="#FFFFFF" />
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/text_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=" Create Account"
+                android:textColor="#d97810" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -109,7 +109,7 @@
                         android:orientation="vertical">
 
                         <com.rengwuxian.materialedittext.MaterialEditText
-                            android:id="@+id/et_lc_str"
+                            android:id="@+id/edittext_loc_address1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -128,7 +128,7 @@
                             app:met_underlineColor="@color/text_divider" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
-                            android:id="@+id/et_lc_apr"
+                            android:id="@+id/edittext_loc_address2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -148,7 +148,7 @@
                             app:met_underlineColor="@color/text_divider" />
 
                         <com.rengwuxian.materialedittext.MaterialEditText
-                            android:id="@+id/et_lc_zip"
+                            android:id="@+id/edittext_loc_city"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 

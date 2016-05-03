@@ -12,7 +12,9 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -61,6 +63,19 @@ public class LoginActivity extends Activity {
 
         tmanager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         str_deviceid = "EMU035Id45";//tmanager.getDeviceId();
+
+
+        et_pass.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+
+                    validate_datas();
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
         ll_register.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +132,22 @@ public class LoginActivity extends Activity {
 
 
                 } else {
-                    new LoginTask().execute();
+
+                    //new LoginTask().execute();
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("login", "success");
+                    editor.commit();
+
+
+                    Intent login_intent = new Intent(getApplicationContext(), ProfileInfo.class);
+                    startActivity(login_intent);
+                    finish();
+
+
+
                 }
             } else {
                 et_pass.setError("between 4 and 10 alphanumeric characters");
@@ -199,14 +229,14 @@ public class LoginActivity extends Activity {
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("login", "12345");
-                    editor.putString("sessionid", gsessionid);
+              /*      editor.putString("sessionid", gsessionid);
                     editor.putString("oonbuxid", goonbuxid);
                     editor.putString("name", gname);
                     editor.putString("mail", gmail);
                     editor.putString("phone", gphone);
                     editor.putString("state", gstate);
                     editor.putString("zip", gzip);
-                    editor.putString("country", gcontry);
+                    editor.putString("country", gcontry);*/
                     editor.commit();
 
 

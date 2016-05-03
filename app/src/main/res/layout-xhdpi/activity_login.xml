@@ -74,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/pass_ico"
                 android:hint="Password"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"

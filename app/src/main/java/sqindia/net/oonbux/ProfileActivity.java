@@ -29,6 +29,8 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     com.rey.material.widget.TextView tv_header;
     Button btn_logout, btn_finish;
 
+    String get_profile_sts, str_oonbux_id, str_state, str_zip, str_phone, str_fname, str_lname;
+
     com.rey.material.widget.LinearLayout lt_back;
 
     // EditText et_fname,et_lname;
@@ -42,6 +44,26 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+
+        get_profile_sts = sharedPreferences.getString("profile", "");
+
+        str_fname = sharedPreferences.getString("fname", "");
+        str_lname = sharedPreferences.getString("lname", "");
+        str_phone = sharedPreferences.getString("phone", "");
+        str_zip = sharedPreferences.getString("zip", "");
+        str_state = sharedPreferences.getString("state", "");
+        str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
+
+
+
+
+
+
+
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -68,6 +90,13 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 //        bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
 
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
+
+
+        tv_oonbux_id.setText(str_oonbux_id);
+        tv_location.setText(str_state + "\t" + str_zip);
+        tv_phone.setText(str_phone);
+        tv_fname.setText(str_fname);
+        tv_lname.setText(str_lname);
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");

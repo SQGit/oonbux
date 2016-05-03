@@ -182,10 +182,10 @@ public class RegisterActivity extends Activity {
             public void onClick(View v) {
 
 
-          /*    Intent goD = new Intent(getApplicationContext(), ProfileInfo.class);
+            /* Intent goD = new Intent(getApplicationContext(), ProfileInfo.class);
                 startActivity(goD);
-                finish();*/
-
+                finish();
+*/
              /*   String txt ="Please verify your registerd mail id for oonbux id";
 
                 Dialog_new cdd = new Dialog_new(RegisterActivity.this,txt);
@@ -222,7 +222,34 @@ public class RegisterActivity extends Activity {
                                         if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
                                             if (!str_state.isEmpty()) {
                                                 if (!(str_zip.isEmpty() || str_zip.length() < 3)) {
-                                                    new RegisterTask().execute();
+
+                                                    //new RegisterTask().execute();
+
+                                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                    editor.putString("register", "success");
+
+
+                                                    editor.putString("oonbuxid", "535SM3");
+                                                    editor.putString("fname", str_fname);
+                                                    editor.putString("lname", str_lname);
+                                                    editor.putString("mail", str_email);
+                                                    editor.putString("phone", str_phone);
+                                                    editor.putString("state", str_state);
+                                                    editor.putString("zip", str_zip);
+                                                    editor.putString("country", str_country);
+
+
+                                                    editor.commit();
+
+
+                                                    Dialog_new cdd = new Dialog_new(RegisterActivity.this, "Check your mail for oonbux activation");
+                                                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                                    cdd.show();
+
+
+
+
                                                 } else {
                                                     aet_zip.setError("Enter zipcode");
                                                     aet_zip.requestFocus();

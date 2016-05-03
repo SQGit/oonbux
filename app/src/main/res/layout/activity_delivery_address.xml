@@ -84,7 +84,7 @@
 
 
                     <com.rey.material.widget.TextView
-                        android:id="@+id/tv_shd_txt1"
+                        android:id="@+id/tv_shd_txt_loc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -96,7 +96,7 @@
 
 
                     <com.rey.material.widget.Button
-                        android:id="@+id/button_update_loc3"
+                        android:id="@+id/button_add_loc"
                         style="@style/Material.Drawable.Ripple.Wave.Light"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -129,10 +129,11 @@
                         android:gravity="top">
 
                         <com.rey.material.widget.CheckBox
-                            android:id="@+id/cb_addto"
+                            android:id="@+id/checkbox_local"
                             style="@style/checkbox1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp" />
 
                     </LinearLayout>
 
@@ -231,7 +232,7 @@
                                     android:layout_gravity="center_vertical|center_horizontal" />
 
                                 <com.rey.material.widget.Button
-                                    android:id="@+id/button_update_loc"
+                                    android:id="@+id/button_save_loc"
                                     style="@style/Material.Drawable.Ripple.Wave.Light"
                                     android:layout_width="wrap_content"
                                     android:layout_height="30dp"
@@ -318,11 +319,11 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="10dp"
                             android:background="@drawable/border">
 
                             <com.rengwuxian.materialedittext.MaterialEditText
-                                android:id="@+id/et_lc_note"
+                                android:id="@+id/edittext_loc_note"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:gravity="top|left"
@@ -330,7 +331,6 @@
                                 android:imeOptions="actionDone"
                                 android:inputType="textMultiLine"
                                 android:padding="1dp"
-
                                 android:paddingLeft="5dp"
                                 android:paddingRight="10dp"
                                 android:textSize="16sp"
@@ -365,7 +365,7 @@
 
 
                     <com.rey.material.widget.TextView
-                        android:id="@+id/tv_shd_txt2"
+                        android:id="@+id/tv_shd_txt_int"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -377,7 +377,7 @@
 
 
                     <com.rey.material.widget.Button
-                        android:id="@+id/button_update_ffloc3"
+                        android:id="@+id/button_add_int"
                         style="@style/Material.Drawable.Ripple.Wave.Light"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -410,10 +410,11 @@
                         android:gravity="top">
 
                         <com.rey.material.widget.CheckBox
-                            android:id="@+id/cb_adddto"
+                            android:id="@+id/checkbox_int"
                             style="@style/checkbox1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp" />
 
                     </LinearLayout>
 
@@ -512,7 +513,7 @@
                                     android:layout_gravity="center_vertical|center_horizontal" />
 
                                 <com.rey.material.widget.Button
-                                    android:id="@+id/button_update_int"
+                                    android:id="@+id/button_save_int"
                                     style="@style/Material.Drawable.Ripple.Wave.Light"
                                     android:layout_width="wrap_content"
                                     android:layout_height="30dp"
@@ -600,16 +601,15 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="10dp"
                             android:background="@drawable/border">
 
                             <com.rengwuxian.materialedittext.MaterialEditText
-                                android:id="@+id/et_lc_notef"
+                                android:id="@+id/edittext_int_note"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:gravity="top|left"
                                 android:hint="Delivery Note"
-
                                 android:imeOptions="actionDone"
                                 android:inputType="textMultiLine"
                                 android:padding="5dp"
@@ -642,7 +642,7 @@
     <LinearLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#000000"
         android:gravity="center">
@@ -650,18 +650,19 @@
         <com.rey.material.widget.Button
             android:id="@+id/button_next"
             style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/login_reg_button"
             android:drawableRight="@drawable/arrow_ico"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:text="Next"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textSize="22sp" />
     </LinearLayout>
 
 

@@ -12,9 +12,8 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -65,7 +64,7 @@ public class LoginActivity extends Activity {
         str_deviceid = "EMU035Id45";//tmanager.getDeviceId();
 
 
-        et_pass.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+       /* et_pass.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -75,7 +74,7 @@ public class LoginActivity extends Activity {
                 }
                 return false;
             }
-        });
+        });*/
 
 
         ll_register.setOnClickListener(new View.OnClickListener() {
@@ -133,10 +132,10 @@ public class LoginActivity extends Activity {
 
                 } else {
 
-                    //new LoginTask().execute();
+                    new LoginTask().execute();
 
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                   /* SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("login", "success");
                     editor.commit();
@@ -144,8 +143,7 @@ public class LoginActivity extends Activity {
 
                     Intent login_intent = new Intent(getApplicationContext(), ProfileInfo.class);
                     startActivity(login_intent);
-                    finish();
-
+                    finish();*/
 
 
                 }
@@ -216,31 +214,36 @@ public class LoginActivity extends Activity {
                 if (status.equals("success")) {
                     Log.d("tag", "<-----msg----->" + msg);
 
+
                     String gsessionid = jo.getString("session_id");
                     String goonbuxid = jo.getString("oonbux_id");
-                    String gname = jo.getString("name");
+                    String gfname = jo.getString("firstname");
+                    String glname = jo.getString("lastname");
                     String gmail = jo.getString("email");
-                    String gphone = jo.getString("phone");
-                    String gstate = jo.getString("state");
-                    String gcontry = jo.getString("country");
-                    String gzip = jo.getString("zip");
+                    String gphone = jo.getString("loc_phone");
+                    String gstate = jo.getString("loc_addr_state");
+                    String gcontry = jo.getString("loc_addr_country");
+                    String gzip = jo.getString("loc_addr_zip");
 
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("login", "12345");
-              /*      editor.putString("sessionid", gsessionid);
-                    editor.putString("oonbuxid", goonbuxid);
-                    editor.putString("name", gname);
-                    editor.putString("mail", gmail);
-                    editor.putString("phone", gphone);
-                    editor.putString("state", gstate);
-                    editor.putString("zip", gzip);
-                    editor.putString("country", gcontry);*/
-                    editor.commit();
+/*
+                    Dialog_new cdd = new Dialog_new(LoginActivity.this, msg,1);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();*/
+
+                    Intent login_intent = new Intent(getApplicationContext(), ProfileInfo.class);
+                    startActivity(login_intent);
+                    finish();
 
 
-                    new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+
+
+
+
+
+
+
+                  /*  new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Message Alert")
                             .setContentText("Login Successful")
                             .setConfirmText("OK")
@@ -264,7 +267,25 @@ public class LoginActivity extends Activity {
 
                                 }
                             })
-                            .show();
+                            .show();*/
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("login", "success");
+
+                    editor.putString("sessionid", gsessionid);
+                    editor.putString("oonbuxid", goonbuxid);
+                    editor.putString("fname", gfname);
+                    editor.putString("lname", glname);
+                    editor.putString("mail", gmail);
+                    editor.putString("phone", gphone);
+                    editor.putString("state", gstate);
+                    editor.putString("zip", gzip);
+                    editor.putString("country", gcontry);
+
+                    editor.commit();
+
 
                 } else if (status.equals("fail")) {
                     Log.d("tag", "<-----msg----->" + msg);
@@ -277,8 +298,6 @@ public class LoginActivity extends Activity {
                         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         cdd.show();
 
-
-
                       /*  new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
                                 .setTitleText("Oops!")
                                 .setContentText("Invalid login Credentials provided")
@@ -286,10 +305,11 @@ public class LoginActivity extends Activity {
                                 .show();*/
                         et_pass.setText("");
                         et_pass.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         et_pass.setError("");
-                    } else if (msg.equals("Account not activated, Activation Email sent to you.")) {
+                    } else if (msg.equals("SERVER ERROR: MESSAGE: Data is Null. This method or property cannot be called on Null values.")) {
 
-                        Dialog_Msg cdd = new Dialog_Msg(LoginActivity.this, msg);
+                        Dialog_Msg cdd = new Dialog_Msg(LoginActivity.this, "Activation Email is Sent to mail ,Check email for further details");
                         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         cdd.show();
                    /*     new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
@@ -297,7 +317,12 @@ public class LoginActivity extends Activity {
                                 .setContentText("Account Not Activated! Please check your mail")
                                 .setConfirmText("OK")
                                 .show();*/
+                    } else {
+                        Dialog_Msg cdd = new Dialog_Msg(LoginActivity.this, msg);
+                        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        cdd.show();
                     }
+
 
                 }
 

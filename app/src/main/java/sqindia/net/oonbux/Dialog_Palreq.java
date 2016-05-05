@@ -2,8 +2,11 @@ package sqindia.net.oonbux;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.rey.material.widget.TextView;
 
@@ -14,6 +17,7 @@ public class Dialog_Palreq extends Dialog {
 
     public Activity c;
     TextView tv_hd, tv_cont, tv_foot;
+    ImageView imgok;
 
     public Dialog_Palreq(Activity activity) {
         super(activity);
@@ -31,13 +35,28 @@ public class Dialog_Palreq extends Dialog {
         tv_hd = (TextView) findViewById(R.id.tv_hd);
         tv_cont = (TextView) findViewById(R.id.tv_cont);
         tv_foot = (TextView) findViewById(R.id.tv_foot);
+        imgok = (ImageView) findViewById(R.id.img_ok);
 
         tv_hd.setTypeface(tf);
         tv_cont.setTypeface(tf);
         tv_foot.setTypeface(tf);
 
+        imgok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(c, DashBoardActivity.class);
+                c.startActivity(inte);
+                dismiss();
+                c.finish();
+            }
+        });
+
 
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dismiss();
+    }
 }

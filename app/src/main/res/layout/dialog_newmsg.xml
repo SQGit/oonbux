@@ -15,12 +15,11 @@
         android:paddingTop="25dp">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imgview"
             style="@style/Material.Drawable.Ripple.Wave.Light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/msg_ico" />
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,7 +61,7 @@
             android:paddingRight="35dp"
             android:text="Close"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
     </LinearLayout>
 
 

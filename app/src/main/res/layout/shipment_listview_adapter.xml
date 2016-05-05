@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,8 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/listview_drawable"
         android:layout_marginTop="5dp"
+        android:background="@drawable/listview_drawable"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -24,11 +25,16 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/photo_ico" />
+
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/imgview"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:background="@drawable/photo_ico"
+                    app:siBorderColor="@color/colorAccent"
+                    app:siBorderWidth="0.5dp" />
+
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_per"
@@ -37,9 +43,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="$3.99 per pickup"
+                    android:text="$3.99 /pickup"
                     android:textColor="#FFFFFF"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
 
             </LinearLayout>
@@ -61,34 +67,37 @@
                     android:gravity="left"
                     android:text="Select shipment size"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
 
                 <com.rey.material.widget.CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
                     android:id="@+id/cb_large"
-                    android:gravity="center_vertical"
-                    android:text="Large"
-                    style="@style/checkbox"  />
-
-                <com.rey.material.widget.CheckBox
+                    style="@style/checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Large" />
+
+                <com.rey.material.widget.CheckBox
                     android:id="@+id/cb_medium"
-                    android:gravity="center_vertical"
-                    android:text="Medium"
-                    style="@style/checkbox"  />
-
-                <com.rey.material.widget.CheckBox
+                    style="@style/checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:id="@+id/cb_small"
+                    android:drawablePadding="10dp"
                     android:gravity="center_vertical"
-                    android:text="Small"
-                    style="@style/checkbox"  />
+                    android:text="Medium" />
+
+                <com.rey.material.widget.CheckBox
+                    android:id="@+id/cb_small"
+                    style="@style/checkbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Small" />
 
 
             </LinearLayout>
@@ -98,40 +107,45 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="2dp"
+                android:gravity="center_horizontal|center|center_vertical"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="5dp"
+                    android:layout_margin="0dp"
                     android:background="@drawable/lft_logo_ico" />
 
-            <!--    <com.rey.material.widget.TextView
-                    android:id="@+id/tv_shd_txgt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/login_reg_button"
-                    android:gravity="center"
-                    android:padding="2dp"
-                    android:text="Add Oonbux \nId"
-                    android:textColor="#FFFFFF"
-                    android:textSize="10sp" />-->
+                <!--    <com.rey.material.widget.TextView
+                        android:id="@+id/tv_shd_txgt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/login_reg_button"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="Add Oonbux \nId"
+                        android:textColor="#FFFFFF"
+                        android:textSize="10sp" />-->
 
-                <com.rey.material.widget.Button
-                    android:id="@+id/button_addid"
-                    style="@style/Material.Drawable.Ripple.Wave.Light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/text_color"
-                    android:text="Add Oonbux \nId"
-                    android:textColor="#FFFFFF"
-                    android:textSize="10sp" />
-
+                <!--       <com.rey.material.widget.Button
+                           android:id="@+id/button_addid"
+                           style="@style/Material.Drawable.Ripple.Wave.Light"
+                           android:layout_width="wrap_content"
+                           android:layout_height="30dp"
+                           android:layout_gravity="center"
+                           android:drawablePadding="5dp"
+                           android:layout_marginTop="10dp"
+                           android:paddingLeft="5dp"
+                           android:paddingRight="5dp"
+                           android:drawableLeft="@drawable/add_ico"
+                           android:background="@color/text_color"
+                           android:text="Oonbux Id"
+                           android:textColor="#FFFFFF"
+                           android:textSize="10sp" />
+       -->
 
             </LinearLayout>
 
@@ -139,14 +153,13 @@
         </LinearLayout>
 
         <com.rey.material.widget.CheckBox
+            android:id="@+id/cb_addto"
+            style="@style/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:id="@+id/cb_addto"
             android:gravity="center_vertical"
-            android:text="Add to Pickup"
-            style="@style/checkbox"  />
-
+            android:text="Add to Pickup" />
 
 
     </LinearLayout>

@@ -2,6 +2,7 @@ package sqindia.net.oonbux;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -18,12 +19,14 @@ public class Dialog_Msg extends Dialog {
     TextView tv_cont;
     String ss;
     Button btn_close;
+    Context context;
 
     public Dialog_Msg(Activity activity, String txt) {
         super(activity);
         this.c = activity;
         this.ss = txt;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,10 @@ public class Dialog_Msg extends Dialog {
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hide();
+                // hide();
+                //c.finish();
+                dismiss();
+
             }
         });
 

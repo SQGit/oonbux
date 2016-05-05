@@ -76,7 +76,7 @@
 
 
             <com.github.siyamed.shapeimageview.CircularImageView
-                android:id="@+id/imageView"
+                android:id="@+id/nav_header_propic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_vertical|center_horizontal"

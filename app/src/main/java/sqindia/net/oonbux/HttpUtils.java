@@ -38,6 +38,7 @@ public class HttpUtils {
             httpPost.setEntity(new StringEntity(json));
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
+            httpPost.setHeader("apikey", "1eo7u4tig9704k2humvdywwnb4hnl2xa1jbrh7go");
 
             HttpResponse httpResponse = new DefaultHttpClient().execute(httpPost);
 
@@ -77,6 +78,7 @@ public class HttpUtils {
 
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(url);
+            httppost.setHeader("apikey", "1eo7u4tig9704k2humvdywwnb4hnl2xa1jbrh7go");
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity entity = response.getEntity();
             is = entity.getContent();
@@ -128,6 +130,7 @@ public class HttpUtils {
             HttpPost httppost = new HttpPost(url);
             httppost.setHeader("Accept", "application/json");
             httppost.setHeader("Content-type", "application/json");
+            httppost.setHeader("apikey", "1eo7u4tig9704k2humvdywwnb4hnl2xa1jbrh7go");
             httppost.setEntity(new StringEntity(json));
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity entity = response.getEntity();
@@ -182,6 +185,7 @@ public class HttpUtils {
             HttpPost httppost = new HttpPost(url);
             httppost.setHeader("Accept", "application/json");
             httppost.setHeader("Content-type", "application/json");
+            httppost.setHeader("apikey", "1eo7u4tig9704k2humvdywwnb4hnl2xa1jbrh7go");
             httppost.setEntity(new StringEntity(json));
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity entity = response.getEntity();
@@ -215,6 +219,69 @@ public class HttpUtils {
 
         return jArray;
     }
+
+
+    public static String makeRequest2(String url, String json, String header) {
+        Log.v(TAG, "URL-->" + url);
+        Log.v(TAG, "input-->" + json);
+
+
+        try {
+            Log.v(TAG, "inside-->");
+
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setEntity(new StringEntity(json));
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+            httpPost.setHeader("session_id", header);
+
+            HttpResponse httpResponse = new DefaultHttpClient().execute(httpPost);
+
+
+            // receive response as inputStream
+            InputStream inputStream = httpResponse.getEntity().getContent();
+            // convert inputstream to string
+            if (inputStream != null) {
+                String result = convertInputStreamToString(inputStream);
+                Log.e(TAG, "output-->" + result);
+                return result;
+            } else {
+                Log.e(TAG, "output-->" + inputStream);
+
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public static String makeRequest1(String url, String json, String token) {

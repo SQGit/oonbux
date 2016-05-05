@@ -70,6 +70,8 @@
             android:name=".DeliveryAddress"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
+        <activity android:name=".AddLocation" />
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

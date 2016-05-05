@@ -57,34 +57,33 @@
     <style name="radio" parent="radiob">
         <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Body1</item>
         <item name="android:textColor">#ffffff</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="checkbox" parent="chkbox">
         <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Body1</item>
         <item name="android:textColor">#ffffff</item>
-        <item name="android:textSize">12sp</item>
-
+        <item name="android:textSize">18sp</item>
     </style>
+
 
 
     <style name="checkbox1">
         <item name="cbd_width">30dp</item>
         <item name="cbd_height">30dp</item>
-        <item name="cbd_boxSize">20dp</item>
+        <item name="cbd_boxSize">26dp</item>
         <item name="cbd_cornerRadius">1dp</item>
         <item name="cbd_strokeColor">@color/text_color_hint_light</item>
-        <item name="cbd_strokeSize">2dp</item>
+        <item name="cbd_strokeSize">3dp</item>
         <item name="cbd_tickColor">@color/text_color</item>
         <item name="cbd_animDuration">@android:integer/config_mediumAnimTime</item>
     </style>
 
 
     <style name="chkbox">
-        <item name="cbd_width">28dp</item>
-        <item name="cbd_height">28dp</item>
-        <item name="cbd_boxSize">14dp</item>
+        <item name="cbd_width">32dp</item>
+        <item name="cbd_height">32dp</item>
+        <item name="cbd_boxSize">25dp</item>
         <item name="cbd_cornerRadius">1dp</item>
         <item name="cbd_strokeColor">@color/text_color</item>
         <item name="cbd_strokeSize">1dp</item>
@@ -93,11 +92,11 @@
     </style>
 
     <style name="radiob">
-        <item name="rbd_width">36dp</item>
-        <item name="rbd_height">36dp</item>
+        <item name="rbd_width">32dp</item>
+        <item name="rbd_height">32dp</item>
         <item name="rbd_strokeSize">3dp</item>
         <item name="rbd_radius">10dp</item>
-        <item name="rbd_strokeColor">#007fa2</item>
+        <item name="rbd_strokeColor">@color/text_color</item>
         <item name="rbd_innerRadius">6dp</item>
         <item name="rbd_animDuration">@android:integer/config_mediumAnimTime</item>
     </style>

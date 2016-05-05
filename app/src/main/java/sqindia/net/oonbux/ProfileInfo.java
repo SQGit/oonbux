@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
@@ -25,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
@@ -35,7 +35,7 @@ public class ProfileInfo extends Activity {
 
     public final static int REQUEST_CODE = 1;
     ImageButton btn_back;
-    String get_profile_sts, str_fname, str_lname, str_email, str_phone, str_zip, str_state;
+    String get_profile_sts, str_fname, str_lname, str_email, str_phone, str_zip, str_state, str_photo;
     com.rey.material.widget.LinearLayout lt_back;
     LinearLayout bck_lt;
     Button btn_next, btn_edit;
@@ -45,6 +45,8 @@ public class ProfileInfo extends Activity {
     ImageView imgview, img_edit;
     Bitmap bitmap;
     Uri uri;
+    boolean img_success, img_success1;
+    String chekphoto;
 
     ArrayList<String> selectedPhotos = new ArrayList<>();
 
@@ -57,7 +59,6 @@ public class ProfileInfo extends Activity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
 
         get_profile_sts = sharedPreferences.getString("profile", "");
-
         str_fname = sharedPreferences.getString("fname", "");
         str_lname = sharedPreferences.getString("lname", "");
         str_email = sharedPreferences.getString("mail", "");
@@ -65,12 +66,10 @@ public class ProfileInfo extends Activity {
         str_zip = sharedPreferences.getString("zip", "");
         str_state = sharedPreferences.getString("state", "");
 
+
+        chekphoto = sharedPreferences.getString("photourl", "");
+
         Log.e("tag", "pfs" + get_profile_sts);
-
-
-
-
-
 
 
         photoAdapter = new PhotoAdapter(this, selectedPhotos);
@@ -99,8 +98,18 @@ public class ProfileInfo extends Activity {
 
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
 
-        imgview = (ImageView) findViewById(R.id.imageView);
+        imgview = (ImageView) findViewById(R.id.nav_header_propic);
         img_edit = (ImageView) findViewById(R.id.img_change);
+
+
+        if ((get_profile_sts.equals(""))) {
+            btn_next.setVisibility(View.VISIBLE);
+            lt_back.setVisibility(View.GONE);
+        } else {
+            btn_next.setVisibility(View.GONE);
+        }
+
+
 
 
        /* if ((get_profile_sts.equals(""))) {
@@ -132,6 +141,24 @@ public class ProfileInfo extends Activity {
         et_phone.setText(str_phone);
         et_zip.setText(str_zip);
         et_state.setText(str_state);
+
+
+        if (!(chekphoto.equals(""))) {
+
+
+            uri = Uri.fromFile(new File(chekphoto));
+
+            try {
+                bitmap = null;
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            imgview.setImageBitmap(bitmap);
+
+        }
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
@@ -168,13 +195,14 @@ public class ProfileInfo extends Activity {
         lt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if ((get_profile_sts.equals(""))) {
-                    Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
+
                 } else {
-                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
                     startActivity(inte);
                 }
-
 
 
             }
@@ -183,7 +211,33 @@ public class ProfileInfo extends Activity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validatedatas();
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+
+                img_success1 = sharedPreferences.getBoolean("img_add", false);
+
+
+                if (img_success1 || (!chekphoto.equals(""))) {
+                    validatedatas();
+                } else {
+                    //Toast.makeText(getApplicationContext(), "Add Profile Picture", Toast.LENGTH_LONG).show();
+
+                    new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Add Profile Picture!")
+                            .setConfirmText("OK")
+
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+
+                                    sDialog.dismiss();
+                                }
+                            })
+                            .show();
+
+
+                }
+
             }
         });
 
@@ -191,7 +245,15 @@ public class ProfileInfo extends Activity {
             @Override
             public void onClick(View v) {
 
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("profile", "");
+                editor.commit();
+
                 enable();
+
+                btn_next.setVisibility(View.VISIBLE);
+
 
             }
         });
@@ -219,21 +281,6 @@ public class ProfileInfo extends Activity {
                             if (!(str_zip.isEmpty() || str_zip.length() < 3)) {
 
 
-
-                              /*  if(selectedPhotos.get(0).isEmpty()){
-
-                                    Toast.makeText(getApplicationContext(),"Add Profile Picture",Toast.LENGTH_LONG).show();
-
-                                }
-                                else
-                                {
-                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putString("photo",selectedPhotos.get(0));
-                                    editor.commit();
-                                }*/
-
-
                                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("fname", str_fname);
@@ -242,6 +289,7 @@ public class ProfileInfo extends Activity {
                                 editor.putString("phone", str_phone);
                                 editor.putString("state", str_state);
                                 editor.putString("zip", str_zip);
+                                editor.putString("photourl", str_photo);
                                 //editor.putString("photo",selectedPhotos.get(0));
                                 editor.commit();
 
@@ -298,6 +346,7 @@ public class ProfileInfo extends Activity {
             }
             photoAdapter.notifyDataSetChanged();
 
+            str_photo = selectedPhotos.get(0);
             uri = Uri.fromFile(new File(selectedPhotos.get(0)));
 
             Log.d("tag", selectedPhotos.get(0));
@@ -307,13 +356,20 @@ public class ProfileInfo extends Activity {
             try {
                 bitmap = null;
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                // bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             // imgview.setImageURI(uri);
             imgview.setImageBitmap(bitmap);
+            img_success = true;
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("img_add", true);
+            editor.commit();
+
         }
     }
 
@@ -326,11 +382,17 @@ public class ProfileInfo extends Activity {
     public void enable() {
 
         et_fname.setEnabled(true);
+        et_fname.setTextColor(getResources().getColor(R.color.text_color));
         et_lname.setEnabled(true);
-        et_email.setEnabled(true);
+        et_lname.setTextColor(getResources().getColor(R.color.text_color));
+        et_email.setEnabled(false);
+        et_email.setTextColor(getResources().getColor(R.color.text_color));
         et_phone.setEnabled(true);
+        et_phone.setTextColor(getResources().getColor(R.color.text_color));
         et_zip.setEnabled(true);
+        et_zip.setTextColor(getResources().getColor(R.color.text_color));
         et_state.setEnabled(true);
+        et_state.setTextColor(getResources().getColor(R.color.text_color));
 
 
         img_edit.setEnabled(true);
@@ -344,13 +406,19 @@ public class ProfileInfo extends Activity {
 
 
         et_fname.setEnabled(false);
+        et_fname.setTextColor(getResources().getColor(R.color.hint_floating_dark));
         et_lname.setEnabled(false);
+        et_lname.setTextColor(getResources().getColor(R.color.hint_floating_dark));
         et_email.setEnabled(false);
+        et_email.setTextColor(getResources().getColor(R.color.hint_floating_dark));
         et_phone.setEnabled(false);
+        et_phone.setTextColor(getResources().getColor(R.color.hint_floating_dark));
         et_zip.setEnabled(false);
+        et_zip.setTextColor(getResources().getColor(R.color.hint_floating_dark));
         et_state.setEnabled(false);
+        et_state.setTextColor(getResources().getColor(R.color.hint_floating_dark));
 
-        img_edit.setEnabled(false);
+        // img_edit.setEnabled(false);
 
         btn_edit.setEnabled(true);
     }

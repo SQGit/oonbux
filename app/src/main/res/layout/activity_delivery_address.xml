@@ -133,7 +133,7 @@
                             style="@style/checkbox1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp" />
+                            android:layout_marginTop="20dp" />
 
                     </LinearLayout>
 
@@ -163,7 +163,7 @@
                                     android:id="@+id/edittext_loc_address1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="AddressLine 1"
+                                    android:hint="Address Line 1"
                                     android:inputType="textPersonName"
                                     android:paddingLeft="5dp"
                                     android:paddingRight="10dp"
@@ -182,7 +182,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
 
-                                    android:hint="AddressLine 2"
+                                    android:hint="Address Line 2"
                                     android:inputType="textPersonName"
                                     android:paddingLeft="5dp"
                                     android:paddingRight="10dp"
@@ -260,6 +260,7 @@
                                 android:layout_marginRight="10dp"
                                 android:layout_weight="1"
                                 android:hint="State"
+                                android:imeActionId="@+id/edittext_loc_zip"
                                 android:inputType="textPersonName"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="10dp"
@@ -280,6 +281,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
                                 android:hint="Zip"
+                                android:imeOptions="actionNext"
                                 android:inputType="number"
                                 android:maxLength="6"
                                 android:paddingLeft="5dp"
@@ -303,6 +305,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Phone"
                             android:inputType="number"
+                            android:maxLength="10"
                             android:paddingLeft="5dp"
                             android:paddingRight="10dp"
                             android:textSize="18sp"
@@ -333,6 +336,7 @@
                                 android:padding="1dp"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="10dp"
+                                android:singleLine="true"
                                 android:textSize="16sp"
                                 app:met_accentTypeface="fonts/prox.otf"
                                 app:met_baseColor="@color/text_divider_light"
@@ -414,7 +418,7 @@
                             style="@style/checkbox1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp" />
+                            android:layout_marginTop="20dp" />
 
                     </LinearLayout>
 
@@ -444,7 +448,7 @@
                                     android:id="@+id/edittext_int_address1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="AddressLine 1"
+                                    android:hint="Address Line 1"
                                     android:inputType="textPersonName"
                                     android:paddingLeft="5dp"
                                     android:paddingRight="10dp"
@@ -463,7 +467,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
 
-                                    android:hint="AddressLine 2"
+                                    android:hint="Address Line 2"
                                     android:inputType="textPersonName"
                                     android:paddingLeft="5dp"
                                     android:paddingRight="10dp"
@@ -541,6 +545,7 @@
                                 android:layout_marginRight="10dp"
                                 android:layout_weight="1"
                                 android:hint="State"
+                                android:imeOptions="actionNext"
                                 android:inputType="textPersonName"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="10dp"
@@ -561,6 +566,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
                                 android:hint="Zip"
+                                android:imeOptions="actionNext"
                                 android:inputType="number"
                                 android:maxLength="6"
                                 android:paddingLeft="5dp"
@@ -615,6 +621,7 @@
                                 android:padding="5dp"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="10dp"
+                                android:singleLine="true"
                                 android:textSize="16sp"
                                 app:met_accentTypeface="fonts/prox.otf"
                                 app:met_baseColor="@color/text_divider_light"

@@ -16,13 +16,14 @@ public class HowItWorks extends Activity {
 
     ImageButton btn_back;
     TextView header;
+    com.rey.material.widget.LinearLayout lt_back;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.howitworks);
 
-        btn_back = (ImageButton) findViewById(R.id.btn_back);
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
@@ -31,10 +32,10 @@ public class HowItWorks extends Activity {
 
         header.setTypeface(tf);
 
+        lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
 
 
-
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        lt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);

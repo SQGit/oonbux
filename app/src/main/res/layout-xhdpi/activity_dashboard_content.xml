@@ -117,9 +117,9 @@
 
             <com.rey.material.widget.Button
                 android:id="@+id/add_ship_button"
+                style="@style/Material.Drawable.Ripple.Touch"
                 android:layout_width="150dp"
                 android:layout_height="35dp"
-
                 android:layout_gravity="center|center_horizontal"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp"
@@ -134,15 +134,17 @@
 
             <com.rey.material.widget.Button
                 android:id="@+id/add_done_button"
+                style="@style/Material.Drawable.Ripple.Touch"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:background="#e6851d"
                 android:drawableLeft="@drawable/done_ico"
+                android:drawablePadding="5dp"
                 android:gravity="center"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Done"
+                android:text="Next"
                 android:textColor="@color/text_color_hint_light"
                 android:textSize="14sp" />
 

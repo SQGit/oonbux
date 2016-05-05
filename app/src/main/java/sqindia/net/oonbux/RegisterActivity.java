@@ -156,7 +156,7 @@ public class RegisterActivity extends Activity {
         });
 
 
-        aet_zip.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+       /* aet_zip.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -166,7 +166,7 @@ public class RegisterActivity extends Activity {
                 }
                 return false;
             }
-        });
+        });*/
 
 
         ll_login.setOnClickListener(new View.OnClickListener() {
@@ -180,17 +180,6 @@ public class RegisterActivity extends Activity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-            /* Intent goD = new Intent(getApplicationContext(), ProfileInfo.class);
-                startActivity(goD);
-                finish();
-*/
-             /*   String txt ="Please verify your registerd mail id for oonbux id";
-
-                Dialog_new cdd = new Dialog_new(RegisterActivity.this,txt);
-                cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                cdd.show();*/
 
 
                 validatedatas();
@@ -223,14 +212,14 @@ public class RegisterActivity extends Activity {
                                             if (!str_state.isEmpty()) {
                                                 if (!(str_zip.isEmpty() || str_zip.length() < 3)) {
 
-                                                    //new RegisterTask().execute();
+                                                    new RegisterTask().execute();
 
-                                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
-                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                 /*   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+                                                    SharedPreferoonbuxidences.Editor editor = sharedPreferences.edit();
                                                     editor.putString("register", "success");
 
 
-                                                    editor.putString("oonbuxid", "535SM3");
+                                                    editor.putString("", "535SM3");
                                                     editor.putString("fname", str_fname);
                                                     editor.putString("lname", str_lname);
                                                     editor.putString("mail", str_email);
@@ -245,7 +234,7 @@ public class RegisterActivity extends Activity {
 
                                                     Dialog_new cdd = new Dialog_new(RegisterActivity.this, "Check your mail for oonbux activation");
                                                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                                    cdd.show();
+                                                    cdd.show();*/
 
 
 
@@ -265,7 +254,7 @@ public class RegisterActivity extends Activity {
 
                                         }
                                     } else {
-                                        et_repass.setError("Password not matches!");
+                                        et_repass.setError("Password not matching!");
                                         et_repass.requestFocus();
                                     }
                                 } else {
@@ -315,6 +304,7 @@ public class RegisterActivity extends Activity {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("firstname", str_fname);
                 jsonObject.accumulate("lastname", str_lname);
+                Log.d("TAG", "lastname" + str_lname);
                 jsonObject.accumulate("email", str_email);
                 jsonObject.accumulate("phone", str_phone);
                 jsonObject.accumulate("password", str_pass);
@@ -351,7 +341,7 @@ public class RegisterActivity extends Activity {
                 if (status.equals("success")) {
 
 
-                    Dialog_new cdd = new Dialog_new(RegisterActivity.this, msg);
+                    Dialog_new cdd = new Dialog_new(RegisterActivity.this, msg, 0);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
 
@@ -360,7 +350,6 @@ public class RegisterActivity extends Activity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("register", "SUCCESS");
                     editor.commit();
-
 
 
 
@@ -396,13 +385,14 @@ public class RegisterActivity extends Activity {
 
                     // Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 } else if (status.equals(null)) {
-                    Toast.makeText(getApplicationContext(), "network available", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();
                 } else if (status.equals("fail")) {
 
 
                     Dialog_Msg cdd = new Dialog_Msg(RegisterActivity.this, msg);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
+
 
 
 
@@ -450,7 +440,7 @@ public class RegisterActivity extends Activity {
             String json = "", jsonStr = "";
             try {
 
-                JSONObject jsonobject = HttpUtils.getData("http://oonbux.sqindia.net/region/country");
+                JSONObject jsonobject = HttpUtils.getData("http://androidtesting.newlogics.in/region/country");
 
                 Log.e("tag", "jj" + jsonobject);
 
@@ -518,7 +508,7 @@ public class RegisterActivity extends Activity {
             String json = "", jsonStr = "";
 
             try {
-                JSONObject jsonobject = HttpUtils.getData2("http://oonbux.sqindia.net/region/state", str_country);
+                JSONObject jsonobject = HttpUtils.getData2("http://androidtesting.newlogics.in/region/state", str_country);
 
                 Log.e("tag", "jj" + jsonobject);
 
@@ -599,7 +589,7 @@ public class RegisterActivity extends Activity {
             String json = "", jsonStr = "";
 
             try {
-                JSONObject jsonobject = HttpUtils.getData3("http://oonbux.sqindia.net/region/zip", str_country, str_state);
+                JSONObject jsonobject = HttpUtils.getData3("http://androidtesting.newlogics.in/region/zip", str_country, str_state);
 
                 Log.e("tag", "jj" + jsonobject);
 

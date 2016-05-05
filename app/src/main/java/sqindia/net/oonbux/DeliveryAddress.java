@@ -16,18 +16,22 @@ import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.TextView;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * Created by Salman on 4/29/2016.
  */
 public class DeliveryAddress extends Activity {
-    LinearLayout bck_lt;
+    LinearLayout bck_lt, bottom_lt;
     TextView tv_header, tv_sub_hdr_loc, tv_sub_hdr_int;
     Button btn_save_loc, btn_save_int, btn_next, btn_add_loc, btn_add_int;
     com.rey.material.widget.LinearLayout lt_back;
     MaterialEditText et_loc_add1, et_loc_add2, et_loc_city, et_loc_state, et_loc_zip, et_loc_phone, et_loc_note, et_int_add1, et_int_add2, et_int_city, et_int_state, et_int_zip, et_int_phone, et_int_note;
-    String get_profile_sts, str_def_adr, str_loc_add1, str_loc_add2, str_loc_city, str_loc_state, str_loc_zip, str_loc_phone, str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_state, str_int_zip, str_int_phone, str_int_note;
+    String get_profile_sts, str_def_adr, str_loc_add1, str_loc_add2, str_loc_city, str_loc_state, str_loc_zip, str_loc_phone,
+            str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_state, str_int_zip, str_int_phone, str_int_note;
 
     CheckBox cb_loc, cb_int;
+    boolean loc_adr, int_adr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,24 @@ public class DeliveryAddress extends Activity {
 
         get_profile_sts = sharedPreferences.getString("profile", "");
         Log.e("tag", "pfs" + get_profile_sts);
+
+        str_loc_add1 = sharedPreferences.getString("loc_addr1", "");
+        str_loc_add2 = sharedPreferences.getString("loc_addr2", "");
+        str_loc_city = sharedPreferences.getString("loc_city", "");
+        str_loc_state = sharedPreferences.getString("loc_state", "");
+        str_loc_zip = sharedPreferences.getString("loc_zip", "");
+        str_loc_phone = sharedPreferences.getString("loc_phone", "");
+        str_loc_note = sharedPreferences.getString("loc_note", "");
+
+        str_int_add1 = sharedPreferences.getString("int_addr1", "");
+        str_int_add2 = sharedPreferences.getString("int_addr2", "");
+        str_int_city = sharedPreferences.getString("int_city", "");
+        str_int_state = sharedPreferences.getString("int_state", "");
+        str_int_zip = sharedPreferences.getString("int_zip", "");
+        str_int_phone = sharedPreferences.getString("int_phone", "");
+        str_int_note = sharedPreferences.getString("int_note", "");
+        str_def_adr = sharedPreferences.getString("default_adr", "");
+
 
         // bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
 
@@ -69,9 +91,34 @@ public class DeliveryAddress extends Activity {
         et_int_note = (MaterialEditText) findViewById(R.id.edittext_int_note);
 
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
+        bottom_lt = (LinearLayout) findViewById(R.id.bottom);
 
         cb_loc = (CheckBox) findViewById(R.id.checkbox_local);
         cb_int = (CheckBox) findViewById(R.id.checkbox_int);
+
+
+        if (str_def_adr == "LOCAL") {
+            cb_loc.setChecked(true);
+        } else if (str_def_adr == "INTERNATIONAL") {
+            cb_int.setChecked(true);
+        }
+
+
+        getfromdata();
+
+
+        if ((get_profile_sts.equals(""))) {
+            bottom_lt.setVisibility(View.VISIBLE);
+        } else {
+            bottom_lt.setVisibility(View.GONE);
+            disable_loc();
+            disable_int();
+            btn_save_loc.setVisibility(View.GONE);
+            btn_save_int.setVisibility(View.GONE);
+
+
+        }
+
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
         Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
@@ -125,9 +172,11 @@ public class DeliveryAddress extends Activity {
             public void onClick(View v) {
 
                 if ((get_profile_sts.equals(""))) {
-                    Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
+                    Intent inte = new Intent(getApplicationContext(), ProfileInfo.class);
+                    startActivity(inte);
+                    // Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
                 } else {
-                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
                     startActivity(inte);
                 }
 
@@ -138,9 +187,17 @@ public class DeliveryAddress extends Activity {
         btn_add_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                loc_adr = false;
+                btn_save_loc.setVisibility(View.VISIBLE);
+                enable_loc();
+
+                bottom_lt.setVisibility(View.VISIBLE);
+
+
                 et_loc_add1.setText("");
                 et_loc_add1.requestFocus();
-                et_int_add2.setText("");
+                et_loc_add2.setText("");
                 et_loc_city.setText("");
                 et_loc_state.setText("");
                 et_loc_zip.setText("");
@@ -153,6 +210,13 @@ public class DeliveryAddress extends Activity {
         btn_add_int.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int_adr = false;
+                btn_save_int.setVisibility(View.VISIBLE);
+                enable_int();
+
+                bottom_lt.setVisibility(View.VISIBLE);
+
                 et_int_add1.setText("");
                 et_int_add1.requestFocus();
                 et_int_add2.setText("");
@@ -206,8 +270,40 @@ public class DeliveryAddress extends Activity {
                                         @Override
                                         public void onClick(View v) {
 
-                                            if (!(cb_loc.isChecked() || cb_int.isChecked())) {
-                                                Toast.makeText(getApplicationContext(), "choose default address", Toast.LENGTH_LONG).show();
+                                            if (!(loc_adr || int_adr)) {
+                                                //Toast.makeText(getApplicationContext(), "Fill addresses", Toast.LENGTH_LONG).show();
+
+                                                new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                                                        .setTitleText("Fill Address")
+                                                        .setConfirmText("OK")
+
+                                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                            @Override
+                                                            public void onClick(SweetAlertDialog sDialog) {
+
+                                                                sDialog.dismiss();
+                                                            }
+                                                        })
+                                                        .show();
+
+
+                                            } else if (!(cb_loc.isChecked() || cb_int.isChecked())) {
+
+                                                // Toast.makeText(getApplicationContext(), "choose default address", Toast.LENGTH_LONG).show();
+
+                                                new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                                                        .setTitleText("Choose Default Address")
+                                                        .setConfirmText("OK")
+
+                                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                            @Override
+                                                            public void onClick(SweetAlertDialog sDialog) {
+
+                                                                sDialog.dismiss();
+                                                            }
+                                                        })
+                                                        .show();
+
                                             } else {
 
                                                 if (cb_loc.isChecked()) {
@@ -220,6 +316,24 @@ public class DeliveryAddress extends Activity {
                                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                                 editor.putString("default_adr", str_def_adr);
                                                 editor.commit();
+
+
+                                                Log.d("tag", sharedPreferences.getString("loc_addr1", ""));
+                                                Log.d("tag", sharedPreferences.getString("loc_addr2", ""));
+                                                Log.d("tag", sharedPreferences.getString("loc_city", ""));
+                                                Log.d("tag", sharedPreferences.getString("loc_state", ""));
+                                                Log.d("tag", sharedPreferences.getString("loc_zip", ""));
+                                                Log.d("tag", sharedPreferences.getString("loc_phone", ""));
+                                                Log.d("tag", sharedPreferences.getString("loc_note", ""));
+
+                                                Log.d("tag", sharedPreferences.getString("int_addr1", ""));
+                                                Log.d("tag", sharedPreferences.getString("int_addr2", ""));
+                                                Log.d("tag", sharedPreferences.getString("int_city", ""));
+                                                Log.d("tag", sharedPreferences.getString("int_state", ""));
+                                                Log.d("tag", sharedPreferences.getString("int_zip", ""));
+                                                Log.d("tag", sharedPreferences.getString("int_phone", ""));
+                                                Log.d("tag", sharedPreferences.getString("int_note", ""));
+                                                Log.d("tag", sharedPreferences.getString("default_adr", ""));
 
 
                                                 Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
@@ -249,17 +363,58 @@ public class DeliveryAddress extends Activity {
 
 
         if (!addr1.isEmpty()) {
-            if (!addr2.isEmpty()) {
                 if (!(city.isEmpty())) {
                     if (!state.isEmpty()) {
                         if (!zip.isEmpty()) {
                             if (!(phone.isEmpty() || phone.length() < 10)) {
                                 if (!note.isEmpty()) {
 
+                                    if (i == 0) {
+                                        btn_save_loc.setVisibility(View.GONE);
+                                        disable_loc();
+                                        //Toast.makeText(getApplicationContext(), "Local address Updated", Toast.LENGTH_LONG).show();
+
+                                        new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
+                                                .setTitleText("Local Address Updated")
+                                                .setConfirmText("OK")
+
+                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                    @Override
+                                                    public void onClick(SweetAlertDialog sDialog) {
+
+                                                        sDialog.dismiss();
+                                                    }
+                                                })
+                                                .show();
+
+                                        loc_adr = true;
+                                    } else {
+                                        btn_save_int.setVisibility(View.GONE);
+                                        disable_int();
+
+                                        new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
+                                                .setTitleText("International Address Updated")
+                                                .setConfirmText("OK")
+
+                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                    @Override
+                                                    public void onClick(SweetAlertDialog sDialog) {
+
+                                                        sDialog.dismiss();
+                                                    }
+                                                })
+                                                .show();
+
+
+                                        // Toast.makeText(getApplicationContext(), "International address Updated", Toast.LENGTH_LONG).show();
+                                        int_adr = true;
+                                    }
+
+
                                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putString(location + "_address1", addr1);
-                                    editor.putString(location + "_address2", addr2);
+                                    editor.putString(location + "_addr1", addr1);
+                                    editor.putString(location + "_addr2", addr2);
                                     editor.putString(location + "_city", city);
                                     editor.putString(location + "_state", state);
                                     editor.putString(location + "_zip", zip);
@@ -267,7 +422,8 @@ public class DeliveryAddress extends Activity {
                                     editor.putString(location + "_note", note);
                                     editor.commit();
 
-                                    Toast.makeText(getApplicationContext(), location + "address Updated", Toast.LENGTH_LONG).show();
+
+
 
                                  /*   Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
                                     startActivity(inte);*/
@@ -288,13 +444,83 @@ public class DeliveryAddress extends Activity {
                 } else {
                     Toast.makeText(getApplicationContext(), "enter city", Toast.LENGTH_LONG).show();
                 }
-            } else {
-                Toast.makeText(getApplicationContext(), "enter address", Toast.LENGTH_LONG).show();
-            }
+
         } else {
             Toast.makeText(getApplicationContext(), "enter address", Toast.LENGTH_LONG).show();
         }
     }
+
+
+    private void getfromdata() {
+
+        //  disable_loc();
+        //  disable_int();
+
+        et_loc_add1.setText(str_loc_add1);
+        et_loc_add2.setText(str_loc_add2);
+        et_loc_city.setText(str_loc_city);
+        et_loc_state.setText(str_loc_state);
+        et_loc_zip.setText(str_loc_zip);
+        et_loc_phone.setText(str_loc_phone);
+        et_loc_note.setText(str_loc_note);
+
+        et_int_add1.setText(str_int_add1);
+        et_int_add2.setText(str_int_add2);
+        et_int_city.setText(str_int_city);
+        et_int_state.setText(str_int_state);
+        et_int_zip.setText(str_int_zip);
+        et_int_phone.setText(str_int_phone);
+        et_int_note.setText(str_int_note);
+
+    }
+
+
+    public void enable_loc() {
+
+        et_loc_add1.setEnabled(true);
+        et_loc_add2.setEnabled(true);
+        et_loc_city.setEnabled(true);
+        et_loc_state.setEnabled(true);
+        et_loc_zip.setEnabled(true);
+        et_loc_phone.setEnabled(true);
+        et_loc_note.setEnabled(true);
+
+    }
+
+
+    public void enable_int() {
+        et_int_add1.setEnabled(true);
+        et_int_add2.setEnabled(true);
+        et_int_city.setEnabled(true);
+        et_int_state.setEnabled(true);
+        et_int_zip.setEnabled(true);
+        et_int_phone.setEnabled(true);
+        et_int_note.setEnabled(true);
+
+    }
+
+
+    public void disable_loc() {
+
+        et_loc_add1.setEnabled(false);
+        et_loc_add2.setEnabled(false);
+        et_loc_city.setEnabled(false);
+        et_loc_state.setEnabled(false);
+        et_loc_zip.setEnabled(false);
+        et_loc_phone.setEnabled(false);
+        et_loc_note.setEnabled(false);
+    }
+
+    public void disable_int() {
+        et_int_add1.setEnabled(false);
+        et_int_add2.setEnabled(false);
+        et_int_city.setEnabled(false);
+        et_int_state.setEnabled(false);
+        et_int_zip.setEnabled(false);
+        et_int_phone.setEnabled(false);
+        et_int_note.setEnabled(false);
+    }
+
 
 }
 

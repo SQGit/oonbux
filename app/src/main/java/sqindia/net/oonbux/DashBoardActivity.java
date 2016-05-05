@@ -7,12 +7,13 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -21,14 +22,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
@@ -41,13 +43,16 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
     com.rey.material.widget.TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet;
     Button btn_nav_cont_loc_adr, btn_nav_cont_int_adr, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop, btn_shop_online, btn_add_shipment, btn_done_shipment;
     com.rey.material.widget.TextView tv_dash_hd_txt;
-    String str_oonbux_id;
+    String str_oonbux_id, str_photo;
     Toolbar toolbar;
     Fragment fragment;
     Context context;
-    ImageView btm_cam;
+    ImageView btm_cam, nav_pro_pic;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     PhotoAdapter photoAdapter;
+
+    Bitmap bitmap;
+    Uri uri;
 
 
     @Override
@@ -69,6 +74,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
         str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
+        str_photo = sharedPreferences.getString("photourl", "");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -115,6 +121,22 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         btn_dash_shop = (Button) findViewById(R.id.btn_dash_shop_online);
 
         btm_cam = (ImageView) findViewById(R.id.cam);
+        nav_pro_pic = (ImageView) findViewById(R.id.nav_header_propic);
+
+
+        uri = Uri.fromFile(new File(str_photo));
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        nav_pro_pic.setImageBitmap(bitmap);
+
+        tv_nav_cont_loc.setText(sharedPreferences.getString("state", ""));
+        tv_nav_cont_address.setText(sharedPreferences.getString("zip", ""));
+        tv_nav_cont_phone.setText(sharedPreferences.getString("phone", ""));
+
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
@@ -215,6 +237,26 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         });
 
 
+        btn_nav_cont_add_loc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /*AddLoc_Fragment fragment = new AddLoc_Fragment();
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
+*/
+                Intent inte = new Intent(getApplicationContext(), AddLocation.class);
+                startActivity(inte);
+
+                // toggle.syncState();
+                // drawer.closeDrawer(GravityCompat.START);
+
+               /* Intent inte = new Intent(getApplicationContext(), AddLocation.class);
+                startActivity(inte);*/
+            }
+        });
+
+
         tv_nav_cont_prof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,9 +300,11 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         btn_nav_cont_loc_adr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_nav_cont_loc.setText("Houston");
-                tv_nav_cont_address.setText("5800,White Line Avenue,\n Houston,Texas 55372");
-                tv_nav_cont_phone.setText("713-555-5555");
+
+/*                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
+                tv_nav_cont_loc.setText(sharedPreferences.getString("loc_state", ""));
+                tv_nav_cont_address.setText(sharedPreferences.getString("loc_addr1", "") + "\t" + sharedPreferences.getString("loc_addr2", ""));
+                tv_nav_cont_phone.setText(sharedPreferences.getString("loc_phone", ""));*/
 
             }
         });
@@ -269,9 +313,10 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         btn_nav_cont_int_adr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_nav_cont_loc.setText("Lagos");
-                tv_nav_cont_address.setText("11A,Adeniro Close,\nMambuza,Lagos 23433");
-                tv_nav_cont_phone.setText("021-323-5353");
+               /* SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
+                tv_nav_cont_loc.setText(sharedPreferences.getString("int_state", ""));
+                tv_nav_cont_address.setText(sharedPreferences.getString("int_addr1", "") + "\t" + sharedPreferences.getString("int_addr2", ""));
+                tv_nav_cont_phone.setText(sharedPreferences.getString("int_phone", ""));*/
 
             }
         });
@@ -280,33 +325,18 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getApplicationContext(), Invite_Pal.class);
-                startActivity(inte);
-            }
-        });
-
-
-        btn_nav_cont_add_loc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AddLoc_Fragment fragment = new AddLoc_Fragment();
-                FragmentManager fm = getFragmentManager();
-                fm.beginTransaction().replace(R.id.nav_container, fragment).commit();
-
-                toggle.syncState();
-                drawer.closeDrawer(GravityCompat.START);
-
-               /* Intent inte = new Intent(getApplicationContext(), AddLocation.class);
+               /* Intent inte = new Intent(getApplicationContext(), Invite_Pal.class);
                 startActivity(inte);*/
             }
         });
 
 
+
+
         btm_cam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "tsdf", Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), "tsdf", Toast.LENGTH_LONG).show();
 
                 PhotoPickerIntent intent = new PhotoPickerIntent(DashBoardActivity.this);
                 intent.setPhotoCount(1);
@@ -328,8 +358,6 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
-
-
 
 
     }
@@ -359,6 +387,19 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             Log.d("tag", selectedPhotos.get(0));
             Log.d("tag", "" + uri);
 
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("shipment_photo", selectedPhotos.get(0));
+            editor.commit();
+
+            progressBar.setProgress(66);
+            DeliverPackageFragment fragment = new DeliverPackageFragment();
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
+            btn_add_shipment.setVisibility(View.GONE);
+            btn_done_shipment.setVisibility(View.VISIBLE);
+            progressBar.setProgress(66);
+
             //btm_cam.setImageURI(uri);
         }
     }
@@ -374,5 +415,39 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
 
+
+        new SweetAlertDialog(DashBoardActivity.this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Do you want to exit the Application?")
+                .setConfirmText("Yes!")
+                .setCancelText("No")
+
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        Intent i1 = new Intent(Intent.ACTION_MAIN);
+                        i1.setAction(Intent.ACTION_MAIN);
+                        i1.addCategory(Intent.CATEGORY_HOME);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i1);
+                        finish();
+
+                    }
+                })
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+
+                    }
+                })
+                .show();
+
+
+    }
 }

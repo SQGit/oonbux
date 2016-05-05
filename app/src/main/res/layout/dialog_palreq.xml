@@ -50,7 +50,7 @@
         android:gravity="center"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="To Setup An oonbux mobile package delivery Account has been sent /n/n You will get a notification as soon as John Accepts your request and sets up his/her account \n\n John will recieve a Text message and an email from you"
+        android:text="To Setup An oonbux mobile package delivery Account has been sent \n\n You will get a notification as soon as John Accepts your request and sets up his/her account \n\n John will recieve a Text message and an email from you"
         android:textColor="#FFFFFF"
         android:textSize="14sp" />
 
@@ -67,6 +67,7 @@
         android:textSize="16sp" />
 
     <ImageView
+        android:id="@+id/img_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

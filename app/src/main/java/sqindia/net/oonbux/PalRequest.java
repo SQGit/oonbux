@@ -31,6 +31,7 @@ public class PalRequest extends Activity {
     TextView tv_header, tv_sheader, tv_comment;
     MaterialEditText et_fname, et_lname, et_email, et_phone, et_comment;
     Spinner spin;
+    com.rey.material.widget.LinearLayout lt_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,9 @@ public class PalRequest extends Activity {
 
         spin = (com.rey.material.widget.Spinner) findViewById(R.id.spinner);
 
-        bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
+        lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
+
+        // bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
 
         btn_back = (ImageButton) findViewById(R.id.btn_back);
         btn_send = (Button) findViewById(R.id.button_send);
@@ -75,7 +78,7 @@ public class PalRequest extends Activity {
         adapter.setDropDownViewResource(R.layout.dropdown_lists);
         spin.setAdapter(adapter);
 
-        bck_lt.setOnClickListener(new View.OnClickListener() {
+        lt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);

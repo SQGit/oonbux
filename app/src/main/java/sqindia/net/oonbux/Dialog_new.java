@@ -59,8 +59,14 @@ public class Dialog_new extends Dialog {
 
         tv_content.setText(regoutput);
 
+        if (i == 0) {
 
-        if (i == 1) {
+            btn_close.setText("OK");
+            imgview.setImageDrawable(c.getResources().getDrawable(R.drawable.tick_ico));
+            Drawable img = c.getResources().getDrawable(R.drawable.done_ico);
+            btn_close.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+
+        } else if (i == 1) {
 
             btn_close.setText("OK");
             imgview.setImageDrawable(c.getResources().getDrawable(R.drawable.tick_ico));

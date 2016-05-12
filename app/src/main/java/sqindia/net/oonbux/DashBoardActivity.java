@@ -450,4 +450,11 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
+    }
 }

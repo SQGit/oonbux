@@ -22,7 +22,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Salman on 4/29/2016.
  */
 public class DeliveryAddress extends Activity {
-    LinearLayout bck_lt, bottom_lt;
+    LinearLayout bottom_lt;
     TextView tv_header, tv_sub_hdr_loc, tv_sub_hdr_int;
     Button btn_save_loc, btn_save_int, btn_next, btn_add_loc, btn_add_int;
     com.rey.material.widget.LinearLayout lt_back;
@@ -120,6 +120,16 @@ public class DeliveryAddress extends Activity {
         }
 
 
+        if (sharedPreferences.getBoolean("adrsts", false)) {
+            loc_adr = true;
+            int_adr = true;
+            disable_loc();
+            disable_int();
+            btn_save_loc.setVisibility(View.GONE);
+            btn_save_int.setVisibility(View.GONE);
+        }
+
+
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
         Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
@@ -154,7 +164,23 @@ public class DeliveryAddress extends Activity {
         cb_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cb_int.setChecked(false);
+                if (!loc_adr) {
+                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Address is empty,fill address")
+                            .setConfirmText("OK")
+
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+
+                                    sDialog.dismiss();
+                                }
+                            })
+                            .show();
+                } else {
+                    cb_int.setChecked(false);
+                }
+
 
             }
         });
@@ -162,7 +188,25 @@ public class DeliveryAddress extends Activity {
         cb_int.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cb_loc.setChecked(false);
+
+
+                if (!int_adr) {
+                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Address is empty,fill address")
+                            .setConfirmText("OK")
+
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+
+                                    sDialog.dismiss();
+                                }
+                            })
+                            .show();
+                } else {
+                    cb_loc.setChecked(false);
+                }
+
             }
         });
 
@@ -172,8 +216,11 @@ public class DeliveryAddress extends Activity {
             public void onClick(View v) {
 
                 if ((get_profile_sts.equals(""))) {
-                    Intent inte = new Intent(getApplicationContext(), ProfileInfo.class);
-                    startActivity(inte);
+                  /*  Intent inte = new Intent(getApplicationContext(), ProfileInfo.class);
+                    startActivity(inte);*/
+
+                    onBackPressed();
+
                     // Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
                 } else {
                     Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
@@ -363,64 +410,65 @@ public class DeliveryAddress extends Activity {
 
 
         if (!addr1.isEmpty()) {
-                if (!(city.isEmpty())) {
-                    if (!state.isEmpty()) {
-                        if (!zip.isEmpty()) {
-                            if (!(phone.isEmpty() || phone.length() < 10)) {
-                                if (!note.isEmpty()) {
+            if (!(city.isEmpty())) {
+                if (!state.isEmpty()) {
+                    if (!zip.isEmpty()) {
+                        if (!(phone.isEmpty() || phone.length() < 10)) {
+                            if (!note.isEmpty()) {
 
-                                    if (i == 0) {
-                                        btn_save_loc.setVisibility(View.GONE);
-                                        disable_loc();
-                                        //Toast.makeText(getApplicationContext(), "Local address Updated", Toast.LENGTH_LONG).show();
+                                if (i == 0) {
+                                    btn_save_loc.setVisibility(View.GONE);
+                                    disable_loc();
+                                    //Toast.makeText(getApplicationContext(), "Local address Updated", Toast.LENGTH_LONG).show();
 
-                                        new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
-                                                .setTitleText("Local Address Updated")
-                                                .setConfirmText("OK")
+                                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
+                                            .setTitleText("Local Address Updated")
+                                            .setConfirmText("OK")
 
-                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                    @Override
-                                                    public void onClick(SweetAlertDialog sDialog) {
+                                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                @Override
+                                                public void onClick(SweetAlertDialog sDialog) {
 
-                                                        sDialog.dismiss();
-                                                    }
-                                                })
-                                                .show();
+                                                    sDialog.dismiss();
+                                                }
+                                            })
+                                            .show();
 
-                                        loc_adr = true;
-                                    } else {
-                                        btn_save_int.setVisibility(View.GONE);
-                                        disable_int();
+                                    loc_adr = true;
+                                } else {
+                                    btn_save_int.setVisibility(View.GONE);
+                                    disable_int();
 
-                                        new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
-                                                .setTitleText("International Address Updated")
-                                                .setConfirmText("OK")
+                                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
+                                            .setTitleText("International Address Updated")
+                                            .setConfirmText("OK")
 
-                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                    @Override
-                                                    public void onClick(SweetAlertDialog sDialog) {
+                                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                @Override
+                                                public void onClick(SweetAlertDialog sDialog) {
 
-                                                        sDialog.dismiss();
-                                                    }
-                                                })
-                                                .show();
-
-
-                                        // Toast.makeText(getApplicationContext(), "International address Updated", Toast.LENGTH_LONG).show();
-                                        int_adr = true;
-                                    }
+                                                    sDialog.dismiss();
+                                                }
+                                            })
+                                            .show();
 
 
-                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putString(location + "_addr1", addr1);
-                                    editor.putString(location + "_addr2", addr2);
-                                    editor.putString(location + "_city", city);
-                                    editor.putString(location + "_state", state);
-                                    editor.putString(location + "_zip", zip);
-                                    editor.putString(location + "_phone", phone);
-                                    editor.putString(location + "_note", note);
-                                    editor.commit();
+                                    // Toast.makeText(getApplicationContext(), "International address Updated", Toast.LENGTH_LONG).show();
+                                    int_adr = true;
+                                }
+
+
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(location + "_addr1", addr1);
+                                editor.putString(location + "_addr2", addr2);
+                                editor.putString(location + "_city", city);
+                                editor.putString(location + "_state", state);
+                                editor.putString(location + "_zip", zip);
+                                editor.putString(location + "_phone", phone);
+                                editor.putString(location + "_note", note);
+                                editor.putBoolean("adrsts", true);
+                                editor.commit();
 
 
 
@@ -428,22 +476,22 @@ public class DeliveryAddress extends Activity {
                                  /*   Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
                                     startActivity(inte);*/
 
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "enter delivery note", Toast.LENGTH_LONG).show();
-                                }
                             } else {
-                                Toast.makeText(getApplicationContext(), "enter Phone Number", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "enter delivery note", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "enter zip", Toast.LENGTH_LONG).show();
-
+                            Toast.makeText(getApplicationContext(), "enter Phone Number", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "enter state", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "enter zip", Toast.LENGTH_LONG).show();
+
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "enter city", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "enter state", Toast.LENGTH_LONG).show();
                 }
+            } else {
+                Toast.makeText(getApplicationContext(), "enter city", Toast.LENGTH_LONG).show();
+            }
 
         } else {
             Toast.makeText(getApplicationContext(), "enter address", Toast.LENGTH_LONG).show();

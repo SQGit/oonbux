@@ -32,6 +32,7 @@ public class DeliverPackageFragment extends Fragment {
     ArrayList<String> selectedPhotos = new ArrayList<>();
     Shipment_Adapter ship_adapter;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

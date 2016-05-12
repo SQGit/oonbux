@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,6 +52,55 @@ public class ProfileInfo extends Activity {
 
     ArrayList<String> selectedPhotos = new ArrayList<>();
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+
+        new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Do you want to exit the Application?")
+                .setConfirmText("Yes!")
+                .setCancelText("No")
+
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        Intent i1 = new Intent(Intent.ACTION_MAIN);
+                        i1.setAction(Intent.ACTION_MAIN);
+                        i1.addCategory(Intent.CATEGORY_HOME);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i1);
+                        finish();
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("login", "");
+                        editor.commit();
+                        sDialog.dismiss();
+
+
+                    }
+                })
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+
+                    }
+                })
+                .show();
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +108,10 @@ public class ProfileInfo extends Activity {
 
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+
+
+        chekphoto = sharedPreferences.getString("photourl", "");
+
 
         get_profile_sts = sharedPreferences.getString("profile", "");
         str_fname = sharedPreferences.getString("fname", "");
@@ -66,8 +121,6 @@ public class ProfileInfo extends Activity {
         str_zip = sharedPreferences.getString("zip", "");
         str_state = sharedPreferences.getString("state", "");
 
-
-        chekphoto = sharedPreferences.getString("photourl", "");
 
         Log.e("tag", "pfs" + get_profile_sts);
 
@@ -84,7 +137,7 @@ public class ProfileInfo extends Activity {
 
         btn_back = (ImageButton) findViewById(R.id.btn_back);
 
-        bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
+        //bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
         btn_next = (Button) findViewById(R.id.button_submit);
         btn_edit = (Button) findViewById(R.id.button_edit);
         header = (TextView) findViewById(R.id.tv_hd_txt);
@@ -105,9 +158,33 @@ public class ProfileInfo extends Activity {
         if ((get_profile_sts.equals(""))) {
             btn_next.setVisibility(View.VISIBLE);
             lt_back.setVisibility(View.GONE);
+            // header.setText("       Profile Info");
         } else {
             btn_next.setVisibility(View.GONE);
+            lt_back.setVisibility(View.VISIBLE);
+            // header.setText("Profile Info");
         }
+
+
+        et_lname.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    et_phone.requestFocus();
+                    int pos = et_phone.getText().length();
+                    et_phone.setSelection(pos);
+
+                    return true;
+                }
+                return false;
+            }
+
+        });
+
+
+
+
+
 
 
 
@@ -145,7 +222,6 @@ public class ProfileInfo extends Activity {
 
         if (!(chekphoto.equals(""))) {
 
-
             uri = Uri.fromFile(new File(chekphoto));
 
             try {
@@ -157,6 +233,10 @@ public class ProfileInfo extends Activity {
             }
 
             imgview.setImageBitmap(bitmap);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("photourl", chekphoto);
+            editor.commit();
 
         }
 
@@ -215,7 +295,7 @@ public class ProfileInfo extends Activity {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
 
                 img_success1 = sharedPreferences.getBoolean("img_add", false);
-
+                btn_edit.setBackgroundColor(getResources().getColor(R.color.text_color));
 
                 if (img_success1 || (!chekphoto.equals(""))) {
                     validatedatas();
@@ -252,6 +332,7 @@ public class ProfileInfo extends Activity {
 
                 enable();
 
+                btn_edit.setBackgroundColor(getResources().getColor(R.color.hint_floating_dark));
                 btn_next.setVisibility(View.VISIBLE);
 
 
@@ -289,9 +370,11 @@ public class ProfileInfo extends Activity {
                                 editor.putString("phone", str_phone);
                                 editor.putString("state", str_state);
                                 editor.putString("zip", str_zip);
-                                editor.putString("photourl", str_photo);
+                                editor.putString("photourl", chekphoto);
                                 //editor.putString("photo",selectedPhotos.get(0));
                                 editor.commit();
+
+                                disable();
 
                                 Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
                                 startActivity(inte);
@@ -346,7 +429,8 @@ public class ProfileInfo extends Activity {
             }
             photoAdapter.notifyDataSetChanged();
 
-            str_photo = selectedPhotos.get(0);
+            chekphoto = selectedPhotos.get(0);
+            uri = null;
             uri = Uri.fromFile(new File(selectedPhotos.get(0)));
 
             Log.d("tag", selectedPhotos.get(0));
@@ -357,6 +441,7 @@ public class ProfileInfo extends Activity {
                 bitmap = null;
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                 bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -383,6 +468,10 @@ public class ProfileInfo extends Activity {
 
         et_fname.setEnabled(true);
         et_fname.setTextColor(getResources().getColor(R.color.text_color));
+        et_fname.requestFocus();
+        int pos = et_fname.getText().length();
+        et_fname.setSelection(pos);
+
         et_lname.setEnabled(true);
         et_lname.setTextColor(getResources().getColor(R.color.text_color));
         et_email.setEnabled(false);

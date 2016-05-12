@@ -115,7 +115,6 @@ public class RegisterActivity extends Activity {
         }
 
 
-
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, country);
         aet_cont.setAdapter(adapter1);
 
@@ -195,24 +194,24 @@ public class RegisterActivity extends Activity {
         str_country = aet_cont.getText().toString();
         str_fname = et_fname.getText().toString();
         str_lname = et_lname.getText().toString();
-                str_email = et_email.getText().toString();
-                str_pass = et_pass.getText().toString();
-                str_repass = et_repass.getText().toString();
-                str_phone = et_phone.getText().toString();
-                str_zip = aet_zip.getText().toString();
-                str_state = aet_state.getText().toString();
+        str_email = et_email.getText().toString();
+        str_pass = et_pass.getText().toString();
+        str_repass = et_repass.getText().toString();
+        str_phone = et_phone.getText().toString();
+        str_zip = aet_zip.getText().toString();
+        str_state = aet_state.getText().toString();
 
-                if (!str_country.isEmpty()) {
-                    if (!str_fname.isEmpty()) {
-                        if (!str_lname.isEmpty()) {
-                            if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
-                                if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
-                                    if (str_repass.matches(str_pass)) {
-                                        if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
-                                            if (!str_state.isEmpty()) {
-                                                if (!(str_zip.isEmpty() || str_zip.length() < 3)) {
+        if (!str_country.isEmpty()) {
+            if (!str_fname.isEmpty()) {
+                if (!str_lname.isEmpty()) {
+                    if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
+                        if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
+                            if (str_repass.matches(str_pass)) {
+                                if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
+                                    if (!str_state.isEmpty()) {
+                                        if (!(str_zip.isEmpty() || str_zip.length() < 3)) {
 
-                                                    new RegisterTask().execute();
+                                            new RegisterTask().execute();
 
                                                  /*   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
                                                     SharedPreferoonbuxidences.Editor editor = sharedPreferences.edit();
@@ -237,47 +236,45 @@ public class RegisterActivity extends Activity {
                                                     cdd.show();*/
 
 
-
-
-                                                } else {
-                                                    aet_zip.setError("Enter zipcode");
-                                                    aet_zip.requestFocus();
-
-                                                }
-                                            } else {
-                                                aet_state.setError("Enter State");
-                                                aet_state.requestFocus();
-                                            }
                                         } else {
-                                            et_phone.setError("Enter valid phone number");
-                                            et_phone.requestFocus();
+                                            aet_zip.setError("Enter zipcode");
+                                            aet_zip.requestFocus();
 
                                         }
                                     } else {
-                                        et_repass.setError("Password not matching!");
-                                        et_repass.requestFocus();
+                                        aet_state.setError("Enter State");
+                                        aet_state.requestFocus();
                                     }
                                 } else {
-                                    et_pass.setError("between 4 and 10 alphanumeric characters");
-                                    et_pass.requestFocus();
+                                    et_phone.setError("Enter valid phone number");
+                                    et_phone.requestFocus();
 
                                 }
                             } else {
-                                et_email.setError("Enter a valid email address!");
-                                et_email.requestFocus();
+                                et_repass.setError("Password not matching!");
+                                et_repass.requestFocus();
                             }
                         } else {
-                            et_lname.setError("Enter a Last Name!");
-                            et_lname.requestFocus();
+                            et_pass.setError("between 4 and 10 alphanumeric characters");
+                            et_pass.requestFocus();
+
                         }
                     } else {
-                        et_fname.setError("Enter a First Name!");
-                        et_fname.requestFocus();
+                        et_email.setError("Enter a valid email address!");
+                        et_email.requestFocus();
                     }
                 } else {
-                    aet_cont.setError("Enter a valid Country!");
-                    aet_cont.requestFocus();
+                    et_lname.setError("Enter a Last Name!");
+                    et_lname.requestFocus();
                 }
+            } else {
+                et_fname.setError("Enter a First Name!");
+                et_fname.requestFocus();
+            }
+        } else {
+            aet_cont.setError("Enter a valid Country!");
+            aet_cont.requestFocus();
+        }
 
     }
 
@@ -442,10 +439,13 @@ public class RegisterActivity extends Activity {
 
                 JSONObject jsonobject = HttpUtils.getData("http://androidtesting.newlogics.in/region/country");
 
-                Log.e("tag", "jj" + jsonobject);
-
+             /*   if (jsonobject.toString().equals(null)) {
+                    Log.e("tag", "jj" + jsonobject);
+                    json = "";
+                } else {
+*/
                 json = jsonobject.toString();
-
+                //}
                 return json;
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
@@ -461,13 +461,14 @@ public class RegisterActivity extends Activity {
             sweetAlertDialog.dismiss();
 
             try {
+
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("country");
                 String msg = jo.getString("message");
                 Log.d("tag", "<-----aasd----->" + status);
-
                 String json = jo.toString();
 
+               /* if (status.equals("success")) {*/
 
                 JSONObject jaa = new JSONObject(jsonStr);
                 JSONArray jj = jaa.getJSONArray("country");
@@ -480,7 +481,23 @@ public class RegisterActivity extends Activity {
                     Log.d("tag", "<-----Statusss----->" + daa);
 
                 }
+                //} /*else if (status.equals("")) {
+/*
+                    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("failed to fetch country")
+                            .setConfirmText("OK")
+                            .show();
 
+                } else if (status.equals("fail")) {
+
+                    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText(msg)
+                            .setConfirmText("OK")
+                            .show();
+
+                }*/
 
             } catch (JSONException e) {
                 // TODO Auto-generated catch block

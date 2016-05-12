@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,6 +65,8 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     // EditText et_fname,et_lname;
 
     MaterialEditText et_fname, et_lname;
+    SweetAlertDialog psDialog;
+    String imagePath = null;
 
 
     private GoogleMap mMap;
@@ -67,7 +80,6 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
 
         get_profile_sts = sharedPreferences.getString("profile", "");
-
         str_fname = sharedPreferences.getString("fname", "");
         str_lname = sharedPreferences.getString("lname", "");
         str_phone = sharedPreferences.getString("phone", "");
@@ -167,8 +179,9 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             public void onClick(View v) {
                 if ((get_profile_sts.equals(""))) {
                     //Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
-                    Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
-                    startActivity(inte);
+                  /*  Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
+                    startActivity(inte);*/
+                    onBackPressed();
 
                 } else {
                     Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
@@ -198,7 +211,33 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
 
-                profile_update();
+
+                if (!Config.isNetworkAvailable(ProfileActivity.this)) {
+
+                    new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("No network Available!")
+                            .setConfirmText("OK")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                    // sweetAlertDialog.setCancelable(false);
+
+                                    startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                                    finish();
+                                }
+                            })
+
+                            .show();
+
+
+                } else {
+                    profile_update();
+                }
+
+
+
             }
         });
 
@@ -307,17 +346,21 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
                     btn_finish.setVisibility(View.GONE);
 
+                    if (str_photo != null) {
+                        new UploadImageToServer(str_photo).execute();
+                    } else {
 
-                    Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Updated Successfully", 2);
-                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    cdd.show();
+
+                        Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Updated Successfully", 2);
+                        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        cdd.show();
 
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("profile", "SUCCESS");
-                    editor.commit();
-
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("profile", "SUCCESS");
+                        editor.commit();
+                    }
                 } else if (status.equals(null)) {
                     Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();
                 } else if (status.equals("fail")) {
@@ -338,6 +381,109 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         }
 
     }
+
+
+    private class UploadImageToServer extends AsyncTask<Void, Integer, String> {
+
+        String img_path;
+
+        public UploadImageToServer(String path) {
+
+            this.img_path = path;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            psDialog = new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+            psDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            psDialog.setTitleText("Uploading Photo");
+            psDialog.setCancelable(false);
+            psDialog.show();
+
+        }
+
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            return uploadFile();
+
+        }
+
+        @SuppressWarnings("deprecation")
+        private String uploadFile() {
+            String responseString = null;
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost("http://oonbux.sqindia.net/api/profilepic");
+            httppost.setHeader("spotId", img_path);
+
+            try {
+                MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                File sourceFile = new File(img_path);
+                entity.addPart("fileUpload", new FileBody(sourceFile));
+                httppost.setEntity(entity);
+                HttpResponse response = httpclient.execute(httppost);
+                HttpEntity r_entity = response.getEntity();
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == 200) {
+                    responseString = EntityUtils.toString(r_entity);
+                } else {
+                    responseString = "Error occurred! Http Status Code: "
+                            + statusCode;
+                }
+
+            } catch (ClientProtocolException e) {
+                responseString = e.toString();
+            } catch (IOException e) {
+                responseString = e.toString();
+            }
+
+            return responseString;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("tag", "Response from server: " + result);
+            psDialog.dismiss();
+
+            Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Updated Successfully", 2);
+            cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            cdd.show();
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

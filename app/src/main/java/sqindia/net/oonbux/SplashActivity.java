@@ -14,7 +14,7 @@ import com.rey.material.widget.Button;
 
 public class SplashActivity extends AppCompatActivity {
     Button btn_submit;
-    String get_login_sts, get_register_sts;
+    String get_login_sts, get_register_sts, get_profile_sts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +26,11 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
         get_login_sts = sharedPreferences.getString("login", "");
         get_register_sts = sharedPreferences.getString("register", "");
+        get_profile_sts = sharedPreferences.getString("profile", "");
 
         Log.d("tag", "login_status" + get_login_sts);
         Log.d("tag", "register_status" + get_register_sts);
+        Log.d("tag", "profile_status" + get_profile_sts);
 
         btn_submit = (Button) findViewById(R.id.button_submit);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
@@ -49,9 +51,18 @@ public class SplashActivity extends AppCompatActivity {
                         finish();
                     } else {
 
-                        Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
-                        startActivity(login_intent);
-                        finish();
+                        if (get_profile_sts.equals("")) {
+                            Intent login_intent = new Intent(getApplicationContext(), ProfileInfo.class);
+                            startActivity(login_intent);
+                            finish();
+                        } else {
+
+                            Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+                            startActivity(login_intent);
+                            finish();
+
+                        }
+
 
                     }
 

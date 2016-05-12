@@ -70,14 +70,14 @@
                     android:textSize="18sp" />
 
                 <com.rey.material.widget.CheckBox
-                    android:id="@+id/cb_large"
+                    android:id="@+id/cb_small"
                     style="@style/checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
-                    android:text="Large" />
+                    android:text="Small" />
 
                 <com.rey.material.widget.CheckBox
                     android:id="@+id/cb_medium"
@@ -90,14 +90,14 @@
                     android:text="Medium" />
 
                 <com.rey.material.widget.CheckBox
-                    android:id="@+id/cb_small"
+                    android:id="@+id/cb_large"
                     style="@style/checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
-                    android:text="Small" />
+                    android:text="Large" />
 
 
             </LinearLayout>

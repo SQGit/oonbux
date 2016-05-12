@@ -160,6 +160,41 @@ public class LoginActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+
+        new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Do you want to exit the Application?")
+                .setConfirmText("Yes!")
+                .setCancelText("No")
+
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        Intent i1 = new Intent(Intent.ACTION_MAIN);
+                        i1.setAction(Intent.ACTION_MAIN);
+                        i1.addCategory(Intent.CATEGORY_HOME);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i1);
+                        finish();
+
+
+                    }
+                })
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+
+                    }
+                })
+                .show();
+
+
+    }
 
     class LoginTask extends AsyncTask<String, Void, String> {
 
@@ -303,8 +338,10 @@ public class LoginActivity extends Activity {
                                 .setContentText("Invalid login Credentials provided")
                                 .setConfirmText("OK")
                                 .show();*/
-                        et_pass.setText("");
+
                         et_pass.requestFocus();
+                        int pos = et_pass.getText().length();
+                        et_pass.setSelection(pos);
                         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         et_pass.setError("");
                     } else if (msg.equals("SERVER ERROR: MESSAGE: Data is Null. This method or property cannot be called on Null values.")) {
@@ -324,7 +361,12 @@ public class LoginActivity extends Activity {
                     }
 
 
+                } else {
+                    Dialog_Msg cdd = new Dialog_Msg(LoginActivity.this, "Try Again Later");
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
                 }
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -333,4 +375,6 @@ public class LoginActivity extends Activity {
         }
 
     }
+
+
 }

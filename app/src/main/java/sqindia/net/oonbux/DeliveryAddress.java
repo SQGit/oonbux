@@ -97,9 +97,9 @@ public class DeliveryAddress extends Activity {
         cb_int = (CheckBox) findViewById(R.id.checkbox_int);
 
 
-        if (str_def_adr == "LOCAL") {
+        if (str_def_adr.equals("LOCAL")) {
             cb_loc.setChecked(true);
-        } else if (str_def_adr == "INTERNATIONAL") {
+        } else if (str_def_adr.equals("INTERNATIONAL")) {
             cb_int.setChecked(true);
         }
 
@@ -115,8 +115,6 @@ public class DeliveryAddress extends Activity {
             disable_int();
             btn_save_loc.setVisibility(View.GONE);
             btn_save_int.setVisibility(View.GONE);
-
-
         }
 
 
@@ -165,6 +163,7 @@ public class DeliveryAddress extends Activity {
             @Override
             public void onClick(View v) {
                 if (!loc_adr) {
+                    cb_loc.setChecked(false);
                     new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Address is empty,fill address")
                             .setConfirmText("OK")
@@ -191,6 +190,9 @@ public class DeliveryAddress extends Activity {
 
 
                 if (!int_adr) {
+
+                    cb_int.setChecked(false);
+
                     new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Address is empty,fill address")
                             .setConfirmText("OK")

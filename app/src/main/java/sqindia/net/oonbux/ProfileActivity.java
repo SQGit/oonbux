@@ -144,7 +144,6 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         }
 
 
-
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
         Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
@@ -235,7 +234,6 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                 } else {
                     profile_update();
                 }
-
 
 
             }
@@ -350,17 +348,17 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                         new UploadImageToServer(str_photo).execute();
                     } else {
 
-
                         Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Updated Successfully", 2);
                         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         cdd.show();
-
-
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("profile", "SUCCESS");
-                        editor.commit();
                     }
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("profile", "SUCCESS");
+                    editor.commit();
+
+
                 } else if (status.equals(null)) {
                     Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();
                 } else if (status.equals("fail")) {
@@ -416,7 +414,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             String responseString = null;
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost("http://oonbux.sqindia.net/api/profilepic");
-            httppost.setHeader("spotId", img_path);
+            httppost.setHeader("session_id", str_session_id);
 
             try {
                 MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -448,42 +446,60 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             Log.d("tag", "Response from server: " + result);
             psDialog.dismiss();
 
+
+            try {
+                JSONObject jo = new JSONObject(result);
+
+                String status = jo.getString("status");
+
+                String msg = jo.getString("message");
+                Log.d("tag", "<-----Status----->" + status);
+
+
+                if (status.equals("success")) {
+
+                    btn_finish.setVisibility(View.GONE);
+
+
+                    Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Updated Successfully", 2);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("profile", "SUCCESS");
+                    editor.commit();
+
+                } else if (status.equals("fail"))
+
+                {
+                    Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Picture not uploaded", 4);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+                } else if (status.equals("fail")) {
+
+                    btn_finish.setVisibility(View.VISIBLE);
+
+                    Dialog_Msg cdd = new Dialog_Msg(ProfileActivity.this, msg);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
+
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+/*
             Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Updated Successfully", 2);
             cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            cdd.show();
+            cdd.show();*/
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

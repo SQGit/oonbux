@@ -129,6 +129,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
         }
 
         nav_pro_pic.setImageBitmap(bitmap);

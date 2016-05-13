@@ -120,6 +120,11 @@ public class Dialog_new extends Dialog {
                     c.startActivity(goD);
                     c.finish();
                     dismiss();
+                } else {
+                    Intent goD = new Intent(c.getApplicationContext(), DashBoardActivity.class);
+                    c.startActivity(goD);
+                    c.finish();
+                    dismiss();
                 }
 
 

@@ -31,6 +31,7 @@ public class DeliverPackageFragment extends Fragment {
     Button btn_addshipment;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     Shipment_Adapter ship_adapter;
+    Adapter_Shipment adapt;
 
 
     @Override
@@ -43,18 +44,26 @@ public class DeliverPackageFragment extends Fragment {
         String sois = sharedPreferences.getString("shipment_photo", "");
 
 
+        Log.d("tag", "0" + sois);
+
+
         shipment_photos = new ArrayList<>();
 
         shipment_photos.add(sois);
+        Log.d("tag", "1" + shipment_photos.get(0));
 
         lv_deliver_list = (ListView) getview.findViewById(R.id.deliver_list);
         btn_addshipment = (Button) getview.findViewById(R.id.add_sp_btn);
 
-        ship_adapter = new Shipment_Adapter(getActivity(), shipment_photos);
-        lv_deliver_list.setAdapter(ship_adapter);
+      /*  ship_adapter = new Shipment_Adapter(getActivity(), shipment_photos);
+        lv_deliver_list.setAdapter(ship_adapter);*/
 
+        adapt = new Adapter_Shipment(getActivity(), shipment_photos);
+        lv_deliver_list.setAdapter(adapt);
 
-        //ship_adapter.notifyDataSetChanged();
+        adapt.notifyDataSetChanged();
+
+        //  ship_adapter.notifyDataSetChanged();
 
 
         btn_addshipment.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +107,9 @@ public class DeliverPackageFragment extends Fragment {
             Log.d("tag", "" + uri);
 
             shipment_photos.add(selectedPhotos.get(0));
-            ship_adapter.notifyDataSetChanged();
+            // ship_adapter.notifyDataSetChanged();
+            Log.d("tag", "2" + shipment_photos.get(0));
+            adapt.notifyDataSetChanged();
 
         }
     }

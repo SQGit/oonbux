@@ -69,37 +69,41 @@
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
 
-                <com.rey.material.widget.CheckBox
-                    android:id="@+id/cb_small"
-                    style="@style/checkbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:checked="true"
-                    android:drawablePadding="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Small" />
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                <com.rey.material.widget.CheckBox
-                    android:id="@+id/cb_medium"
-                    style="@style/checkbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:drawablePadding="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Medium" />
+                    <com.rey.material.widget.CheckBox
+                        android:id="@+id/cb_small"
+                        style="@style/checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:checked="true"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:text="Small" />
 
-                <com.rey.material.widget.CheckBox
-                    android:id="@+id/cb_large"
-                    style="@style/checkbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:drawablePadding="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Large" />
+                    <com.rey.material.widget.CheckBox
+                        android:id="@+id/cb_medium"
+                        style="@style/checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:text="Medium" />
 
+                    <com.rey.material.widget.CheckBox
+                        android:id="@+id/cb_large"
+                        style="@style/checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:text="Large" />
+                </RadioGroup>
 
             </LinearLayout>
 

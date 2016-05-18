@@ -36,6 +36,11 @@ public class Dialog_new extends Dialog {
     }
 
     @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_newmsg);

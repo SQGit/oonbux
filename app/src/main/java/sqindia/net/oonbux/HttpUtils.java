@@ -85,6 +85,10 @@ public class HttpUtils {
 
         } catch (Exception e) {
             Log.e("tag", "Error in http connection " + e.toString());
+            result = "sam";
+            return jArray;
+
+
         }
 
         // Convert response to string
@@ -100,13 +104,18 @@ public class HttpUtils {
             result = sb.toString();
         } catch (Exception e) {
             Log.e("tag", "Error converting result " + e.toString());
+            result = "sam";
         }
 
         try {
 
             jArray = new JSONObject(result);
         } catch (JSONException e) {
+            Log.e("tag", result);
+            Log.e("tag", jArray.toString());
             Log.e("tag", "Error parsing data " + e.toString());
+
+
         }
 
         return jArray;
@@ -260,28 +269,6 @@ public class HttpUtils {
         }
         return "";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public static String makeRequest1(String url, String json, String token) {

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.rey.material.widget.Button;
@@ -28,10 +29,11 @@ public class DeliverPackageFragment extends Fragment {
     public final static int REQUEST_CODE = 1;
     public ArrayList<String> shipment_photos;
     ListView lv_deliver_list;
-    Button btn_addshipment;
+    Button btn_addshipment, btn_nextshipment;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     Shipment_Adapter ship_adapter;
     Adapter_Shipment adapt;
+    ImageButton btn_nxt;
 
 
     @Override
@@ -43,8 +45,10 @@ public class DeliverPackageFragment extends Fragment {
 
         String sois = sharedPreferences.getString("shipment_photo", "");
 
+        String cktis = sharedPreferences.getString("fromdash", "");
 
-        Log.d("tag", "0" + sois);
+
+        Log.d("tag", "0" + cktis);
 
 
         shipment_photos = new ArrayList<>();
@@ -55,13 +59,27 @@ public class DeliverPackageFragment extends Fragment {
         lv_deliver_list = (ListView) getview.findViewById(R.id.deliver_list);
         btn_addshipment = (Button) getview.findViewById(R.id.add_sp_btn);
 
+        btn_nxt = (ImageButton) getview.findViewById(R.id.button_next);
+        // btn_nextshipment = (Button) getview.findViewById(R.id.next_button);
+
       /*  ship_adapter = new Shipment_Adapter(getActivity(), shipment_photos);
         lv_deliver_list.setAdapter(ship_adapter);*/
 
-        adapt = new Adapter_Shipment(getActivity(), shipment_photos);
-        lv_deliver_list.setAdapter(adapt);
+        /*adapt = new Adapter_Shipment(getActivity(), shipment_photos);
+        lv_deliver_list.setAdapter(adapt);*/
 
-        adapt.notifyDataSetChanged();
+
+        if (cktis.equals("asdfg")) {
+            btn_addshipment.setVisibility(View.INVISIBLE);
+            adapt = new Adapter_Shipment(getActivity(), shipment_photos);
+            lv_deliver_list.setAdapter(adapt);
+        } else {
+            btn_addshipment.setVisibility(View.VISIBLE);
+            btn_nxt.setVisibility(View.INVISIBLE);
+        }
+
+
+        //adapt.notifyDataSetChanged();
 
         //  ship_adapter.notifyDataSetChanged();
 
@@ -69,11 +87,31 @@ public class DeliverPackageFragment extends Fragment {
         btn_addshipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                shipment_photos.clear();
                 PhotoPickerIntent intent = new PhotoPickerIntent(getActivity());
                 intent.setPhotoCount(1);
                 intent.setColumn(4);
                 intent.setShowCamera(true);
                 startActivityForResult(intent, REQUEST_CODE);
+                btn_nxt.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+      /*  btn_nextshipment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ioi = new Intent(getActivity(),ShipmentNext.class);
+                startActivity(ioi);
+            }
+        });*/
+
+        btn_nxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ioi = new Intent(getActivity(), ShipmentNext.class);
+                startActivity(ioi);
             }
         });
 
@@ -105,11 +143,19 @@ public class DeliverPackageFragment extends Fragment {
 
             Log.d("tag", selectedPhotos.get(0));
             Log.d("tag", "" + uri);
-
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("shipment_photo", selectedPhotos.get(0));
+            editor.commit();
             shipment_photos.add(selectedPhotos.get(0));
             // ship_adapter.notifyDataSetChanged();
             Log.d("tag", "2" + shipment_photos.get(0));
+
+            adapt = new Adapter_Shipment(getActivity(), shipment_photos);
+            lv_deliver_list.setAdapter(adapt);
             adapt.notifyDataSetChanged();
+            btn_nxt.setVisibility(View.VISIBLE);
+            btn_addshipment.setVisibility(View.INVISIBLE);
 
         }
     }

@@ -71,6 +71,10 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
         <activity android:name=".AddLocation" />
+        <activity android:name=".ShipmentNext" />
+        <activity android:name=".ChoosePal" />
+        <activity android:name=".ChooseAddress" />
+        <activity android:name=".AddPal" />
 
 
         <meta-data

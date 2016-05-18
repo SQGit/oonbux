@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
     android:paddingBottom="15dp">
 
@@ -12,6 +11,7 @@
         style="@style/Material.Drawable.Ripple.Wave"
         android:layout_width="150dp"
         android:layout_height="35dp"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
@@ -26,23 +26,35 @@
     <com.rey.material.widget.ListView
         android:id="@+id/deliver_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </com.rey.material.widget.ListView>
-
-    <!--
-        <com.rey.material.widget.Button
-            android:id="@+id/add_sp_btn2"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:background="#e6851d"
-            android:drawableLeft="@drawable/done_ico"
-            android:gravity="center"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:text="Done"
-            android:textColor="@color/text_color_hint_light"
-            android:textSize="14sp" />-->
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_sp_btn"></com.rey.material.widget.ListView>
 
 
-</LinearLayout>
+    <!--     <com.rey.material.widget.Button
+             android:id="@+id/next_button"
+             android:layout_width="wrap_content"
+             android:layout_height="35dp"
+             android:layout_gravity="center"
+             android:background="#e6851d"
+             android:drawableLeft="@drawable/done_ico"
+             android:gravity="center"
+             android:paddingLeft="15dp"
+             android:paddingRight="10dp"
+             android:layout_marginTop="25dp"
+             android:text="Done"
+             android:textColor="@color/text_color_hint_light"
+             android:textSize="14sp" />-->
+
+
+    <ImageButton
+        android:id="@+id/button_next"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_next_button"
+        android:src="@drawable/back_rt_ico" />
+
+
+</RelativeLayout>

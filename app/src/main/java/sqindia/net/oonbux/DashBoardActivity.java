@@ -200,7 +200,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             public void onClick(View v) {
 
                 btn_add_shipment.setVisibility(View.GONE);
-                btn_done_shipment.setVisibility(View.VISIBLE);
+                // btn_done_shipment.setVisibility(View.VISIBLE);
 
                 progressBar.setProgress(66);
                 btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
@@ -392,6 +392,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("shipment_photo", selectedPhotos.get(0));
+            editor.putString("fromdash", "asdfg");
             editor.commit();
 
             progressBar.setProgress(66);
@@ -399,7 +400,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             FragmentManager fm = getFragmentManager();
             fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
             btn_add_shipment.setVisibility(View.GONE);
-            btn_done_shipment.setVisibility(View.VISIBLE);
+            btn_done_shipment.setVisibility(View.GONE);
             progressBar.setProgress(66);
 
             //btm_cam.setImageURI(uri);

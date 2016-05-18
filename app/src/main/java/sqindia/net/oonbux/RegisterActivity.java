@@ -339,6 +339,7 @@ public class RegisterActivity extends Activity {
 
 
                     Dialog_new cdd = new Dialog_new(RegisterActivity.this, msg, 0);
+                    cdd.setCancelable(false);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
 
@@ -388,6 +389,7 @@ public class RegisterActivity extends Activity {
 
                     Dialog_Msg cdd = new Dialog_Msg(RegisterActivity.this, msg);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.setCancelable(false);
                     cdd.show();
 
 
@@ -443,12 +445,22 @@ public class RegisterActivity extends Activity {
                     Log.e("tag", "jj" + jsonobject);
                     json = "";
                 } else {
+
 */
+                if (jsonobject == null) {
+                    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("Try Check your Network")
+                            .setConfirmText("OK")
+                            .show();
+                }
+
                 json = jsonobject.toString();
                 //}
                 return json;
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
+                jsonStr = "";
             }
             return jsonStr;
 

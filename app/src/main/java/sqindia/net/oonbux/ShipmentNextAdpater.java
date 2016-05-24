@@ -1,14 +1,16 @@
 package sqindia.net.oonbux;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
+
+import java.util.ArrayList;
 
 
 public class ShipmentNextAdpater extends BaseAdapter {
@@ -16,6 +18,8 @@ public class ShipmentNextAdpater extends BaseAdapter {
     Context c1;
     CheckBox ck_sml;
     Button btn_add_pal;
+    ArrayList<String> sam;
+    int ls = 3;
 
 
     public ShipmentNextAdpater(Context c1) {
@@ -26,7 +30,7 @@ public class ShipmentNextAdpater extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return ls;
     }
 
     @Override
@@ -44,12 +48,28 @@ public class ShipmentNextAdpater extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
+        LinearLayout layout;
+
+        ls = 5;
+
         LayoutInflater inflat = (LayoutInflater) c1.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         view = inflat.inflate(R.layout.shipment_next_apapter, null);
 
 
-        btn_add_pal = (Button) view.findViewById(R.id.button_next);
+        layout = (LinearLayout) view.findViewById(R.id.linearlayout);
+
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ls = ls - 1;
+                notifyDataSetChanged();
+            }
+        });
+
+   /*     btn_add_pal = (Button) view.findViewById(R.id.button_next);
 
         btn_add_pal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +78,7 @@ public class ShipmentNextAdpater extends BaseAdapter {
                 newe.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 c1.startActivity(newe);
             }
-        });
+        });*/
 
 //        ck_sml = (CheckBox) view.findViewById(R.id.cb_small);
 

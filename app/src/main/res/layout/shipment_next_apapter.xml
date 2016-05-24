@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -17,17 +18,144 @@
 
 
     <LinearLayout
+        android:id="@+id/linearlayout"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
-        android:background="@color/text_divider">
+        android:background="#606060"
+        android:padding="3dp">
 
 
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/imgview"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/photo_ico"
+            app:siBorderColor="@color/colorAccent"
+            app:siBorderWidth="0.5dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="size : "
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_headers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:text="SMALL"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_headeddr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Pickup : "
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_headerdds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:text="NO"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_headeddddr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Price : "
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_headerdDds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:text="346 dol"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_headedsddddr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Pal Id : "
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_headeraddDds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:text="86FF3EDJ4"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
     </LinearLayout>
 
-    <com.rey.material.widget.Button
+    <!--<com.rey.material.widget.Button
         android:id="@+id/button_next"
         style="@style/Material.Drawable.Ripple.Wave"
         android:layout_width="wrap_content"
@@ -40,6 +168,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="Add Pal"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF" />-->
 
 </LinearLayout>

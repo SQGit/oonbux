@@ -1,6 +1,7 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ListView;
 
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 
 /**
@@ -21,6 +23,7 @@ public class AddPal extends Activity {
     MaterialAutoCompleteTextView aet_mail;
     com.rey.material.widget.LinearLayout lt_back;
     ListView lsview;
+    Button btn_submit;
 
 
     @Override
@@ -43,6 +46,9 @@ public class AddPal extends Activity {
         et_name.setTypeface(tf);
         aet_mail.setTypeface(tf);
 
+        btn_submit = (Button) findViewById(R.id.button_submit);
+
+
 
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
 
@@ -53,6 +59,16 @@ public class AddPal extends Activity {
               /*  Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
                 startActivity(inte);*/
                 onBackPressed();
+            }
+        });
+
+
+
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(), ChoosePal.class);
+                startActivity(inte);
             }
         });
 

@@ -35,13 +35,15 @@ public class DeliverPackageFragment extends Fragment {
     Adapter_Shipment adapt;
     ImageButton btn_nxt;
 
+    SharedPreferences sharedPreferences;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View getview = inflater.inflate(R.layout.fragment_deliver_package, container, false);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String sois = sharedPreferences.getString("shipment_photo", "");
 
@@ -110,6 +112,21 @@ public class DeliverPackageFragment extends Fragment {
         btn_nxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                String size = sharedPreferences.getString("ship_size", "");
+
+                String pickup = sharedPreferences.getString("ship_pickup", "");
+
+                Log.d("tag", "" + size + "\t" + pickup);
+
+
+
+
+
+
+
+
                 Intent ioi = new Intent(getActivity(), ShipmentNext.class);
                 startActivity(ioi);
             }

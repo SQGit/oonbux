@@ -49,11 +49,52 @@
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button_next"
+        android:layout_height="375dp"
         android:layout_below="@+id/ll1">
 
     </ListView>
+
+
+    <LinearLayout
+        android:id="@+id/ll3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listview"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_nexst"
+            style="@style/Material.Drawable.Ripple.Wave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/text_color"
+            android:drawableLeft="@drawable/lft_pal_ico"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Add Pal"
+            android:textColor="#FFFFFF" />
+
+        <!--   <com.rey.material.widget.Button
+               android:id="@+id/button_delete"
+               style="@style/Material.Drawable.Ripple.Wave"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:background="@color/text_color"
+               android:drawableLeft="@drawable/lft_pal_ico"
+               android:drawablePadding="5dp"
+               android:paddingLeft="10dp"
+               android:layout_marginLeft="15dp"
+               android:layout_marginRight="20dp"
+               android:paddingRight="10dp"
+               android:text="Delete Cart"
+               android:textColor="#FFFFFF" />-->
+    </LinearLayout>
 
 
     <ImageButton

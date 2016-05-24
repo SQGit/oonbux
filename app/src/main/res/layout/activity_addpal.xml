@@ -50,7 +50,7 @@
     <LinearLayout
         android:id="@+id/ll2"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="85dp"
         android:layout_below="@+id/ll1"
         android:background="@color/text_color">
 
@@ -82,22 +82,23 @@
     <LinearLayout
         android:id="@+id/ll3"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="55dp"
         android:layout_below="@+id/ll2"
         android:background="#896640">
 
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edittext_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:hint="Pal Name"
             android:inputType="textPersonName"
             android:paddingLeft="5dp"
             android:paddingRight="10dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:met_accentTypeface="fonts/prox.otf"
             app:met_baseColor="@color/text_divider_light"
             app:met_floatingLabel="normal"

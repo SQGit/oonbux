@@ -179,6 +179,7 @@ public class LoginActivity extends Activity {
                         i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i1);
+                        sDialog.dismiss();
                         finish();
 
 
@@ -188,6 +189,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         sweetAlertDialog.dismiss();
+                        sweetAlertDialog.cancel();
 
                     }
                 })
@@ -266,7 +268,7 @@ public class LoginActivity extends Activity {
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();*/
 
-                    Intent login_intent = new Intent(getApplicationContext(), ProfileInfo.class);
+                    Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
                     startActivity(login_intent);
                     finish();
 
@@ -309,8 +311,13 @@ public class LoginActivity extends Activity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("login", "success");
 
+                    editor.putString("register", "success");
+
+                    editor.putString("profile", "success");
+
                     editor.putString("sessionid", gsessionid);
                     editor.putString("oonbuxid", goonbuxid);
+                    editor.putString("gcmid", jo.getString("device_gcm_id"));
                     editor.putString("fname", gfname);
                     editor.putString("lname", glname);
                     editor.putString("mail", gmail);
@@ -318,6 +325,34 @@ public class LoginActivity extends Activity {
                     editor.putString("state", gstate);
                     editor.putString("zip", gzip);
                     editor.putString("country", gcontry);
+
+
+                    editor.putString("default_adr", jo.getString("default_loc"));
+
+                    editor.putString("loc_addr1", jo.getString("loc_addr_line1"));
+                    editor.putString("loc_addr2", jo.getString("loc_addr_line2"));
+                    editor.putString("loc_city", jo.getString("loc_addr_city"));
+                    editor.putString("loc_state", jo.getString("loc_addr_state"));
+                    editor.putString("loc_zip", jo.getString("loc_addr_zip"));
+                    editor.putString("loc_phone", jo.getString("loc_phone"));
+                    editor.putString("loc_note", jo.getString("loc_delivery_note"));
+
+                    editor.putString("int_addr1", jo.getString("int_addr_line1"));
+                    editor.putString("int_addr2", jo.getString("int_addr_line2"));
+                    editor.putString("int_city", jo.getString("int_addr_city"));
+                    editor.putString("int_state", jo.getString("int_addr_state"));
+                    editor.putString("int_zip", jo.getString("int_addr_zip"));
+                    editor.putString("int_phone", jo.getString("int_phone"));
+                    editor.putString("int_note", jo.getString("int_delivery_note"));
+
+
+
+
+
+
+
+
+
 
                     editor.commit();
 

@@ -118,12 +118,13 @@ public class DeliveryAddress extends Activity {
         }
 
 
-        if (sharedPreferences.getBoolean("adrsts", false)) {
+        if (sharedPreferences.getBoolean("adrsts0", false)) {
             loc_adr = true;
-            int_adr = true;
             disable_loc();
-            disable_int();
             btn_save_loc.setVisibility(View.GONE);
+        } else if (sharedPreferences.getBoolean("adrsts1", false)) {
+            int_adr = true;
+            disable_int();
             btn_save_int.setVisibility(View.GONE);
         }
 
@@ -178,6 +179,19 @@ public class DeliveryAddress extends Activity {
                             .show();
                 } else {
                     cb_int.setChecked(false);
+
+                    if (cb_loc.isChecked()) {
+                        str_def_adr = "LOCAL";
+                    } else if (cb_int.isChecked()) {
+                        str_def_adr = "INTERNATIONAL";
+                    }
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("default_adr", str_def_adr);
+                    editor.commit();
+
+
                 }
 
 
@@ -207,6 +221,20 @@ public class DeliveryAddress extends Activity {
                             .show();
                 } else {
                     cb_loc.setChecked(false);
+
+
+                    if (cb_loc.isChecked()) {
+                        str_def_adr = "LOCAL";
+                    } else if (cb_int.isChecked()) {
+                        str_def_adr = "INTERNATIONAL";
+                    }
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("default_adr", str_def_adr);
+                    editor.commit();
+
+
                 }
 
             }
@@ -436,6 +464,20 @@ public class DeliveryAddress extends Activity {
                                             })
                                             .show();
 
+
+                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString(location + "_addr1", addr1);
+                                    editor.putString(location + "_addr2", addr2);
+                                    editor.putString(location + "_city", city);
+                                    editor.putString(location + "_state", state);
+                                    editor.putString(location + "_zip", zip);
+                                    editor.putString(location + "_phone", phone);
+                                    editor.putString(location + "_note", note);
+                                    editor.putBoolean("adrsts0", true);
+                                    editor.commit();
+
+
                                     loc_adr = true;
                                 } else {
                                     btn_save_int.setVisibility(View.GONE);
@@ -455,12 +497,25 @@ public class DeliveryAddress extends Activity {
                                             .show();
 
 
+                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString(location + "_addr1", addr1);
+                                    editor.putString(location + "_addr2", addr2);
+                                    editor.putString(location + "_city", city);
+                                    editor.putString(location + "_state", state);
+                                    editor.putString(location + "_zip", zip);
+                                    editor.putString(location + "_phone", phone);
+                                    editor.putString(location + "_note", note);
+                                    editor.putBoolean("adrsts1", true);
+                                    editor.commit();
+
+
                                     // Toast.makeText(getApplicationContext(), "International address Updated", Toast.LENGTH_LONG).show();
                                     int_adr = true;
                                 }
 
 
-                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                                /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(location + "_addr1", addr1);
                                 editor.putString(location + "_addr2", addr2);
@@ -470,7 +525,7 @@ public class DeliveryAddress extends Activity {
                                 editor.putString(location + "_phone", phone);
                                 editor.putString(location + "_note", note);
                                 editor.putBoolean("adrsts", true);
-                                editor.commit();
+                                editor.commit();*/
 
 
 

@@ -84,8 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="NO 2,\n Nast st \n arizob"
+            android:text="NO 2,\nWestboag st \n Arizona"
             android:textColor="#e0e0e0"
             android:textSize="14sp" />
 
@@ -165,8 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="NO 2,\n Nast st \n arizob"
+            android:text="NO 846,\nGia Block \nCarolina"
             android:textColor="#e0e0e0"
             android:textSize="14sp" />
 
@@ -245,8 +243,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="NO 2,\n Nast st \n arizob"
+            android:text="NO 3/55,\nRoot 53 \nNR"
             android:textColor="#e0e0e0"
             android:textSize="14sp" />
 
@@ -325,8 +322,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="NO 2,\n Nast st \n arizob"
+            android:text="NO 55,\nRad Street \nBrukline"
             android:textColor="#e0e0e0"
             android:textSize="14sp" />
 
@@ -351,6 +347,7 @@
 
 
     <com.rey.material.widget.Button
+        android:id="@+id/button_payment"
         style="@style/Material.Drawable.Ripple.Wave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

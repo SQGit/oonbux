@@ -45,6 +45,13 @@
                 android:textColor="#FFFFFF"
                 android:textSize="24sp" />
 
+            <com.rey.material.widget.LinearLayout
+                android:id="@+id/layout_add"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="right">
             <ImageButton
                 android:id="@+id/button_add_pal"
                 android:layout_width="wrap_content"
@@ -52,6 +59,7 @@
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/plus_ico" />
+            </com.rey.material.widget.LinearLayout>
 
 
         </FrameLayout>
@@ -68,13 +76,13 @@
         android:background="@color/text_color">
 
         <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
-            android:id="@+id/edittext_email"
+            android:id="@+id/edittext_pal_names"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:hint="Pal Name or Email Id"
+            android:hint="Enter Pal Name"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:paddingLeft="5dp"
@@ -90,6 +98,15 @@
             app:met_underlineColor="@color/text_divider" />
 
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/lview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll2"
+        android:layout_marginBottom="100dp">
+
+    </ListView>
 
 
     <ImageButton

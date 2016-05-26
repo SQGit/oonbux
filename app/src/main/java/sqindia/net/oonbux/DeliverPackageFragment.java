@@ -17,7 +17,9 @@ import com.rey.material.widget.Button;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
@@ -34,8 +36,10 @@ public class DeliverPackageFragment extends Fragment {
     Shipment_Adapter ship_adapter;
     Adapter_Shipment adapt;
     ImageButton btn_nxt;
-
+    ArrayList<String> ship_size = new ArrayList<>();
     SharedPreferences sharedPreferences;
+
+    SharedPreferences.Editor edit;
 
 
     @Override
@@ -118,14 +122,22 @@ public class DeliverPackageFragment extends Fragment {
 
                 String pickup = sharedPreferences.getString("ship_pickup", "");
 
-                Log.d("tag", "" + size + "\t" + pickup);
+                String photo = sharedPreferences.getString("shipment_photo", "");
 
+                Log.e("tag", "" + size + "\t" + pickup + "\t" + photo);
 
+                ship_size.add(size);
 
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Set<String> set = new HashSet<String>();
+                set.add(size);
+                //set.addAll(ship_size);
+                editor.putStringSet("ship", set);
+                editor.commit();
 
-
-
-
+                editor.putString("s_size", size);
+                editor.putString("s_photo", photo);
+                editor.commit();
 
                 Intent ioi = new Intent(getActivity(), ShipmentNext.class);
                 startActivity(ioi);

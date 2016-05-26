@@ -69,6 +69,7 @@ public class AddPal extends Activity {
             public void onClick(View v) {
                 Intent inte = new Intent(getApplicationContext(), ChoosePal.class);
                 startActivity(inte);
+                finish();
             }
         });
 

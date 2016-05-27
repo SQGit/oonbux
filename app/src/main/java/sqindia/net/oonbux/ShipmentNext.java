@@ -1,13 +1,15 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -20,6 +22,8 @@ import com.rey.material.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Salman on 5/18/2016.
@@ -36,10 +40,11 @@ public class ShipmentNext extends Activity {
     com.rey.material.widget.LinearLayout lt_back, lt_add;
     Button btn_delete, btn_addpal, btn_continue;
     Set<String> sets = new HashSet<String>();
-
-
+    DbC dbclass;
+    Context context = this;
+    Adap_Shipment adapter1;
     SharedPreferences sharedPreferences;
-
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ public class ShipmentNext extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shipment_next);
 
+        dbclass = new DbC(context);
 
         // ship_size = new ArrayList<>();
         //ship_photo = new ArrayList<>();
@@ -116,45 +122,65 @@ public class ShipmentNext extends Activity {
         btn_continue.setTypeface(tf1);
 
 
-        if (!ship_size.isEmpty()) {
+      /*  if (!ship_size.isEmpty()) {
 
             Log.e("tag3", ship_size.get(0) + "\t" + ship_photo.get(0) + "\t" + ship_size.size());
             shipadpt = new ShipmentNextAdpater(ShipmentNext.this, getApplicationContext(), ship_size, ship_photo);
             lsview.setAdapter(shipadpt);
-        }
+        }*/
 
 
-
-        lsview.setOnHoverListener(new View.OnHoverListener() {
-            @Override
-            public boolean onHover(View v, MotionEvent event) {
-
-                Log.d("tag", "hover");
-                return true;
-            }
-        });
+        getFromDB();
 
 
-        lsview.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int i = position;
-                Log.d("tag", "select " + i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         lsview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int i = position;
+//                String ads = lsview.getSelectedItem().toString();
 
-                Log.d("tag", "click " + i);
+                //  String msg = view.findViewById(R.id.tv_size).getText().toString;
+
+                TextView txxx = (TextView) view.findViewById(R.id.tv_size);
+
+                TextView tx = (TextView) view.findViewById(R.id.tv_op);
+
+                final String asd = tx.getText().toString();
+                Log.d("tag", "" + asd);
+
+                final String sss = txxx.getText().toString();
+
+
+                SweetAlertDialog dialog = new SweetAlertDialog(ShipmentNext.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Do you want to Delete this \n Shipment?")
+                        .setConfirmText("Yes!")
+                        .setCancelText("No")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                dbclass.deletedata(sss, asd);
+                                getFromDB();
+                                adapter1.notifyDataSetChanged();
+                                sDialog.dismiss();
+
+                            }
+                        })
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        });
+                dialog.show();
+
+
+
+
+
+
+
+
             }
         });
 
@@ -165,7 +191,6 @@ public class ShipmentNext extends Activity {
 
                 Intent newe = new Intent(getApplicationContext(), ChoosePal.class);
                 startActivity(newe);
-
 
             }
         });
@@ -180,22 +205,6 @@ public class ShipmentNext extends Activity {
 
             }
         });
-
-
-     /*   btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Log.d("tag","btndelete");
-                lsview.getChildAt(1).setEnabled(false);
-
-
-
-            }
-        });*/
-
-
-
 
 
         lt_back.setOnClickListener(new View.OnClickListener() {
@@ -217,11 +226,41 @@ public class ShipmentNext extends Activity {
 
             }
         });
+    }
 
 
+    private void getFromDB() {
+
+        ArrayList<DbGclass> dbdatalist = new ArrayList<DbGclass>();
+        dbdatalist.clear();
+
+        String query = " SELECT * FROM cart";
 
 
+        Cursor c = dbclass.fetchdata(query);
+
+
+        if (c != null) {
+            if (c.moveToFirst()) {
+                do {
+                    DbGclass dbc = new DbGclass();
+
+                    dbc.set_id(String.valueOf(c.getInt(c.getColumnIndex("id"))));
+
+                    dbc.set_size(c.getString(c.getColumnIndex("size")));
+                    dbc.set_pickup(c.getString(c.getColumnIndex("pickup")));
+                    dbc.set_photo(c.getString(c.getColumnIndex("photo")));
+                    dbdatalist.add(dbc);
+                } while (c.moveToNext());
+            }
+        }
+
+
+        adapter1 = new Adap_Shipment(ShipmentNext.this, dbdatalist);
+        lsview.setAdapter(adapter1);
 
 
     }
+
+
 }

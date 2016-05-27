@@ -1,8 +1,10 @@
 package sqindia.net.oonbux;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -41,11 +43,17 @@ public class DeliverPackageFragment extends Fragment {
 
     SharedPreferences.Editor edit;
 
+    private SQLiteDatabase db;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View getview = inflater.inflate(R.layout.fragment_deliver_package, container, false);
+
+
+        createDatabase();
+
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -119,10 +127,10 @@ public class DeliverPackageFragment extends Fragment {
 
 
                 String size = sharedPreferences.getString("ship_size", "");
-
                 String pickup = sharedPreferences.getString("ship_pickup", "");
-
                 String photo = sharedPreferences.getString("shipment_photo", "");
+
+                insertIntoDB(size, pickup, photo);
 
                 Log.e("tag", "" + size + "\t" + pickup + "\t" + photo);
 
@@ -147,6 +155,32 @@ public class DeliverPackageFragment extends Fragment {
 
         return getview;
     }
+
+
+    protected void createDatabase() {
+        Log.d("tag", "createdb");
+        db = getActivity().openOrCreateDatabase("oonbux", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, size VARCHAR, pickup VARCHAR, photo VARCHAR);");
+    }
+
+    protected void insertIntoDB(String a, String b, String c) {
+        Log.d("tag", "insertdb " + a + b + c);
+        String query = "INSERT INTO cart (size,pickup,photo) VALUES('" + a + "', '" + b + "', '" + c + "');";
+        db.execSQL(query);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @Override

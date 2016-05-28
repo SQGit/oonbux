@@ -67,7 +67,7 @@ public class HttpUtils {
     }
 
 
-    public static JSONObject getData(String url) {
+    public static JSONObject getData(String url) throws JSONException {
         InputStream is = null;
         String result = "";
         JSONObject jArray = null;
@@ -86,39 +86,51 @@ public class HttpUtils {
         } catch (Exception e) {
             Log.e("tag", "Error in http connection " + e.toString());
             result = "sam";
+            is = null;
             return jArray;
-
 
         }
 
         // Convert response to string
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    is, "iso-8859-1"), 8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            is.close();
-            result = sb.toString();
-        } catch (Exception e) {
-            Log.e("tag", "Error converting result " + e.toString());
+
+        if (is.equals(null)) {
+
             result = "sam";
-        }
-
-        try {
-
             jArray = new JSONObject(result);
-        } catch (JSONException e) {
-            Log.e("tag", result);
-            Log.e("tag", jArray.toString());
-            Log.e("tag", "Error parsing data " + e.toString());
+            return jArray;
+
+        } else {
 
 
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        is, "iso-8859-1"), 8);
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                is.close();
+                result = sb.toString();
+            } catch (Exception e) {
+                Log.e("tag", "Error converting result " + e.toString());
+                result = "sam";
+            }
+
+            try {
+
+                jArray = new JSONObject(result);
+            } catch (JSONException e) {
+                Log.e("tag", result);
+                Log.e("tag", jArray.toString());
+                Log.e("tag", "Error parsing data " + e.toString());
+
+
+            }
+
+            return jArray;
         }
 
-        return jArray;
     }
 
 

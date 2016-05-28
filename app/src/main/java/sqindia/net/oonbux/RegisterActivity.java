@@ -447,7 +447,9 @@ public class RegisterActivity extends Activity {
                 } else {
 
 */
-                if (jsonobject == null) {
+                Log.d("tag", "" + jsonobject.toString());
+
+                if (jsonobject.toString() == "sam") {
                     new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
                             .setContentText("Try Check your Network")

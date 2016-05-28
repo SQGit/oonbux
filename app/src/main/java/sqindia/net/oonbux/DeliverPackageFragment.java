@@ -19,10 +19,9 @@ import com.rey.material.widget.Button;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
@@ -130,9 +129,35 @@ public class DeliverPackageFragment extends Fragment {
                 String pickup = sharedPreferences.getString("ship_pickup", "");
                 String photo = sharedPreferences.getString("shipment_photo", "");
 
-                insertIntoDB(size, pickup, photo);
 
-                Log.e("tag", "" + size + "\t" + pickup + "\t" + photo);
+                if (size.equals("nil")) {
+
+
+                    new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("Please Add size for shipment")
+                            .setConfirmText("Ok")
+
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismiss();
+                                }
+                            })
+                            .show();
+
+
+                } else {
+                    insertIntoDB(size, pickup, photo);
+                    Intent ioi = new Intent(getActivity(), ShipmentNext.class);
+                    startActivity(ioi);
+
+                }
+
+
+
+
+
+               /* Log.e("tag", "" + size + "\t" + pickup + "\t" + photo);
 
                 ship_size.add(size);
 
@@ -145,10 +170,9 @@ public class DeliverPackageFragment extends Fragment {
 
                 editor.putString("s_size", size);
                 editor.putString("s_photo", photo);
-                editor.commit();
+                editor.commit();*/
 
-                Intent ioi = new Intent(getActivity(), ShipmentNext.class);
-                startActivity(ioi);
+
             }
         });
 

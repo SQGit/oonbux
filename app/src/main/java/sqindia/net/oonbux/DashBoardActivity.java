@@ -4,15 +4,17 @@ package sqindia.net.oonbux;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,11 +24,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +47,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
     com.rey.material.widget.TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet;
     Button btn_nav_cont_loc_adr, btn_nav_cont_int_adr, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop, btn_shop_online, btn_add_shipment, btn_done_shipment;
     com.rey.material.widget.TextView tv_dash_hd_txt;
-    String str_oonbux_id, str_photo;
+    String str_oonbux_id, str_photo, web_photo;
     Toolbar toolbar;
     Fragment fragment;
     Context context;
@@ -53,6 +57,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
     Bitmap bitmap;
     Uri uri;
+
+    ProgressDialog pDialog;
 
 
     @Override
@@ -124,16 +130,23 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         nav_pro_pic = (ImageView) findViewById(R.id.nav_header_propic);
 
 
-        uri = Uri.fromFile(new File(str_photo));
-        try {
+        web_photo = sharedPreferences.getString("web_photo_url", "");
+        String photo_url = "http://androidtesting.newlogics.in/profilepic/C_120x120_eaw1o5ff08k5eafl158k_mypytvtlgirwqbccsmjddjzkedtkghsnjmrifcav_hot(6).png";
+
+
+        new LoadImage().execute(web_photo);
+
+
+        // uri = Uri.fromFile(new File(str_photo));
+      /*  try {
             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (OutOfMemoryError e) {
             e.printStackTrace();
-        }
+        }*/
 
-        nav_pro_pic.setImageBitmap(bitmap);
+        // nav_pro_pic.setImageBitmap(bitmap);
 
         tv_nav_cont_loc.setText(sharedPreferences.getString("state", ""));
         tv_nav_cont_address.setText(sharedPreferences.getString("zip", ""));
@@ -460,5 +473,44 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         super.onStop();
 
 
+    }
+
+    private class LoadImage extends AsyncTask<String, String, Bitmap> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(DashBoardActivity.this);
+            pDialog.setMessage("Loading Image ....");
+            pDialog.show();
+
+        }
+
+        protected Bitmap doInBackground(String... args) {
+            try {
+                bitmap = BitmapFactory.decodeStream((InputStream) new URL(args[0]).getContent());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap image) {
+
+            Log.d("tag", "" + image);
+            if (image != null) {
+                //img.setImageBitmap(image);
+                bitmap = image;
+                pDialog.dismiss();
+
+                nav_pro_pic.setImageBitmap(bitmap);
+
+            } else {
+
+                pDialog.dismiss();
+                Toast.makeText(DashBoardActivity.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
+
+            }
+        }
     }
 }

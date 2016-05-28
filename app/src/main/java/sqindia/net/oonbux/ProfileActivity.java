@@ -1,8 +1,10 @@
 package sqindia.net.oonbux;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -45,6 +47,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -57,12 +61,14 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     com.rey.material.widget.TextView tv_header;
     Button btn_logout, btn_finish;
     ImageView iv_profile;
-    String get_profile_sts, str_oonbux_id, str_state, str_zip, str_phone, str_fname, str_lname, str_photo, str_session_id;
+    String get_profile_sts, str_oonbux_id, str_state, str_zip, str_phone, str_fname, str_lname, str_photo, str_session_id, str_web_photo;
     Uri uri;
     Bitmap bitmap;
     com.rey.material.widget.LinearLayout lt_back;
     SweetAlertDialog sweetAlertDialog;
     // EditText et_fname,et_lname;
+
+    ProgressDialog progressDialog;
 
     MaterialEditText et_fname, et_lname;
     SweetAlertDialog psDialog;
@@ -87,6 +93,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         str_state = sharedPreferences.getString("state", "");
         str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
         str_photo = sharedPreferences.getString("photourl", "");
+        str_web_photo = sharedPreferences.getString("web_photo_url", "");
 
         str_session_id = sharedPreferences.getString("sessionid", "");
 
@@ -126,16 +133,20 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         tv_fname.setText(str_fname);
         tv_lname.setText(str_lname);
 
-        uri = Uri.fromFile(new File(str_photo));
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if (!(str_web_photo.isEmpty())) {
+            new LoadImage().execute(str_web_photo);
+        } else {
+            uri = Uri.fromFile(new File(str_photo));
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            iv_profile.setImageBitmap(bitmap);
+            //bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
         }
-
-        iv_profile.setImageBitmap(bitmap);
-        //bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
-
 
         if ((get_profile_sts.equals(""))) {
             btn_finish.setVisibility(View.VISIBLE);
@@ -413,7 +424,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         private String uploadFile() {
             String responseString = null;
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://oonbux.sqindia.net/api/profilepic");
+            HttpPost httppost = new HttpPost("http://androidtesting.newlogics.in/api/profilepic");
             httppost.setHeader("session_id", str_session_id);
 
             try {
@@ -458,6 +469,11 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
                 if (status.equals("success")) {
 
+                    String url = jo.getString("url");
+
+                    Log.d("tag", url);
+
+
                     btn_finish.setVisibility(View.GONE);
 
 
@@ -469,6 +485,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("profile", "SUCCESS");
+                    editor.putString("web_photo_url", url);
                     editor.commit();
 
                 } else if (status.equals("fail"))
@@ -500,6 +517,52 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         }
 
     }
+
+
+    private class LoadImage extends AsyncTask<String, String, Bitmap> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ProfileActivity.this);
+            progressDialog.setMessage("Loading Image ....");
+            progressDialog.show();
+
+        }
+
+        protected Bitmap doInBackground(String... args) {
+            try {
+                bitmap = BitmapFactory.decodeStream((InputStream) new URL(args[0]).getContent());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap image) {
+
+            Log.d("tag", "" + image);
+            if (image != null) {
+                //img.setImageBitmap(image);
+                bitmap = image;
+                progressDialog.dismiss();
+
+                iv_profile.setImageBitmap(bitmap);
+
+            } else {
+
+                progressDialog.dismiss();
+                Toast.makeText(ProfileActivity.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+
+
+
+
+
 
 
 }

@@ -108,20 +108,30 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="tag" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4df211f2-8859-454b-8356-ed913636e9a1" name="Default" comment="oonbux's commit24s">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/FileCache.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/MemoryCache.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Utils.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DashBoardActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DashBoardActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliverPackageFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliverPackageFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/HttpUtils.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/HttpUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/AddLocation.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/AddLocation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Config.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Config.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DbC.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DbC.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliveryAddress.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliveryAddress.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/LoginActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileInfo.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/RegisterActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/RegisterActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ShipmentNext.java" afterPath="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ShipmentNext.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_addloction.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_addloction.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/shipment_listview_adapter.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/shipment_listview_adapter.xml" />
     </list>
     <ignored path="oonbux_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -162,140 +172,131 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ProfileActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.57706094">
-              <caret line="338" column="48" selection-start-line="338" selection-start-column="48" selection-end-line="338" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="59" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="67" />
+              <caret line="39" column="45" selection-start-line="39" selection-start-column="45" selection-end-line="39" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Dialog_new.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Dialog_new.java">
+      <file leaf-file-name="Config.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Config.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DashBoardActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DashBoardActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+              <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="false" />
-                <element signature="e#8085#9082#0" expanded="true" />
-                <element signature="e#9081#9082#0" expanded="true" />
-                <element signature="e#9130#10071#0" expanded="true" />
-                <element signature="e#10070#10071#0" expanded="true" />
-                <element signature="e#10119#11102#0" expanded="true" />
-                <element signature="e#11101#11102#0" expanded="true" />
-                <element signature="e#11155#11975#0" expanded="true" />
-                <element signature="e#11974#11975#0" expanded="true" />
-                <element signature="e#12024#12267#0" expanded="true" />
-                <element signature="e#12266#12267#0" expanded="true" />
-                <element signature="e#12317#12555#0" expanded="true" />
-                <element signature="e#12554#12555#0" expanded="true" />
-                <element signature="e#12608#12845#0" expanded="true" />
-                <element signature="e#12844#12845#0" expanded="true" />
-                <element signature="e#12897#13115#0" expanded="true" />
-                <element signature="e#13114#13115#0" expanded="true" />
-                <element signature="e#13166#13404#0" expanded="true" />
-                <element signature="e#13403#13404#0" expanded="true" />
-                <element signature="e#13457#14025#0" expanded="true" />
-                <element signature="e#14024#14025#0" expanded="true" />
-                <element signature="e#14078#14645#0" expanded="true" />
-                <element signature="e#14644#14645#0" expanded="true" />
-                <element signature="e#14697#14939#0" expanded="true" />
-                <element signature="e#14938#14939#0" expanded="true" />
-                <element signature="e#14981#15467#0" expanded="true" />
-                <element signature="e#15466#15467#0" expanded="true" />
-                <element signature="e#15516#15906#0" expanded="true" />
-                <element signature="e#15905#15906#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <file leaf-file-name="DeliveryAddress.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliveryAddress.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="29" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="48" />
+              <caret line="418" column="67" selection-start-line="418" selection-start-column="67" selection-end-line="418" selection-end-column="67" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddLocation.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/AddLocation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="3.690141">
+              <caret line="76" column="40" selection-start-line="76" selection-start-column="40" selection-end-line="76" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegisterActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/RegisterActivity.java">
+      <file leaf-file-name="activity_addloction.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_addloction.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="449" column="57" selection-start-line="449" selection-start-column="57" selection-end-line="449" selection-end-column="57" />
+              <caret line="198" column="44" selection-start-line="198" selection-start-column="44" selection-end-line="198" selection-end-column="44" />
+              <folding>
+                <element signature="e#4979#6161#0" expanded="false" />
+                <element signature="e#6614#7854#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeliverPackageFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliverPackageFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="150" column="65" selection-start-line="150" selection-start-column="65" selection-end-line="150" selection-end-column="65" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#4584#4585#0" expanded="false" />
+                <element signature="e#4673#4674#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShipmentNext.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ShipmentNext.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="53" column="28" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbC.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DbC.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="44" column="38" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#311#312#0" expanded="false" />
+                <element signature="e#360#361#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Adapter_Shipment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Adapter_Shipment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="73" column="48" selection-start-line="73" selection-start-column="48" selection-end-line="73" selection-end-column="48" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#1504#1505#0" expanded="false" />
+                <element signature="e#1535#1536#0" expanded="false" />
+                <element signature="e#1578#1579#0" expanded="false" />
+                <element signature="e#1609#1610#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shipment_listview_adapter.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/shipment_listview_adapter.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="81" column="46" selection-start-line="81" selection-start-column="46" selection-end-line="81" selection-end-column="46" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HttpUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/HttpUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="101" column="10" selection-start-line="101" selection-start-column="10" selection-end-line="101" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MemoryCache.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/MemoryCache.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#699#700#0" expanded="true" />
-                <element signature="e#728#729#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FileCache.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/FileCache.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Utils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -2403,28 +2404,20 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/palrequest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/howitworks.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/HowItWorks.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/AddLocation.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-xhdpi/activity_dashboard_content.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_palreq.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Dialog_Palreq.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Config.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/actitiy_profile_info.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/SplashActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileInfo.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/shipment_listview_adapter.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Dialog_new.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_addloction.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/login_reg_button.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/round_next_button.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/shipment_list_apapter.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/First_Fragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_addpal.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_delivery_address.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliveryAddress.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Shipment_Adapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_deliver_package.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Adapter_Shipment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
@@ -2439,8 +2432,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/chooseaddress.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DbGclass.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/shipment_next_apapter.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DbC.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ShipmentNext.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Adap_Shipment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliverPackageFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Utils.java" />
@@ -2448,9 +2439,19 @@
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ImageLoader.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/MemoryCache.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/HttpUtils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/RegisterActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DashBoardActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Config.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/RegisterActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileInfo.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/shipment_listview_adapter.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DbC.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ShipmentNext.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_addloction.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliveryAddress.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/AddLocation.java" />
       </list>
     </option>
   </component>
@@ -2485,74 +2486,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oonbux_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scratches" />
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oonbux_project" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oonbux_project" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oonbux_project" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oonbux_project" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oonbux" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -2577,6 +2511,37 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oonbux_project" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oonbux_project" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oonbux_project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3021,7 +2986,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.70989764" sideWeight="0.54248863" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.70989764" sideWeight="0.4575114" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.70989764" sideWeight="0.4575114" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -3029,7 +2994,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20272315" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20272315" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852808" sideWeight="0.49317408" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852808" sideWeight="0.5068259" order="4" side_tool="true" content_ui="tabs" />
@@ -3041,7 +3006,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30458015" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30408472" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -3109,30 +3074,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/login_reg_button.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="12" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_addloction.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9324056">
-          <caret line="44" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="228" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/HowItWorks.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="18" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-xhdpi/activity_dashboard.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -3207,13 +3148,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/AddLocation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.4014337">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-xhdpi/activity_dashboard_content.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -3234,13 +3168,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliveryAddress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.30645162">
-          <caret line="558" column="17" selection-start-line="558" selection-start-column="17" selection-end-line="558" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Shipment_Adapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4265233">
@@ -3258,16 +3185,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/shipment_listview_adapter.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="159" column="8" selection-start-line="60" selection-start-column="16" selection-end-line="70" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.033663366">
@@ -3279,14 +3196,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Adapter_Shipment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3304,7 +3213,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="59" column="78" selection-start-line="59" selection-start-column="6" selection-end-line="59" selection-end-column="78" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3359,14 +3267,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.2795699">
-          <caret line="310" column="79" selection-start-line="310" selection-start-column="19" selection-end-line="310" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/shipment_next.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -3387,21 +3287,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5788531">
-          <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliverPackageFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03046595">
-          <caret line="139" column="73" selection-start-line="139" selection-start-column="73" selection-end-line="139" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ChooseAddress.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29928315">
@@ -3409,30 +3294,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ShipmentNext.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03046595">
-          <caret line="155" column="69" selection-start-line="155" selection-start-column="69" selection-end-line="155" selection-end-column="69" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DbC.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.390681">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Adap_Shipment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.03046595">
           <caret line="66" column="54" selection-start-line="66" selection-start-column="54" selection-end-line="66" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3447,7 +3312,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.03046595">
           <caret line="127" column="16" selection-start-line="127" selection-start-column="16" selection-end-line="146" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3465,9 +3329,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3475,9 +3336,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3485,11 +3343,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#699#700#0" expanded="true" />
-            <element signature="e#728#729#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3497,23 +3350,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="101" column="10" selection-start-line="101" selection-start-column="10" selection-end-line="101" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/RegisterActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="449" column="57" selection-start-line="449" selection-start-column="57" selection-end-line="449" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Dialog_new.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3525,10 +3361,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Gridview_adapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="59" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="67" />
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -3536,45 +3372,150 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DashBoardActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#8085#9082#0" expanded="true" />
-            <element signature="e#9081#9082#0" expanded="true" />
-            <element signature="e#9130#10071#0" expanded="true" />
-            <element signature="e#10070#10071#0" expanded="true" />
-            <element signature="e#10119#11102#0" expanded="true" />
-            <element signature="e#11101#11102#0" expanded="true" />
-            <element signature="e#11155#11975#0" expanded="true" />
-            <element signature="e#11974#11975#0" expanded="true" />
-            <element signature="e#12024#12267#0" expanded="true" />
-            <element signature="e#12266#12267#0" expanded="true" />
-            <element signature="e#12317#12555#0" expanded="true" />
-            <element signature="e#12554#12555#0" expanded="true" />
-            <element signature="e#12608#12845#0" expanded="true" />
-            <element signature="e#12844#12845#0" expanded="true" />
-            <element signature="e#12897#13115#0" expanded="true" />
-            <element signature="e#13114#13115#0" expanded="true" />
-            <element signature="e#13166#13404#0" expanded="true" />
-            <element signature="e#13403#13404#0" expanded="true" />
-            <element signature="e#13457#14025#0" expanded="true" />
-            <element signature="e#14024#14025#0" expanded="true" />
-            <element signature="e#14078#14645#0" expanded="true" />
-            <element signature="e#14644#14645#0" expanded="true" />
-            <element signature="e#14697#14939#0" expanded="true" />
-            <element signature="e#14938#14939#0" expanded="true" />
-            <element signature="e#14981#15467#0" expanded="true" />
-            <element signature="e#15466#15467#0" expanded="true" />
-            <element signature="e#15516#15906#0" expanded="true" />
-            <element signature="e#15905#15906#0" expanded="true" />
-          </folding>
+          <caret line="513" column="9" selection-start-line="513" selection-start-column="9" selection-end-line="513" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Dialog_new.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="111" column="45" selection-start-line="111" selection-start-column="45" selection-end-line="111" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/RegisterActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="479" column="0" selection-start-line="479" selection-start-column="0" selection-end-line="479" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="327" column="37" selection-start-line="327" selection-start-column="20" selection-end-line="327" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="344" column="0" selection-start-line="344" selection-start-column="0" selection-end-line="344" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ProfileActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57706094">
-          <caret line="338" column="48" selection-start-line="338" selection-start-column="48" selection-end-line="338" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="426" column="101" selection-start-line="426" selection-start-column="101" selection-end-line="426" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Adapter_Shipment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="73" column="48" selection-start-line="73" selection-start-column="48" selection-end-line="73" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1504#1505#0" expanded="false" />
+            <element signature="e#1535#1536#0" expanded="false" />
+            <element signature="e#1578#1579#0" expanded="false" />
+            <element signature="e#1609#1610#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/shipment_listview_adapter.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="81" column="46" selection-start-line="81" selection-start-column="46" selection-end-line="81" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliverPackageFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="150" column="65" selection-start-line="150" selection-start-column="65" selection-end-line="150" selection-end-column="65" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#4584#4585#0" expanded="false" />
+            <element signature="e#4673#4674#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/ShipmentNext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="28" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DbC.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="38" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#311#312#0" expanded="false" />
+            <element signature="e#360#361#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_addloction.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="198" column="44" selection-start-line="198" selection-start-column="44" selection-end-line="198" selection-end-column="44" />
+          <folding>
+            <element signature="e#4979#6161#0" expanded="false" />
+            <element signature="e#6614#7854#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="45" selection-start-line="39" selection-start-column="45" selection-end-line="39" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/DeliveryAddress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="418" column="67" selection-start-line="418" selection-start-column="67" selection-end-line="418" selection-end-column="67" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/sqindia/net/oonbux/AddLocation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.690141">
+          <caret line="76" column="40" selection-start-line="76" selection-start-column="40" selection-end-line="76" selection-end-column="40" />
           <folding />
         </state>
       </provider>

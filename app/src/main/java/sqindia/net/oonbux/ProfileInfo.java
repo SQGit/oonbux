@@ -63,40 +63,48 @@ public class ProfileInfo extends Activity {
     public void onBackPressed() {
         //super.onBackPressed();
 
-        new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Do you want to exit the Application?")
-                .setConfirmText("Yes!")
-                .setCancelText("No")
 
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        Intent i1 = new Intent(Intent.ACTION_MAIN);
-                        i1.setAction(Intent.ACTION_MAIN);
-                        i1.addCategory(Intent.CATEGORY_HOME);
-                        i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(i1);
-                        finish();
+        if ((get_profile_sts.equals(""))) {
+            new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Do you want to exit the Application?")
+                    .setConfirmText("Yes!")
+                    .setCancelText("No")
 
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("login", "");
-                        editor.commit();
-                        sDialog.dismiss();
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            Intent i1 = new Intent(Intent.ACTION_MAIN);
+                            i1.setAction(Intent.ACTION_MAIN);
+                            i1.addCategory(Intent.CATEGORY_HOME);
+                            i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(i1);
+                            finish();
+
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("login", "");
+                            editor.commit();
+                            sDialog.dismiss();
 
 
-                    }
-                })
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
 
-                    }
-                })
-                .show();
+                        }
+                    })
+                    .show();
+
+        } else {
+            Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(inte);
+            finish();
+        }
 
 
     }

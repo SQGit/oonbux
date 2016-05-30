@@ -152,7 +152,7 @@
             <GridView
                 android:id="@+id/grd_usa"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="150dp"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/ll3"
                 android:numColumns="2"
@@ -196,11 +196,10 @@
             <GridView
                 android:id="@+id/grd_nig"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="150dp"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/ll4"
                 android:numColumns="2">
-
             </GridView>
         </RelativeLayout>
 

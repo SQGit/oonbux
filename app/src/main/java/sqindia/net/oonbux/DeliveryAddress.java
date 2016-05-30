@@ -413,9 +413,16 @@ public class DeliveryAddress extends Activity {
                                                 Log.d("tag", sharedPreferences.getString("default_adr", ""));
 
 
-                                                Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
-                                                startActivity(inte);
+                                                String virtualaddr = sharedPreferences.getString("virtul_addr", "");
 
+                                                if (virtualaddr.equals("")) {
+                                                    Intent inte = new Intent(getApplicationContext(), AddLocation.class);
+                                                    inte.putExtra("sts", 0);
+                                                    startActivity(inte);
+                                                } else {
+                                                    Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                                                    startActivity(inte);
+                                                }
 
                                             }
                                         }

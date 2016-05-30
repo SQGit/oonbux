@@ -40,9 +40,9 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
+/*
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-        get_profile_sts = sharedPreferences.getString("login", "");
+        get_profile_sts = sharedPreferences.getString("login", "");*/
 
         btn_login = (Button) findViewById(R.id.button_login);
         ll_register = (LinearLayout) findViewById(R.id.linear_login_text);
@@ -223,7 +223,7 @@ public class LoginActivity extends Activity {
                 jsonObject.accumulate("device_gcm_id", str_deviceid);
                 // 4. convert JSONObject to JSON to String
                 json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest(Config.REG_URL + "login", json);
+                return jsonStr = HttpUtils.makeRequest(Config.SER_URL + "login", json);
             } catch (Exception e) {
                 Log.d("InputStream", e.getLocalizedMessage());
             }
@@ -263,17 +263,33 @@ public class LoginActivity extends Activity {
                     String gzip = jo.getString("loc_addr_zip");
 
 
-/*
-                    Dialog_new cdd = new Dialog_new(LoginActivity.this, msg,1);
-                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    cdd.show();*/
+                    String address = jo.getString("loc_addr_line1");
 
-                    Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+
+
+
+
+                    /*Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
                     startActivity(login_intent);
-                    finish();
+                    finish();*/
 
 
+                    Log.d("tag", "" + address);
+                    if (!(address.equals("null"))) {
 
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("profile", "success");
+                        editor.commit();
+                        Log.d("tag", "1");
+
+                    } else {
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("profile", "");
+                        editor.commit();
+                        Log.d("tag", "1");
+                    }
 
 
 
@@ -313,8 +329,6 @@ public class LoginActivity extends Activity {
 
                     editor.putString("register", "success");
 
-                    editor.putString("profile", "success");
-
                     editor.putString("sessionid", gsessionid);
                     editor.putString("oonbuxid", goonbuxid);
                     editor.putString("gcmid", jo.getString("device_gcm_id"));
@@ -325,7 +339,6 @@ public class LoginActivity extends Activity {
                     editor.putString("state", gstate);
                     editor.putString("zip", gzip);
                     editor.putString("country", gcontry);
-
 
                     editor.putString("default_adr", jo.getString("default_loc"));
 
@@ -344,17 +357,32 @@ public class LoginActivity extends Activity {
                     editor.putString("int_zip", jo.getString("int_addr_zip"));
                     editor.putString("int_phone", jo.getString("int_phone"));
                     editor.putString("int_note", jo.getString("int_delivery_note"));
-
-
-
-
-
-
-
-
-
-
                     editor.commit();
+
+
+
+                   /* Dialog_new cdd = new Dialog_new(LoginActivity.this, msg,1);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();*/
+
+
+                    String sts = sharedPreferences.getString("profile", "");
+
+                    Log.d("tag", "" + sts);
+                    if (sts.equals("")) {
+                        Intent goD = new Intent(getApplicationContext(), ProfileInfo.class);
+                        startActivity(goD);
+                        Log.d("tag", "2");
+                        finish();
+
+                    } else {
+                        Intent goD = new Intent(getApplicationContext(), DashBoardActivity.class);
+                        startActivity(goD);
+                        Log.d("tag", "2");
+                        finish();
+                    }
+
+
 
 
                 } else if (status.equals("fail")) {

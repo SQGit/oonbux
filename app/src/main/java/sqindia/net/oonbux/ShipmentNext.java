@@ -46,6 +46,16 @@ public class ShipmentNext extends Activity {
     SharedPreferences sharedPreferences;
     private SQLiteDatabase db;
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        dbclass.del_last_row();
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

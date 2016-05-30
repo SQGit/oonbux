@@ -326,7 +326,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
                 // 4. convert JSONObject to JSON to String
                 json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest2(Config.REG_URL + "profileupdate", json, str_session_id);
+                return jsonStr = HttpUtils.makeRequest2(Config.SER_URL + "profileupdate", json, str_session_id);
             } catch (Exception e) {
                 Log.d("InputStream", e.getLocalizedMessage());
             }
@@ -424,7 +424,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         private String uploadFile() {
             String responseString = null;
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://androidtesting.newlogics.in/api/profilepic");
+            HttpPost httppost = new HttpPost("http://oonsoft.eastus.cloudapp.azure.com/api/profilepic");
             httppost.setHeader("session_id", str_session_id);
 
             try {

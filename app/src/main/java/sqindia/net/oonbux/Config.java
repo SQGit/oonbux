@@ -10,6 +10,9 @@ public class Config {
     // static final String REG_URL = "http://oonbux.sqindia.net/";
 
 
+    static final String SER_URL = "http://oonsoft.eastus.cloudapp.azure.com/";
+
+
     static final String REG_URL = "http://androidtesting.newlogics.in/";
 
     static final String CSS_URL = "http://oonbux.sqindia.net/region";

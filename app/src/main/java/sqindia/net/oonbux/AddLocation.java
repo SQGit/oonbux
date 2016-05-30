@@ -16,11 +16,16 @@ public class AddLocation extends Activity{
     com.rey.material.widget.LinearLayout lt_back;
     Button btn_submit;
     GridView grid1,grid2;
+    Intent intent = getIntent();
+    int status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addloction);
+
+
+        status = intent.getIntExtra("sts", -1);
 
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         btn_submit = (Button) findViewById(R.id.button_submit);
@@ -36,6 +41,16 @@ public class AddLocation extends Activity{
         grid2.setAdapter(adapter);
 
 
+        if (status == 0) {
+            btn_submit.setText("Next");
+        } else {
+            btn_submit.setText("Submit");
+        }
+
+
+
+
+
         lt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,8 +64,18 @@ public class AddLocation extends Activity{
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
-                startActivity(inte);
+
+
+                if (status == 0) {
+                    btn_submit.setText("Next");
+                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    startActivity(inte);
+                } else {
+                    btn_submit.setText("Submit");
+                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    startActivity(inte);
+                }
+
             }
         });
 

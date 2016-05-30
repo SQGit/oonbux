@@ -62,4 +62,27 @@ public class DbC extends SQLiteOpenHelper {
     }
 
 
+    public void del_last_row() {
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getWritableDatabase();
+            //sdb1.rawQuery(qry2,null);
+            String query = "DELETE FROM cart WHERE id = (SELECT MAX(id) FROM cart);";
+
+            // DELETE FROM test WHERE id = (SELECT MAX(id) FROM test);
+            // sdb1.delete("cart","size =?", new String[] { txt });
+
+            sdb1.execSQL(query);
+
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+
+        }
+
+    }
+
+
+
+
 }

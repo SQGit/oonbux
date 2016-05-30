@@ -310,7 +310,7 @@ public class RegisterActivity extends Activity {
                 jsonObject.accumulate("zip", str_zip);
                 // 4. convert JSONObject to JSON to String
                 json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest(Config.REG_URL + "registration", json);
+                return jsonStr = HttpUtils.makeRequest(Config.SER_URL + "registration", json);
             } catch (Exception e) {
                 Log.d("InputStream", e.getLocalizedMessage());
             }

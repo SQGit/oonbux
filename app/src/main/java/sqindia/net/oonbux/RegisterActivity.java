@@ -439,7 +439,8 @@ public class RegisterActivity extends Activity {
             String json = "", jsonStr = "";
             try {
 
-                JSONObject jsonobject = HttpUtils.getData("http://androidtesting.newlogics.in/region/country");
+                String country_url = Config.SER_URL + "region/country";
+                JSONObject jsonobject = HttpUtils.getData(country_url);
 
              /*   if (jsonobject.toString().equals(null)) {
                     Log.e("tag", "jj" + jsonobject);
@@ -539,7 +540,11 @@ public class RegisterActivity extends Activity {
             String json = "", jsonStr = "";
 
             try {
-                JSONObject jsonobject = HttpUtils.getData2("http://androidtesting.newlogics.in/region/state", str_country);
+
+
+                String state_url = Config.SER_URL + "region/state";
+
+                JSONObject jsonobject = HttpUtils.getData2(state_url, str_country);
 
                 Log.e("tag", "jj" + jsonobject);
 
@@ -620,7 +625,10 @@ public class RegisterActivity extends Activity {
             String json = "", jsonStr = "";
 
             try {
-                JSONObject jsonobject = HttpUtils.getData3("http://androidtesting.newlogics.in/region/zip", str_country, str_state);
+
+
+                String zip_url = Config.SER_URL + "region/zip";
+                JSONObject jsonobject = HttpUtils.getData3(zip_url, str_country, str_state);
 
                 Log.e("tag", "jj" + jsonobject);
 

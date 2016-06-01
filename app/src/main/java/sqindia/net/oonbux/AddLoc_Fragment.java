@@ -38,10 +38,10 @@ public class AddLoc_Fragment extends Fragment {
 
         header.setTypeface(tf);
 
-        Gridview_adapter adapter = new Gridview_adapter(getActivity());
+       // Gridview_adapter adapter = new Gridview_adapter(getActivity());
 
-        grid1.setAdapter(adapter);
-        grid2.setAdapter(adapter);
+       // grid1.setAdapter(adapter);
+       // grid2.setAdapter(adapter);
 
         return view;
     }

@@ -261,6 +261,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
 */
                 Intent inte = new Intent(getApplicationContext(), AddLocation.class);
+                inte.putExtra("sts", 1);
                 startActivity(inte);
 
                 // toggle.syncState();

@@ -138,10 +138,11 @@
 
 
                 <com.rey.material.widget.TextView
-                    android:id="@+id/tv_hd_txat"
+                    android:id="@+id/tv_shd_txt1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="30dp"
                     android:gravity="center"
                     android:text="USA"
@@ -182,10 +183,11 @@
 
 
                 <com.rey.material.widget.TextView
-                    android:id="@+id/tv_hd_tdxat"
+                    android:id="@+id/tv_shd_txt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="30dp"
                     android:gravity="center"
                     android:text="NIGERIA"

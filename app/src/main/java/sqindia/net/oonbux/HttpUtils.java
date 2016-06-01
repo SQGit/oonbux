@@ -242,7 +242,7 @@ public class HttpUtils {
     }
 
 
-    public static String makeRequest2(String url, String json, String header) {
+    public static String makeRequest2(String url, String json, String session) {
         Log.v(TAG, "URL-->" + url);
         Log.v(TAG, "input-->" + json);
 
@@ -254,7 +254,7 @@ public class HttpUtils {
             httpPost.setEntity(new StringEntity(json));
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-            httpPost.setHeader("session_id", header);
+            httpPost.setHeader("session_id", session);
 
             HttpResponse httpResponse = new DefaultHttpClient().execute(httpPost);
 

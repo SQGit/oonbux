@@ -19,7 +19,7 @@ import java.util.HashMap;
 /**
  * Created by Salman on 4/23/2016.
  */
-public class Gridview_adapter extends BaseAdapter {
+public class Gridview_adapter1 extends BaseAdapter {
 
     Context c1;
     //ArrayList<GridviewDatas> vir_addrs;
@@ -35,7 +35,7 @@ public class Gridview_adapter extends BaseAdapter {
     String[] adatas;
 
 
-    public Gridview_adapter(Context c1, ArrayList<HashMap<String, String>> datas) {
+    public Gridview_adapter1(Context c1, ArrayList<HashMap<String, String>> datas) {
         this.c1 = c1;
         this.vir_addrs = datas;
         this.array = new boolean[vir_addrs.size()];
@@ -113,7 +113,7 @@ public class Gridview_adapter extends BaseAdapter {
 */
 
 
-        //cb_choose.setChecked(array[position]);
+        cb_choose.setChecked(array[position]);
 
 
         cb_choose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -121,16 +121,14 @@ public class Gridview_adapter extends BaseAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-
-                    String uslists = resultp.get(AddLocation._id);
+                    String niglists = resultp.get(AddLocation._id);
 
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c1);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("virtual_address1", uslists);
+                    editor.putString("virtual_address2", niglists);
                     editor.commit();
 
-                    Log.d("tag", position + "us_yes" + sharedPreferences.getString("virtual_address1", ""));
-
+                    Log.d("tag", position + "nig_yes" + sharedPreferences.getString("virtual_address1", ""));
                  /*   selected_position =  position;
                     array[position] = true;
                     lss.add(resultp.get(AddLocation._id));
@@ -160,12 +158,11 @@ public class Gridview_adapter extends BaseAdapter {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("virtual_address1", "");
                     editor.commit();
-                    Log.d("tag", position + "us_no" + sharedPreferences.getString("virtual_address1", ""));
-
+                    Log.d("tag", position + "nig_no" + sharedPreferences.getString("virtual_address1", ""));
 
                     //array[position] = false;
                 }
-
+                // notifyDataSetChanged();
             }
         });
 

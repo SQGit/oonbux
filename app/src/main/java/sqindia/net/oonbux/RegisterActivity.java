@@ -462,8 +462,9 @@ public class RegisterActivity extends Activity {
                 //}
                 return json;
             } catch (Exception e) {
-                Log.e("InputStream", e.getLocalizedMessage());
+                Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
+                sweetAlertDialog.dismiss();
             }
             return jsonStr;
 

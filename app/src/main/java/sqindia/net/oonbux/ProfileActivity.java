@@ -69,7 +69,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     // EditText et_fname,et_lname;
 
     ProgressDialog progressDialog;
-
+    String[] vir_adr;
     MaterialEditText et_fname, et_lname;
     SweetAlertDialog psDialog;
     String imagePath = null;
@@ -153,6 +153,19 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         } else {
             btn_finish.setVisibility(View.GONE);
         }
+
+
+        String getvirtual1 = sharedPreferences.getString("virtual_address1", "");
+        String getvirtual2 = sharedPreferences.getString("virtual_address2", "");
+
+        vir_adr = new String[2];
+
+        vir_adr[0] = getvirtual1;
+        vir_adr[1] = getvirtual2;
+
+
+
+
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
@@ -271,8 +284,101 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
     public void profile_update() {
 
-        new Profile_Update_Task().execute();
+        // new Profile_Update_Task().execute();
+
+        new Virtual_Address_Task().execute();
     }
+
+
+    class Virtual_Address_Task extends AsyncTask<String, Void, String> {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String json = "", jsonStr = "";
+
+            try {
+
+                JSONObject jsonObject = new JSONObject();
+
+
+                jsonObject.accumulate("default_loc", vir_adr);
+
+
+                // 4. convert JSONObject to JSON to String
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest2(Config.SER_URL + "virtualaddr/update", json, str_session_id);
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("tag", "<-----rerseres---->" + s);
+            super.onPostExecute(s);
+
+//            sweetAlertDialog.dismiss();
+
+            try {
+                JSONObject jo = new JSONObject(s);
+
+                String status = jo.getString("status");
+
+                String msg = jo.getString("message");
+                Log.d("tag", "<-----Status----->" + status);
+
+
+                if (status.equals("success")) {
+
+                    // new Profile_Update_Task().execute();
+
+                    Log.d("tag", "<-----Status----->" + msg);
+
+
+                } else if (status.equals(null)) {
+                    Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();
+                } else if (status.equals("fail")) {
+                    Log.d("tag", "<-----Status----->" + msg);
+                    // new Profile_Update_Task().execute();
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     class Profile_Update_Task extends AsyncTask<String, Void, String> {

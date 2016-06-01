@@ -146,9 +146,32 @@ public class AddLocation extends Activity {
                 if (status == 0) {
                     btn_submit.setText("Next");
 
+                  /*  SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
+                    String getvirtual = sharedPreferences.getString("virtual_address","");
 
-                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
-                    startActivity(inte);
+                    String[] playlists = getvirtual.split(",");
+
+                    Log.d("tag",""+playlists[0] + "\t" +playlists[1])*/
+                    ;
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
+                    String getvirtual1 = sharedPreferences.getString("virtual_address1", "");
+                    String getvirtual2 = sharedPreferences.getString("virtual_address2", "");
+
+                    if (getvirtual1.equals("") && getvirtual2.equals("")) {
+                        Log.d("tag", "" + getvirtual1 + "\t" + getvirtual2);
+                    } else {
+                        Log.d("tag", "1" + getvirtual1 + "\t" + getvirtual2);
+                        Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                        startActivity(inte);
+                    }
+
+
+
+
+                    /*Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                    startActivity(inte);*/
                 } else {
                     btn_submit.setText("Submit");
                     Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
@@ -157,6 +180,28 @@ public class AddLocation extends Activity {
 
             }
         });
+
+
+
+       /* grid1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("tag","onclick");
+            }
+        });*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
@@ -195,7 +240,7 @@ public class AddLocation extends Activity {
 
                 return json;
             } catch (Exception e) {
-                Log.e("InputStream", e.getLocalizedMessage());
+                Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
             }
             return jsonStr;
@@ -281,9 +326,11 @@ public class AddLocation extends Activity {
 
                     Gridview_adapter adapter1 = new Gridview_adapter(getApplicationContext(), us_lists);
 
-                    Gridview_adapter adapter2 = new Gridview_adapter(getApplicationContext(), nig_lists);
+                    Gridview_adapter1 adapter2 = new Gridview_adapter1(getApplicationContext(), nig_lists);
 
                     grid1.setAdapter(adapter1);
+
+
                     grid2.setAdapter(adapter2);
 
 

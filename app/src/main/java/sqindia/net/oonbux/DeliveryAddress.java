@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
+import com.rey.material.widget.Spinner;
 import com.rey.material.widget.TextView;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -22,6 +24,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Salman on 4/29/2016.
  */
 public class DeliveryAddress extends Activity {
+
     LinearLayout bottom_lt;
     TextView tv_header, tv_sub_hdr_loc, tv_sub_hdr_int;
     Button btn_save_loc, btn_save_int, btn_next, btn_add_loc, btn_add_int;
@@ -33,11 +36,15 @@ public class DeliveryAddress extends Activity {
     CheckBox cb_loc, cb_int;
     boolean loc_adr, int_adr;
 
+    Spinner loc_spin, int_spin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_address);
 
+
+        String[] countries = {"US", "NIGERIA", "CANADA"};
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
 
@@ -97,6 +104,12 @@ public class DeliveryAddress extends Activity {
         cb_int = (CheckBox) findViewById(R.id.checkbox_int);
 
 
+        loc_spin = (Spinner) findViewById(R.id.loc_spin_country);
+
+        ArrayAdapter<String> adapter1_spin = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists1, R.id.text_spin, countries);
+        loc_spin.setAdapter(adapter1_spin);
+
+
         if (str_def_adr.equals("LOCAL")) {
             cb_loc.setChecked(true);
         } else if (str_def_adr.equals("INTERNATIONAL")) {
@@ -104,7 +117,10 @@ public class DeliveryAddress extends Activity {
         }
 
 
-        getfromdata();
+        if (!(str_loc_add1.equals("null"))) {
+
+            getfromdata();
+        }
 
 
         if ((get_profile_sts.equals(""))) {
@@ -416,6 +432,12 @@ public class DeliveryAddress extends Activity {
                                                 String virtualaddr = sharedPreferences.getString("virtul_addr", "");
 
                                                 if (virtualaddr.equals("")) {
+
+
+                                                    editor = sharedPreferences.edit();
+                                                    editor.putString("vir_sts", "0");
+                                                    editor.commit();
+
                                                     Intent inte = new Intent(getApplicationContext(), AddLocation.class);
                                                     inte.putExtra("sts", 0);
                                                     startActivity(inte);

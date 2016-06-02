@@ -340,7 +340,8 @@ public class ProfileInfo extends Activity {
 
                 enable();
 
-                btn_edit.setBackgroundColor(getResources().getColor(R.color.hint_floating_dark));
+                //    btn_edit.setBackgroundColor(getResources().getColor(R.color.hint_floating_dark));
+                btn_edit.setVisibility(View.INVISIBLE);
                 btn_next.setVisibility(View.VISIBLE);
 
 

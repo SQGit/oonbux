@@ -67,7 +67,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     com.rey.material.widget.LinearLayout lt_back;
     SweetAlertDialog sweetAlertDialog;
     // EditText et_fname,et_lname;
-
+    String get_Virtual1, get_Virtual2;
     ProgressDialog progressDialog;
     String[] vir_adr;
     MaterialEditText et_fname, et_lname;
@@ -96,6 +96,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         str_web_photo = sharedPreferences.getString("web_photo_url", "");
 
         str_session_id = sharedPreferences.getString("sessionid", "");
+
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -155,13 +156,13 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         }
 
 
-        String getvirtual1 = sharedPreferences.getString("virtual_address1", "");
-        String getvirtual2 = sharedPreferences.getString("virtual_address2", "");
+        get_Virtual1 = sharedPreferences.getString("virtual_address1", "");
+        get_Virtual2 = sharedPreferences.getString("virtual_address2", "");
 
         vir_adr = new String[2];
 
-        vir_adr[0] = getvirtual1;
-        vir_adr[1] = getvirtual2;
+        vir_adr[0] = get_Virtual1;
+        vir_adr[1] = get_Virtual2;
 
 
 
@@ -309,7 +310,8 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                 JSONObject jsonObject = new JSONObject();
 
 
-                jsonObject.accumulate("default_loc", vir_adr);
+                jsonObject.accumulate("selected_location", get_Virtual1);
+                jsonObject.accumulate("selected_location", get_Virtual2);
 
 
                 // 4. convert JSONObject to JSON to String
@@ -341,16 +343,31 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
                 if (status.equals("success")) {
 
-                    // new Profile_Update_Task().execute();
+
 
                     Log.d("tag", "<-----Status----->" + msg);
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("virtul_addr", "success");
+                    editor.commit();
+
+                    new Profile_Update_Task().execute();
 
 
                 } else if (status.equals(null)) {
                     Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();
                 } else if (status.equals("fail")) {
                     Log.d("tag", "<-----Status----->" + msg);
-                    // new Profile_Update_Task().execute();
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("virtul_addr", "success");
+                    editor.commit();
+
+                    new Profile_Update_Task().execute();
+
                 }
 
 

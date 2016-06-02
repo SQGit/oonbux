@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="searchablespinnerlibrary-1.2.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.toptoche.searchablespinner/searchablespinnerlibrary/1.2.0/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.toptoche.searchablespinner/searchablespinnerlibrary/1.2.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.toptoche.searchablespinner/searchablespinnerlibrary/1.2.0/69d80ad29cd8907e27588a68f4a292272a6a8b2f/searchablespinnerlibrary-1.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

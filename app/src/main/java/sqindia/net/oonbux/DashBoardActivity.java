@@ -55,6 +55,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
     ArrayList<String> selectedPhotos = new ArrayList<>();
     PhotoAdapter photoAdapter;
 
+    String va1_line1, va1_line2, va1_city, va1_state, va1_zip, va1_country, va2_line1, va2_line2, va2_city, va2_state, va2_zip, va2_country;
+
     Bitmap bitmap;
     Uri uri;
 
@@ -81,6 +83,23 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
         str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
         str_photo = sharedPreferences.getString("photourl", "");
+
+        va1_line1 = sharedPreferences.getString("va1_line1", "");
+        va1_line2 = sharedPreferences.getString("va1_line2", "");
+        va1_city = sharedPreferences.getString("va1_city", "");
+        va1_state = sharedPreferences.getString("va1_state", "");
+        va1_zip = sharedPreferences.getString("va1_zip", "");
+        va1_country = sharedPreferences.getString("va1_country", "");
+
+
+        va2_line1 = sharedPreferences.getString("va2_line1", "");
+        va2_line2 = sharedPreferences.getString("va2_line2", "");
+        va2_city = sharedPreferences.getString("va2_city", "");
+        va2_state = sharedPreferences.getString("va2_state", "");
+        va2_zip = sharedPreferences.getString("va2_zip", "");
+        va2_country = sharedPreferences.getString("va2_country", "");
+
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -148,9 +167,9 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
         // nav_pro_pic.setImageBitmap(bitmap);
 
-        tv_nav_cont_loc.setText(sharedPreferences.getString("state", ""));
+      /*  tv_nav_cont_loc.setText(sharedPreferences.getString("state", ""));
         tv_nav_cont_address.setText(sharedPreferences.getString("zip", ""));
-        tv_nav_cont_phone.setText(sharedPreferences.getString("phone", ""));
+        tv_nav_cont_phone.setText(sharedPreferences.getString("phone", ""));*/
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
@@ -188,6 +207,18 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         First_Fragment fragment = new First_Fragment();
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
+
+
+        btn_nav_cont_loc_adr.setText(va1_zip + "\n" + va1_country);
+        btn_nav_cont_int_adr.setText(va2_zip + "\n" + va2_country);
+
+
+        tv_nav_cont_loc.setText(va1_state);
+        tv_nav_cont_address.setText(va1_line1 + "\t" + va1_line2 + "\t" + va1_city);
+
+
+
+
 
 
         btn_dash_ship.setOnClickListener(new View.OnClickListener() {
@@ -260,6 +291,13 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 FragmentManager fm = getFragmentManager();
                 fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
 */
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("vir_sts", "1");
+                editor.commit();
+
+
                 Intent inte = new Intent(getApplicationContext(), AddLocation.class);
                 inte.putExtra("sts", 1);
                 startActivity(inte);
@@ -301,6 +339,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "button worked", Toast.LENGTH_LONG).show();
+                tv_nav_cont_loc.setText(va1_state);
+                tv_nav_cont_address.setText(va1_line1 + "\t" + va1_line2 + "\t" + va1_city);
             }
         });
 
@@ -313,17 +353,6 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         });
 
 
-        btn_nav_cont_loc_adr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-/*                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
-                tv_nav_cont_loc.setText(sharedPreferences.getString("loc_state", ""));
-                tv_nav_cont_address.setText(sharedPreferences.getString("loc_addr1", "") + "\t" + sharedPreferences.getString("loc_addr2", ""));
-                tv_nav_cont_phone.setText(sharedPreferences.getString("loc_phone", ""));*/
-
-            }
-        });
 
 
         btn_nav_cont_int_adr.setOnClickListener(new View.OnClickListener() {
@@ -333,6 +362,9 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 tv_nav_cont_loc.setText(sharedPreferences.getString("int_state", ""));
                 tv_nav_cont_address.setText(sharedPreferences.getString("int_addr1", "") + "\t" + sharedPreferences.getString("int_addr2", ""));
                 tv_nav_cont_phone.setText(sharedPreferences.getString("int_phone", ""));*/
+
+                tv_nav_cont_loc.setText(va2_state);
+                tv_nav_cont_address.setText(va2_line1 + "\t" + va2_line2 + "\t" + va2_city);
 
             }
         });

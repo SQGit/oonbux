@@ -12,6 +12,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
@@ -42,7 +43,7 @@ public class AddLocation extends Activity {
     GridView grid1, grid2;
     Intent intent = getIntent();
     int status;
-    String str_session_id;
+    String str_session_id,vir_sts;
     SweetAlertDialog sweetAlertDialog;
     TextView tv_header, tv_sub_header1, tv_sub_header2;
     ArrayList<GridviewDatas> us_datas = new ArrayList<GridviewDatas>();
@@ -58,6 +59,8 @@ public class AddLocation extends Activity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
 
         str_session_id = sharedPreferences.getString("sessionid", "");
+        vir_sts = sharedPreferences.getString("vir_sts", "");
+
 
         Intent getData = new Intent();
         status = getData.getIntExtra("sts", 0);
@@ -87,7 +90,7 @@ public class AddLocation extends Activity {
         nig_lists = new ArrayList<>();
 
 
-        if (status == 0) {
+        if (vir_sts == "0") {
             btn_submit.setText("Next");
         } else {
             btn_submit.setText("Submit");
@@ -143,7 +146,7 @@ public class AddLocation extends Activity {
             public void onClick(View v) {
 
 
-                if (status == 0) {
+                if (vir_sts == "0") {
                     btn_submit.setText("Next");
 
                   /*  SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
@@ -176,6 +179,8 @@ public class AddLocation extends Activity {
                     btn_submit.setText("Submit");
                     Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
                     startActivity(inte);
+
+                    new Virtual_Address_Task().execute();
                 }
 
             }
@@ -220,6 +225,10 @@ public class AddLocation extends Activity {
         protected String doInBackground(String... params) {
 
             String json = "", jsonStr = "";
+
+
+
+
             try {
 
                 String virtual_url = Config.SER_URL + "virtualaddr/fetch";
@@ -252,6 +261,8 @@ public class AddLocation extends Activity {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
             sweetAlertDialog.dismiss();
+
+
 
             try {
 
@@ -347,6 +358,116 @@ public class AddLocation extends Activity {
         }
 
     }
+
+
+
+
+
+
+    class Virtual_Address_Task extends AsyncTask<String, Void, String> {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String json = "", jsonStr = "";
+
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
+            String getvirtual1 = sharedPreferences.getString("virtual_address1", "");
+            String getvirtual2 = sharedPreferences.getString("virtual_address2", "");
+
+            try {
+
+                JSONObject jsonObject = new JSONObject();
+
+
+                jsonObject.accumulate("selected_location", getvirtual1);
+                jsonObject.accumulate("selected_location", getvirtual2);
+
+
+                // 4. convert JSONObject to JSON to String
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest2(Config.SER_URL + "virtualaddr/update", json, str_session_id);
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("tag", "<-----rerseres---->" + s);
+            super.onPostExecute(s);
+
+//            sweetAlertDialog.dismiss();
+
+            try {
+                JSONObject jo = new JSONObject(s);
+
+                String status = jo.getString("status");
+
+                String msg = jo.getString("message");
+                Log.d("tag", "<-----Status----->" + status);
+
+
+                if (status.equals("success")) {
+
+
+
+                    Log.d("tag", "<-----Status----->" + msg);
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("virtul_addr", "success");
+                    editor.commit();
+
+                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    startActivity(inte);
+
+
+
+                } else if (status.equals(null)) {
+                    Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();
+                } else if (status.equals("fail")) {
+                    Log.d("tag", "<-----Status----->" + msg);
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("virtul_addr", "success");
+                    editor.commit();
+
+                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    startActivity(inte);
+
+
+
+
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+
+
+
+
 
 
 }

@@ -123,10 +123,22 @@ public class Gridview_adapter extends BaseAdapter {
                 if (isChecked) {
 
                     String uslists = resultp.get(AddLocation._id);
+                    String addrline1 = resultp.get(AddLocation.addr1);
+                    String addrline2 = resultp.get(AddLocation.addr2);
+                    String city = resultp.get(AddLocation.city);
+                    String state = resultp.get(AddLocation.state);
+                    String zip = resultp.get(AddLocation.zip);
+                    String country = resultp.get(AddLocation.country);
 
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c1);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("virtual_address1", uslists);
+                    editor.putString("va1_line1", addrline1);
+                    editor.putString("va1_line2", addrline2);
+                    editor.putString("va1_city", city);
+                    editor.putString("va1_state", state);
+                    editor.putString("va1_zip", zip);
+                    editor.putString("va1_country", country);
                     editor.commit();
 
                     Log.d("tag", position + "us_yes" + sharedPreferences.getString("virtual_address1", ""));

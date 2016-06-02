@@ -18,30 +18,69 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:orientation="vertical">
 
-            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
-                android:id="@+id/edittext_country"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/country_ico"
-                android:hint="Country"
-                android:imeOptions="actionNext"
-                android:inputType="textPersonName"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp"
-                android:textSize="20sp"
-                app:met_accentTypeface="fonts/prox.otf"
-                app:met_baseColor="@color/text_divider_light"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
-                app:met_textColor="@color/text_color"
-                app:met_textColorHint="@color/text_color_hint"
-                app:met_underlineColor="@color/text_divider" />
+                android:layout_height="wrap_content">
+
+
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spin_country"
+                    style="@style/Material.Widget.Spinner"
+                    spn_labelTextSize="22sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:paddingBottom="2dp"
+                    android:paddingTop="5dp"
+                    android:popupBackground="#e0e0e0"
+                    android:textColor="#FF616161"
+                    android:textSize="22sp"
+                    app:rd_style="@style/Material.Drawable.Ripple.Wave"
+                    app:spn_arrowSize="0dp"
+                    app:spn_dividerColor="#9e9e9e"
+                    app:spn_dividerHeight="1.5dp"
+                    app:spn_label="Country"
+                    app:spn_labelEnable="true"
+                    app:spn_labelTextColor="@color/hint_floating_dark"
+
+                    />
+
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/down_ico" />
+
+            </FrameLayout>
+
+
+            <!--       <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                       android:id="@+id/edittext_country"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:drawableRight="@drawable/country_ico"
+                       android:hint="Country"
+                       android:imeOptions="actionNext"
+                       android:inputType="textPersonName"
+                       android:paddingLeft="5dp"
+                       android:paddingRight="10dp"
+                       android:textSize="20sp"
+                       app:met_accentTypeface="fonts/prox.otf"
+                       app:met_baseColor="@color/text_divider_light"
+                       app:met_floatingLabel="normal"
+                       app:met_floatingLabelTextColor="@color/hint_floating"
+                       app:met_primaryColor="@color/text_divider_light"
+                       app:met_textColor="@color/text_color"
+                       app:met_textColorHint="@color/text_color_hint"
+                       app:met_underlineColor="@color/text_divider" />-->
 
 
             <com.rengwuxian.materialedittext.MaterialEditText

@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/email_ico"
                 android:hint="Email"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
                 android:textSize="20sp"

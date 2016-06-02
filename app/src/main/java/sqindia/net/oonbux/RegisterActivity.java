@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.Spinner;
 import com.rey.material.widget.TextView;
 
 import org.json.JSONArray;
@@ -45,11 +46,20 @@ public class RegisterActivity extends Activity {
     ArrayList<String> states = new ArrayList<>();
     ArrayList<String> zip = new ArrayList<>();
 
+    String[] ar_states;
+    Spinner spin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+
+        spin = (com.rey.material.widget.Spinner) findViewById(R.id.spin_country);
+
+
+        str_country = "us";
+
 
         btn_submit = (Button) findViewById(R.id.button_submit);
         ll_login = (LinearLayout) findViewById(R.id.linear_login_text);
@@ -65,12 +75,12 @@ public class RegisterActivity extends Activity {
         et_phone = (MaterialEditText) findViewById(R.id.edittext_phone);
 
 
-        aet_cont = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_country);
+        // aet_cont = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_country);
         aet_state = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_state);
         aet_zip = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_zipcode);
 
 
-        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
+        final Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
         btn_submit.setTypeface(tf);
         tv_donthav.setTypeface(tf);
@@ -84,9 +94,45 @@ public class RegisterActivity extends Activity {
         et_repass.setTypeface(tf);
         et_phone.setTypeface(tf);
 
-        aet_cont.setTypeface(tf);
+//        aet_cont.setTypeface(tf);
         aet_zip.setTypeface(tf);
         aet_state.setTypeface(tf);
+
+
+        String[] countries = {"US", "NIGERIA", "CANADA"};
+
+
+
+
+       /* spin.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+
+                TextView stsx = (TextView) view.findViewById(R.id.text_spin);
+                stsx.setTypeface(tf);
+
+
+                str_country = spin.getSelectedItem().toString();
+                Log.d("tag",str_country);
+                new GetState().execute();
+                return true;
+            }
+        });*/
+
+
+        spin.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+
+
+                str_country = spin.getSelectedItem().toString();
+                Log.d("tag", str_country);
+                new GetState().execute();
+
+
+            }
+        });
+
 
 
         if (!Config.isNetworkAvailable(RegisterActivity.this)) {
@@ -110,16 +156,21 @@ public class RegisterActivity extends Activity {
 
 
         } else {
-            new GetCountry().execute();
-            aet_cont.requestFocus();
+            // new GetCountry().execute();
+            //aet_cont.requestFocus();
         }
 
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, country);
-        aet_cont.setAdapter(adapter1);
+        ArrayAdapter<String> adapter1_spin = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, countries);
+        spin.setAdapter(adapter1_spin);
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, states);
-        aet_state.setAdapter(adapter2);
+
+
+
+        /*ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, country);
+        aet_cont.setAdapter(adapter1);*/
+
+
 
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, zip);
         aet_zip.setAdapter(adapter3);
@@ -129,21 +180,32 @@ public class RegisterActivity extends Activity {
             @Override
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    str_country = aet_cont.getText().toString();
+                    //str_country = aet_cont.getText().toString();
                     new GetState().execute();
                     aet_state.requestFocus();
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+                    /*ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, ar_states);
+                    aet_state.setAdapter(adapter2);*/
                     return true;
                 }
                 return false;
             }
         });
 
+        aet_state.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new GetState().execute();
+            }
+        });
+
+
         aet_state.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    str_country = aet_cont.getText().toString();
+                    //str_country = aet_cont.getText().toString();
                     str_state = aet_state.getText().toString();
                     new GetZip().execute();
                     aet_zip.requestFocus();
@@ -191,7 +253,7 @@ public class RegisterActivity extends Activity {
     public void validatedatas() {
 
 
-        str_country = aet_cont.getText().toString();
+        //   str_country = aet_cont.getText().toString();
         str_fname = et_fname.getText().toString();
         str_lname = et_lname.getText().toString();
         str_email = et_email.getText().toString();
@@ -201,7 +263,8 @@ public class RegisterActivity extends Activity {
         str_zip = aet_zip.getText().toString();
         str_state = aet_state.getText().toString();
 
-        if (!str_country.isEmpty()) {
+        //  if (!str_country.isEmpty()) {
+
             if (!str_fname.isEmpty()) {
                 if (!str_lname.isEmpty()) {
                     if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
@@ -271,10 +334,10 @@ public class RegisterActivity extends Activity {
                 et_fname.setError("Enter a First Name!");
                 et_fname.requestFocus();
             }
-        } else {
+        /*} else {
             aet_cont.setError("Enter a valid Country!");
             aet_cont.requestFocus();
-        }
+        }*/
 
     }
 
@@ -338,7 +401,7 @@ public class RegisterActivity extends Activity {
                 if (status.equals("success")) {
 
 
-                    Dialog_new cdd = new Dialog_new(RegisterActivity.this, msg, 0);
+                    Dialog_new cdd = new Dialog_new(RegisterActivity.this, "Thank you for Signing Up Oonbux.\nAn Activation Email Sent to " + str_email + "\nPlease check your mail for Activation details.", 0);
                     cdd.setCancelable(false);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
@@ -564,7 +627,8 @@ public class RegisterActivity extends Activity {
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             sweetAlertDialog.dismiss();
-            aet_state.requestFocus();
+            // aet_state.requestFocus();
+            // et_fname.requestFocus();
 
             super.onPostExecute(jsonStr);
             if (jsonStr == "") {
@@ -577,27 +641,46 @@ public class RegisterActivity extends Activity {
                     String msg = jo.getString("message");
                     Log.d("tag", "<-----Statasdfus----->" + status);
 
-                    String json = jo.toString();
+
+                    if (status.equals("null")) {
 
 
-                    JSONObject jaa = new JSONObject(jsonStr);
-                    JSONArray jj = jaa.getJSONArray("state");
-                    Log.d("tag", "<-----S---->" + jj);
+                        Log.d("tag", "<--> state not available for this country");
 
-                    //JSONArray ja = jo.getJSONArray(status);
 
-                    for (int i1 = 0; i1 < jj.length(); i1++) {
+                    } else {
 
-                        // JSONObject data = jj.getJSONObject(i1);
 
-                        String daa = jj.getString(i1);
+                        String json = jo.toString();
 
-                        //countries[jj.length()] =
-                        states.add(daa);
-                        Log.d("tag", "<-----Statusss----->" + daa);
+
+                        JSONObject jaa = new JSONObject(jsonStr);
+                        JSONArray jj = jaa.getJSONArray("state");
+                        Log.d("tag", "<-----S---->" + jj);
+
+                        //JSONArray ja = jo.getJSONArray(status);
+
+                        for (int i1 = 0; i1 < jj.length(); i1++) {
+
+
+                            ar_states = new String[jj.length()];
+
+                            // JSONObject data = jj.getJSONObject(i1);
+
+                            String daa = jj.getString(i1);
+
+                            ar_states[i1] = daa;
+                            //countries[jj.length()] =
+                            states.add(daa);
+                            Log.d("tag", "<-----Statusss----->" + ar_states[i1]);
+
+                        }
+
+                        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, ar_states);
+                        aet_state.setAdapter(adapter2);
+
 
                     }
-
 
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block

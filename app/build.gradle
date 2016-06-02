@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "sqindia.net.oonbux"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -45,5 +45,8 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.bumptech.glide:glide:3.6.0'
 
+
+
+    compile 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.2.0'
 
 }

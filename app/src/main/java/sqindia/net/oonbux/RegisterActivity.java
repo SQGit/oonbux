@@ -48,6 +48,12 @@ public class RegisterActivity extends Activity {
 
     String[] ar_states;
     Spinner spin;
+    String[] countries;
+    ArrayAdapter<String> adapter2;
+
+
+    GlobalDatas gdatas = new GlobalDatas();
+    GlobalDatas gs = (GlobalDatas) getApplication();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +105,7 @@ public class RegisterActivity extends Activity {
         aet_state.setTypeface(tf);
 
 
-        String[] countries = {"US", "NIGERIA", "CANADA"};
+        countries = new String[]{"US", "NIGERIA", "CANADA"};
 
 
 
@@ -156,15 +162,12 @@ public class RegisterActivity extends Activity {
 
 
         } else {
-            // new GetCountry().execute();
-            //aet_cont.requestFocus();
+            new GetCountry().execute();
         }
 
 
-        ArrayAdapter<String> adapter1_spin = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, countries);
-        spin.setAdapter(adapter1_spin);
-
-
+        adapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, states);
+        aet_state.setAdapter(adapter2);
 
 
         /*ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, country);
@@ -172,11 +175,10 @@ public class RegisterActivity extends Activity {
 
 
 
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, zip);
-        aet_zip.setAdapter(adapter3);
 
 
-        et_phone.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+
+       /* et_phone.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
@@ -185,18 +187,19 @@ public class RegisterActivity extends Activity {
                     aet_state.requestFocus();
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
-                    /*ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, ar_states);
-                    aet_state.setAdapter(adapter2);*/
+                    *//*ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, ar_states);
+                    aet_state.setAdapter(adapter2);*//*
                     return true;
                 }
                 return false;
             }
-        });
+        });*/
 
         aet_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new GetState().execute();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
         });
 
@@ -213,6 +216,16 @@ public class RegisterActivity extends Activity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+
+        aet_zip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new GetZip().execute();
+                aet_zip.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
         });
 
@@ -560,6 +573,17 @@ public class RegisterActivity extends Activity {
                     Log.d("tag", "<-----Statusss----->" + daa);
 
                 }
+
+
+                ArrayAdapter<String> adapter1_spin = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, country);
+                spin.setAdapter(adapter1_spin);
+                adapter1_spin.notifyDataSetChanged();
+
+
+                gdatas.setCountry_Datas(country);
+
+
+
                 //} /*else if (status.equals("")) {
 /*
                     new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
@@ -597,6 +621,8 @@ public class RegisterActivity extends Activity {
             sweetAlertDialog.setCancelable(false);
             sweetAlertDialog.show();
             super.onPreExecute();
+
+
         }
 
         protected String doInBackground(String... params) {
@@ -605,6 +631,8 @@ public class RegisterActivity extends Activity {
 
             try {
 
+
+                Log.d("tag", "" + str_country);
 
                 String state_url = Config.SER_URL + "region/state";
 
@@ -676,8 +704,7 @@ public class RegisterActivity extends Activity {
 
                         }
 
-                        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, ar_states);
-                        aet_state.setAdapter(adapter2);
+                        adapter2.notifyDataSetChanged();
 
 
                     }
@@ -709,6 +736,7 @@ public class RegisterActivity extends Activity {
             String json = "", jsonStr = "";
 
             try {
+
 
 
                 String zip_url = Config.SER_URL + "region/zip";
@@ -760,8 +788,12 @@ public class RegisterActivity extends Activity {
                         //countries[jj.length()] =
                         zip.add(daa);
                         Log.d("tag", "<-----Statusss----->" + daa);
-
+                        adapter2.notifyDataSetChanged();
                     }
+
+
+                    ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, zip);
+                    aet_zip.setAdapter(adapter3);
 
 
                 } catch (JSONException e) {

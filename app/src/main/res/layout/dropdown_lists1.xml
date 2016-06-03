@@ -5,8 +5,9 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:gravity="left"
+    android:inputType="textPersonName"
     android:padding="5dp"
     android:text=" Login"
     android:textColor="#ffffff"
-    android:textSize="20sp" />
+    android:textSize="18sp" />
 

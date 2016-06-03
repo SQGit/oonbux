@@ -1,22 +1,36 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.Spinner;
 import com.rey.material.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -31,12 +45,32 @@ public class DeliveryAddress extends Activity {
     com.rey.material.widget.LinearLayout lt_back;
     MaterialEditText et_loc_add1, et_loc_add2, et_loc_city, et_loc_state, et_loc_zip, et_loc_phone, et_loc_note, et_int_add1, et_int_add2, et_int_city, et_int_state, et_int_zip, et_int_phone, et_int_note;
     String get_profile_sts, str_def_adr, str_loc_add1, str_loc_add2, str_loc_city, str_loc_state, str_loc_zip, str_loc_phone,
-            str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_state, str_int_zip, str_int_phone, str_int_note;
+            str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_state, str_int_zip, str_int_phone, str_int_note, str_loc_cont, str_int_cont;
 
     CheckBox cb_loc, cb_int;
     boolean loc_adr, int_adr;
 
-    Spinner loc_spin, int_spin;
+    Spinner spin_loc, spin_int;
+    String[] countries;
+    Typeface tf, tf1;
+
+    SweetAlertDialog sweetAlertDialog;
+
+    ArrayList<String> countr = new ArrayList<>();
+
+    GlobalDatas gdatas = new GlobalDatas();
+
+    MyAdapter adapter_a, adapter_b, adapter_c;
+
+    String str_country, str_state;
+
+    ArrayList<String> country = new ArrayList<>();
+    ArrayList<String> states = new ArrayList<>();
+    ArrayList<String> zip = new ArrayList<>();
+
+
+    MaterialAutoCompleteTextView aet_loc_state, aet_loc_zip, aet_int_state, aet_int_zip;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +78,7 @@ public class DeliveryAddress extends Activity {
         setContentView(R.layout.activity_delivery_address);
 
 
-        String[] countries = {"US", "NIGERIA", "CANADA"};
+        countries = new String[]{"US", "NIGERIA", "GAANA"};
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
 
@@ -84,8 +118,8 @@ public class DeliveryAddress extends Activity {
         et_loc_add1 = (MaterialEditText) findViewById(R.id.edittext_loc_address1);
         et_loc_add2 = (MaterialEditText) findViewById(R.id.edittext_loc_address2);
         et_loc_city = (MaterialEditText) findViewById(R.id.edittext_loc_city);
-        et_loc_state = (MaterialEditText) findViewById(R.id.edittext_loc_state);
-        et_loc_zip = (MaterialEditText) findViewById(R.id.edittext_loc_zip);
+        aet_loc_state = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_loc_state);
+        aet_loc_zip = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_loc_zip);
         et_loc_phone = (MaterialEditText) findViewById(R.id.edittext_loc_phone);
         et_loc_note = (MaterialEditText) findViewById(R.id.edittext_loc_note);
 
@@ -104,10 +138,110 @@ public class DeliveryAddress extends Activity {
         cb_int = (CheckBox) findViewById(R.id.checkbox_int);
 
 
-        loc_spin = (Spinner) findViewById(R.id.loc_spin_country);
+        spin_loc = (Spinner) findViewById(R.id.loc_spin_country);
 
-        ArrayAdapter<String> adapter1_spin = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists1, R.id.text_spin, countries);
-        loc_spin.setAdapter(adapter1_spin);
+        spin_int = (Spinner) findViewById(R.id.int_spin_country);
+
+
+
+       /* ArrayAdapter<String> adapter1_spin = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists1, R.id.text_spin, countries);
+        spin_loc.setAdapter(adapter1_spin);*/
+
+        //adapter_a = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, countries);
+        //spin_loc.setAdapter(adapter_a);
+
+        //  spin_loc.invalidate();
+        //spin_loc.setAdapter(new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, countries));
+
+
+        if (!Config.isNetworkAvailable(DeliveryAddress.this)) {
+
+            new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Oops!")
+                    .setContentText("No network Available!")
+                    .setConfirmText("OK")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                            // sweetAlertDialog.setCancelable(false);
+
+                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                            finish();
+                        }
+                    })
+
+                    .show();
+
+
+        } else {
+            new GetCountry().execute();
+        }
+
+
+        spin_loc.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                str_loc_cont = spin_loc.getSelectedItem().toString();
+                new GetState(str_loc_state, 0).execute();
+
+                aet_loc_state.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        });
+
+
+/*
+        spin_int.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+
+                str_int_cont = spin_int.getSelectedItem().toString();
+                new GetState().execute();
+
+                et_int_state.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+            }
+        });*/
+
+
+        aet_loc_state.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                str_loc_cont = spin_loc.getSelectedItem().toString();
+                new GetState(str_loc_state, 0).execute();
+                aet_loc_state.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        });
+
+
+        aet_loc_zip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                str_loc_state = aet_loc_state.getText().toString();
+                new GetZip().execute();
+                aet_loc_zip.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        });
+
+
+
+
+      /*  et_int_state.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new GetState().execute();
+                et_int_state.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        });*/
+
+
+
 
 
         if (str_def_adr.equals("LOCAL")) {
@@ -145,8 +279,8 @@ public class DeliveryAddress extends Activity {
         }
 
 
-        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
-        Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
+        tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
+        tf1 = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
         tv_header.setTypeface(tf);
 
@@ -162,8 +296,8 @@ public class DeliveryAddress extends Activity {
         et_loc_add1.setTypeface(tf1);
         et_loc_add2.setTypeface(tf1);
         et_loc_city.setTypeface(tf1);
-        et_loc_state.setTypeface(tf1);
-        et_loc_zip.setTypeface(tf1);
+        aet_loc_state.setTypeface(tf1);
+        aet_loc_zip.setTypeface(tf1);
         et_loc_phone.setTypeface(tf1);
         et_loc_note.setTypeface(tf1);
 
@@ -292,8 +426,8 @@ public class DeliveryAddress extends Activity {
                 et_loc_add1.requestFocus();
                 et_loc_add2.setText("");
                 et_loc_city.setText("");
-                et_loc_state.setText("");
-                et_loc_zip.setText("");
+                aet_loc_state.setText("");
+                aet_loc_zip.setText("");
                 et_loc_phone.setText("");
                 et_loc_note.setText("");
             }
@@ -329,7 +463,7 @@ public class DeliveryAddress extends Activity {
                 str_loc_add1 = et_loc_add1.getText().toString();
                 str_loc_add2 = et_loc_add2.getText().toString();
                 str_loc_city = et_loc_city.getText().toString();
-                str_loc_state = et_loc_state.getText().toString();
+                str_loc_state = aet_loc_state.getText().toString();
                 str_loc_zip = et_loc_zip.getText().toString();
                 str_loc_phone = et_loc_phone.getText().toString();
                 str_loc_note = et_loc_note.getText().toString();
@@ -593,8 +727,8 @@ public class DeliveryAddress extends Activity {
         et_loc_add1.setText(str_loc_add1);
         et_loc_add2.setText(str_loc_add2);
         et_loc_city.setText(str_loc_city);
-        et_loc_state.setText(str_loc_state);
-        et_loc_zip.setText(str_loc_zip);
+        aet_loc_state.setText(str_loc_state);
+        aet_loc_zip.setText(str_loc_zip);
         et_loc_phone.setText(str_loc_phone);
         et_loc_note.setText(str_loc_note);
 
@@ -608,19 +742,17 @@ public class DeliveryAddress extends Activity {
 
     }
 
-
     public void enable_loc() {
 
         et_loc_add1.setEnabled(true);
         et_loc_add2.setEnabled(true);
         et_loc_city.setEnabled(true);
-        et_loc_state.setEnabled(true);
-        et_loc_zip.setEnabled(true);
+        aet_loc_state.setEnabled(true);
+        aet_loc_zip.setEnabled(true);
         et_loc_phone.setEnabled(true);
         et_loc_note.setEnabled(true);
 
     }
-
 
     public void enable_int() {
         et_int_add1.setEnabled(true);
@@ -633,13 +765,12 @@ public class DeliveryAddress extends Activity {
 
     }
 
-
     public void disable_loc() {
 
         et_loc_add1.setEnabled(false);
         et_loc_add2.setEnabled(false);
         et_loc_city.setEnabled(false);
-        et_loc_state.setEnabled(false);
+        aet_loc_state.setEnabled(false);
         et_loc_zip.setEnabled(false);
         et_loc_phone.setEnabled(false);
         et_loc_note.setEnabled(false);
@@ -653,6 +784,367 @@ public class DeliveryAddress extends Activity {
         et_int_zip.setEnabled(false);
         et_int_phone.setEnabled(false);
         et_int_note.setEnabled(false);
+    }
+
+
+    public class MyAdapter extends ArrayAdapter<String> {
+
+        public MyAdapter(Context context, int textViewResourceId, ArrayList<String> objects) {
+            super(context, textViewResourceId, objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+
+        public View getCustomView(int position, View row, ViewGroup parent) {
+
+            LayoutInflater inflater = getLayoutInflater();
+            row = inflater.inflate(R.layout.dropdown_lists1, parent, false);
+
+            TextView label = (TextView) row.findViewById(R.id.text_spin);
+
+            label.setTypeface(tf);
+
+            label.setText(countries[position]);
+
+
+            return row;
+        }
+    }
+
+
+    class GetCountry extends AsyncTask<String, Void, String> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            sweetAlertDialog = new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetAlertDialog.setTitleText("Loading");
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.show();
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+            try {
+
+                String country_url = Config.SER_URL + "region/country";
+                JSONObject jsonobject = HttpUtils.getData(country_url);
+
+             /*   if (jsonobject.toString().equals(null)) {
+                    Log.e("tag", "jj" + jsonobject);
+                    json = "";
+                } else {
+
+*/
+                Log.d("tag", "" + jsonobject.toString());
+
+                if (jsonobject.toString() == "sam") {
+                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("Try Check your Network")
+                            .setConfirmText("OK")
+                            .show();
+                }
+
+                json = jsonobject.toString();
+                //}
+                return json;
+            } catch (Exception e) {
+                Log.e("InputStream", "" + e.getLocalizedMessage());
+                jsonStr = "";
+                sweetAlertDialog.dismiss();
+            }
+            return jsonStr;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            super.onPostExecute(jsonStr);
+            sweetAlertDialog.dismiss();
+
+            try {
+
+                JSONObject jo = new JSONObject(jsonStr);
+                String status = jo.getString("country");
+                String msg = jo.getString("message");
+                Log.d("tag", "<-----aasd----->" + status);
+                String json = jo.toString();
+
+               /* if (status.equals("success")) {*/
+
+                JSONObject jaa = new JSONObject(jsonStr);
+                JSONArray jj = jaa.getJSONArray("country");
+                Log.d("tag", "<-----S---->" + jj);
+
+                for (int i1 = 0; i1 < jj.length(); i1++) {
+
+                    String daa = jj.getString(i1);
+                    country.add(daa);
+                    Log.d("tag", "<-----Statusss----->" + daa);
+
+                }
+
+
+               /* ArrayAdapter<String> adapter1_spin = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin,country);
+                spin_loc.setAdapter(adapter1_spin);
+                adapter1_spin.notifyDataSetChanged();*/
+
+                adapter_a = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, country);
+                spin_loc.setAdapter(adapter_a);
+
+                adapter_a.notifyDataSetChanged();
+
+                adapter_b = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, country);
+                spin_int.setAdapter(adapter_b);
+
+                adapter_b.notifyDataSetChanged();
+
+
+                //} /*else if (status.equals("")) {
+/*
+                    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("failed to fetch country")
+                            .setConfirmText("OK")
+                            .show();
+
+                } else if (status.equals("fail")) {
+
+                    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText(msg)
+                            .setConfirmText("OK")
+                            .show();
+
+                }*/
+
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+    class GetState extends AsyncTask<String, Void, String> {
+
+
+        String get_cont;
+        int c_sts;
+
+
+        GetState(String cont, int sts) {
+            this.get_cont = cont;
+            this.c_sts = sts;
+        }
+
+        protected void onPreExecute() {
+
+            sweetAlertDialog = new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetAlertDialog.setTitleText("Loading");
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.show();
+            super.onPreExecute();
+
+            get_cont = spin_loc.getSelectedItem().toString();
+
+
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+
+            try {
+
+
+                Log.d("tag", "" + get_cont);
+
+                String state_url = Config.SER_URL + "region/state";
+
+                JSONObject jsonobject = HttpUtils.getData2(state_url, get_cont);
+
+                Log.e("tag", "jj" + jsonobject);
+
+                json = jsonobject.toString();
+
+                return json;
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            sweetAlertDialog.dismiss();
+
+
+            super.onPostExecute(jsonStr);
+            if (jsonStr == "") {
+
+            } else {
+
+                try {
+                    JSONObject jo = new JSONObject(jsonStr);
+                    String status = jo.getString("state");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Statasdfus----->" + status);
+
+
+                    if (status.equals("null")) {
+
+
+                        Log.d("tag", "<--> state not available for this country");
+
+
+                    } else {
+
+
+                        String json = jo.toString();
+
+
+                        JSONObject jaa = new JSONObject(jsonStr);
+                        JSONArray jj = jaa.getJSONArray("state");
+                        Log.d("tag", "<-----S---->" + jj);
+
+                        //JSONArray ja = jo.getJSONArray(status);
+
+                        for (int i1 = 0; i1 < jj.length(); i1++) {
+
+
+                            // JSONObject data = jj.getJSONObject(i1);
+
+                            String daa = jj.getString(i1);
+
+
+                            //countries[jj.length()] =
+                            states.add(daa);
+                            Log.d("tag", "<-----Statusss----->" + states.get(i1));
+
+                        }
+
+                        adapter_c = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, states);
+                        aet_loc_state.setAdapter(adapter_c);
+
+                        adapter_c.notifyDataSetChanged();
+
+
+                    }
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+
+    class GetZip extends AsyncTask<String, Void, String> {
+
+        String get_cont, get_state;
+
+        protected void onPreExecute() {
+
+            sweetAlertDialog = new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetAlertDialog.setTitleText("Loading");
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.show();
+
+            super.onPreExecute();
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+
+            try {
+
+
+                String zip_url = Config.SER_URL + "region/zip";
+                JSONObject jsonobject = HttpUtils.getData3(zip_url, str_loc_cont, str_loc_state);
+
+                Log.e("tag", "jj" + jsonobject);
+
+                json = jsonobject.toString();
+
+                return json;
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            sweetAlertDialog.dismiss();
+            super.onPostExecute(jsonStr);
+            if (jsonStr == "") {
+
+            } else {
+
+                try {
+                    JSONObject jo = new JSONObject(jsonStr);
+                    String status = jo.getString("zip");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Statasdfus----->" + status);
+
+                    String json = jo.toString();
+
+
+                    JSONObject jaa = new JSONObject(jsonStr);
+                    JSONArray jj = jaa.getJSONArray("zip");
+                    Log.d("tag", "<-----S---->" + jj);
+
+                    //JSONArray ja = jo.getJSONArray(status);
+
+                    for (int i1 = 0; i1 < jj.length(); i1++) {
+
+                        // JSONObject data = jj.getJSONObject(i1);
+
+                        String daa = jj.getString(i1);
+
+                        //countries[jj.length()] =
+                        zip.add(daa);
+                        Log.d("tag", "<-----Statusss----->" + daa);
+                        //adapter2.notifyDataSetChanged();
+                    }
+
+
+                    // ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, zip);
+                    //aet_zip.setAdapter(adapter3);
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
 

@@ -35,6 +35,17 @@ public class SplashActivity extends AppCompatActivity {
         btn_submit = (Button) findViewById(R.id.button_submit);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
         btn_submit.setTypeface(tf);
+
+        //if (!get_login_sts.equals("") || !get_profile_sts.equals("")) {
+
+
+        if (!get_profile_sts.equals("")) {
+            Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+            startActivity(login_intent);
+            finish();
+        }
+
+
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,5 +82,9 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
+
+
 }

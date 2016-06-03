@@ -23,6 +23,7 @@
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyDiyf6Iasx06QQs4_3tjilpraTHchMtSSE" />
 
+
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -83,5 +84,6 @@
             android:value="AIzaSyDiyf6Iasx06QQs4_3tjilpraTHchMtSSE" />
 
     </application>
+
 
 </manifest>

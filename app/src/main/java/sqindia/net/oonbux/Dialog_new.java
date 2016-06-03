@@ -67,9 +67,10 @@ public class Dialog_new extends Dialog {
         if (i == 0) {
 
             btn_close.setText("OK");
+            btn_close.setTextSize(27);
             imgview.setImageDrawable(c.getResources().getDrawable(R.drawable.tick_ico));
             Drawable img = c.getResources().getDrawable(R.drawable.done_ico);
-            btn_close.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+            btn_close.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 
         } else if (i == 1) {
 

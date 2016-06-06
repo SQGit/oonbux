@@ -207,7 +207,6 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/state_ico"
                 android:hint="State"
-
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName"
                 android:maxLength="10"

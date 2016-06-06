@@ -34,9 +34,6 @@ import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-/**
- * Created by Salman on 4/29/2016.
- */
 public class DeliveryAddress extends Activity {
 
     LinearLayout bottom_lt;
@@ -46,20 +43,12 @@ public class DeliveryAddress extends Activity {
     MaterialEditText et_loc_add1, et_loc_add2, et_loc_city, et_loc_state, et_loc_zip, et_loc_phone, et_loc_note, et_int_add1, et_int_add2, et_int_city, et_int_state, et_int_zip, et_int_phone, et_int_note;
     String get_profile_sts, str_def_adr, str_loc_add1, str_loc_add2, str_loc_city, str_loc_state, str_loc_zip, str_loc_phone,
             str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_state, str_int_zip, str_int_phone, str_int_note, str_loc_cont, str_int_cont;
-
     CheckBox cb_loc, cb_int;
     boolean loc_adr, int_adr;
-
     Spinner spin_loc, spin_int;
     String[] countries;
     Typeface tf, tf1;
-
     SweetAlertDialog sweetAlertDialog;
-
-    ArrayList<String> countr = new ArrayList<>();
-
-    GlobalDatas gdatas = new GlobalDatas();
-
     MyAdapter adapter_a, adapter_b, adapter_c;
 
     String str_country, str_state;
@@ -68,8 +57,7 @@ public class DeliveryAddress extends Activity {
     ArrayList<String> states = new ArrayList<>();
     ArrayList<String> zip = new ArrayList<>();
 
-
-    MaterialAutoCompleteTextView aet_loc_state, aet_loc_zip, aet_int_state, aet_int_zip;
+    MaterialAutoCompleteTextView aet_loc_state, aet_loc_zip;
 
 
     @Override
@@ -77,11 +65,8 @@ public class DeliveryAddress extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_address);
 
-
         countries = new String[]{"US", "NIGERIA", "GAANA"};
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
-
         get_profile_sts = sharedPreferences.getString("profile", "");
         Log.e("tag", "pfs" + get_profile_sts);
 
@@ -92,7 +77,6 @@ public class DeliveryAddress extends Activity {
         str_loc_zip = sharedPreferences.getString("loc_zip", "");
         str_loc_phone = sharedPreferences.getString("loc_phone", "");
         str_loc_note = sharedPreferences.getString("loc_note", "");
-
         str_int_add1 = sharedPreferences.getString("int_addr1", "");
         str_int_add2 = sharedPreferences.getString("int_addr2", "");
         str_int_city = sharedPreferences.getString("int_city", "");
@@ -103,18 +87,14 @@ public class DeliveryAddress extends Activity {
         str_def_adr = sharedPreferences.getString("default_adr", "");
 
 
-        // bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
-
         tv_header = (TextView) findViewById(R.id.tv_hd_txt);
         tv_sub_hdr_loc = (TextView) findViewById(R.id.tv_shd_txt_loc);
         tv_sub_hdr_int = (TextView) findViewById(R.id.tv_shd_txt_int);
-
         btn_save_loc = (Button) findViewById(R.id.button_save_loc);
         btn_save_int = (Button) findViewById(R.id.button_save_int);
         btn_add_loc = (Button) findViewById(R.id.button_add_loc);
         btn_add_int = (Button) findViewById(R.id.button_add_int);
         btn_next = (Button) findViewById(R.id.button_next);
-
         et_loc_add1 = (MaterialEditText) findViewById(R.id.edittext_loc_address1);
         et_loc_add2 = (MaterialEditText) findViewById(R.id.edittext_loc_address2);
         et_loc_city = (MaterialEditText) findViewById(R.id.edittext_loc_city);
@@ -122,7 +102,6 @@ public class DeliveryAddress extends Activity {
         aet_loc_zip = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_loc_zip);
         et_loc_phone = (MaterialEditText) findViewById(R.id.edittext_loc_phone);
         et_loc_note = (MaterialEditText) findViewById(R.id.edittext_loc_note);
-
         et_int_add1 = (MaterialEditText) findViewById(R.id.edittext_int_address1);
         et_int_add2 = (MaterialEditText) findViewById(R.id.edittext_int_address2);
         et_int_city = (MaterialEditText) findViewById(R.id.edittext_int_city);
@@ -130,32 +109,15 @@ public class DeliveryAddress extends Activity {
         et_int_zip = (MaterialEditText) findViewById(R.id.edittext_int_zip);
         et_int_phone = (MaterialEditText) findViewById(R.id.edittext_int_phone);
         et_int_note = (MaterialEditText) findViewById(R.id.edittext_int_note);
-
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         bottom_lt = (LinearLayout) findViewById(R.id.bottom);
-
         cb_loc = (CheckBox) findViewById(R.id.checkbox_local);
         cb_int = (CheckBox) findViewById(R.id.checkbox_int);
-
-
         spin_loc = (Spinner) findViewById(R.id.loc_spin_country);
-
         spin_int = (Spinner) findViewById(R.id.int_spin_country);
 
 
-
-       /* ArrayAdapter<String> adapter1_spin = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists1, R.id.text_spin, countries);
-        spin_loc.setAdapter(adapter1_spin);*/
-
-        //adapter_a = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, countries);
-        //spin_loc.setAdapter(adapter_a);
-
-        //  spin_loc.invalidate();
-        //spin_loc.setAdapter(new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, countries));
-
-
         if (!Config.isNetworkAvailable(DeliveryAddress.this)) {
-
             new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Oops!")
                     .setContentText("No network Available!")
@@ -163,17 +125,12 @@ public class DeliveryAddress extends Activity {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-
-                            // sweetAlertDialog.setCancelable(false);
-
                             startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                             finish();
+                            sweetAlertDialog.dismiss();
                         }
                     })
-
                     .show();
-
-
         } else {
             new GetCountry().execute();
         }
@@ -184,7 +141,6 @@ public class DeliveryAddress extends Activity {
             public void onItemSelected(Spinner parent, View view, int position, long id) {
                 str_loc_cont = spin_loc.getSelectedItem().toString();
                 new GetState(str_loc_state, 0).execute();
-
                 aet_loc_state.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
@@ -209,7 +165,6 @@ public class DeliveryAddress extends Activity {
         aet_loc_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 str_loc_cont = spin_loc.getSelectedItem().toString();
                 new GetState(str_loc_state, 0).execute();
                 aet_loc_state.requestFocus();
@@ -239,9 +194,6 @@ public class DeliveryAddress extends Activity {
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
         });*/
-
-
-
 
 
         if (str_def_adr.equals("LOCAL")) {
@@ -830,23 +782,12 @@ public class DeliveryAddress extends Activity {
             sweetAlertDialog.setCancelable(false);
             sweetAlertDialog.show();
         }
-
         protected String doInBackground(String... params) {
-
             String json = "", jsonStr = "";
             try {
-
                 String country_url = Config.SER_URL + "region/country";
                 JSONObject jsonobject = HttpUtils.getData(country_url);
-
-             /*   if (jsonobject.toString().equals(null)) {
-                    Log.e("tag", "jj" + jsonobject);
-                    json = "";
-                } else {
-
-*/
                 Log.d("tag", "" + jsonobject.toString());
-
                 if (jsonobject.toString() == "sam") {
                     new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
@@ -854,9 +795,7 @@ public class DeliveryAddress extends Activity {
                             .setConfirmText("OK")
                             .show();
                 }
-
                 json = jsonobject.toString();
-                //}
                 return json;
             } catch (Exception e) {
                 Log.e("InputStream", "" + e.getLocalizedMessage());
@@ -864,15 +803,12 @@ public class DeliveryAddress extends Activity {
                 sweetAlertDialog.dismiss();
             }
             return jsonStr;
-
         }
-
         @Override
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
             sweetAlertDialog.dismiss();
-
             try {
 
                 JSONObject jo = new JSONObject(jsonStr);
@@ -880,178 +816,116 @@ public class DeliveryAddress extends Activity {
                 String msg = jo.getString("message");
                 Log.d("tag", "<-----aasd----->" + status);
                 String json = jo.toString();
-
-               /* if (status.equals("success")) {*/
-
                 JSONObject jaa = new JSONObject(jsonStr);
                 JSONArray jj = jaa.getJSONArray("country");
                 Log.d("tag", "<-----S---->" + jj);
-
                 for (int i1 = 0; i1 < jj.length(); i1++) {
-
                     String daa = jj.getString(i1);
                     country.add(daa);
                     Log.d("tag", "<-----Statusss----->" + daa);
-
                 }
-
-
-               /* ArrayAdapter<String> adapter1_spin = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin,country);
-                spin_loc.setAdapter(adapter1_spin);
-                adapter1_spin.notifyDataSetChanged();*/
-
                 adapter_a = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, country);
                 spin_loc.setAdapter(adapter_a);
-
-                adapter_a.notifyDataSetChanged();
 
                 adapter_b = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, country);
                 spin_int.setAdapter(adapter_b);
 
-                adapter_b.notifyDataSetChanged();
-
-
-                //} /*else if (status.equals("")) {
-/*
-                    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Oops!")
-                            .setContentText("failed to fetch country")
-                            .setConfirmText("OK")
-                            .show();
-
-                } else if (status.equals("fail")) {
-
-                    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Oops!")
-                            .setContentText(msg)
-                            .setConfirmText("OK")
-                            .show();
-
-                }*/
 
             } catch (JSONException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
+                new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Oops!")
+                        .setContentText("Network Error,Try Again Later.")
+                        .setConfirmText("OK")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                finish();
+                                sweetAlertDialog.dismiss();
+                            }
+                        })
+                        .show();
             }
-
         }
-
     }
 
 
     class GetState extends AsyncTask<String, Void, String> {
-
-
         String get_cont;
         int c_sts;
-
-
         GetState(String cont, int sts) {
             this.get_cont = cont;
             this.c_sts = sts;
         }
-
         protected void onPreExecute() {
-
             sweetAlertDialog = new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
             sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
             sweetAlertDialog.setTitleText("Loading");
             sweetAlertDialog.setCancelable(false);
             sweetAlertDialog.show();
             super.onPreExecute();
-
-            get_cont = spin_loc.getSelectedItem().toString();
-
-
         }
-
         protected String doInBackground(String... params) {
-
             String json = "", jsonStr = "";
-
             try {
-
-
                 Log.d("tag", "" + get_cont);
-
                 String state_url = Config.SER_URL + "region/state";
-
                 JSONObject jsonobject = HttpUtils.getData2(state_url, get_cont);
-
                 Log.e("tag", "jj" + jsonobject);
-
                 json = jsonobject.toString();
-
                 return json;
             } catch (Exception e) {
                 Log.d("InputStream", e.getLocalizedMessage());
             }
-
             return null;
-
         }
-
         @Override
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             sweetAlertDialog.dismiss();
-
-
             super.onPostExecute(jsonStr);
             if (jsonStr == "") {
-
             } else {
-
                 try {
                     JSONObject jo = new JSONObject(jsonStr);
                     String status = jo.getString("state");
                     String msg = jo.getString("message");
                     Log.d("tag", "<-----Statasdfus----->" + status);
-
-
                     if (status.equals("null")) {
-
-
                         Log.d("tag", "<--> state not available for this country");
-
-
                     } else {
-
-
-                        String json = jo.toString();
-
-
                         JSONObject jaa = new JSONObject(jsonStr);
                         JSONArray jj = jaa.getJSONArray("state");
                         Log.d("tag", "<-----S---->" + jj);
-
-                        //JSONArray ja = jo.getJSONArray(status);
-
                         for (int i1 = 0; i1 < jj.length(); i1++) {
-
-
-                            // JSONObject data = jj.getJSONObject(i1);
-
                             String daa = jj.getString(i1);
-
-
-                            //countries[jj.length()] =
                             states.add(daa);
                             Log.d("tag", "<-----Statusss----->" + states.get(i1));
-
                         }
 
-                        adapter_c = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, states);
-                        aet_loc_state.setAdapter(adapter_c);
+                        if (c_sts == 0) {
+                            adapter_c = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, states);
+                            aet_loc_state.setAdapter(adapter_c);
+                            aet_loc_state.requestFocus();
+                        } else {
 
-                        adapter_c.notifyDataSetChanged();
-
-
+                        }
                     }
 
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
+                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("Network Error,Try Again Later.")
+                            .setConfirmText("OK")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    finish();
+                                    sweetAlertDialog.dismiss();
+                                }
+                            })
+                            .show();
                 }
             }
         }

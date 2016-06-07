@@ -61,7 +61,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     com.rey.material.widget.TextView tv_header;
     Button btn_logout, btn_finish;
     ImageView iv_profile;
-    String get_profile_sts, str_oonbux_id, str_state, str_zip, str_phone, str_fname, str_lname, str_photo, str_session_id, str_web_photo;
+    String get_profile_sts, str_oonbux_id, str_state, str_zip, str_phone, str_fname, str_lname, str_photo, str_session_id, str_web_photo, vir_adr_sts;
     Uri uri;
     Bitmap bitmap;
     com.rey.material.widget.LinearLayout lt_back;
@@ -97,7 +97,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
         str_session_id = sharedPreferences.getString("sessionid", "");
 
-
+        vir_adr_sts = sharedPreferences.getString("virtul_addr", "");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -165,10 +165,6 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         vir_adr[1] = get_Virtual2;
 
 
-
-
-
-
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
         Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
@@ -193,6 +189,35 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Do you want to Logout the Application?")
+                        .setConfirmText("Yes!")
+                        .setCancelText("No")
+
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("login", "");
+                                editor.commit();
+                                Intent inte = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(inte);
+                                finish();
+                                sDialog.dismiss();
+
+                            }
+                        })
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+
+                            }
+                        })
+                        .show();
 
             }
         });
@@ -285,9 +310,12 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
     public void profile_update() {
 
-        // new Profile_Update_Task().execute();
+        if (vir_adr_sts.equals("")) {
+            new Virtual_Address_Task().execute();
+        } else {
+            new Profile_Update_Task().execute();
+        }
 
-        new Virtual_Address_Task().execute();
     }
 
 
@@ -344,7 +372,6 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                 if (status.equals("success")) {
 
 
-
                     Log.d("tag", "<-----Status----->" + msg);
 
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
@@ -380,24 +407,6 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     class Profile_Update_Task extends AsyncTask<String, Void, String> {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
@@ -421,6 +430,8 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
                 JSONObject jsonObject = new JSONObject();
 
+                Log.d("tag", "" + sharedPreferences.getString("loc_country", "") + sharedPreferences.getString("int_country", ""));
+
                 jsonObject.accumulate("firstname", sharedPreferences.getString("fname", ""));
                 jsonObject.accumulate("lastname", sharedPreferences.getString("lname", ""));
                 jsonObject.accumulate("email", sharedPreferences.getString("mail", ""));
@@ -435,6 +446,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                 jsonObject.accumulate("loc_addr_zip", sharedPreferences.getString("loc_zip", ""));
                 jsonObject.accumulate("loc_phone", sharedPreferences.getString("loc_phone", ""));
                 jsonObject.accumulate("loc_delivery_note", sharedPreferences.getString("loc_note", ""));
+                jsonObject.accumulate("loc_addr_country", sharedPreferences.getString("loc_country", ""));
 
                 jsonObject.accumulate("int_addr_line1", sharedPreferences.getString("int_addr1", ""));
                 jsonObject.accumulate("int_addr_line2", sharedPreferences.getString("int_addr2", ""));
@@ -443,6 +455,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                 jsonObject.accumulate("int_addr_zip", sharedPreferences.getString("int_zip", ""));
                 jsonObject.accumulate("int_phone", sharedPreferences.getString("int_phone", ""));
                 jsonObject.accumulate("int_delivery_note", sharedPreferences.getString("int_note", ""));
+                jsonObject.accumulate("int_addr_country", sharedPreferences.getString("int_country", ""));
 
                 jsonObject.accumulate("default_loc", sharedPreferences.getString("default_adr", ""));
 
@@ -529,7 +542,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             super.onPreExecute();
             psDialog = new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.PROGRESS_TYPE);
             psDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
-            psDialog.setTitleText("Uploading Photo");
+            psDialog.setTitleText("Loading");
             psDialog.setCancelable(false);
             psDialog.show();
 
@@ -680,12 +693,6 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             }
         }
     }
-
-
-
-
-
-
 
 
 }

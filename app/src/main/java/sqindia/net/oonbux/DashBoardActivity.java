@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.rey.material.widget.Button;
+import com.rey.material.widget.TextView;
 
 import java.io.File;
 import java.io.InputStream;
@@ -44,7 +45,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
     public final static int REQUEST_CODE = 1;
     public ProgressBar progressBar;
-    com.rey.material.widget.TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet;
+    com.rey.material.widget.TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet, tv_nav_cont_logout;
     Button btn_nav_cont_loc_adr, btn_nav_cont_int_adr, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop, btn_shop_online, btn_add_shipment, btn_done_shipment;
     com.rey.material.widget.TextView tv_dash_hd_txt;
     String str_oonbux_id, str_photo, web_photo;
@@ -131,6 +132,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_rec_pkg = (com.rey.material.widget.TextView) findViewById(R.id.txt9);
         tv_nav_cont_payment = (com.rey.material.widget.TextView) findViewById(R.id.txt10);
         tv_nav_cont_d_wallet = (com.rey.material.widget.TextView) findViewById(R.id.txt11);
+        tv_nav_cont_logout = (TextView) findViewById(R.id.txt12);
 
         btn_add_shipment = (Button) findViewById(R.id.add_ship_button);
         btn_done_shipment = (Button) findViewById(R.id.add_done_button);
@@ -199,6 +201,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         btn_dash_deliver.setTypeface(tf);
         btn_shop_online.setTypeface(tf);
         btn_add_shipment.setTypeface(tf);
+
+        tv_nav_cont_logout.setTypeface(tf);
 
         tv_nav_hd_ship_id.setText(str_oonbux_id);
         btn_add_shipment.setVisibility(View.VISIBLE);
@@ -307,6 +311,44 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
                /* Intent inte = new Intent(getApplicationContext(), AddLocation.class);
                 startActivity(inte);*/
+            }
+        });
+
+        tv_nav_cont_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                new SweetAlertDialog(DashBoardActivity.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Do you want to Logout the Application?")
+                        .setConfirmText("Yes!")
+                        .setCancelText("No")
+
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("login", "");
+                                editor.commit();
+                                Intent inte = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(inte);
+                                finish();
+                                sDialog.dismiss();
+
+                            }
+                        })
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+
+                            }
+                        })
+                        .show();
+
+
             }
         });
 

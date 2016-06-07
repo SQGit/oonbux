@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
@@ -44,6 +45,8 @@ public class RegisterActivity extends Activity {
     ArrayList<String> zip = new ArrayList<>();
     Spinner spin;
     ListAdapter_Class country_list_adapter, state_list_adapter, zip_list_adapter;
+
+    ArrayAdapter<String> adpater_states;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +80,6 @@ public class RegisterActivity extends Activity {
                 states.clear();
                 new GetState(str_country).execute();
 
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                aet_state.requestFocus();
             }
         });
 
@@ -88,7 +89,6 @@ public class RegisterActivity extends Activity {
                 str_country = spin.getSelectedItem().toString();
                 states.clear();
                 new GetState(str_country).execute();
-
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
         });
@@ -146,6 +146,19 @@ public class RegisterActivity extends Activity {
                 validatedatas();
             }
         });
+
+
+        adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, states);
+        aet_state.setAdapter(adpater_states);
+
+
+
+
+
+
+
+
+
     }
 
     private void getIds_Fonts() {
@@ -442,11 +455,14 @@ public class RegisterActivity extends Activity {
                             states.add(daa);
                             Log.d("tag", states.get(i1));
                         }
-                        state_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists2, states);
-                        Log.d("tag", "" + String.valueOf(states.size()));
-                        aet_state.setAdapter(state_list_adapter);
 
-                        state_list_adapter.notifyDataSetChanged();
+                        adpater_states.notifyDataSetChanged();
+                        Log.d("tag", "" + String.valueOf(states.size()));
+
+                        /*state_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists2, states);
+                        aet_state.setAdapter(state_list_adapter);
+                        state_list_adapter.notifyDataSetChanged();*/
+
                     }
 
                 } catch (JSONException e) {
@@ -524,8 +540,13 @@ public class RegisterActivity extends Activity {
                         zip.add(daa);
                         Log.d("tag", "<-----Statusss----->" + daa);
                     }
-                    zip_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists2, zip);
-                    aet_zip.setAdapter(zip_list_adapter);
+
+                    ArrayAdapter<String> adapter_zip = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, zip);
+                    aet_zip.setAdapter(adapter_zip);
+
+                   /* zip_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists2, zip);
+                    aet_zip.setAdapter(zip_list_adapter);*/
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)

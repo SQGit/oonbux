@@ -128,13 +128,13 @@ public class AddLocation extends Activity {
             public void onClick(View v) {
 
 
-                if (status != 0) {
+                if (vir_sts == "0") {
 
-                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
                     startActivity(inte);
                     finish();
                 } else {
-                    Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
+                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
                     startActivity(inte);
                 }
 
@@ -177,8 +177,8 @@ public class AddLocation extends Activity {
                     startActivity(inte);*/
                 } else {
                     btn_submit.setText("Submit");
-                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
-                    startActivity(inte);
+                   /* Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    startActivity(inte);*/
 
                     new Virtual_Address_Task().execute();
                 }

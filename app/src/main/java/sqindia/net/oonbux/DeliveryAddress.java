@@ -11,10 +11,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -40,9 +42,9 @@ public class DeliveryAddress extends Activity {
     TextView tv_header, tv_sub_hdr_loc, tv_sub_hdr_int;
     Button btn_save_loc, btn_save_int, btn_next, btn_add_loc, btn_add_int;
     com.rey.material.widget.LinearLayout lt_back;
-    MaterialEditText et_loc_add1, et_loc_add2, et_loc_city, et_loc_state, et_loc_zip, et_loc_phone, et_loc_note, et_int_add1, et_int_add2, et_int_city, et_int_state, et_int_zip, et_int_phone, et_int_note;
-    String get_profile_sts, str_def_adr, str_loc_add1, str_loc_add2, str_loc_city, str_loc_state, str_loc_zip, str_loc_phone,
-            str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_state, str_int_zip, str_int_phone, str_int_note, str_loc_cont, str_int_cont;
+    MaterialEditText et_loc_add1, et_loc_add2, et_loc_city, et_loc_phone, et_loc_note, et_int_add1, et_int_add2, et_int_city, et_int_phone, et_int_note;
+    String get_profile_sts, str_def_adr, str_loc_add1, str_loc_add2, str_loc_city, str_loc_zip, str_loc_phone,
+            str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_zip, str_int_phone, str_int_note;
     CheckBox cb_loc, cb_int;
     boolean loc_adr, int_adr;
     Spinner spin_loc, spin_int;
@@ -57,7 +59,12 @@ public class DeliveryAddress extends Activity {
     ArrayList<String> states = new ArrayList<>();
     ArrayList<String> zip = new ArrayList<>();
 
-    MaterialAutoCompleteTextView aet_loc_state, aet_loc_zip;
+    MaterialAutoCompleteTextView aet_loc_state, aet_loc_zip, aet_int_state, aet_int_zip;
+
+    String str_loc_country, str_loc_state, str_int_country, str_int_state;
+
+    ArrayAdapter<String> adpater_states, adpater_states_, adapter_zips, adapter_zips_;
+
 
 
     @Override
@@ -75,6 +82,7 @@ public class DeliveryAddress extends Activity {
         str_loc_city = sharedPreferences.getString("loc_city", "");
         str_loc_state = sharedPreferences.getString("loc_state", "");
         str_loc_zip = sharedPreferences.getString("loc_zip", "");
+        str_loc_country = sharedPreferences.getString("loc_country", "");
         str_loc_phone = sharedPreferences.getString("loc_phone", "");
         str_loc_note = sharedPreferences.getString("loc_note", "");
         str_int_add1 = sharedPreferences.getString("int_addr1", "");
@@ -83,6 +91,7 @@ public class DeliveryAddress extends Activity {
         str_int_state = sharedPreferences.getString("int_state", "");
         str_int_zip = sharedPreferences.getString("int_zip", "");
         str_int_phone = sharedPreferences.getString("int_phone", "");
+        str_int_country = sharedPreferences.getString("int_country", "");
         str_int_note = sharedPreferences.getString("int_note", "");
         str_def_adr = sharedPreferences.getString("default_adr", "");
 
@@ -105,8 +114,8 @@ public class DeliveryAddress extends Activity {
         et_int_add1 = (MaterialEditText) findViewById(R.id.edittext_int_address1);
         et_int_add2 = (MaterialEditText) findViewById(R.id.edittext_int_address2);
         et_int_city = (MaterialEditText) findViewById(R.id.edittext_int_city);
-        et_int_state = (MaterialEditText) findViewById(R.id.edittext_int_state);
-        et_int_zip = (MaterialEditText) findViewById(R.id.edittext_int_zip);
+        aet_int_state = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_int_state);
+        aet_int_zip = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_int_zip);
         et_int_phone = (MaterialEditText) findViewById(R.id.edittext_int_phone);
         et_int_note = (MaterialEditText) findViewById(R.id.edittext_int_note);
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
@@ -135,40 +144,135 @@ public class DeliveryAddress extends Activity {
             new GetCountry().execute();
         }
 
-
         spin_loc.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-                str_loc_cont = spin_loc.getSelectedItem().toString();
-                new GetState(str_loc_state, 0).execute();
-                aet_loc_state.requestFocus();
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                str_loc_country = spin_loc.getSelectedItem().toString();
+                new GetState(str_loc_country, 0).execute();
             }
         });
 
-
-/*
-        spin_int.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+/*        spin_int.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-
-                str_int_cont = spin_int.getSelectedItem().toString();
-                new GetState().execute();
-
-                et_int_state.requestFocus();
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-
+                str_int_country = spin_int.getSelectedItem().toString();
+                new GetState(str_int_country, 1).execute();
             }
         });*/
+
+
+        spin_int.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+
+                str_int_country = spin_int.getSelectedItem().toString();
+                new GetState(str_int_country, 1).execute();
+                return true;
+            }
+        });
 
 
         aet_loc_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                str_loc_cont = spin_loc.getSelectedItem().toString();
-                new GetState(str_loc_state, 0).execute();
+                str_loc_country = spin_loc.getSelectedItem().toString();
+                new GetState(str_loc_country, 0).execute();
                 aet_loc_state.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        });
+        aet_int_state.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                str_int_country = spin_loc.getSelectedItem().toString();
+                new GetState(str_int_country, 1).execute();
+                aet_int_state.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        });
+
+
+        aet_loc_state.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (aet_loc_state.getText().toString() != null) {
+                        str_loc_country = spin_loc.getSelectedItem().toString();
+                        str_loc_state = aet_loc_state.getText().toString();
+                        new GetZip(str_loc_country, str_loc_state, 0).execute();
+                        aet_loc_zip.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        return true;
+                    } else {
+                        aet_loc_state.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        aet_int_state.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (aet_int_state.getText().toString() != null) {
+                        str_int_country = spin_int.getSelectedItem().toString();
+                        str_int_state = aet_int_state.getText().toString();
+                        new GetZip(str_int_country, str_int_state, 1).execute();
+                        aet_int_zip.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        return true;
+                    } else {
+                        aet_int_state.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+
+        et_loc_city.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (aet_loc_state.getText().toString() != null) {
+                        str_country = spin_loc.getSelectedItem().toString();
+                        str_state = aet_loc_state.getText().toString();
+                        new GetZip(str_country, str_state, 0).execute();
+                        aet_loc_zip.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        return true;
+                    } else {
+                        aet_loc_state.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+        et_int_city.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (aet_int_state.getText().toString() != null) {
+                        str_int_country = spin_loc.getSelectedItem().toString();
+                        str_int_state = aet_loc_state.getText().toString();
+                        new GetZip(str_int_country, str_int_state, 1).execute();
+                        aet_int_zip.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        return true;
+                    } else {
+                        aet_int_state.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        return true;
+                    }
+                }
+                return false;
             }
         });
 
@@ -176,24 +280,26 @@ public class DeliveryAddress extends Activity {
         aet_loc_zip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                str_loc_country = spin_loc.getSelectedItem().toString();
                 str_loc_state = aet_loc_state.getText().toString();
-                new GetZip().execute();
+                new GetZip(str_loc_country, str_loc_state, 0).execute();
+                aet_loc_zip.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        });
+
+        aet_int_zip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                str_int_country = spin_int.getSelectedItem().toString();
+                str_int_state = aet_int_state.getText().toString();
+                new GetZip(str_int_country, str_int_state, 1).execute();
                 aet_loc_zip.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
         });
 
 
-
-
-      /*  et_int_state.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new GetState().execute();
-                et_int_state.requestFocus();
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-            }
-        });*/
 
 
         if (str_def_adr.equals("LOCAL")) {
@@ -203,7 +309,7 @@ public class DeliveryAddress extends Activity {
         }
 
 
-        if (!(str_loc_add1.equals("null"))) {
+        if (!(str_loc_add1.equals("null")) || (!(str_int_add1.equals("null")))) {
 
             getfromdata();
         }
@@ -224,7 +330,9 @@ public class DeliveryAddress extends Activity {
             loc_adr = true;
             disable_loc();
             btn_save_loc.setVisibility(View.GONE);
-        } else if (sharedPreferences.getBoolean("adrsts1", false)) {
+        }
+
+        if (sharedPreferences.getBoolean("adrsts1", false)) {
             int_adr = true;
             disable_int();
             btn_save_int.setVisibility(View.GONE);
@@ -256,8 +364,8 @@ public class DeliveryAddress extends Activity {
         et_int_add1.setTypeface(tf1);
         et_int_add2.setTypeface(tf1);
         et_int_city.setTypeface(tf1);
-        et_int_state.setTypeface(tf1);
-        et_int_zip.setTypeface(tf1);
+        aet_int_state.setTypeface(tf1);
+        aet_int_zip.setTypeface(tf1);
         et_int_phone.setTypeface(tf1);
         et_int_note.setTypeface(tf1);
 
@@ -400,8 +508,8 @@ public class DeliveryAddress extends Activity {
                 et_int_add1.requestFocus();
                 et_int_add2.setText("");
                 et_int_city.setText("");
-                et_int_state.setText("");
-                et_int_zip.setText("");
+                aet_int_state.setText("");
+                aet_int_zip.setText("");
                 et_int_phone.setText("");
                 et_int_note.setText("");
             }
@@ -416,12 +524,13 @@ public class DeliveryAddress extends Activity {
                 str_loc_add2 = et_loc_add2.getText().toString();
                 str_loc_city = et_loc_city.getText().toString();
                 str_loc_state = aet_loc_state.getText().toString();
-                str_loc_zip = et_loc_zip.getText().toString();
+                str_loc_zip = aet_loc_zip.getText().toString();
                 str_loc_phone = et_loc_phone.getText().toString();
                 str_loc_note = et_loc_note.getText().toString();
+                str_loc_country = spin_loc.getSelectedItem().toString();
 
 
-                validate(0, str_loc_add1, str_loc_add2, str_loc_city, str_loc_state, str_loc_zip, str_loc_phone, str_loc_note);
+                validate(0, str_loc_add1, str_loc_add2, str_loc_city, str_loc_state, str_loc_zip, str_loc_phone, str_loc_note, str_loc_country);
 
 
             }
@@ -434,12 +543,13 @@ public class DeliveryAddress extends Activity {
                 str_int_add1 = et_int_add1.getText().toString();
                 str_int_add2 = et_int_add2.getText().toString();
                 str_int_city = et_int_city.getText().toString();
-                str_int_state = et_int_state.getText().toString();
-                str_int_zip = et_int_zip.getText().toString();
+                str_int_state = aet_int_state.getText().toString();
+                str_int_zip = aet_int_zip.getText().toString();
                 str_int_phone = et_int_phone.getText().toString();
                 str_int_note = et_int_note.getText().toString();
+                str_int_country = spin_int.getSelectedItem().toString();
 
-                validate(1, str_int_add1, str_int_add2, str_int_city, str_int_state, str_int_zip, str_int_phone, str_int_note);
+                validate(1, str_int_add1, str_int_add2, str_int_city, str_int_state, str_int_zip, str_int_phone, str_int_note, str_int_country);
 
             }
         });
@@ -513,6 +623,8 @@ public class DeliveryAddress extends Activity {
                                                 Log.d("tag", sharedPreferences.getString("int_phone", ""));
                                                 Log.d("tag", sharedPreferences.getString("int_note", ""));
                                                 Log.d("tag", sharedPreferences.getString("default_adr", ""));
+                                                Log.d("tag", sharedPreferences.getString("loc_country", ""));
+                                                Log.d("tag", sharedPreferences.getString("int_country", ""));
 
 
                                                 String virtualaddr = sharedPreferences.getString("virtul_addr", "");
@@ -543,7 +655,7 @@ public class DeliveryAddress extends Activity {
     }
 
 
-    public void validate(int i, String addr1, String addr2, String city, String state, String zip, String phone, String note)
+    public void validate(int i, String addr1, String addr2, String city, String state, String zip, String phone, String note, String country)
 
     {
         String location;
@@ -589,6 +701,7 @@ public class DeliveryAddress extends Activity {
                                     editor.putString(location + "_zip", zip);
                                     editor.putString(location + "_phone", phone);
                                     editor.putString(location + "_note", note);
+                                    editor.putString(location + "_country", country);
                                     editor.putBoolean("adrsts0", true);
                                     editor.commit();
 
@@ -621,6 +734,7 @@ public class DeliveryAddress extends Activity {
                                     editor.putString(location + "_zip", zip);
                                     editor.putString(location + "_phone", phone);
                                     editor.putString(location + "_note", note);
+                                    editor.putString(location + "_country", country);
                                     editor.putBoolean("adrsts1", true);
                                     editor.commit();
 
@@ -687,8 +801,8 @@ public class DeliveryAddress extends Activity {
         et_int_add1.setText(str_int_add1);
         et_int_add2.setText(str_int_add2);
         et_int_city.setText(str_int_city);
-        et_int_state.setText(str_int_state);
-        et_int_zip.setText(str_int_zip);
+        aet_int_state.setText(str_int_state);
+        aet_int_zip.setText(str_int_zip);
         et_int_phone.setText(str_int_phone);
         et_int_note.setText(str_int_note);
 
@@ -703,6 +817,7 @@ public class DeliveryAddress extends Activity {
         aet_loc_zip.setEnabled(true);
         et_loc_phone.setEnabled(true);
         et_loc_note.setEnabled(true);
+        spin_loc.setEnabled(true);
 
     }
 
@@ -710,10 +825,11 @@ public class DeliveryAddress extends Activity {
         et_int_add1.setEnabled(true);
         et_int_add2.setEnabled(true);
         et_int_city.setEnabled(true);
-        et_int_state.setEnabled(true);
-        et_int_zip.setEnabled(true);
+        aet_int_state.setEnabled(true);
+        aet_int_zip.setEnabled(true);
         et_int_phone.setEnabled(true);
         et_int_note.setEnabled(true);
+        spin_int.setEnabled(true);
 
     }
 
@@ -723,20 +839,23 @@ public class DeliveryAddress extends Activity {
         et_loc_add2.setEnabled(false);
         et_loc_city.setEnabled(false);
         aet_loc_state.setEnabled(false);
-        et_loc_zip.setEnabled(false);
+        aet_loc_zip.setEnabled(false);
         et_loc_phone.setEnabled(false);
         et_loc_note.setEnabled(false);
+        spin_loc.setEnabled(false);
     }
 
     public void disable_int() {
         et_int_add1.setEnabled(false);
         et_int_add2.setEnabled(false);
         et_int_city.setEnabled(false);
-        et_int_state.setEnabled(false);
-        et_int_zip.setEnabled(false);
+        aet_int_state.setEnabled(false);
+        aet_int_zip.setEnabled(false);
         et_int_phone.setEnabled(false);
         et_int_note.setEnabled(false);
+        spin_int.setEnabled(false);
     }
+
 
 
     public class MyAdapter extends ArrayAdapter<String> {
@@ -772,7 +891,6 @@ public class DeliveryAddress extends Activity {
         }
     }
 
-
     class GetCountry extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
@@ -782,6 +900,7 @@ public class DeliveryAddress extends Activity {
             sweetAlertDialog.setCancelable(false);
             sweetAlertDialog.show();
         }
+
         protected String doInBackground(String... params) {
             String json = "", jsonStr = "";
             try {
@@ -804,6 +923,7 @@ public class DeliveryAddress extends Activity {
             }
             return jsonStr;
         }
+
         @Override
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
@@ -849,14 +969,15 @@ public class DeliveryAddress extends Activity {
         }
     }
 
-
     class GetState extends AsyncTask<String, Void, String> {
         String get_cont;
         int c_sts;
+
         GetState(String cont, int sts) {
             this.get_cont = cont;
             this.c_sts = sts;
         }
+
         protected void onPreExecute() {
             sweetAlertDialog = new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
             sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
@@ -865,6 +986,7 @@ public class DeliveryAddress extends Activity {
             sweetAlertDialog.show();
             super.onPreExecute();
         }
+
         protected String doInBackground(String... params) {
             String json = "", jsonStr = "";
             try {
@@ -879,6 +1001,7 @@ public class DeliveryAddress extends Activity {
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
@@ -902,13 +1025,17 @@ public class DeliveryAddress extends Activity {
                             states.add(daa);
                             Log.d("tag", "<-----Statusss----->" + states.get(i1));
                         }
-
+                        Log.d("tag", "" + c_sts);
                         if (c_sts == 0) {
-                            adapter_c = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, states);
-                            aet_loc_state.setAdapter(adapter_c);
-                            aet_loc_state.requestFocus();
-                        } else {
 
+                            adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, states);
+                            aet_loc_state.setAdapter(adpater_states);
+                           /* adapter_c = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, states);
+                            aet_loc_state.setAdapter(adapter_c);
+                            aet_loc_state.requestFocus();*/
+                        } else {
+                            adpater_states_ = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, states);
+                            aet_int_state.setAdapter(adpater_states_);
                         }
                     }
 
@@ -932,10 +1059,17 @@ public class DeliveryAddress extends Activity {
 
     }
 
-
     class GetZip extends AsyncTask<String, Void, String> {
 
         String get_cont, get_state;
+        int get_sts;
+
+        public GetZip(String cont, String state, int sts) {
+            this.get_cont = cont;
+            this.get_state = state;
+            this.get_sts = sts;
+        }
+
 
         protected void onPreExecute() {
 
@@ -951,24 +1085,16 @@ public class DeliveryAddress extends Activity {
         protected String doInBackground(String... params) {
 
             String json = "", jsonStr = "";
-
             try {
-
-
                 String zip_url = Config.SER_URL + "region/zip";
-                JSONObject jsonobject = HttpUtils.getData3(zip_url, str_loc_cont, str_loc_state);
-
+                JSONObject jsonobject = HttpUtils.getData3(zip_url, get_cont, get_state);
                 Log.e("tag", "jj" + jsonobject);
-
                 json = jsonobject.toString();
-
                 return json;
             } catch (Exception e) {
                 Log.d("InputStream", e.getLocalizedMessage());
             }
-
             return null;
-
         }
 
         @Override
@@ -1007,14 +1133,32 @@ public class DeliveryAddress extends Activity {
                         //adapter2.notifyDataSetChanged();
                     }
 
+                    Log.d("tag", "<---->" + "" + get_sts);
+                    if (get_sts == 0) {
 
-                    // ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, zip);
-                    //aet_zip.setAdapter(adapter3);
-
+                        adapter_zips = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, zip);
+                        aet_loc_zip.setAdapter(adapter_zips);
+                    } else {
+                        adapter_zips_ = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, zip);
+                        aet_int_zip.setAdapter(adapter_zips_);
+                    }
 
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
+
+                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("Network Error,Try Again Later.")
+                            .setConfirmText("OK")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    finish();
+                                    sweetAlertDialog.dismiss();
+                                }
+                            })
+                            .show();
+
                 }
             }
         }

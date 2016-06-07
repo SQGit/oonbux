@@ -52,7 +52,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Add Location"
+                android:text="Virtual Address"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp" />
 

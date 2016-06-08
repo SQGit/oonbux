@@ -20,10 +20,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
         get_login_sts = sharedPreferences.getString("login", "");
         get_register_sts = sharedPreferences.getString("register", "");
         get_profile_sts = sharedPreferences.getString("profile", "");
+
         Log.d("tag", "login_status" + get_login_sts);
         Log.d("tag", "register_status" + get_register_sts);
         Log.d("tag", "profile_status" + get_profile_sts);

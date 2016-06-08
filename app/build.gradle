@@ -49,4 +49,6 @@ dependencies {
 
     compile 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.2.0'
 
+    compile 'info.hoang8f:android-segmented:1.0.6'
+
 }

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dash">
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#070b23">
+
+        <FrameLayout
+            android:id="@+id/bck_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.rey.material.widget.LinearLayout
+                android:id="@+id/layout_back"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="80dp"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/back_ico" />
+            </com.rey.material.widget.LinearLayout>
+
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/tv_hd_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Add Shipment"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+
+
+            <com.rey.material.widget.LinearLayout
+                android:id="@+id/layout_add"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="right">
+
+                <ImageButton
+                    android:id="@+id/button_add_pal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/plus_ico" />
+            </com.rey.material.widget.LinearLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+
+
+    <!--   <ListView
+           android:id="@+id/listview"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/ll1"
+           android:layout_marginBottom="80dp"></ListView>-->
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/swipe_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll1"
+        android:layout_marginBottom="80dp" />
+
+
+    <LinearLayout
+        android:id="@+id/ll3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_addpal"
+            style="@style/Material.Drawable.Ripple.Wave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@color/text_color"
+            android:drawableLeft="@drawable/pal_add_wt_ico"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Send to Pal"
+            android:textColor="#FFFFFF" />
+
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_continue"
+            style="@style/Material.Drawable.Ripple.Wave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@color/text_color"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/back_rt_ico"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Continue"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

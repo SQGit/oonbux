@@ -77,6 +77,9 @@ public class Adapter_Shipment extends BaseAdapter {
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
             editor = sharedPreferences.edit();
 
+            editor.putString("ship_size", "nil");
+            editor.commit();
+
 
             // holder = (ViewHolder) vi.getTag();
 

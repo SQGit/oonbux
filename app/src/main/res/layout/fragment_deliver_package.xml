@@ -46,15 +46,21 @@
              android:textSize="14sp" />-->
 
 
-    <ImageButton
+    <com.rey.material.widget.Button
         android:id="@+id/button_next"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/round_next_button"
-        android:src="@drawable/back_rt_ico" />
+        android:background="@drawable/login_reg_button"
+        android:drawablePadding="20dp"
+        android:drawableRight="@drawable/back_rt_ico"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:text="Next"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp" />
 
 
 </RelativeLayout>

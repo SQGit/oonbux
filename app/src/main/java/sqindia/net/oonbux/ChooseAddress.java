@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Switch;
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.Spinner;
@@ -36,9 +35,10 @@ public class ChooseAddress extends Activity {
     ArrayList<String> sss = new ArrayList<>();
 
     TextView tv_from, tv_to, tv_pickup, tv_sub1, tv_sub2, tv_sub3, tv_header;
-    Switch sw_pickup, sw_to;
 
     String str_name, str_oonbux_id, str_phone, str_state, str_zip, str_country;
+
+    Button on, off, on1, off1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,39 @@ public class ChooseAddress extends Activity {
         str_country = sharedPreferences.getString("country", "");
 
 
+        on = (Button) findViewById(R.id.btn_on_pickup);
+        off = (Button) findViewById(R.id.btn_off_pickup);
+
+        on1 = (Button) findViewById(R.id.btn_on_to);
+        off1 = (Button) findViewById(R.id.btn_off_to);
+
+
+        on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // on.setBackgroundColor(getResources().getColor(R.color.tab_brown));
+                on.setBackgroundResource(R.drawable.thumb);
+                //on.setBackground(getResources().getDrawable(R.drawable.thumb));
+                off.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                // off.setBackgroundColor(getResources().getColor(R.color.tab_default));
+
+            }
+        });
+
+
+        off.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                off.setBackgroundResource(R.drawable.thumb);
+                on.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+                /*off.setBackgroundColor(getResources().getColor(R.color.tab_brown));
+                on.setBackgroundColor(getResources().getColor(R.color.tab_default));*/
+
+            }
+        });
 
 
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
@@ -77,8 +110,6 @@ public class ChooseAddress extends Activity {
         tv_sub2 = (TextView) findViewById(R.id.tv_shd_txt2);
         tv_sub3 = (TextView) findViewById(R.id.tv_shd_txt3);
 
-        sw_pickup = (Switch) findViewById(R.id.switch1);
-        sw_to = (Switch) findViewById(R.id.switch2);
 
         tv_header = (TextView) findViewById(R.id.tv_hd_txt);
 
@@ -91,8 +122,6 @@ public class ChooseAddress extends Activity {
         tv_from.setTypeface(tf);
         tv_pickup.setTypeface(tf);
         tv_to.setTypeface(tf);
-        sw_pickup.setTypeface(tf);
-        sw_to.setTypeface(tf);
 
         tv_sub1.setTypeface(tf);
         tv_sub2.setTypeface(tf);
@@ -101,8 +130,6 @@ public class ChooseAddress extends Activity {
         btn_payment.setTypeface(tf);
 
 
-        sw_pickup.setSwitchTypeface(tf);
-        sw_to.setSwitchTypeface(tf);
 
 
         sting = new String[]{"72,Boorks,NY", "235,Mesa,CR",

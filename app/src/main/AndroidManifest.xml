@@ -78,6 +78,8 @@
         <activity android:name=".ChooseAddress" />
         <activity android:name=".AddPal" />
 
+        <activity android:name=".SwipeList" />
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

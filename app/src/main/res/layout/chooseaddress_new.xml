@@ -103,6 +103,13 @@
             android:textColor="#424242"
             android:textSize="16sp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,38 +122,34 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2">
 
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/track"
+                    android:gravity="right">
 
 
-                    <!-- <Switch
-                         android:layout_width="0dp"
-                         android:layout_height="wrap_content"
-                         android:textOn="LOCAL"
-                         android:textOff="INTERNATIONAL"
-                         android:textSize="22sp"
-                         android:track="@color/text_color"
-                         android:textColor="#b90303"
-                         android:layout_weight="1"/>-->
-
-
-                    <Switch
-                        android:id="@+id/switch1"
-                        style="@style/Material.Widget.Switch"
+                    <com.rey.material.widget.Button
+                        android:id="@+id/btn_on_pickup"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_weight="1"
-                        android:showText="true"
-                        android:textColor="#4eae2c"
-                        android:textOff="Local"
-                        android:textOn="International"
-                        android:textSize="10sp"
-                        android:thumb="@drawable/thumb"
-                        android:track="@drawable/track" />
+                        android:layout_height="30dp"
+                        android:background="@android:color/transparent"
+                        android:text="Local"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp" />
 
-
+                    <com.rey.material.widget.Button
+                        android:id="@+id/btn_off_pickup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/thumb"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="International"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
 
@@ -217,39 +220,36 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2">
 
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/track"
+                    android:gravity="right">
 
 
-                    <!-- <Switch
-                         android:layout_width="0dp"
-                         android:layout_height="wrap_content"
-                         android:textOn="LOCAL"
-                         android:textOff="INTERNATIONAL"
-                         android:textSize="22sp"
-                         android:track="@color/text_color"
-                         android:textColor="#b90303"
-                         android:layout_weight="1"/>-->
-
-
-                    <Switch
-                        android:id="@+id/switch2"
-                        style="@style/Material.Widget.Switch"
+                    <com.rey.material.widget.Button
+                        android:id="@+id/btn_on_to"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_weight="1"
-                        android:showText="true"
-                        android:textColor="#4eae2c"
-                        android:textOff="Local"
-                        android:textOn="International"
-                        android:textSize="10sp"
-                        android:thumb="@drawable/thumb"
-                        android:track="@drawable/track" />
+                        android:layout_height="30dp"
+                        android:background="@android:color/transparent"
+                        android:text="Local"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp" />
 
-
+                    <com.rey.material.widget.Button
+                        android:id="@+id/btn_off_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/thumb"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="International"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp" />
                 </LinearLayout>
+
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_to_txt"

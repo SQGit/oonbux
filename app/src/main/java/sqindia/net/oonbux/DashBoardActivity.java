@@ -81,7 +81,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         }
 
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
         str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
         str_photo = sharedPreferences.getString("photourl", "");
 
@@ -99,7 +99,6 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         va2_state = sharedPreferences.getString("va2_state", "");
         va2_zip = sharedPreferences.getString("va2_zip", "");
         va2_country = sharedPreferences.getString("va2_country", "");
-
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -221,10 +220,6 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_address.setText(va1_line1 + "\t" + va1_line2 + "\t" + va1_city);
 
 
-
-
-
-
         btn_dash_ship.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,17 +242,36 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
 
-                btn_add_shipment.setVisibility(View.GONE);
-                // btn_done_shipment.setVisibility(View.VISIBLE);
 
-                progressBar.setProgress(66);
-                btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
-                btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_brown));
-                btn_shop_online.setBackgroundColor(getResources().getColor(R.color.tab_default));
+                if ((sharedPreferences.getString("shipment_photo", "")) == "") {
+                    new SweetAlertDialog(DashBoardActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Please Add the Shipment")
+                            .setConfirmText("Ok")
 
-                DeliverPackageFragment fragment = new DeliverPackageFragment();
-                FragmentManager fm = getFragmentManager();
-                fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
+
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismiss();
+                                }
+                            })
+                            .show();
+
+                } else {
+
+
+                    btn_add_shipment.setVisibility(View.GONE);
+                    // btn_done_shipment.setVisibility(View.VISIBLE);
+
+                    progressBar.setProgress(66);
+                    btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
+                    btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_brown));
+                    btn_shop_online.setBackgroundColor(getResources().getColor(R.color.tab_default));
+
+                    DeliverPackageFragment fragment = new DeliverPackageFragment();
+                    FragmentManager fm = getFragmentManager();
+                    fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
+                }
             }
         });
 
@@ -395,8 +409,6 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         });
 
 
-
-
         btn_nav_cont_int_adr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -419,8 +431,6 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 startActivity(inte);*/
             }
         });
-
-
 
 
         btm_cam.setOnClickListener(new View.OnClickListener() {

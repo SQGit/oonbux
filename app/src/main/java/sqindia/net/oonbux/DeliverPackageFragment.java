@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.rey.material.widget.Button;
@@ -36,7 +35,7 @@ public class DeliverPackageFragment extends Fragment {
     ArrayList<String> selectedPhotos = new ArrayList<>();
     Shipment_Adapter ship_adapter;
     Adapter_Shipment adapt;
-    ImageButton btn_nxt;
+    Button btn_nxt;
     ArrayList<String> ship_size = new ArrayList<>();
     SharedPreferences sharedPreferences;
 
@@ -72,7 +71,7 @@ public class DeliverPackageFragment extends Fragment {
         lv_deliver_list = (ListView) getview.findViewById(R.id.deliver_list);
         btn_addshipment = (Button) getview.findViewById(R.id.add_sp_btn);
 
-        btn_nxt = (ImageButton) getview.findViewById(R.id.button_next);
+        btn_nxt = (Button) getview.findViewById(R.id.button_next);
         // btn_nextshipment = (Button) getview.findViewById(R.id.next_button);
 
       /*  ship_adapter = new Shipment_Adapter(getActivity(), shipment_photos);
@@ -148,7 +147,7 @@ public class DeliverPackageFragment extends Fragment {
 
                 } else {
                     insertIntoDB(size, pickup, photo);
-                    Intent ioi = new Intent(getActivity(), ShipmentNext.class);
+                    Intent ioi = new Intent(getActivity(), SwipeList.class);
                     startActivity(ioi);
 
                 }

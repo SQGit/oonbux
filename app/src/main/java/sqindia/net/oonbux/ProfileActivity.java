@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,8 +27,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -49,6 +53,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -74,7 +79,9 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     SweetAlertDialog psDialog;
     String imagePath = null;
 
-
+    double lat, lon;
+    Geocoder geocoder;
+    SupportMapFragment fragmentm;
     private GoogleMap mMap;
 
     @Override
@@ -102,6 +109,19 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        fragmentm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map1);
+
+
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(10.7529807,79.0614082))
+                .zoom(9f)
+                .build();
+
+
+        fragmentm.getMapAsync(this);
+
 
         phy_layout = (LinearLayout) findViewById(R.id.pda_layout);
         prof_layout = (LinearLayout) findViewById(R.id.pi_layout);
@@ -133,6 +153,9 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         tv_phone.setText(str_phone);
         tv_fname.setText(str_fname);
         tv_lname.setText(str_lname);
+
+
+        getLatlongtoImage();
 
 
         if (!(str_web_photo.isEmpty())) {
@@ -291,18 +314,62 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
+    private void getLatlongtoImage() {
+
+
+        geocoder = new Geocoder(ProfileActivity.this);
+        try {
+            List<Address> addresses = geocoder.getFromLocationName("77015", 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                // Use the address as needed
+                String message = String.format("Latitude: %f, Longitude: %f",
+                        address.getLatitude(), address.getLongitude());
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+                lat = address.getLatitude();
+                lon = address.getLongitude();
+
+
+                Log.d("tag", "" + address.getLatitude() + "\t" + address.getLongitude() + "\t" + address.getAddressLine(0) + "\t" + address.getLocality());
+
+            } else {
+
+                Toast.makeText(this, "Unable to geocode zipcode", Toast.LENGTH_LONG).show();
+            }
+        } catch (IOException e) {
+            Log.d("tag", "" + e);
+        }
+
+
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
+        getLatlongtoImage();
         // Add a marker in Sydney, Australia, and move the camera.
-        LatLng sydney = new LatLng(29.6396935, -95.6845927);
+        LatLng sydney = new LatLng(lat, lon);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //  mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         // mMap.animateCamera(CameraUpdateFactory.zoomTo( 10.0f ));
 
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 9f));
+
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(10.7529807,79.0614082))
+                .zoom(9f)
+                .build();
+
+        fragmentm.newInstance(new GoogleMapOptions().camera(cameraPosition));
+        LatLng sydney1 = new LatLng(lat, lon);
+        //fragmentm.getMapAsync(this);
 
 
     }

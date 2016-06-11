@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -38,7 +39,7 @@ public class DeliverPackageFragment extends Fragment {
     Button btn_nxt;
     ArrayList<String> ship_size = new ArrayList<>();
     SharedPreferences sharedPreferences;
-
+    SharedPreferences.Editor editor;
     SharedPreferences.Editor edit;
 
     private SQLiteDatabase db;
@@ -54,6 +55,10 @@ public class DeliverPackageFragment extends Fragment {
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        editor = sharedPreferences.edit();
+
+        editor.putString("ship_size", "nil");
+        editor.commit();
 
         String sois = sharedPreferences.getString("shipment_photo", "");
 
@@ -72,6 +77,10 @@ public class DeliverPackageFragment extends Fragment {
         btn_addshipment = (Button) getview.findViewById(R.id.add_sp_btn);
 
         btn_nxt = (Button) getview.findViewById(R.id.button_next);
+
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/prox.otf");
+
+        btn_nxt.setTypeface(tf);
         // btn_nextshipment = (Button) getview.findViewById(R.id.next_button);
 
       /*  ship_adapter = new Shipment_Adapter(getActivity(), shipment_photos);
@@ -147,29 +156,10 @@ public class DeliverPackageFragment extends Fragment {
 
                 } else {
                     insertIntoDB(size, pickup, photo);
-                    Intent ioi = new Intent(getActivity(), SwipeList.class);
+                    Intent ioi = new Intent(getActivity(), SurfaceView.class);
                     startActivity(ioi);
 
                 }
-
-
-
-
-
-               /* Log.e("tag", "" + size + "\t" + pickup + "\t" + photo);
-
-                ship_size.add(size);
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                Set<String> set = new HashSet<String>();
-                set.add(size);
-                //set.addAll(ship_size);
-                editor.putStringSet("ship", set);
-                editor.commit();
-
-                editor.putString("s_size", size);
-                editor.putString("s_photo", photo);
-                editor.commit();*/
 
 
             }
@@ -191,15 +181,6 @@ public class DeliverPackageFragment extends Fragment {
         String query = "INSERT INTO cart (size,pickup,photo) VALUES('" + a + "', '" + b + "', '" + c + "');";
         db.execSQL(query);
     }
-
-
-
-
-
-
-
-
-
 
 
 

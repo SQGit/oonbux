@@ -317,6 +317,16 @@
             android:layout_height="2dp"
             android:background="#383a49" />
 
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map1"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            tools:context=".MapsActivity" />
+
+
     </LinearLayout>
 
 

@@ -55,6 +55,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/login_reg_button"
         android:drawablePadding="20dp"
+        style="@style/Material.Drawable.Ripple.Wave"
         android:drawableRight="@drawable/back_rt_ico"
         android:paddingLeft="30dp"
         android:paddingRight="20dp"

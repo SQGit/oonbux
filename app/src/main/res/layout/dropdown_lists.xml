@@ -12,7 +12,7 @@
         android:gravity="left"
         android:padding="5dp"
         android:text=" Login"
-        android:textColor="#ffffff"
+        android:textColor="@color/text_color"
         android:textSize="20sp" />
 
 </LinearLayout>

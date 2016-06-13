@@ -1,6 +1,7 @@
 package sqindia.net.oonbux;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -27,14 +28,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -66,7 +66,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     com.rey.material.widget.TextView tv_header;
     Button btn_logout, btn_finish;
     ImageView iv_profile;
-    String get_profile_sts, str_oonbux_id, str_state, str_zip, str_phone, str_fname, str_lname, str_photo, str_session_id, str_web_photo, vir_adr_sts;
+    String get_profile_sts, str_oonbux_id, str_state, str_zip, str_phone, str_fname, str_lname, str_photo, str_session_id, web_photo, vir_adr_sts;
     Uri uri;
     Bitmap bitmap;
     com.rey.material.widget.LinearLayout lt_back;
@@ -81,17 +81,15 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
     double lat, lon;
     Geocoder geocoder;
-    SupportMapFragment fragmentm;
     private GoogleMap mMap;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
-
         get_profile_sts = sharedPreferences.getString("profile", "");
         str_fname = sharedPreferences.getString("fname", "");
         str_lname = sharedPreferences.getString("lname", "");
@@ -100,33 +98,17 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         str_state = sharedPreferences.getString("state", "");
         str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
         str_photo = sharedPreferences.getString("photourl", "");
-        str_web_photo = sharedPreferences.getString("web_photo_url", "");
-
+        web_photo = sharedPreferences.getString("web_photo_url", "");
         str_session_id = sharedPreferences.getString("sessionid", "");
-
         vir_adr_sts = sharedPreferences.getString("virtul_addr", "");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        fragmentm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map1);
-
-
-
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(10.7529807,79.0614082))
-                .zoom(9f)
-                .build();
-
-
-        fragmentm.getMapAsync(this);
-
-
         phy_layout = (LinearLayout) findViewById(R.id.pda_layout);
         prof_layout = (LinearLayout) findViewById(R.id.pi_layout);
         btn_back = (ImageButton) findViewById(R.id.btn_back);
-
         tv_header = (com.rey.material.widget.TextView) findViewById(R.id.tv_hd_txt);
         tv_oonbuxid_txt = (TextView) findViewById(R.id.textview_id_txt);
         tv_oonbux_id = (TextView) findViewById(R.id.textview_id);
@@ -141,12 +123,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         btn_logout = (Button) findViewById(R.id.button_logout);
         btn_finish = (Button) findViewById(R.id.button_finish);
         iv_profile = (ImageView) findViewById(R.id.image_profile);
-        //  et_fname = (MaterialEditText) findViewById(R.id.edittext_fname);
-        //  et_lname = (MaterialEditText) findViewById(R.id.edittext_lname);
-//        bck_lt = (LinearLayout) findViewById(R.id.bck_layout);
-
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
-
 
         tv_oonbux_id.setText(str_oonbux_id);
         tv_location.setText(str_state + "\t" + str_zip);
@@ -154,12 +131,20 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         tv_fname.setText(str_fname);
         tv_lname.setText(str_lname);
 
-
         getLatlongtoImage();
 
+        if(web_photo != null ){
+            Log.d("tag","inside");
 
-        if (!(str_web_photo.isEmpty())) {
-            new LoadImage().execute(str_web_photo);
+            Picasso.with(context)
+                    .load(web_photo)
+                    .placeholder(null)
+                    .into(iv_profile);
+        }
+
+
+    /*    if (!(web_photo.isEmpty())) {
+            new LoadImage().execute(web_photo);
         } else {
             uri = Uri.fromFile(new File(str_photo));
             try {
@@ -170,7 +155,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
             iv_profile.setImageBitmap(bitmap);
             //bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
-        }
+        }*/
 
         if ((get_profile_sts.equals(""))) {
             btn_finish.setVisibility(View.VISIBLE);
@@ -331,7 +316,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                 lon = address.getLongitude();
 
 
-                Log.d("tag", "" + address.getLatitude() + "\t" + address.getLongitude() + "\t" + address.getAddressLine(0) + "\t" + address.getLocality());
+              //  Log.d("tag", "" + address.getLatitude() + "\t" + address.getLongitude() + "\t" + address.getAddressLine(0) + "\t" + address.getLocality());
 
             } else {
 
@@ -349,29 +334,14 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
         getLatlongtoImage();
         // Add a marker in Sydney, Australia, and move the camera.
         LatLng sydney = new LatLng(lat, lon);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //  mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         // mMap.animateCamera(CameraUpdateFactory.zoomTo( 10.0f ));
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 9f));
-
         mMap.getUiSettings().setAllGesturesEnabled(false);
-
-
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(10.7529807,79.0614082))
-                .zoom(9f)
-                .build();
-
-        fragmentm.newInstance(new GoogleMapOptions().camera(cameraPosition));
-        LatLng sydney1 = new LatLng(lat, lon);
-        //fragmentm.getMapAsync(this);
-
-
     }
 
 

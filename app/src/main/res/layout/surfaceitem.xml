@@ -25,7 +25,7 @@
             android:text="Delete"
             android:textSize="15sp"
             android:textColor="#FFFFFF"
-            android:background="#d84315"/>
+            android:background="@color/text_color"/>
         <!--What you want to show-->
     </LinearLayout>
     <!-- Bottom View End-->

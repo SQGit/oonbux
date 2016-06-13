@@ -17,5 +17,6 @@
     <color name="tab_default">#e47b0a</color>
     <color name="progress_bg">#61c561</color>
     <color name="white">#FFFFFF</color>
+    <color name="text_divider1">#eeeeee</color>
 
 </resources>

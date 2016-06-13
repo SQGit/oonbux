@@ -19,6 +19,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
 }
 
 dependencies {
@@ -53,6 +58,7 @@ dependencies {
 
     compile "com.daimajia.swipelayout:library:1.2.0@aar"
 
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
 
 }

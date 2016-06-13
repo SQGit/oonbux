@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import com.daimajia.swipe.SimpleSwipeListener;
+
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.rey.material.widget.Button;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -30,7 +29,7 @@ public class SurfaceList extends BaseSwipeAdapter {
     ArrayList<DbGclass> arrayList;
 
     LinearLayout layout;
-    ImageView iview;
+    ImageView iv_ship_img;
     com.rey.material.widget.TextView tv_size, tv_price, tv_size_txt, tv_pickup, tv_pickup_txt, tv_price_txt, opt;
     SQLiteDatabase db;
     Uri uri;
@@ -51,7 +50,7 @@ public class SurfaceList extends BaseSwipeAdapter {
     }
 
     @Override
-    public View generateView(int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent) {
 
 
         DbGclass dbc = arrayList.get(position);
@@ -96,7 +95,13 @@ public class SurfaceList extends BaseSwipeAdapter {
 
                 Log.d("tag",asdf);
                 dbclass.deletedata("aa",asdf);
+
+                arrayList.remove(position);
+
                 notifyDataSetChanged();
+
+
+
 
             }
         });
@@ -113,7 +118,7 @@ public class SurfaceList extends BaseSwipeAdapter {
         opt = (com.rey.material.widget.TextView) v.findViewById(R.id.tv_op);
 
 
-        iview = (ImageView) v.findViewById(R.id.imgview);
+        iv_ship_img = (ImageView) v.findViewById(R.id.imgview);
 
         tv_size.setTypeface(tf);
         tv_price.setTypeface(tf);
@@ -134,32 +139,27 @@ public class SurfaceList extends BaseSwipeAdapter {
         tv_size.setText(dbc.get_size());
         tv_pickup.setText(dbc.get_pickup());
 
-        uri = Uri.fromFile(new File(dbc.get_photo()));
+
+        Picasso.with(mContext)
+                .load(new File(dbc.get_photo()))
+                .into(iv_ship_img);
+
+
+
+
+        /*uri = Uri.fromFile(new File(dbc.get_photo()));
 
 
         try {
             bitmap = null;
             bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), uri);
             bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
-            iview.setImageBitmap(bitmap);
+            iv_ship_img.setImageBitmap(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }*/
 
         return v;
     }

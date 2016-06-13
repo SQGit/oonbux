@@ -357,6 +357,9 @@ public class LoginActivity extends Activity {
                     editor.putString("int_zip", jo.getString("int_addr_zip"));
                     editor.putString("int_phone", jo.getString("int_phone"));
                     editor.putString("int_note", jo.getString("int_delivery_note"));
+                    Log.d("tag",""+jo.getString("photourl"));
+                    editor.putString("web_photo_url", jo.getString("photourl"));
+
                     editor.commit();
 
 
@@ -381,8 +384,6 @@ public class LoginActivity extends Activity {
                         Log.d("tag", "2");
                         finish();
                     }
-
-
 
 
                 } else if (status.equals("fail")) {

@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.InputStream;
@@ -55,7 +56,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
     String str_oonbux_id, str_photo, web_photo;
     Toolbar toolbar;
     Fragment fragment;
-    Context context;
+    Context context = this;
     ImageView btm_cam, nav_pro_pic;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     PhotoAdapter photoAdapter;
@@ -76,13 +77,13 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
         photoAdapter = new PhotoAdapter(this, selectedPhotos);
 
-        try {
+      /*  try {
             btm_cam.setImageURI(photoAdapter.uri);
         } catch (NullPointerException e) {
 
             Log.d("tag", String.valueOf(e));
 
-        }
+        }*/
 
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashBoardActivity.this);
@@ -103,6 +104,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         va2_state = sharedPreferences.getString("va2_state", "");
         va2_zip = sharedPreferences.getString("va2_zip", "");
         va2_country = sharedPreferences.getString("va2_country", "");
+
+        web_photo = sharedPreferences.getString("web_photo_url", "");
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -154,11 +157,30 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         nav_pro_pic = (ImageView) findViewById(R.id.nav_header_propic);
 
 
-        web_photo = sharedPreferences.getString("web_photo_url", "");
-        String photo_url = "http://androidtesting.newlogics.in/profilepic/C_120x120_eaw1o5ff08k5eafl158k_mypytvtlgirwqbccsmjddjzkedtkghsnjmrifcav_hot(6).png";
+        if(web_photo != null ){
+            Log.d("tag","inside");
+
+            Picasso.with(context)
+                    .load(web_photo)
+                    .resize(50, 50)
+                    .into(nav_pro_pic);
+
+        }
 
 
-        new LoadImage().execute(web_photo);
+
+
+     /*   if(!(web_photo == "")) {
+            //new LoadImage().execute(web_photo);
+
+
+            Picasso.with(context)
+                    .load(web_photo)
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(nav_pro_pic);
+
+        }*/
 
 
         // uri = Uri.fromFile(new File(str_photo));
@@ -519,12 +541,17 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             editor.commit();
 
             progressBar.setProgress(66);
+
+            btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
+            btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_brown));
+            btn_shop_online.setBackgroundColor(getResources().getColor(R.color.tab_default));
+
             DeliverPackageFragment fragment = new DeliverPackageFragment();
             FragmentManager fm = getFragmentManager();
             fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
+
             btn_add_shipment.setVisibility(View.GONE);
             btn_done_shipment.setVisibility(View.GONE);
-            progressBar.setProgress(66);
 
             //btm_cam.setImageURI(uri);
         }

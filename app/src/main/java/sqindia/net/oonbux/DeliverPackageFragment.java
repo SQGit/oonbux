@@ -43,6 +43,7 @@ public class DeliverPackageFragment extends Fragment {
     SharedPreferences.Editor edit;
 
     private SQLiteDatabase db;
+    String shipment_photo;
 
 
     @Override
@@ -60,7 +61,7 @@ public class DeliverPackageFragment extends Fragment {
         editor.putString("ship_size", "nil");
         editor.commit();
 
-        String sois = sharedPreferences.getString("shipment_photo", "");
+        shipment_photo = sharedPreferences.getString("shipment_photo", "");
 
         String cktis = sharedPreferences.getString("fromdash", "");
 
@@ -70,7 +71,7 @@ public class DeliverPackageFragment extends Fragment {
 
         shipment_photos = new ArrayList<>();
 
-        shipment_photos.add(sois);
+        shipment_photos.add(shipment_photo);
         Log.d("tag", "1" + shipment_photos.get(0));
 
         lv_deliver_list = (ListView) getview.findViewById(R.id.deliver_list);

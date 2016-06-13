@@ -122,17 +122,13 @@ public class SwipeList extends Activity {
 
         String query = " SELECT * FROM cart";
 
-
         Cursor c = dbclass.fetchdata(query);
-
 
         if (c != null) {
             if (c.moveToFirst()) {
                 do {
                     DbGclass dbc = new DbGclass();
-
                     dbc.set_id(String.valueOf(c.getInt(c.getColumnIndex("id"))));
-
                     dbc.set_size(c.getString(c.getColumnIndex("size")));
                     dbc.set_pickup(c.getString(c.getColumnIndex("pickup")));
                     dbc.set_photo(c.getString(c.getColumnIndex("photo")));
@@ -140,7 +136,6 @@ public class SwipeList extends Activity {
                 } while (c.moveToNext());
             }
         }
-
 
         adapter1 = new Adap_Shipment(SwipeList.this, dbdatalist);
         mListView.setAdapter(adapter1);

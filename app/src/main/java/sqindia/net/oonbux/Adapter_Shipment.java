@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +18,9 @@ import android.widget.Toast;
 
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.TextView;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -91,7 +90,7 @@ public class Adapter_Shipment extends BaseAdapter {
             holder.ck_lrg = (CheckBox) vi.findViewById(R.id.cb_large);
             holder.ck_add = (CheckBox) vi.findViewById(R.id.cb_addto);
 
-            holder.imgview = (ImageView) vi.findViewById(R.id.imgview);
+            holder.iv_ship_img = (ImageView) vi.findViewById(R.id.imgview);
 
 
             Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/prox.otf");
@@ -103,7 +102,7 @@ public class Adapter_Shipment extends BaseAdapter {
             holder.ck_lrg.setTypeface(tf);
             holder.ck_add.setTypeface(tf);
 
-            uri = Uri.fromFile(new File(data.get(position)));
+           /* uri = Uri.fromFile(new File(data.get(position)));
 
 
             try {
@@ -114,9 +113,17 @@ public class Adapter_Shipment extends BaseAdapter {
                 e.printStackTrace();
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
-            }
+            }*/
 
-            holder.imgview.setImageBitmap(bitmap);
+
+
+            Picasso.with(activity)
+                    .load(new File(data.get(position)))
+                    .into(holder.iv_ship_img);
+
+
+
+            //holder.iv_ship_img.setImageBitmap(bitmap);
 
 
             holder.ck_sml.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -274,7 +281,7 @@ public class Adapter_Shipment extends BaseAdapter {
         public CheckBox ck_med;
         public CheckBox ck_lrg;
         public CheckBox ck_add;
-        public ImageView imgview;
+        public ImageView iv_ship_img;
 
     }
 

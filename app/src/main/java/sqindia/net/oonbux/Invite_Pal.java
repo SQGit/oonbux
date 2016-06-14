@@ -29,5 +29,21 @@ public class Invite_Pal extends Activity {
 
         Invite_Pal_Adapter adapter = new Invite_Pal_Adapter(getApplicationContext());
         lv_deliver_list.setAdapter(adapter);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

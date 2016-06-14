@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -30,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.gigamole.library.ntb.NavigationTabBar;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 import com.squareup.picasso.Picasso;
@@ -480,7 +482,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         });
 
 
-        btm_cam.setOnClickListener(new View.OnClickListener() {
+      /*  btm_cam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Toast.makeText(getApplicationContext(), "tsdf", Toast.LENGTH_LONG).show();
@@ -493,7 +495,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
             }
         });
-
+*/
 
         btn_add_shipment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -505,6 +507,69 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+        final NavigationTabBar ntbSample4 = (NavigationTabBar) findViewById(R.id.ntb_sample_4);
+        final int bgColor = Color.TRANSPARENT;
+        final ArrayList<NavigationTabBar.Model> models4 = new ArrayList<>();
+        models4.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.chat_ico), bgColor
+                ).build()
+        );
+        models4.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.group_ico), bgColor
+                ).build()
+        );
+        models4.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.camera), bgColor
+                ).build()
+        );
+        models4.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.receive_ico), bgColor
+                ).build()
+        );
+        models4.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.pkg_ico), bgColor
+                ).build()
+        );
+        ntbSample4.setModels(models4);
+        ntbSample4.setModelIndex(2, true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

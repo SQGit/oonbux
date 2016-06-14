@@ -24,14 +24,13 @@ android {
         incremental true
         javaMaxHeapSize "4g"
     }
-}
+}                                                                                                                            
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     //  compile 'com.google.maps.android:android-maps-utils:0.3.0'
     compile 'com.android.support:multidex:1.0.0'
-
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
     compile 'com.google.android.gms:play-services:8.4.0'
@@ -39,26 +38,13 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'cn.pedant.sweetalert:library:1.3'
     compile 'com.android.support:support-v4:23.3.0'
-
-
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
-
-
-
     compile 'me.iwf.photopicker:PhotoPicker:0.8.1@aar'
-
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.bumptech.glide:glide:3.6.0'
-
-
-
     compile 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.2.0'
-
     compile 'com.baoyz.swipemenulistview:library:1.3.0'
-
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
-
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     compile 'com.squareup.picasso:picasso:2.5.2'
-
-
+    compile project(':NTBlibrary')
 }

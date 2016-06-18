@@ -17,6 +17,13 @@ public class Config {
 
     static final String CSS_URL = "http://oonbux.sqindia.net/region";
 
+
+    static final String GCM_PROJ_ID = "600977208793";
+    static final String PKG_NAME = "sqindia.net.oonbux";
+    static final String GCM_API_KEY = "AIzaSyA4QlRGMEdX-GPcFsC5VjzVxZqH5knJwFo";
+
+    static final String MSG_KEY = "m";
+
     public static String[] countries = {"Africa", "India", "America"};
     public static String[] state_lists = {"alabama", "alaska",
             "arizona",

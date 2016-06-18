@@ -1,6 +1,7 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -11,17 +12,24 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -31,18 +39,18 @@ public class LoginActivity extends Activity {
     TextView tv_donthav, tv_register;
     LinearLayout ll_register;
     TelephonyManager tmanager;
-    String str_email, str_pass, str_deviceid, get_profile_sts;
+    String str_email, str_pass, str_deviceid, get_profile_sts,get_gcmId;
     SweetAlertDialog sweetAlertDialog;
     MaterialEditText et_email, et_pass;
+    Context applicationContext;
+    GoogleCloudMessaging gcmObj;
+
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-/*
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-        get_profile_sts = sharedPreferences.getString("login", "");*/
 
         btn_login = (Button) findViewById(R.id.button_login);
         ll_register = (LinearLayout) findViewById(R.id.linear_login_text);
@@ -51,6 +59,8 @@ public class LoginActivity extends Activity {
         et_email = (MaterialEditText) findViewById(R.id.edittext_email);
         et_pass = (MaterialEditText) findViewById(R.id.edittext_pass);
 
+
+        applicationContext = getApplicationContext();
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
@@ -62,19 +72,6 @@ public class LoginActivity extends Activity {
 
         tmanager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         str_deviceid = "EMU035Id45";//tmanager.getDeviceId();
-
-
-       /* et_pass.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-
-                    validate_datas();
-                    return true;
-                }
-                return false;
-            }
-        });*/
 
 
         ll_register.setOnClickListener(new View.OnClickListener() {
@@ -90,15 +87,101 @@ public class LoginActivity extends Activity {
                                          @Override
                                          public void onClick(View v) {
 
+                                             // validate_datas();
 
-                                             validate_datas();
-
+                                             get_Gcm_Id();
 
                                          }
                                      }
-
         );
+
     }
+    private void get_Gcm_Id() {
+
+        sweetAlertDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+        sweetAlertDialog.setTitleText("Loading");
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.show();
+
+        if (checkPlayServices()) {
+            registerInBackground();
+        }
+    }
+
+    private void registerInBackground() {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcmObj == null) {
+                        gcmObj = GoogleCloudMessaging.getInstance(applicationContext);
+                    }
+                    get_gcmId = gcmObj.register(Config.GCM_PROJ_ID);
+                    msg = "Registration ID :" + get_gcmId;
+                    Log.d("tag", get_gcmId);
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                    Log.e("tag",ex.getMessage());
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+
+                sweetAlertDialog.dismiss();
+
+                Log.d("tag",""+msg);
+
+                if (!TextUtils.isEmpty(get_gcmId)) {
+
+                   Toast.makeText(
+                            getApplicationContext(),
+                            "Registered with GCM Server successfully.\n\n"
+                                    + msg, Toast.LENGTH_SHORT).show();
+
+                    Log.d("tag1", get_gcmId);
+
+                    validate_datas();
+
+
+                } else {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Reg ID Creation Failed.\n\nEither you haven't enabled Internet or GCM server is busy right now. Make sure you enabled Internet and try registering again after some time."
+                                    + msg, Toast.LENGTH_LONG).show();
+
+                    Log.d("tag",""+msg);}
+            }
+        }.execute();
+    }
+
+
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        // When Play services not found in device
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                // Show Error dialog to install Play services
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Toast.makeText(getApplicationContext(),"This device doesn't support Play services, App will not work normally",Toast.LENGTH_LONG).show();
+                finish();
+            }
+            return false;
+        } else {
+            Toast.makeText(getApplicationContext(),"This device supports Play services, App will work normally", Toast.LENGTH_LONG).show();
+        }
+        return true;
+    }
+
+
+
 
 
     public void validate_datas() {
@@ -220,7 +303,7 @@ public class LoginActivity extends Activity {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("email", str_email);
                 jsonObject.accumulate("password", str_pass);
-                jsonObject.accumulate("device_gcm_id", str_deviceid);
+                jsonObject.accumulate("device_gcm_id", get_gcmId);
                 // 4. convert JSONObject to JSON to String
                 json = jsonObject.toString();
                 return jsonStr = HttpUtils.makeRequest(Config.SER_URL + "login", json);

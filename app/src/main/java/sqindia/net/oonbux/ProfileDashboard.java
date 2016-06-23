@@ -15,7 +15,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -58,7 +57,7 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
-public class ProfileActivity extends FragmentActivity implements OnMapReadyCallback {
+public class ProfileDashboard extends FragmentActivity implements OnMapReadyCallback {
 
     LinearLayout phy_layout, prof_layout;
     ImageButton btn_back;
@@ -89,7 +88,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
         get_profile_sts = sharedPreferences.getString("profile", "");
         str_fname = sharedPreferences.getString("fname", "");
         str_lname = sharedPreferences.getString("lname", "");
@@ -198,7 +197,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
 
-                new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.WARNING_TYPE)
+                new SweetAlertDialog(ProfileDashboard.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Do you want to Logout the Application?")
                         .setConfirmText("Yes!")
                         .setCancelText("No")
@@ -207,7 +206,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
 
-                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("login", "");
                                 editor.commit();
@@ -236,7 +235,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             public void onClick(View v) {
                 if ((get_profile_sts.equals(""))) {
                     //Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
-                  /*  Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
+                  /*  Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
                     startActivity(inte);*/
                     onBackPressed();
 
@@ -250,7 +249,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         phy_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goPhy = new Intent(getApplicationContext(), DeliveryAddress.class);
+                Intent goPhy = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
                 startActivity(goPhy);
             }
         });
@@ -269,9 +268,9 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             public void onClick(View v) {
 
 
-                if (!Config.isNetworkAvailable(ProfileActivity.this)) {
+                if (!Config.isNetworkAvailable(ProfileDashboard.this)) {
 
-                    new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(ProfileDashboard.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
                             .setContentText("No network Available!")
                             .setConfirmText("OK")
@@ -302,7 +301,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
     private void getLatlongtoImage() {
 
 
-        geocoder = new Geocoder(ProfileActivity.this);
+        geocoder = new Geocoder(ProfileDashboard.this);
         try {
             List<Address> addresses = geocoder.getFromLocationName("77015", 1);
             if (addresses != null && !addresses.isEmpty()) {
@@ -310,7 +309,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                 // Use the address as needed
                 String message = String.format("Latitude: %f, Longitude: %f",
                         address.getLatitude(), address.getLongitude());
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+              //  Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 
                 lat = address.getLatitude();
                 lon = address.getLongitude();
@@ -320,7 +319,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
             } else {
 
-                Toast.makeText(this, "Unable to geocode zipcode", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Unable to geocode zipcode", Toast.LENGTH_LONG).show();
             }
         } catch (IOException e) {
             Log.d("tag", "" + e);
@@ -358,7 +357,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
     class Virtual_Address_Task extends AsyncTask<String, Void, String> {
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
 
         protected void onPreExecute() {
             super.onPreExecute();
@@ -411,7 +410,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
                     Log.d("tag", "<-----Status----->" + msg);
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("virtul_addr", "success");
                     editor.commit();
@@ -425,7 +424,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                     Log.d("tag", "<-----Status----->" + msg);
 
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("virtul_addr", "success");
                     editor.commit();
@@ -446,12 +445,12 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
     class Profile_Update_Task extends AsyncTask<String, Void, String> {
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
 
         protected void onPreExecute() {
             super.onPreExecute();
 
-            sweetAlertDialog = new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog = new SweetAlertDialog(ProfileDashboard.this, SweetAlertDialog.PROGRESS_TYPE);
             sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
             sweetAlertDialog.setTitleText("Loading");
             sweetAlertDialog.setCancelable(false);
@@ -532,12 +531,12 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                         new UploadImageToServer(str_photo).execute();
                     } else {
 
-                        Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Updated Successfully", 2);
+                        Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile Updated Successfully", 2);
                         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         cdd.show();
                     }
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("profile", "SUCCESS");
                     editor.commit();
@@ -549,7 +548,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
 
                     btn_finish.setVisibility(View.VISIBLE);
 
-                    Dialog_Msg cdd = new Dialog_Msg(ProfileActivity.this, msg);
+                    Dialog_Msg cdd = new Dialog_Msg(ProfileDashboard.this, msg);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
 
@@ -577,7 +576,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            psDialog = new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+            psDialog = new SweetAlertDialog(ProfileDashboard.this, SweetAlertDialog.PROGRESS_TYPE);
             psDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
             psDialog.setTitleText("Loading");
             psDialog.setCancelable(false);
@@ -650,12 +649,12 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                     btn_finish.setVisibility(View.GONE);
 
 
-                    Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Updated Successfully", 2);
+                    Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile Updated Successfully", 2);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
 
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("profile", "SUCCESS");
                     editor.putString("web_photo_url", url);
@@ -664,14 +663,14 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
                 } else if (status.equals("fail"))
 
                 {
-                    Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Picture not uploaded", 4);
+                    Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile Picture not uploaded", 4);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
                 } else if (status.equals("fail")) {
 
                     btn_finish.setVisibility(View.VISIBLE);
 
-                    Dialog_Msg cdd = new Dialog_Msg(ProfileActivity.this, msg);
+                    Dialog_Msg cdd = new Dialog_Msg(ProfileDashboard.this, msg);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
 
@@ -684,7 +683,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             }
 
 /*
-            Dialog_new cdd = new Dialog_new(ProfileActivity.this, "Profile Updated Successfully", 2);
+            Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile Updated Successfully", 2);
             cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             cdd.show();*/
         }
@@ -696,7 +695,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(ProfileActivity.this);
+            progressDialog = new ProgressDialog(ProfileDashboard.this);
             progressDialog.setMessage("Loading Image ....");
             progressDialog.show();
 
@@ -725,7 +724,7 @@ public class ProfileActivity extends FragmentActivity implements OnMapReadyCallb
             } else {
 
                 progressDialog.dismiss();
-                Toast.makeText(ProfileActivity.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileDashboard.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
 
             }
         }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_dash"
-    tools:context=".DeliveryAddress">
+    tools:context=".ProfilePhysicalDeliveryAddress">
 
 
     <LinearLayout
@@ -52,7 +52,27 @@
                     android:textColor="#FFFFFF"
                     android:textSize="24sp" />
 
-            </FrameLayout>
+
+                <com.rey.material.widget.LinearLayout
+                    android:id="@+id/layout_add"
+                    style="@style/Material.Drawable.Ripple.Touch"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+
+                    <ImageButton
+                        android:id="@+id/button_add_pal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/plus_ico" />
+                </com.rey.material.widget.LinearLayout>
+
+                           </FrameLayout>
+
+
         </LinearLayout>
 
 
@@ -109,7 +129,7 @@
                         android:drawableLeft="@drawable/add_ico"
                         android:paddingLeft="10dp"
                         android:paddingRight="5dp"
-                        android:text="Add"
+                        android:text="Edit"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp" />
 
@@ -222,7 +242,7 @@
                                        android:layout_gravity="center_horizontal"
                                        android:layout_marginBottom="5dp"
                                        android:layout_height="55dp"
-                                       tools:context=".DeliveryAddress" />-->
+                                       tools:context=".ProfilePhysicalDeliveryAddress" />-->
 
                                 <com.rey.material.widget.Button
                                     android:id="@+id/button_save_loc"
@@ -458,7 +478,7 @@
                         android:drawableLeft="@drawable/add_ico"
                         android:paddingLeft="10dp"
                         android:paddingRight="5dp"
-                        android:text="Add"
+                        android:text="Edit"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp" />
 

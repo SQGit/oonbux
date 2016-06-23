@@ -130,7 +130,7 @@ public class AddLocation extends Activity {
 
                 if (vir_sts == "0") {
 
-                    Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
+                    Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
                     startActivity(inte);
                     finish();
                 } else {
@@ -166,14 +166,14 @@ public class AddLocation extends Activity {
                         Log.d("tag", "" + getvirtual1 + "\t" + getvirtual2);
                     } else {
                         Log.d("tag", "1" + getvirtual1 + "\t" + getvirtual2);
-                        Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                        Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
                         startActivity(inte);
                     }
 
 
 
 
-                    /*Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                    /*Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
                     startActivity(inte);*/
                 } else {
                     btn_submit.setText("Submit");

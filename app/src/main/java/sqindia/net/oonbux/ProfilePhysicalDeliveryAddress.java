@@ -36,9 +36,9 @@ import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class DeliveryAddress extends Activity {
+public class ProfilePhysicalDeliveryAddress extends Activity {
 
-    LinearLayout bottom_lt;
+    LinearLayout bottom_lt, lt_add_address;
     TextView tv_header, tv_sub_hdr_loc, tv_sub_hdr_int;
     Button btn_save_loc, btn_save_int, btn_next, btn_add_loc, btn_add_int;
     com.rey.material.widget.LinearLayout lt_back;
@@ -66,14 +66,13 @@ public class DeliveryAddress extends Activity {
     ArrayAdapter<String> adpater_states, adpater_states_, adapter_zips, adapter_zips_;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_address);
 
         countries = new String[]{"US", "NIGERIA", "GAANA"};
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
         get_profile_sts = sharedPreferences.getString("profile", "");
         Log.e("tag", "pfs" + get_profile_sts);
 
@@ -125,9 +124,11 @@ public class DeliveryAddress extends Activity {
         spin_loc = (Spinner) findViewById(R.id.loc_spin_country);
         spin_int = (Spinner) findViewById(R.id.int_spin_country);
 
+        lt_add_address = (LinearLayout) findViewById(R.id.layout_add);
 
-        if (!Config.isNetworkAvailable(DeliveryAddress.this)) {
-            new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+
+        if (!Config.isNetworkAvailable(ProfilePhysicalDeliveryAddress.this)) {
+            new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Oops!")
                     .setContentText("No network Available!")
                     .setConfirmText("OK")
@@ -300,6 +301,13 @@ public class DeliveryAddress extends Activity {
         });
 
 
+        lt_add_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addressPart = new Intent(getApplicationContext(), ManageAddress.class);
+                startActivity(addressPart);
+            }
+        });
 
 
         if (str_def_adr.equals("LOCAL")) {
@@ -309,9 +317,21 @@ public class DeliveryAddress extends Activity {
         }
 
 
-        if (!(str_loc_add1.equals("null")) || (!(str_int_add1.equals("null")))) {
+        if (!(str_loc_add1.equals("null"))) {
 
-            getfromdata();
+            getfromdata_loc();
+        }
+        else{
+            enable_loc();
+        }
+
+
+        if (!(str_int_add1.equals("null"))) {
+
+            getfromdata_int();
+        }
+        else{
+            enable_int();
         }
 
 
@@ -375,7 +395,7 @@ public class DeliveryAddress extends Activity {
             public void onClick(View v) {
                 if (!loc_adr) {
                     cb_loc.setChecked(false);
-                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Address is empty,fill address")
                             .setConfirmText("OK")
 
@@ -396,7 +416,7 @@ public class DeliveryAddress extends Activity {
                         str_def_adr = "INTERNATIONAL";
                     }
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("default_adr", str_def_adr);
                     editor.commit();
@@ -417,7 +437,7 @@ public class DeliveryAddress extends Activity {
 
                     cb_int.setChecked(false);
 
-                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Address is empty,fill address")
                             .setConfirmText("OK")
 
@@ -439,7 +459,7 @@ public class DeliveryAddress extends Activity {
                         str_def_adr = "INTERNATIONAL";
                     }
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("default_adr", str_def_adr);
                     editor.commit();
@@ -460,10 +480,14 @@ public class DeliveryAddress extends Activity {
                     startActivity(inte);*/
 
                     onBackPressed();
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("profile", "success");
+                    editor.commit();
 
                     // Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
                 } else {
-                    Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                    Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
                     startActivity(inte);
                 }
 
@@ -481,15 +505,21 @@ public class DeliveryAddress extends Activity {
 
                 bottom_lt.setVisibility(View.VISIBLE);
 
+                et_loc_add1.requestFocus();
 
-                et_loc_add1.setText("");
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("profile", "");
+                editor.commit();
+
+               /* et_loc_add1.setText("");
                 et_loc_add1.requestFocus();
                 et_loc_add2.setText("");
                 et_loc_city.setText("");
                 aet_loc_state.setText("");
                 aet_loc_zip.setText("");
                 et_loc_phone.setText("");
-                et_loc_note.setText("");
+                et_loc_note.setText("");*/
             }
         });
 
@@ -504,14 +534,21 @@ public class DeliveryAddress extends Activity {
 
                 bottom_lt.setVisibility(View.VISIBLE);
 
-                et_int_add1.setText("");
+                et_int_add1.requestFocus();
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("profile", "");
+                editor.commit();
+
+                /*et_int_add1.setText("");
                 et_int_add1.requestFocus();
                 et_int_add2.setText("");
                 et_int_city.setText("");
                 aet_int_state.setText("");
                 aet_int_zip.setText("");
                 et_int_phone.setText("");
-                et_int_note.setText("");
+                et_int_note.setText("");*/
             }
         });
 
@@ -562,7 +599,7 @@ public class DeliveryAddress extends Activity {
                                             if (!(loc_adr || int_adr)) {
                                                 //Toast.makeText(getApplicationContext(), "Fill addresses", Toast.LENGTH_LONG).show();
 
-                                                new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                                                new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                                                         .setTitleText("Fill Address")
                                                         .setConfirmText("OK")
 
@@ -580,7 +617,7 @@ public class DeliveryAddress extends Activity {
 
                                                 // Toast.makeText(getApplicationContext(), "choose default address", Toast.LENGTH_LONG).show();
 
-                                                new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                                                new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                                                         .setTitleText("Choose Default Address")
                                                         .setConfirmText("OK")
 
@@ -601,7 +638,7 @@ public class DeliveryAddress extends Activity {
                                                     str_def_adr = "INTERNATIONAL";
                                                 }
 
-                                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
                                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                                 editor.putString("default_adr", str_def_adr);
                                                 editor.commit();
@@ -640,7 +677,7 @@ public class DeliveryAddress extends Activity {
                                                     inte.putExtra("sts", 0);
                                                     startActivity(inte);
                                                 } else {
-                                                    Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                                                    Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
                                                     startActivity(inte);
                                                 }
 
@@ -678,7 +715,7 @@ public class DeliveryAddress extends Activity {
                                     disable_loc();
                                     //Toast.makeText(getApplicationContext(), "Local address Updated", Toast.LENGTH_LONG).show();
 
-                                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
                                             .setTitleText("Local Address Updated")
                                             .setConfirmText("OK")
 
@@ -692,7 +729,7 @@ public class DeliveryAddress extends Activity {
                                             .show();
 
 
-                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString(location + "_addr1", addr1);
                                     editor.putString(location + "_addr2", addr2);
@@ -711,7 +748,7 @@ public class DeliveryAddress extends Activity {
                                     btn_save_int.setVisibility(View.GONE);
                                     disable_int();
 
-                                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.SUCCESS_TYPE)
                                             .setTitleText("International Address Updated")
                                             .setConfirmText("OK")
 
@@ -725,7 +762,7 @@ public class DeliveryAddress extends Activity {
                                             .show();
 
 
-                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString(location + "_addr1", addr1);
                                     editor.putString(location + "_addr2", addr2);
@@ -744,7 +781,7 @@ public class DeliveryAddress extends Activity {
                                 }
 
 
-                                /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DeliveryAddress.this);
+                                /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(location + "_addr1", addr1);
                                 editor.putString(location + "_addr2", addr2);
@@ -759,7 +796,7 @@ public class DeliveryAddress extends Activity {
 
 
 
-                                 /*   Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
+                                 /*   Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
                                     startActivity(inte);*/
 
                             } else {
@@ -785,7 +822,7 @@ public class DeliveryAddress extends Activity {
     }
 
 
-    private void getfromdata() {
+    private void getfromdata_loc() {
 
         //  disable_loc();
         //  disable_int();
@@ -798,6 +835,15 @@ public class DeliveryAddress extends Activity {
         et_loc_phone.setText(str_loc_phone);
         et_loc_note.setText(str_loc_note);
 
+
+    }
+
+
+    private void getfromdata_int() {
+
+        //  disable_loc();
+        //  disable_int();
+
         et_int_add1.setText(str_int_add1);
         et_int_add2.setText(str_int_add2);
         et_int_city.setText(str_int_city);
@@ -807,6 +853,7 @@ public class DeliveryAddress extends Activity {
         et_int_note.setText(str_int_note);
 
     }
+
 
     public void enable_loc() {
 
@@ -857,7 +904,6 @@ public class DeliveryAddress extends Activity {
     }
 
 
-
     public class MyAdapter extends ArrayAdapter<String> {
 
         public MyAdapter(Context context, int textViewResourceId, ArrayList<String> objects) {
@@ -894,7 +940,7 @@ public class DeliveryAddress extends Activity {
     class GetCountry extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            sweetAlertDialog = new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog = new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
             sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
             sweetAlertDialog.setTitleText("Loading");
             sweetAlertDialog.setCancelable(false);
@@ -908,7 +954,7 @@ public class DeliveryAddress extends Activity {
                 JSONObject jsonobject = HttpUtils.getData(country_url);
                 Log.d("tag", "" + jsonobject.toString());
                 if (jsonobject.toString() == "sam") {
-                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
                             .setContentText("Try Check your Network")
                             .setConfirmText("OK")
@@ -944,16 +990,16 @@ public class DeliveryAddress extends Activity {
                     country.add(daa);
                     Log.d("tag", "<-----Statusss----->" + daa);
                 }
-                adapter_a = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, country);
+                adapter_a = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
                 spin_loc.setAdapter(adapter_a);
 
-                adapter_b = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, country);
+                adapter_b = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
                 spin_int.setAdapter(adapter_b);
 
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Oops!")
                         .setContentText("Network Error,Try Again Later.")
                         .setConfirmText("OK")
@@ -979,7 +1025,7 @@ public class DeliveryAddress extends Activity {
         }
 
         protected void onPreExecute() {
-            sweetAlertDialog = new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog = new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
             sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
             sweetAlertDialog.setTitleText("Loading");
             sweetAlertDialog.setCancelable(false);
@@ -1028,20 +1074,20 @@ public class DeliveryAddress extends Activity {
                         Log.d("tag", "" + c_sts);
                         if (c_sts == 0) {
 
-                            adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, states);
+                            adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, states);
                             aet_loc_state.setAdapter(adpater_states);
-                           /* adapter_c = new MyAdapter(DeliveryAddress.this, R.layout.dropdown_lists1, states);
+                           /* adapter_c = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, states);
                             aet_loc_state.setAdapter(adapter_c);
                             aet_loc_state.requestFocus();*/
                         } else {
-                            adpater_states_ = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, states);
+                            adpater_states_ = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, states);
                             aet_int_state.setAdapter(adpater_states_);
                         }
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
                             .setContentText("Network Error,Try Again Later.")
                             .setConfirmText("OK")
@@ -1073,7 +1119,7 @@ public class DeliveryAddress extends Activity {
 
         protected void onPreExecute() {
 
-            sweetAlertDialog = new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog = new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
             sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
             sweetAlertDialog.setTitleText("Loading");
             sweetAlertDialog.setCancelable(false);
@@ -1136,17 +1182,17 @@ public class DeliveryAddress extends Activity {
                     Log.d("tag", "<---->" + "" + get_sts);
                     if (get_sts == 0) {
 
-                        adapter_zips = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, zip);
+                        adapter_zips = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, zip);
                         aet_loc_zip.setAdapter(adapter_zips);
                     } else {
-                        adapter_zips_ = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists, R.id.text_spin, zip);
+                        adapter_zips_ = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, zip);
                         aet_int_zip.setAdapter(adapter_zips_);
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
 
-                    new SweetAlertDialog(DeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
                             .setContentText("Network Error,Try Again Later.")
                             .setConfirmText("OK")

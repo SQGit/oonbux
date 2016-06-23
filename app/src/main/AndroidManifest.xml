@@ -80,23 +80,21 @@
         <activity
             android:name=".ProfileInfo"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity
-            android:name=".PhysicalDeliveryAddress"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
         <activity android:name=".HowItWorks" />
         <activity android:name=".ContactUs" />
         <activity
             android:name=".PalRequest"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileDashboard" />
         <activity android:name=".Invite_Pal" />
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/img_Picker" />
 
         <activity
-            android:name=".DeliveryAddress"
+            android:name=".ProfilePhysicalDeliveryAddress"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
         <activity android:name=".AddLocation" />
@@ -109,6 +107,7 @@
 
         <activity android:name=".SurfaceView" />
         <activity android:name=".ChatPage"/>
+        <activity android:name=".ManageAddress"/>
 
 
         <meta-data

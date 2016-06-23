@@ -403,7 +403,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_prof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
                 startActivity(inte);
             }
         });

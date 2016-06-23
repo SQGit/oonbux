@@ -240,7 +240,7 @@ public class ProfileInfo extends Activity {
                     //Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
 
                 } else {
-                    Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+                    Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
                     startActivity(inte);
                 }
 
@@ -344,7 +344,7 @@ public class ProfileInfo extends Activity {
                     .show();
 
         } else {
-            Intent inte = new Intent(getApplicationContext(), ProfileActivity.class);
+            Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
             startActivity(inte);
             finish();
         }
@@ -386,7 +386,7 @@ public class ProfileInfo extends Activity {
 
                                 disable();
 
-                                Intent inte = new Intent(getApplicationContext(), DeliveryAddress.class);
+                                Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
                                 startActivity(inte);
 
                             } else {

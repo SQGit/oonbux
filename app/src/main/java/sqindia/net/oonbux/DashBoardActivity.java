@@ -109,6 +109,10 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
         web_photo = sharedPreferences.getString("web_photo_url", "");
 
+        String asdf = sharedPreferences.getString("sessionid", "");
+
+        Log.d("tag",""+asdf);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

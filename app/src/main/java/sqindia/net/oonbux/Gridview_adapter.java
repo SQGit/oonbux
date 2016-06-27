@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.TextView;
@@ -24,6 +25,8 @@ public class Gridview_adapter extends BaseAdapter {
     Context c1;
     //ArrayList<GridviewDatas> vir_addrs;
     TextView tv_addr1, tv_addr2, tv_city, tv_state, tv_zip, tv_country;
+
+
     CheckBox cb_choose;
     ArrayList<HashMap<String, String>> vir_addrs;
     HashMap<String, String> resultp = new HashMap<String, String>();
@@ -77,6 +80,7 @@ public class Gridview_adapter extends BaseAdapter {
         tv_state = (TextView) view.findViewById(R.id.tv_state);
         tv_zip = (TextView) view.findViewById(R.id.tv_zip);
         tv_country = (TextView) view.findViewById(R.id.tv_country);
+
 
         tv_addr1.setText(resultp.get(AddLocation.addr1));
         tv_addr2.setText(resultp.get(AddLocation.addr2));

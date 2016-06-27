@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="3dp"
+    android:paddingTop="3dp">
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:background="#606060"
+        android:padding="5dp">
+
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/imgview"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/photo_ico"
+            app:siBorderColor="@color/colorAccent"
+            app:siBorderWidth="0.5dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_size_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Name : "
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:text="ANDY RODUS"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_pickup_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Oonbux Id : "
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_oonbuxid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:text="IB566FD33"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_price_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Email : "
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_mail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:text="rodusmail@oonbux.com"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_headedsddddr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="Phone : "
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:text="984546544"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--<com.rey.material.widget.Button
+        android:id="@+id/button_next"
+        style="@style/Material.Drawable.Ripple.Wave"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginRight="10dp"
+        android:background="@color/text_color"
+        android:drawableLeft="@drawable/lft_pal_ico"
+        android:drawablePadding="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Add Pal"
+        android:textColor="#FFFFFF" />-->
+
+</LinearLayout>

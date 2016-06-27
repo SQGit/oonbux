@@ -354,6 +354,192 @@ public class HttpUtils {
 
 
 
+    public static JSONObject getAllPal(String url, String data, String session) {
+        InputStream is = null;
+        String json, result = "";
+        JSONObject jArray = null;
+
+        // Download JSON data from URL
+        try {
+
+
+            Log.d("tag",""+url+data+session);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("keyword", data);
+            json = jsonObject.toString();
+
+
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(url);
+            httppost.setHeader("session_id",session);
+            httppost.setEntity(new StringEntity(json));
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+
+        } catch (Exception e) {
+            Log.e("tag", "Error in http connection " + e.toString());
+        }
+
+        // Convert response to string
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            result = sb.toString();
+        } catch (Exception e) {
+            Log.e("tag", "Error converting result " + e.toString());
+        }
+
+        try {
+
+            jArray = new JSONObject(result);
+        } catch (JSONException e) {
+            Log.e("tag", "Error parsing data " + e.toString());
+        }
+
+        return jArray;
+    }
+
+
+
+
+    public static String makeRequest34(String url, String json, String session) {
+
+        Log.e(TAG, "URL-->" + url);
+        Log.e(TAG, "input-->" + json);
+
+
+        try {
+            Log.e(TAG, "inside-->");
+
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setEntity(new StringEntity(json));
+            httpPost.setHeader("Content-type", "application/json");
+            httpPost.setHeader("session_id",session);
+
+
+            HttpResponse httpResponse = new DefaultHttpClient().execute(httpPost);
+
+
+            // receive response as inputStream
+            InputStream inputStream = httpResponse.getEntity().getContent();
+            // convert inputstream to string
+            if (inputStream != null) {
+                String result = convertInputStreamToString(inputStream);
+                Log.e(TAG, "output-->" + result);
+                return result;
+            } else {
+                Log.e(TAG, "output-->" + inputStream);
+
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static JSONObject getPalLists(String url,String session) throws JSONException {
+        InputStream is = null;
+        String result = "";
+        JSONObject jArray = null;
+
+        // Download JSON data from URL
+        try {
+
+
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(url);
+            httppost.setHeader("session_id",session);
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+
+        } catch (Exception e) {
+            Log.e("tag", "Error in http connection " + e.toString());
+            result = "sam";
+            is = null;
+            return jArray;
+
+        }
+
+        // Convert response to string
+
+        if (is.equals(null)) {
+
+            result = "sam";
+            jArray = new JSONObject(result);
+            return jArray;
+
+        } else {
+
+
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        is, "iso-8859-1"), 8);
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                is.close();
+                result = sb.toString();
+            } catch (Exception e) {
+                Log.e("tag", "Error converting result " + e.toString());
+                result = "sam";
+            }
+
+            try {
+
+                jArray = new JSONObject(result);
+            } catch (JSONException e) {
+                Log.e("tag", result);
+                Log.e("tag", jArray.toString());
+                Log.e("tag", "Error parsing data " + e.toString());
+
+
+            }
+
+            return jArray;
+        }
+
+    }
+
+
+
+
+
 
 
 

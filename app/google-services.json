@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "600977208793",
+    "project_id": "oonbux5353"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600977208793:android:94c302fad6707305",
+        "android_client_info": {
+          "package_name": "sqindia.net.oonbux"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7phpfj1m_MTmWc_k_KzJVd1NumbP_a-Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

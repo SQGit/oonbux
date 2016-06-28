@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_dash">
@@ -41,7 +40,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Search Pal"
+                android:text="Pal Requests"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp" />
 
@@ -62,37 +61,14 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center|center_vertical">
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/edittext_pal_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:hint="Enter Pal Name or email or id"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp"
-                android:textSize="20sp"
-                app:met_accentTypeface="fonts/prox.otf"
-                app:met_baseColor="@color/text_divider_light"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelTextColor="@color/bg_color"
-                app:met_primaryColor="@color/text_divider_light"
-                app:met_textColor="@color/text_color_hint_light"
-                app:met_textColorHint="@color/text_color_hint_light"
-                app:met_underlineColor="@color/text_divider" />
-
-
-            <Button
-                android:id="@+id/button_submit"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:text="submit" />
+                android:text="Requests not approved by pal"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp" />
 
 
         </FrameLayout>

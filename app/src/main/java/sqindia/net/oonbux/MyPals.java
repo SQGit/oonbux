@@ -8,9 +8,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +34,7 @@ public class MyPals extends Activity {
     SweetAlertDialog sweetDialog;
     String str_sessionid;
     HashMap<String, String> map ;
-    LinearLayout lt_add,lt_back;
+    LinearLayout lt_add,lt_back,lt_pending;
     ArrayList<HashMap<String, String>> pal_datas;
 
     @Override
@@ -45,6 +49,7 @@ public class MyPals extends Activity {
         lv_mypals = (ListView) findViewById(R.id.lview);
         lt_add = (LinearLayout) findViewById(R.id.layout_add);
         lt_back = (LinearLayout) findViewById(R.id.layout_back);
+        lt_pending = (LinearLayout) findViewById(R.id.layout_pending);
 
 
         pal_datas = new ArrayList<>();
@@ -62,6 +67,50 @@ public class MyPals extends Activity {
 
                 Intent goSearch = new Intent(getApplicationContext(),SearchPal.class);
                 startActivity(goSearch);
+
+            }
+        });
+
+        lt_pending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             //  MyPals.this.openOptionsMenu();
+
+                PopupMenu popup = new PopupMenu(MyPals.this, lt_pending);
+
+                popup.getMenuInflater().inflate(R.menu.palmenu, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()) {
+
+
+                            case R.id.request: {
+                                Intent i = new Intent(getApplicationContext(), PendingbyMe.class);
+                                startActivity(i);
+                                return true;
+                            }
+
+                            case R.id.pending: {
+                                Intent i = new Intent(getApplicationContext(), PendingbyPal.class);
+                                startActivity(i);
+                                return true;
+                            }
+
+                            default: {
+                                return true;
+                            }
+
+
+                        }
+
+
+                    }
+                });
+
+                popup.show();
+
 
             }
         });
@@ -193,6 +242,51 @@ public class MyPals extends Activity {
 
         }
 
+    }
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.palmenu, menu);
+      //  MenuItem pinMenuItem1 = menu.getItem(0).getSubMenu().getItem(0);
+       // MenuItem pinMenuItem2 = menu.getItem(0).getSubMenu().getItem(1);
+
+        // applyFontToMenuItem(pinMenuItem1);
+        //applyFontToMenuItem(pinMenuItem2);
+
+
+
+
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.request: {
+                Intent i = new Intent(getApplicationContext(), PendingbyMe.class);
+                startActivity(i);
+                return true;
+            }
+
+            case R.id.pending: {
+                Intent i = new Intent(getApplicationContext(), PendingbyPal.class);
+                startActivity(i);
+                return true;
+            }
+
+
+            default: {
+                return true;
+            }
+        }
     }
 
 

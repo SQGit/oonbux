@@ -110,6 +110,8 @@
         <activity android:name=".ManageAddress"/>
         <activity android:name=".MyPals"/>
         <activity android:name=".SearchPal"/>
+        <activity android:name=".PendingbyMe"/>
+        <activity android:name=".PendingbyPal"/>
 
 
         <meta-data

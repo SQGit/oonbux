@@ -24,12 +24,13 @@ public class GcmNotificationIntentService extends IntentService {
     public static final String TAG = "GCMNotificationIntentService";
     NotificationCompat.Builder builder;
 
-    String notifi_body,notifi_title,gcm_data;
+    String notifi_body,notifi_title,gcm_data,from;
     public GcmNotificationIntentService() {
         super("GcmIntentService");
     }
 
     GcmListenerService gcmget;
+    String sts;
 
 
 
@@ -52,15 +53,19 @@ public class GcmNotificationIntentService extends IntentService {
 
         notifi_body = extras.getString("gcm.notification.body");
         notifi_title = extras.getString("gcm.notification.title");
-        gcm_data = extras.getString("somekey");
+        gcm_data = extras.getString("data");
+        from = extras.getString("from");
+        sts =extras.getString("type");
+
+        Log.e("tag"," "+notifi_body +" -"+notifi_title+"*"+gcm_data);
 
 
-       if (gcm_data!= null) {
+     /*  if (gcm_data!= null) {
            sendNotification("Hi your message is: " + gcm_data); //When Message is received normally from GCM Cloud Server
        }
         else{
            sendNotification("");
-       }
+       }*/
         //Log.d("tag","keys"+ asdf1 +"__ \t"+ asdf2+"_\t"+asdf3);
 
 
@@ -88,6 +93,28 @@ public class GcmNotificationIntentService extends IntentService {
 
             }
         }*/
+
+
+
+        if(sts.equals("PALREQUEST"))
+        {
+            palRequest(gcm_data);
+        }
+        else if(sts.equals("PALRESPOND")){
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         GcmReceiver.completeWakefulIntent(intent);
     }
 
@@ -128,4 +155,50 @@ public class GcmNotificationIntentService extends IntentService {
         // Post img_emg notification
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
+
+
+
+    private void palRequest(String data) {
+
+        Log.e("tag","234"+data);
+
+        Intent resultIntent = new Intent(this, PalAccept.class);
+        resultIntent.putExtra("get_Server", data);
+        resultIntent.setAction(Intent.ACTION_MAIN);
+        resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                resultIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder mNotifyBuilder;
+        NotificationManager mNotificationManager;
+
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        mNotifyBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle(notifi_title)
+                .setContentText("Pal Request from - "+from)
+                .setSmallIcon(R.mipmap.launcher);
+        // Set pending intent
+        mNotifyBuilder.setContentIntent(resultPendingIntent);
+
+        // Set Vibrate, Sound and Light
+        int defaults = 0;
+        defaults = defaults | Notification.DEFAULT_LIGHTS;
+        defaults = defaults | Notification.DEFAULT_VIBRATE;
+        defaults = defaults | Notification.DEFAULT_SOUND;
+
+        mNotifyBuilder.setDefaults(defaults);
+        // Set the content for Notification
+        // mNotifyBuilder.setContentText("New Alert from Palani");
+        // Set autocancel
+        mNotifyBuilder.setAutoCancel(true);
+        // Post img_emg notification
+        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+    }
+
+
+
+
+
+
 }

@@ -1,17 +1,12 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -27,44 +22,31 @@ import java.util.HashMap;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
- * Created by Salman on 6/27/2016.
+ * Created by Salman on 6/28/2016.
  */
-public class SearchPal extends Activity {
+public class PendingbyMe extends Activity {
 
-    Button btn_submit;
-    MaterialEditText et_searchtxt;
+
     String str_palkey, str_sessionid;
     SweetAlertDialog sweetDialog;
     HashMap<String, String> map;
     ListView lv_pallists;
     ArrayList<HashMap<String, String>> pal_datas;
-    Adapter_PalLists staff_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.searchpal);
+        setContentView(R.layout.pendingbyme);
 
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SearchPal.this);
+
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(PendingbyMe.this);
         str_sessionid = sharedPreferences.getString("sessionid", "");
 
-        et_searchtxt = (MaterialEditText) findViewById(R.id.edittext_pal_name);
-        btn_submit = (Button) findViewById(R.id.button_submit);
-        lv_pallists = (ListView) findViewById(R.id.lview);
 
+        lv_pallists = (ListView) findViewById(R.id.lview);
         pal_datas = new ArrayList<>();
 
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                str_palkey = et_searchtxt.getText().toString();
-
-                new getSearchData().execute();
-
-            }
-        });
-
-
+        new getSearchData().execute();
     }
 
 
@@ -73,7 +55,7 @@ public class SearchPal extends Activity {
     class getSearchData extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            sweetDialog = new SweetAlertDialog(SearchPal.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetDialog = new SweetAlertDialog(PendingbyMe.this, SweetAlertDialog.PROGRESS_TYPE);
             sweetDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
             sweetDialog.setTitleText("Loading");
             sweetDialog.setCancelable(false);
@@ -87,19 +69,24 @@ public class SearchPal extends Activity {
 
             try {
 
-                String virtual_url = Config.SER_URL + "pal/search";
-                Log.e("tag", "" + str_palkey);
-
-                //JSONObject jsonobject = HttpUtils.makeRequest34(virtual_url,str_palkey, str_sessionid);
+                String virtual_url = Config.SER_URL + "pal/requestpendingbyme";
 
 
-                JSONObject jsonobject = new JSONObject();
-                jsonobject.accumulate("keyword", str_palkey);
-                // 4. convert JSONObject to JSON to String
-                Log.e("tag", "" + jsonobject.toString());
+                JSONObject jsonobject = HttpUtils.getVirtual(virtual_url, str_sessionid);
+
+                Log.d("tag", "" + jsonobject.toString());
+
+                if (jsonobject.toString() == "sam") {
+                    new SweetAlertDialog(PendingbyMe.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("Try Check your Network")
+                            .setConfirmText("OK")
+                            .show();
+                }
+
                 json = jsonobject.toString();
 
-                return jsonStr = HttpUtils.makeRequest34(virtual_url, json, str_sessionid);
+                return json;
             } catch (Exception e) {
                 Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
@@ -131,21 +118,22 @@ public class SearchPal extends Activity {
                     if (count > 0) {
 
 
-                        String subd = jo.getString("result");
+                        String subd = jo.getString("pendingbyme");
 
-                        JSONArray friends_list = jo.getJSONArray("result");
+                        JSONArray friends_list = jo.getJSONArray("pendingbyme");
                         Log.e("tag", "<-----result----->" + "" + friends_list);
 
                         map = new HashMap<String, String>();
                         map.clear();
                         pal_datas.clear();
 
+
                         for (int i = 0; i < friends_list.length(); i++) {
 
                             JSONObject datas = friends_list.getJSONObject(i);
 
 
-                            map = new HashMap<String, String>();
+
                             map.put("oonbux_id", datas.getString("oonbux_id"));
                             map.put("firstname", datas.getString("firstname"));
                             map.put("lastname", datas.getString("lastname"));
@@ -159,16 +147,17 @@ public class SearchPal extends Activity {
                         }
 
 
-                        staff_adapter = new Adapter_PalLists(SearchPal.this, pal_datas, count);
+                        Adapter_PalLists staff_adapter = new Adapter_PalLists(PendingbyMe.this, pal_datas, count);
                         staff_adapter.notifyDataSetChanged();
                         lv_pallists.setAdapter(staff_adapter);
+
                     } else {
 
                     }
 
                 } else {
 
-                    new SweetAlertDialog(SearchPal.this, SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(PendingbyMe.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
                             .setContentText("Try Check your Network")
                             .setConfirmText("OK")
@@ -185,7 +174,6 @@ public class SearchPal extends Activity {
         }
 
     }
-
 
 
 }

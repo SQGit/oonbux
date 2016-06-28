@@ -39,7 +39,7 @@ public class LoginActivity extends Activity {
     TextView tv_donthav, tv_register;
     LinearLayout ll_register;
     TelephonyManager tmanager;
-    String str_email, str_pass, str_deviceid, get_profile_sts,get_gcmId;
+    String str_email, str_pass,  get_profile_sts,get_gcmId;
     SweetAlertDialog sweetAlertDialog;
     MaterialEditText et_email, et_pass;
     Context applicationContext;
@@ -71,7 +71,7 @@ public class LoginActivity extends Activity {
         et_pass.setTypeface(tf);
 
         tmanager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        str_deviceid = "EMU035Id45";//tmanager.getDeviceId();
+        //str_deviceid = "EMU035Id45";//tmanager.getDeviceId();
 
 
         ll_register.setOnClickListener(new View.OnClickListener() {
@@ -120,11 +120,11 @@ public class LoginActivity extends Activity {
                     }
                     get_gcmId = gcmObj.register(Config.GCM_PROJ_ID);
                     msg = "Registration ID :" + get_gcmId;
-                    Log.d("tag", get_gcmId);
+                    Log.e("tags", msg+get_gcmId);
 
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
-                    Log.e("tag",ex.getMessage());
+                    Log.e("tage",ex.getMessage());
                 }
                 return msg;
             }

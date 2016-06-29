@@ -122,7 +122,7 @@ public class MyPals extends Activity {
         new getPalLists().execute();
 
      /*   Adapter_PalLists staff_adapter = new Adapter_PalLists(MyPals.this, map, 5);
-        lv_mypals.setAdapter(staff_adapter);*/
+        lv_palpendings.setAdapter(staff_adapter);*/
 
     }
 

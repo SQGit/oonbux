@@ -3,6 +3,7 @@ package sqindia.net.oonbux;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -30,7 +31,7 @@ public class Adapter_PalLists extends BaseAdapter {
     Context context;
     HashMap<String, String> data = new HashMap<>();
     int count;
-    TextView tv_name,tv_oonbuxid,tv_mail,tv_phone;
+    TextView tv_name,tv_oonbuxid,tv_mail,tv_phone,tv_name_txt,tv_oonbuxid_txt,tv_mail_txt,tv_phone_txt;
     ImageView img_view;
     ArrayList<HashMap<String, String>> datas = new ArrayList<>();
     HashMap<String, String> result = new HashMap<String, String>();
@@ -65,16 +66,31 @@ public class Adapter_PalLists extends BaseAdapter {
 
         convertView = inflat.inflate(R.layout.pal_list_adapter, null);
 
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/prox.otf");
+
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         str_sessionid = sharedPreferences.getString("sessionid", "");
 
         result = datas.get(position);
 
         tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+        tv_name_txt = (TextView) convertView.findViewById(R.id.tv_name_txt);
         tv_oonbuxid = (TextView) convertView.findViewById(R.id.tv_oonbuxid);
+        tv_oonbuxid_txt = (TextView) convertView.findViewById(R.id.tv_oonbuxid_txt);
         tv_mail = (TextView) convertView.findViewById(R.id.tv_mail);
+        tv_mail_txt = (TextView) convertView.findViewById(R.id.tv_mail_txt);
         tv_phone = (TextView) convertView.findViewById(R.id.tv_phone);
+        tv_phone_txt = (TextView) convertView.findViewById(R.id.tv_phone_txt);
         img_view = (ImageView) convertView.findViewById(R.id.imgview);
+
+        tv_name.setTypeface(tf);
+        tv_name_txt.setTypeface(tf);
+        tv_oonbuxid.setTypeface(tf);
+        tv_oonbuxid_txt.setTypeface(tf);
+        tv_mail.setTypeface(tf);
+        tv_mail_txt.setTypeface(tf);
+        tv_phone.setTypeface(tf);
+        tv_phone_txt.setTypeface(tf);
 
 
         tv_name.setText(result.get("firstname")+" "+result.get("lastname"));

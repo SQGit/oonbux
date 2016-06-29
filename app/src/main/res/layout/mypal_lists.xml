@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dash"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#070b23">
+
+        <FrameLayout
+            android:id="@+id/bck_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.rey.material.widget.LinearLayout
+                android:id="@+id/layout_back"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="80dp"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/back_ico" />
+            </com.rey.material.widget.LinearLayout>
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/tv_hd_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="Pal"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp" />
+
+
+            <com.rey.material.widget.LinearLayout
+                android:id="@+id/layout_add"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="right">
+
+                <ImageButton
+                    android:id="@+id/button_add_pal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/lft_pal_ico" />
+            </com.rey.material.widget.LinearLayout>
+
+
+        </FrameLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/ll1"
+        android:layout_gravity="center"
+        android:layout_margin="4dp"
+        android:background="@drawable/backo"
+        android:padding="1dp">
+
+
+        <com.rey.material.widget.Button
+            android:id="@+id/tbtn1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/mypal_ico"
+            android:padding="10dp"
+            android:text="My Pal's"
+            android:textColor="#af7735"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#9b550f" />
+
+        <com.rey.material.widget.Button
+            android:id="@+id/tbtn2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/request_wt_ico"
+            android:padding="10dp"
+            android:text="Requests"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />-->
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#9b550f" />
+
+        <com.rey.material.widget.Button
+            android:id="@+id/tbtn3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/pending_wt_ico"
+            android:padding="10dp"
+            android:text="Pending"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />-->
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/ll2"
+        android:background="#e47b0a">
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/tv_shd_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="List of Pals who accepted your requests"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll3">
+
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

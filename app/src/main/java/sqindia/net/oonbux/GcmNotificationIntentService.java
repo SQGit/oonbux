@@ -38,27 +38,8 @@ public class GcmNotificationIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
         Bundle extras = intent.getExtras();
-
-
-
-
-
-
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-
         String messageType = gcm.getMessageType(intent);
-
-        String asdf = intent.getExtras().toString();
-        Log.e("tag"," "+asdf);
-
-        notifi_body = extras.getString("gcm.notification.body");
-        notifi_title = extras.getString("gcm.notification.title");
-        gcm_data = extras.getString("data");
-        from = extras.getString("from");
-        sts =extras.getString("type");
-
-        Log.e("tag"," "+notifi_body +" -"+notifi_title+"*"+gcm_data);
-
 
      /*  if (gcm_data!= null) {
            sendNotification("Hi your message is: " + gcm_data); //When Message is received normally from GCM Cloud Server
@@ -94,18 +75,48 @@ public class GcmNotificationIntentService extends IntentService {
             }
         }*/
 
+        Log.e("tagBundle ",""+intent.getExtras());
+        Log.e("tagstring ",""+intent.getExtras().toString());
+
+        if(intent.getExtras().toString().contains("gcm.notification.title")){
 
 
-        if(sts.equals("PALREQUEST"))
-        {
-            palRequest(gcm_data);
+            sts = extras.getString("type");
+            notifi_body = extras.getString("gcm.notification.body");
+            notifi_title = extras.getString("gcm.notification.title");
+            gcm_data = extras.getString("data");
+            from = extras.getString("from");
+
+
+            Log.e("tag"," "+notifi_body +" -"+notifi_title+"*"+gcm_data);
+
+            if (sts.equals("PALREQUEST")) {
+                palRequest(gcm_data);
+            }
+            else if (sts.equals("PALRESPOND")) {
+
+
+            }
         }
-        else if(sts.equals("PALRESPOND")){
-
-        }
 
 
 
+
+
+
+       /* if(!(extras.containsKey("type"))) {
+
+            if (extras.getString("type") == null) {
+
+                sts = extras.getString("type");
+
+                if (sts.equals("PALREQUEST")) {
+                    palRequest(gcm_data);
+                } else if (sts.equals("PALRESPOND")) {
+
+                }
+            }
+        }*/
 
 
 
@@ -159,40 +170,26 @@ public class GcmNotificationIntentService extends IntentService {
 
 
     private void palRequest(String data) {
-
-        Log.e("tag","234"+data);
-
         Intent resultIntent = new Intent(this, PalAccept.class);
         resultIntent.putExtra("get_Server", data);
         resultIntent.setAction(Intent.ACTION_MAIN);
         resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                 resultIntent, PendingIntent.FLAG_ONE_SHOT);
-
         NotificationCompat.Builder mNotifyBuilder;
         NotificationManager mNotificationManager;
-
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         mNotifyBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(notifi_title)
                 .setContentText("Pal Request from - "+from)
                 .setSmallIcon(R.mipmap.launcher);
-        // Set pending intent
         mNotifyBuilder.setContentIntent(resultPendingIntent);
-
-        // Set Vibrate, Sound and Light
         int defaults = 0;
         defaults = defaults | Notification.DEFAULT_LIGHTS;
         defaults = defaults | Notification.DEFAULT_VIBRATE;
         defaults = defaults | Notification.DEFAULT_SOUND;
-
         mNotifyBuilder.setDefaults(defaults);
-        // Set the content for Notification
-        // mNotifyBuilder.setContentText("New Alert from Palani");
-        // Set autocancel
         mNotifyBuilder.setAutoCancel(true);
-        // Post img_emg notification
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
 

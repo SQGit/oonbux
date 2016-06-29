@@ -456,7 +456,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_pal_req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getApplicationContext(), MyPals.class);
+                Intent inte = new Intent(getApplicationContext(), MyPalLists.class);
                 startActivity(inte);
             }
         });

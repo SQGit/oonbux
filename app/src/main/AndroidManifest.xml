@@ -112,6 +112,9 @@
         <activity android:name=".SearchPal"/>
         <activity android:name=".PendingbyMe"/>
         <activity android:name=".PendingbyPal"/>
+        <activity android:name=".PalAccept"/>
+
+        <activity android:name=".MyPalLists"/>
 
 
         <meta-data

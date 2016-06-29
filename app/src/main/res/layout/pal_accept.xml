@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content">
 
                 <com.rey.material.widget.TextView
-                    android:id="@+id/tv_pickup_txt"
+                    android:id="@+id/tv_oonbuxid_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content">
 
                 <com.rey.material.widget.TextView
-                    android:id="@+id/tv_price_txt"
+                    android:id="@+id/tv_mail_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -195,7 +195,7 @@
                 android:layout_height="wrap_content">
 
                 <com.rey.material.widget.TextView
-                    android:id="@+id/tv_ship_headedsddddr"
+                    android:id="@+id/tv_phone_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

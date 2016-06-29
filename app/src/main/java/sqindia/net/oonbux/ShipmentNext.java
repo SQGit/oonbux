@@ -150,7 +150,7 @@ public class ShipmentNext extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                String ads = lsview.getSelectedItem().toString();
 
-                //  String msg = view.findViewById(R.id.tv_size).getText().toString;
+                //  String msg = view.findViewById(R.id.tv_name).getText().toString;
 
                 TextView txxx = (TextView) view.findViewById(R.id.tv_size);
 

@@ -164,6 +164,8 @@ public class AddLocation extends Activity {
 
                     if (getvirtual1.equals("") && getvirtual2.equals("")) {
                         Log.d("tag", "" + getvirtual1 + "\t" + getvirtual2);
+                        Toast.makeText(getApplicationContext(), "Choose Virtual Address", Toast.LENGTH_LONG).show();
+
                     } else {
                         Log.d("tag", "1" + getvirtual1 + "\t" + getvirtual2);
                         Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);

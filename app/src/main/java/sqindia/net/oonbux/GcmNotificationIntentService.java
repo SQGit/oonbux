@@ -15,6 +15,9 @@ import com.google.android.gms.gcm.GcmListenerService;
 import com.google.android.gms.gcm.GcmReceiver;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Salman on 6/16/2016.
  */
@@ -30,7 +33,7 @@ public class GcmNotificationIntentService extends IntentService {
     }
 
     GcmListenerService gcmget;
-    String sts;
+    String sts,message;
 
 
 
@@ -75,8 +78,8 @@ public class GcmNotificationIntentService extends IntentService {
             }
         }*/
 
-        Log.e("tagBundle ",""+intent.getExtras());
-        Log.e("tagstring ",""+intent.getExtras().toString());
+       // Log.e("tagBundle ",""+intent.getExtras());
+       // Log.e("tagstring ",""+intent.getExtras().toString());
 
         if(intent.getExtras().toString().contains("gcm.notification.title")){
 
@@ -95,39 +98,37 @@ public class GcmNotificationIntentService extends IntentService {
             }
             else if (sts.equals("PALRESPOND")) {
 
+                palRespond(gcm_data);
+            }
+            else if(sts.equals("ONETOONECHAT")){
 
+                gcm_data = extras.getString("data");
+
+                try {
+                    JSONObject json_serv = new JSONObject(gcm_data);
+
+
+                    message = json_serv.getString("message");
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+
+                Log.e("tagBundle ",""+message);
+                onetoonechat(message);
             }
         }
 
-
-
-
-
-
-       /* if(!(extras.containsKey("type"))) {
-
-            if (extras.getString("type") == null) {
-
-                sts = extras.getString("type");
-
-                if (sts.equals("PALREQUEST")) {
-                    palRequest(gcm_data);
-                } else if (sts.equals("PALRESPOND")) {
-
-                }
-            }
-        }*/
-
-
-
-
-
-
-
-
-
         GcmReceiver.completeWakefulIntent(intent);
     }
+
+
 
     private void sendNotification(String greetMsg) {
 
@@ -172,6 +173,7 @@ public class GcmNotificationIntentService extends IntentService {
     private void palRequest(String data) {
         Intent resultIntent = new Intent(this, PalAccept.class);
         resultIntent.putExtra("get_Server", data);
+        resultIntent.putExtra("sts", "Request");
         resultIntent.setAction(Intent.ACTION_MAIN);
         resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
@@ -192,6 +194,80 @@ public class GcmNotificationIntentService extends IntentService {
         mNotifyBuilder.setAutoCancel(true);
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
+
+
+
+    private void palRespond(String data) {
+        Intent resultIntent = new Intent(this, PalAccept.class);
+        resultIntent.putExtra("get_Server", data);
+        resultIntent.putExtra("sts", "Respond");
+        resultIntent.setAction(Intent.ACTION_MAIN);
+        resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                resultIntent, PendingIntent.FLAG_ONE_SHOT);
+        NotificationCompat.Builder mNotifyBuilder;
+        NotificationManager mNotificationManager;
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotifyBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle(notifi_title)
+                .setContentText("Pal Respond from - "+from)
+                .setSmallIcon(R.mipmap.launcher);
+        mNotifyBuilder.setContentIntent(resultPendingIntent);
+        int defaults = 0;
+        defaults = defaults | Notification.DEFAULT_LIGHTS;
+        defaults = defaults | Notification.DEFAULT_VIBRATE;
+        defaults = defaults | Notification.DEFAULT_SOUND;
+        mNotifyBuilder.setDefaults(defaults);
+        mNotifyBuilder.setAutoCancel(true);
+        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+    }
+
+
+
+    private void onetoonechat(String gcm_data) {
+
+        Intent i = new Intent();
+        i.setAction("appendChatScreenMsg");
+        i.putExtra("get_Server", gcm_data);
+        this.sendBroadcast(i);
+
+
+        palmessage(gcm_data);
+
+
+
+
+    }
+
+
+
+    private void palmessage(String data) {
+        Intent resultIntent = new Intent(this, ChatPage.class);
+        resultIntent.putExtra("get_Server", data);
+        resultIntent.putExtra("sts", "Respond");
+        resultIntent.setAction(Intent.ACTION_MAIN);
+        resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                resultIntent, PendingIntent.FLAG_ONE_SHOT);
+        NotificationCompat.Builder mNotifyBuilder;
+        NotificationManager mNotificationManager;
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotifyBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle(notifi_title)
+                .setContentText("Pal Respond from - "+from)
+                .setSmallIcon(R.mipmap.launcher);
+        mNotifyBuilder.setContentIntent(resultPendingIntent);
+        int defaults = 0;
+        defaults = defaults | Notification.DEFAULT_LIGHTS;
+        defaults = defaults | Notification.DEFAULT_VIBRATE;
+        defaults = defaults | Notification.DEFAULT_SOUND;
+        mNotifyBuilder.setDefaults(defaults);
+        mNotifyBuilder.setAutoCancel(true);
+        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+    }
+
+
+
 
 
 

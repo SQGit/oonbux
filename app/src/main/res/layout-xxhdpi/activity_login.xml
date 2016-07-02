@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/email_ico"
                 android:hint="Email"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
                 android:textSize="20sp"
@@ -67,12 +67,14 @@
                           app:met_underlineColor="@color/text_divider" />-->
 
 
+
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edittext_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/pass_ico"
                 android:hint="Password"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
@@ -93,9 +95,9 @@
     <LinearLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
 
@@ -105,7 +107,6 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:background="@drawable/login_reg_button"
             android:drawableRight="@drawable/arrow_ico"
             android:paddingLeft="20dp"
@@ -118,7 +119,7 @@
             android:id="@+id/linear_login_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
             android:gravity="center"
             android:orientation="horizontal">
 

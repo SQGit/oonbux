@@ -43,6 +43,9 @@ public class Pal_Friends extends Fragment {
 
         lv_mypals = (ListView) v.findViewById(R.id.lview);
 
+        pal_datas = new ArrayList<>();
+        map = new HashMap<String, String>();
+
         new getPalLists().execute();
 
         return v;
@@ -127,7 +130,6 @@ public class Pal_Friends extends Fragment {
                             JSONObject datas = friends_list.getJSONObject(i);
 
 
-                            map = new HashMap<String, String>();
                             map.put("oonbux_id", datas.getString("oonbux_id"));
                             map.put("firstname", datas.getString("firstname"));
                             map.put("lastname", datas.getString("lastname"));
@@ -142,7 +144,7 @@ public class Pal_Friends extends Fragment {
                         }
 
 
-                        Adapter_PalLists staff_adapter = new Adapter_PalLists(getActivity(), pal_datas, count);
+                        Adapter_PalLists staff_adapter = new Adapter_PalLists(getActivity(), pal_datas, count,0);
 
                         lv_mypals.setAdapter(staff_adapter);
                     } else {

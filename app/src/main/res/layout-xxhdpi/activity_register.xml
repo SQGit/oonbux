@@ -8,46 +8,79 @@
     android:orientation="vertical"
     tools:context=".RegisterActivity">
 
-    <!-- <ImageView
-         android:id="@+id/imgv"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:src="@drawable/header_img" />-->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="280dp"
+        android:layout_above="@+id/bottom"
+        android:layout_marginTop="270dp"
         android:paddingTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:orientation="vertical">
 
-            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
-                android:id="@+id/edittext_country"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/country_ico"
-                android:hint="Country"
-                android:imeOptions="actionNext"
-                android:inputType="textPersonName"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp"
-                android:textSize="20sp"
-                app:met_accentTypeface="fonts/prox.otf"
-                app:met_baseColor="@color/text_divider_light"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
-                app:met_textColor="@color/text_color"
-                app:met_textColorHint="@color/text_color_hint"
-                app:met_underlineColor="@color/text_divider" />
+                android:layout_height="wrap_content">
 
+
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spin_country"
+                    style="@style/Material.Widget.Spinner"
+                    spn_labelTextSize="22sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:paddingBottom="2dp"
+                    android:paddingTop="5dp"
+                    android:popupBackground="#e0e0e0"
+                    android:textColor="#FF616161"
+                    android:textSize="22sp"
+                    app:rd_style="@style/Material.Drawable.Ripple.Wave"
+                    app:spn_arrowSize="0dp"
+                    app:spn_dividerColor="#9e9e9e"
+                    app:spn_dividerHeight="1.5dp"
+                    app:spn_label="Country"
+                    app:spn_labelEnable="true"
+                    app:spn_labelTextColor="@color/hint_floating_dark"
+
+                    />
+
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/down_ico" />
+
+            </FrameLayout>
+
+
+            <!--       <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                       android:id="@+id/edittext_country"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:drawableRight="@drawable/country_ico"
+                       android:hint="Country"
+                       android:imeOptions="actionNext"
+                       android:inputType="textPersonName"
+                       android:paddingLeft="5dp"
+                       android:paddingRight="10dp"
+                       android:textSize="20sp"
+                       app:met_accentTypeface="fonts/prox.otf"
+                       app:met_baseColor="@color/text_divider_light"
+                       app:met_floatingLabel="normal"
+                       app:met_floatingLabelTextColor="@color/hint_floating"
+                       app:met_primaryColor="@color/text_divider_light"
+                       app:met_textColor="@color/text_color"
+                       app:met_textColorHint="@color/text_color_hint"
+                       app:met_underlineColor="@color/text_divider" />-->
 
 
             <com.rengwuxian.materialedittext.MaterialEditText
@@ -211,61 +244,69 @@
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
 
-
-            <com.rey.material.widget.Button
-                android:id="@+id/button_submit"
-                style="@style/Material.Drawable.Ripple.Wave.Light"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/login_reg_button"
-                android:drawableRight="@drawable/arrow_ico"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Submit"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp" />
-
-            <LinearLayout
-                android:id="@+id/linear_login_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.rey.material.widget.TextView
-                    android:id="@+id/text_dont"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Already have an Account?"
-                    android:textColor="#FFFFFF" />
-
-                <com.rey.material.widget.TextView
-                    android:id="@+id/text_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=" Login"
-                    android:textColor="#d97810" />
-            </LinearLayout>
-
-            <com.rey.material.widget.TextView
-                android:id="@+id/terms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/terms"
-                android:textColor="#e0e0e0"
-                android:textSize="10sp" />
-
-
         </LinearLayout>
     </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_submit"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/login_reg_button"
+            android:drawableRight="@drawable/arrow_ico"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Submit"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:id="@+id/linear_login_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/text_dont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Already have an Account?"
+                android:textColor="#FFFFFF" />
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/text_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=" Login"
+                android:textColor="#d97810" />
+        </LinearLayout>
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/terms"
+            android:textColor="#e0e0e0"
+            android:textSize="10sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

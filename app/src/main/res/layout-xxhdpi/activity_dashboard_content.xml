@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_dash">
-
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_collapseMode="pin" />
 
     <LinearLayout
         android:id="@+id/ll1"
@@ -54,10 +46,11 @@
             android:layout_weight="1"
             android:background="@color/tab_brown"
             android:drawableLeft="@drawable/lft_btn_1_ico"
-            android:paddingLeft="5dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="10dp"
             android:text="Ship your package abroad"
             android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
         <com.rey.material.widget.Button
             android:id="@+id/btn_dash_deliver"
@@ -69,7 +62,7 @@
             android:paddingLeft="5dp"
             android:text="Deliver your package"
             android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
         <com.rey.material.widget.Button
             android:id="@+id/btn_dash_shop_online"
@@ -83,7 +76,7 @@
             android:paddingLeft="5dp"
             android:text="Shop online with one address"
             android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -100,10 +93,12 @@
         android:minWidth="200dp"
         android:progressDrawable="@drawable/progress" />
 
+
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/ll5"
         android:layout_below="@id/progressBar1"></FrameLayout>
 
 
@@ -114,6 +109,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,9 +117,9 @@
 
             <com.rey.material.widget.Button
                 android:id="@+id/add_ship_button"
+                style="@style/Material.Drawable.Ripple.Touch"
                 android:layout_width="150dp"
                 android:layout_height="35dp"
-
                 android:layout_gravity="center|center_horizontal"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp"
@@ -135,33 +131,36 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp" />
 
+
             <com.rey.material.widget.Button
                 android:id="@+id/add_done_button"
+                style="@style/Material.Drawable.Ripple.Touch"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:background="#e6851d"
                 android:drawableLeft="@drawable/done_ico"
+                android:drawablePadding="5dp"
                 android:gravity="center"
-                android:paddingLeft="15dp"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Done"
+                android:text="Next"
                 android:textColor="@color/text_color_hint_light"
                 android:textSize="14sp" />
 
-
         </FrameLayout>
 
-
         <LinearLayout
+            android:id="@+id/btm_layout"
             android:layout_width="fill_parent"
             android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
             android:background="@color/bottom_page"
             android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+            android:paddingTop="5dp"
+            android:orientation="horizontal">
 
-            <ImageView
+
+        <!--    <ImageView
                 android:id="@+id/chat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -205,14 +204,14 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="20dp"
                 android:layout_toRightOf="@+id/receive"
-                android:background="@drawable/pkg_ico" />
+                android:background="@drawable/pkg_ico" />-->
 
 
         </LinearLayout>
 
-    </LinearLayout>
 
-    <!--<include
-        android:id="@+id/footer"
-        layout="@layout/dash_bottom_tools" />-->
+    </LinearLayout>
+     <include
+         android:id="@+id/footer"
+         layout="@layout/nav_bottom_page" />
 </RelativeLayout>

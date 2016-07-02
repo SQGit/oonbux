@@ -25,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -111,7 +112,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
         String asdf = sharedPreferences.getString("sessionid", "");
 
-        Log.d("tag",""+asdf);
+        Log.d("tag", "" + asdf);
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -163,8 +164,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         nav_pro_pic = (ImageView) findViewById(R.id.nav_header_propic);
 
 
-        if(web_photo != null ){
-            Log.d("tag","inside");
+        if (web_photo != null) {
+            Log.d("tag", "inside");
 
             Picasso.with(context)
                     .load(web_photo)
@@ -456,6 +457,9 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_pal_req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                drawer.closeDrawer(Gravity.LEFT);
+
                 Intent inte = new Intent(getApplicationContext(), MyPalLists.class);
                 startActivity(inte);
             }
@@ -513,21 +517,13 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         });
 
 
-
-
-
-
-
-
-
-
-
         final NavigationTabBar ntbSample4 = (NavigationTabBar) findViewById(R.id.ntb_sample_4);
         final int bgColor = Color.TRANSPARENT;
         final ArrayList<NavigationTabBar.Model> models4 = new ArrayList<>();
         models4.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.chat_ico), bgColor
+
                 ).build()
         );
         models4.add(
@@ -550,28 +546,28 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                         getResources().getDrawable(R.drawable.pkg_ico), bgColor
                 ).build()
         );
+
         ntbSample4.setModels(models4);
         ntbSample4.setModelIndex(2, true);
 
 
 
+        ntbSample4.setOnTabBarSelectedIndexListener(new NavigationTabBar.OnTabBarSelectedIndexListener() {
+            @Override
+            public void onStartTabSelected(final NavigationTabBar.Model model, final int index) {
 
+                if(index ==0){
+                    Intent goChat = new Intent(getApplicationContext(),Pal_Chat_List.class);
+                    startActivity(goChat);
+                }
 
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            @Override
+            public void onEndTabSelected(final NavigationTabBar.Model model, final int index) {
+                model.hideBadge();
+            }
+        });
 
 
 
@@ -682,16 +678,10 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
     }
 
 
-
-
-
-
-
     private class PhoneCallListener extends PhoneStateListener {
 
-        private boolean isPhoneCalling = false;
-
         String LOG_TAG = "LOGGING 123";
+        private boolean isPhoneCalling = false;
 
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
@@ -725,15 +715,6 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             }
         }
     }
-
-
-
-
-
-
-
-
-
 
 
     private class LoadImage extends AsyncTask<String, String, Bitmap> {

@@ -70,15 +70,7 @@ public class ProfileInfo extends Activity {
 
         Log.e("tag", "pfs" + get_profile_sts);
 
-        photoAdapter = new PhotoAdapter(this, selectedPhotos);
-
-      /*  try {
-            iv_profile_pic.setImageURI(uri);
-        } catch (NullPointerException e) {
-
-            Log.d("tag", String.valueOf(e));
-
-        }*/
+      //  photoAdapter = new PhotoAdapter(this, selectedPhotos);
 
         btn_back = (ImageButton) findViewById(R.id.btn_back);
         btn_next = (Button) findViewById(R.id.button_submit);
@@ -98,11 +90,9 @@ public class ProfileInfo extends Activity {
         if ((get_profile_sts.equals(""))) {
             btn_next.setVisibility(View.VISIBLE);
             lt_back.setVisibility(View.GONE);
-            // header.setText("       Profile Info");
         } else {
             btn_next.setVisibility(View.GONE);
             lt_back.setVisibility(View.VISIBLE);
-            // header.setText("Profile Info");
         }
 
 
@@ -121,34 +111,6 @@ public class ProfileInfo extends Activity {
 
         });
 
-
-
-
-
-
-
-
-
-       /* if ((get_profile_sts.equals(""))) {
-            enable();
-            et_fname.setText("");
-            et_lname.setText("");
-            et_email.setText("");
-            et_phone.setText("");
-            et_zip.setText("");
-            et_state.setText("");
-        } else {
-
-            disable();
-        }*/
-
-
-       /* et_fname.setText("Sam");
-        et_lname.setText("Andres");
-        et_email.setText("samand@gmail.com");
-        et_phone.setText("738993838939");
-        et_zip.setText("613");
-        et_state.setText("PR");*/
 
 
         disable();
@@ -170,7 +132,7 @@ public class ProfileInfo extends Activity {
 
             Picasso.with(context)
                     .load(web_photo)
-                    .resize(75, 75)
+                    .fit()
                     .into(iv_profile_pic);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -178,6 +140,11 @@ public class ProfileInfo extends Activity {
             editor.commit();
 
             img_frm_web = true;
+        }
+
+
+        if(sharedPreferences.getString("edit","").isEmpty()){
+
         }
 
 
@@ -255,9 +222,11 @@ public class ProfileInfo extends Activity {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
                 img_success1 = sharedPreferences.getBoolean("img_add", false);
                 btn_edit.setBackgroundColor(getResources().getColor(R.color.text_color));
-                if (img_frm_gal || img_frm_web) {
+
+                if (img_frm_gal && img_frm_web) {
                     validatedatas();
-                } else {
+                }
+                else {
                     //Toast.makeText(getApplicationContext(), "Add Profile Picture", Toast.LENGTH_LONG).show();
 
                     new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.WARNING_TYPE)
@@ -269,6 +238,15 @@ public class ProfileInfo extends Activity {
                                 public void onClick(SweetAlertDialog sDialog) {
 
                                     sDialog.dismiss();
+
+
+                                    PhotoPickerIntent intent = new PhotoPickerIntent(ProfileInfo.this);
+                                    intent.setPhotoCount(1);
+                                    intent.setColumn(3);
+                                    intent.setShowCamera(true);
+                                    startActivityForResult(intent, REQUEST_CODE);
+
+
                                 }
                             })
                             .show();
@@ -286,12 +264,13 @@ public class ProfileInfo extends Activity {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("profile", "");
+                editor.putString("edit", "success");
                 editor.commit();
 
                 enable();
 
                 //    btn_edit.setBackgroundColor(getResources().getColor(R.color.hint_floating_dark));
-                btn_edit.setVisibility(View.INVISIBLE);
+               // btn_edit.setVisibility(View.INVISIBLE);
                 btn_next.setVisibility(View.VISIBLE);
 
 
@@ -425,44 +404,33 @@ public class ProfileInfo extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         List<String> photos = null;
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            if (data != null) {
-                photos = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+
+        if(resultCode != RESULT_CANCELED) {
+            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE ) {
+
+                if (data != null) {
+                    photos = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+                }
+                selectedPhotos.clear();
+                if (photos != null) {
+                    selectedPhotos.addAll(photos);
+                }
+               // photoAdapter.notifyDataSetChanged();
+
+                web_photo = selectedPhotos.get(0);
+
+                Picasso.with(context)
+                        .load(new File(web_photo))
+                        .into(iv_profile_pic);
+
+                img_frm_gal = true;
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("img_add", true);
+                editor.commit();
+
             }
-            selectedPhotos.clear();
-            if (photos != null) {
-                selectedPhotos.addAll(photos);
-            }
-            photoAdapter.notifyDataSetChanged();
-
-            web_photo = selectedPhotos.get(0);
-
-            Picasso.with(context)
-                    .load(new File(web_photo))
-                    .into(iv_profile_pic);
-
-
-            /*web_photo = selectedPhotos.get(0);
-            uri = null;
-            uri = Uri.fromFile(new File(selectedPhotos.get(0)));
-            Log.d("tag", selectedPhotos.get(0));
-            Log.d("tag", "" + uri);
-            try {
-                bitmap = null;
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // iv_profile_pic.setImageURI(uri);
-            iv_profile_pic.setImageBitmap(bitmap);*/
-            img_frm_gal = true;
-
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("img_add", true);
-            editor.commit();
-
         }
     }
 
@@ -474,7 +442,6 @@ public class ProfileInfo extends Activity {
         et_fname.requestFocus();
         int pos = et_fname.getText().length();
         et_fname.setSelection(pos);
-
         et_lname.setEnabled(true);
         et_lname.setTextColor(getResources().getColor(R.color.text_color));
         et_email.setEnabled(false);
@@ -485,14 +452,10 @@ public class ProfileInfo extends Activity {
         et_zip.setTextColor(getResources().getColor(R.color.text_color));
         et_state.setEnabled(true);
         et_state.setTextColor(getResources().getColor(R.color.text_color));
-
-
         img_edit.setEnabled(true);
-
         btn_edit.setEnabled(false);
 
     }
-
     public void disable() {
 
 
@@ -508,9 +471,7 @@ public class ProfileInfo extends Activity {
         et_zip.setTextColor(getResources().getColor(R.color.hint_floating_dark));
         et_state.setEnabled(false);
         et_state.setTextColor(getResources().getColor(R.color.hint_floating_dark));
-
-        // img_edit.setEnabled(false);
-
+        img_edit.setEnabled(false);
         btn_edit.setEnabled(true);
     }
 }

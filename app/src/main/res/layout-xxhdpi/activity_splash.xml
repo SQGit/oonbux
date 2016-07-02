@@ -6,6 +6,11 @@
     tools:context="sqindia.net.oonbux.SplashActivity">
 
 
+
+
+
+
+
     <include layout="@layout/activity_splash_content" />
 
 

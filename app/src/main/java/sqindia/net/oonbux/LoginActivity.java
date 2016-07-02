@@ -87,9 +87,9 @@ public class LoginActivity extends Activity {
                                          @Override
                                          public void onClick(View v) {
 
-                                             // validate_datas();
+                                             validate_datas();
 
-                                             get_Gcm_Id();
+
 
                                          }
                                      }
@@ -138,14 +138,14 @@ public class LoginActivity extends Activity {
 
                 if (!TextUtils.isEmpty(get_gcmId)) {
 
-                   Toast.makeText(
+                  /* Toast.makeText(
                             getApplicationContext(),
                             "Registered with GCM Server successfully.\n\n"
-                                    + msg, Toast.LENGTH_SHORT).show();
+                                    + msg, Toast.LENGTH_SHORT).show();*/
 
                     Log.d("tag1", get_gcmId);
 
-                    validate_datas();
+                    new LoginTask().execute();
 
 
                 } else {
@@ -175,7 +175,7 @@ public class LoginActivity extends Activity {
             }
             return false;
         } else {
-            Toast.makeText(getApplicationContext(),"This device supports Play services, App will work normally", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(),"This device supports Play services, App will work normally", Toast.LENGTH_LONG).show();
         }
         return true;
     }
@@ -215,7 +215,9 @@ public class LoginActivity extends Activity {
 
                 } else {
 
-                    new LoginTask().execute();
+
+
+                    get_Gcm_Id();
 
 
                    /* SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
@@ -242,6 +244,7 @@ public class LoginActivity extends Activity {
 
 
     }
+
 
     @Override
     public void onBackPressed() {

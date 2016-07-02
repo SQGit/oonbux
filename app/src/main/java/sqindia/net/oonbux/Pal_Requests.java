@@ -151,7 +151,7 @@ public class Pal_Requests extends Fragment {
                         }
 
 
-                        Adapter_PalLists staff_adapter = new Adapter_PalLists(getActivity(), pal_datas, count);
+                        Adapter_PalLists staff_adapter = new Adapter_PalLists(getActivity(), pal_datas, count,1);
                         staff_adapter.notifyDataSetChanged();
                         lv_palreqs.setAdapter(staff_adapter);
 

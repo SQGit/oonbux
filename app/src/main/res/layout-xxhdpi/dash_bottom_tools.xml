@@ -72,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"
+            android:layout_marginRight="20dp"
             android:layout_toRightOf="@+id/receive"
             android:background="@drawable/pkg_ico" />
 

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingBottom="3dp"
     android:paddingTop="3dp">
 
 
+
     <LinearLayout
         android:id="@+id/linearlayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_weight="1"
         android:background="#606060"
         android:padding="5dp">
-
 
         <com.github.siyamed.shapeimageview.CircularImageView
             android:id="@+id/imgview"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="3dp"
             android:background="@drawable/photo_ico"
             app:siBorderColor="@color/colorAccent"
             app:siBorderWidth="0.5dp" />
@@ -32,7 +32,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="1dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -146,21 +146,85 @@
 
 
         </LinearLayout>
+
     </LinearLayout>
 
-    <!--<com.rey.material.widget.Button
-        android:id="@+id/button_next"
-        style="@style/Material.Drawable.Ripple.Wave"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginRight="10dp"
-        android:background="@color/text_color"
-        android:drawableLeft="@drawable/lft_pal_ico"
-        android:drawablePadding="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="Add Pal"
-        android:textColor="#FFFFFF" />-->
 
-</LinearLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:background="@drawable/login_reg_button"
+        android:id="@+id/layout_request"
+        android:layout_alignParentRight="true"
+        android:padding="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content">
+
+        <com.rey.material.widget.TextView
+
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_request"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center"
+            android:text="Request?"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+        <!-- <ImageView
+             android:layout_width="wrap_content"
+             android:layout_gravity="center_vertical|center_horizontal"
+             android:layout_height="wrap_content"
+             android:background="@mipmap/ic_launcher"/>-->
+    </FrameLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearlayout"
+        android:layout_gravity="center"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/backo"
+        android:padding="1dp">
+
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_accept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="3dp"
+            android:text="Accept"
+            android:textColor="#af7735"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#9b550f" />
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_reject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="3dp"
+            android:text="Reject"
+            android:textColor="#af7735"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

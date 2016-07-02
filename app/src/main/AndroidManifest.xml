@@ -115,6 +115,8 @@
         <activity android:name=".PalAccept"/>
 
         <activity android:name=".MyPalLists"/>
+        <activity android:name=".Pal_Chat_List"/>
+        <activity android:name=".Pal_Chat"/>
 
 
         <meta-data

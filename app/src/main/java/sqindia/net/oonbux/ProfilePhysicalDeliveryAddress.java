@@ -261,8 +261,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_int_state.getText().toString() != null) {
-                        str_int_country = spin_loc.getSelectedItem().toString();
-                        str_int_state = aet_loc_state.getText().toString();
+                        str_int_country = spin_int.getSelectedItem().toString();
+                        str_int_state = aet_int_state.getText().toString();
                         new GetZip(str_int_country, str_int_state, 1).execute();
                         aet_int_zip.requestFocus();
                         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -320,8 +320,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         if (!(str_loc_add1.equals("null"))) {
 
             getfromdata_loc();
-        }
-        else{
+        } else {
             enable_loc();
         }
 
@@ -329,8 +328,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         if (!(str_int_add1.equals("null"))) {
 
             getfromdata_int();
-        }
-        else{
+        } else {
             enable_int();
         }
 
@@ -395,8 +393,11 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public void onClick(View v) {
                 if (!loc_adr) {
                     cb_loc.setChecked(false);
+
+
+
                     new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Address is empty,fill address")
+                            .setTitleText("Save Address")
                             .setConfirmText("OK")
 
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -479,10 +480,15 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                   /*  Intent inte = new Intent(getApplicationContext(), ProfileInfo.class);
                     startActivity(inte);*/
 
-                    onBackPressed();
+
+
+                    Intent intes = new Intent(getApplicationContext(), ProfileInfo.class);
+                    startActivity(intes);
+
+
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("profile", "success");
+                    editor.putString("profile", "");
                     editor.commit();
 
                     // Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
@@ -620,11 +626,9 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                                                 new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                                                         .setTitleText("Choose Default Address")
                                                         .setConfirmText("OK")
-
                                                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                                             @Override
                                                             public void onClick(SweetAlertDialog sDialog) {
-
                                                                 sDialog.dismiss();
                                                             }
                                                         })
@@ -667,7 +671,6 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                                                 String virtualaddr = sharedPreferences.getString("virtul_addr", "");
 
                                                 if (virtualaddr.equals("")) {
-
 
                                                     editor = sharedPreferences.edit();
                                                     editor.putString("vir_sts", "0");
@@ -1089,12 +1092,12 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                     e.printStackTrace();
                     new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
-                            .setContentText("Network Error,Try Again Later.")
+                            .setContentText("No state associated with given country \n try again")
                             .setConfirmText("OK")
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    finish();
+
                                     sweetAlertDialog.dismiss();
                                 }
                             })
@@ -1194,12 +1197,11 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
                     new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
-                            .setContentText("Network Error,Try Again Later.")
+                            .setContentText("No zips associated with given state \n try again")
                             .setConfirmText("OK")
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    finish();
                                     sweetAlertDialog.dismiss();
                                 }
                             })

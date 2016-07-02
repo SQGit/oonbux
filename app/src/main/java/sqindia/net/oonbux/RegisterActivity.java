@@ -37,7 +37,7 @@ public class RegisterActivity extends Activity {
     TextView tv_donthav, tv_register, tv_footer;
     LinearLayout ll_login;
     MaterialEditText et_fname, et_lname, et_email, et_phone, et_pass, et_repass;
-    MaterialAutoCompleteTextView aet_cont, aet_state, aet_zip;
+    MaterialAutoCompleteTextView  aet_state, aet_zip;
     String str_fname, str_lname, str_country, str_email, str_phone, str_pass, str_repass, str_state, str_zip;
     SweetAlertDialog sweetAlertDialog;
     ArrayList<String> country = new ArrayList<>();
@@ -150,13 +150,6 @@ public class RegisterActivity extends Activity {
 
         adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, states);
         aet_state.setAdapter(adpater_states);
-
-
-
-
-
-
-
 
 
     }
@@ -302,7 +295,7 @@ public class RegisterActivity extends Activity {
                     if (msg.contains("Email")) {
                         et_email.requestFocus();
                     } else if (msg.contains("Region")) {
-                        aet_cont.requestFocus();
+                        aet_state.requestFocus();
                     }
                 }
             } catch (JSONException e) {
@@ -475,7 +468,6 @@ public class RegisterActivity extends Activity {
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    finish();
                                     sweetAlertDialog.dismiss();
                                 }
                             })
@@ -551,13 +543,13 @@ public class RegisterActivity extends Activity {
                     e.printStackTrace();
                     new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Oops!")
-                            .setContentText("Network Error,Try Again Later.")
+                            .setContentText("No zip associated with given state \n try again")
                             .setConfirmText("OK")
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    finish();
                                     sweetAlertDialog.dismiss();
+                                    aet_state.requestFocus();
                                 }
                             })
                             .show();

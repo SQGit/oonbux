@@ -80,8 +80,8 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
     double lat, lon;
     Geocoder geocoder;
-    private GoogleMap mMap;
     Context context = this;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,13 +132,26 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
         getLatlongtoImage();
 
-        if(web_photo != null ){
-            Log.d("tag","inside");
+        if (web_photo != null) {
 
-            Picasso.with(context)
-                    .load(web_photo)
-                    .placeholder(null)
-                    .into(iv_profile);
+            if (web_photo.contains("http://oonsoft.")) {
+                Log.d("tag", "inside");
+                Log.d("tag", web_photo);
+                Picasso.with(context)
+                        .load(web_photo)
+                        .placeholder(null)
+                        .into(iv_profile);
+
+            } else {
+                Log.d("tag", "inside");
+                Log.d("tag", web_photo);
+                Picasso.with(context)
+                        .load(new File(web_photo))
+                        .placeholder(null)
+                        .into(iv_profile);
+            }
+
+
         }
 
 
@@ -309,13 +322,13 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
                 // Use the address as needed
                 String message = String.format("Latitude: %f, Longitude: %f",
                         address.getLatitude(), address.getLongitude());
-              //  Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                //  Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 
                 lat = address.getLatitude();
                 lon = address.getLongitude();
 
 
-              //  Log.d("tag", "" + address.getLatitude() + "\t" + address.getLongitude() + "\t" + address.getAddressLine(0) + "\t" + address.getLocality());
+                //  Log.d("tag", "" + address.getLatitude() + "\t" + address.getLongitude() + "\t" + address.getAddressLine(0) + "\t" + address.getLocality());
 
             } else {
 
@@ -420,6 +433,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
                 } else if (status.equals(null)) {
                     Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();
+                    new Profile_Update_Task().execute();
                 } else if (status.equals("fail")) {
                     Log.d("tag", "<-----Status----->" + msg);
 
@@ -431,6 +445,8 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
                     new Profile_Update_Task().execute();
 
+                } else {
+                    new Profile_Update_Task().execute();
                 }
 
 
@@ -673,8 +689,10 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
                     Dialog_Msg cdd = new Dialog_Msg(ProfileDashboard.this, msg);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
-
-
+                } else {
+                    Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile Picture not uploaded", 2);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
                 }
 
 

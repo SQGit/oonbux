@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_dash"
@@ -132,7 +133,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/ll2"
-        android:background="#e47b0a">
+        android:background="#e47b0a"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <com.rey.material.widget.TextView
             android:id="@+id/tv_shd_txt"
@@ -140,23 +143,70 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:text="List of Pals who accepted your requests"
+            android:text=""
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
+
     </LinearLayout>
 
-    <ScrollView
+    <FrameLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/ll2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+
+            <com.rey.material.widget.EditText
+                android:id="@+id/et_searchtxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:textColorHint="#070b23"
+                android:drawableLeft="@drawable/search"
+                android:hint="Name or email or oonbux id"
+                android:textSize="18sp"
+                app:et_dividerColor="@color/text_color_hint_light"
+                app:et_dividerHeight="1dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/text_color_hint_light"
+                app:et_labelTextSize="12sp">
+
+            </com.rey.material.widget.EditText>
+
+
+
+            <com.rey.material.widget.Button
+                android:id="@+id/button_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="5dp"
+                android:background="@drawable/backo"
+                android:text="Submit"
+                android:textColor="@color/text_color_hint_light"
+                android:textSize="16sp"
+                android:theme="@style/Material.Drawable.Ripple.Wave" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ll3">
-
-        <FrameLayout
-            android:id="@+id/frame_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
-
-    </ScrollView>
+        android:layout_below="@+id/ll3"></FrameLayout>
 
 
 </RelativeLayout>

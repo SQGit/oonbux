@@ -143,7 +143,7 @@ public class PendingbyPal extends Activity {
                         }
 
 
-                        Adapter_PalLists staff_adapter = new Adapter_PalLists(PendingbyPal.this, pal_datas, count);
+                        Adapter_PalLists staff_adapter = new Adapter_PalLists(PendingbyPal.this, pal_datas, count,1);
                         staff_adapter.notifyDataSetChanged();
                         lv_pallists.setAdapter(staff_adapter);
 

@@ -217,7 +217,7 @@ public class MyPals extends Activity {
                         }
 
 
-                        Adapter_PalLists staff_adapter = new Adapter_PalLists(MyPals.this, pal_datas, count);
+                        Adapter_PalLists staff_adapter = new Adapter_PalLists(MyPals.this, pal_datas, count,0);
 
                         lv_mypals.setAdapter(staff_adapter);
                     } else {

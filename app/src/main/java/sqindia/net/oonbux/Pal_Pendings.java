@@ -152,7 +152,7 @@ public class Pal_Pendings extends Fragment {
                         }
 
 
-                        Adapter_PalLists staff_adapter = new Adapter_PalLists(getActivity(), pal_datas, count);
+                        Adapter_PalLists staff_adapter = new Adapter_PalLists(getActivity(), pal_datas, count,2);
                         staff_adapter.notifyDataSetChanged();
                         lv_palpendings.setAdapter(staff_adapter);
 

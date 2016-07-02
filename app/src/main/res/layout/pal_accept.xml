@@ -55,7 +55,7 @@
     <LinearLayout
         android:id="@+id/ll2"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/ll1"
         android:background="@color/text_color">
 
@@ -78,18 +78,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll2"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
-        android:background="#606060"
         android:orientation="vertical"
         android:padding="15dp">
 
 
         <com.github.siyamed.shapeimageview.CircularImageView
             android:id="@+id/imgview"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_vertical|center_horizontal"
             android:background="@drawable/photo_ico"
             app:siBorderColor="@color/colorAccent"
@@ -99,14 +99,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="center"
             android:layout_marginLeft="10dp"
+            android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_name_txt"
@@ -117,7 +117,7 @@
                     android:gravity="left"
                     android:text="Name : "
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_name"
@@ -127,14 +127,14 @@
                     android:gravity="left"
                     android:text="ANDY RODUS"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_oonbuxid_txt"
@@ -145,7 +145,7 @@
                     android:gravity="left"
                     android:text="Oonbux Id : "
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_oonbuxid"
@@ -155,14 +155,14 @@
                     android:gravity="left"
                     android:text="IB566FD33"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_mail_txt"
@@ -173,7 +173,7 @@
                     android:gravity="left"
                     android:text="Email : "
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_mail"
@@ -183,7 +183,7 @@
                     android:gravity="left"
                     android:text="rodusmail@oonbux.com"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
 
 
             </LinearLayout>
@@ -191,8 +191,8 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_phone_txt"
@@ -203,7 +203,7 @@
                     android:gravity="left"
                     android:text="Phone : "
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_phone"
@@ -213,7 +213,7 @@
                     android:gravity="left"
                     android:text="984546544"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
 
@@ -226,58 +226,68 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="105dp"
         android:orientation="horizontal">
 
         <com.rey.material.widget.Button
-            android:id="@+id/button_addpal"
+            android:id="@+id/button_accept"
             style="@style/Material.Drawable.Ripple.Wave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
-            android:background="@color/text_color"
+            android:background="@drawable/login_reg_button"
             android:drawableLeft="@drawable/pal_add_wt_ico"
             android:drawablePadding="5dp"
-            android:paddingLeft="10dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"
             android:paddingRight="10dp"
             android:text="Accept"
             android:textColor="#FFFFFF" />
 
 
         <com.rey.material.widget.Button
-            android:id="@+id/button_continue"
+            android:id="@+id/button_reject"
             style="@style/Material.Drawable.Ripple.Wave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
-            android:background="@color/text_color"
-            android:drawablePadding="5dp"
-            android:drawableRight="@drawable/back_rt_ico"
-            android:paddingLeft="10dp"
+            android:textSize="20sp"
+            android:background="@drawable/login_reg_button"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/close_ico"
+            android:paddingLeft="20dp"
             android:paddingRight="10dp"
             android:text="Reject"
             android:textColor="#FFFFFF" />
 
-        <!--   <com.rey.material.widget.Button
-               android:id="@+id/button_delete"
-               style="@style/Material.Drawable.Ripple.Wave"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:background="@color/text_color"
-               android:drawableLeft="@drawable/lft_pal_ico"
-               android:drawablePadding="5dp"
-               android:paddingLeft="10dp"
-               android:layout_marginLeft="15dp"
-               android:layout_marginRight="20dp"
-               android:paddingRight="10dp"
-               android:text="Delete Cart"
-               android:textColor="#FFFFFF" />-->
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll4"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp">
+
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_close"
+            style="@style/Material.Drawable.Ripple.Wave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login_reg_button"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="OK"
+            android:textSize="22sp"
+            android:textColor="#FFFFFF" />
+
+    </FrameLayout>
 
 
 </RelativeLayout>

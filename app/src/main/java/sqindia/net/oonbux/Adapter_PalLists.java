@@ -139,6 +139,7 @@ public class Adapter_PalLists extends BaseAdapter {
         else if (sts == 4) {
             lt_request.setVisibility(View.VISIBLE);
             lt_submit.setVisibility(View.GONE);
+            tv_req.setText("Chat");
         }
 
         if (!(result.get("photourl").isEmpty())) {
@@ -167,6 +168,11 @@ public class Adapter_PalLists extends BaseAdapter {
                     goChat.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     goChat.putExtra("oonbuxid",oonbux_id);
                     context.startActivity(goChat);
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("oonbuxid", oonbux_id);
+                    editor.commit();
+
 
 
                 }

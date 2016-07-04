@@ -40,7 +40,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
     LinearLayout bottom_lt, lt_add_address;
     TextView tv_header, tv_sub_hdr_loc, tv_sub_hdr_int;
-    Button btn_save_loc, btn_save_int, btn_next, btn_add_loc, btn_add_int;
+    Button btn_save_loc, btn_save_int, btn_next, btn_edit_loc, btn_edit_int;
     com.rey.material.widget.LinearLayout lt_back;
     MaterialEditText et_loc_add1, et_loc_add2, et_loc_city, et_loc_phone, et_loc_note, et_int_add1, et_int_add2, et_int_city, et_int_phone, et_int_note;
     String get_profile_sts, str_def_adr, str_loc_add1, str_loc_add2, str_loc_city, str_loc_zip, str_loc_phone,
@@ -100,8 +100,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         tv_sub_hdr_int = (TextView) findViewById(R.id.tv_shd_txt_int);
         btn_save_loc = (Button) findViewById(R.id.button_save_loc);
         btn_save_int = (Button) findViewById(R.id.button_save_int);
-        btn_add_loc = (Button) findViewById(R.id.button_add_loc);
-        btn_add_int = (Button) findViewById(R.id.button_add_int);
+        btn_edit_loc = (Button) findViewById(R.id.button_add_loc);
+        btn_edit_int = (Button) findViewById(R.id.button_add_int);
         btn_next = (Button) findViewById(R.id.button_next);
         et_loc_add1 = (MaterialEditText) findViewById(R.id.edittext_loc_address1);
         et_loc_add2 = (MaterialEditText) findViewById(R.id.edittext_loc_address2);
@@ -348,12 +348,35 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             loc_adr = true;
             disable_loc();
             btn_save_loc.setVisibility(View.GONE);
+
+        }
+        else{
+               et_int_add1.setText("");
+                et_int_add1.requestFocus();
+                et_int_add2.setText("");
+                et_int_city.setText("");
+                aet_int_state.setText("");
+                aet_int_zip.setText("");
+                et_int_phone.setText("");
+                et_int_note.setText("");
         }
 
         if (sharedPreferences.getBoolean("adrsts1", false)) {
             int_adr = true;
             disable_int();
             btn_save_int.setVisibility(View.GONE);
+        }
+        else{
+
+              et_loc_add1.setText("");
+                et_loc_add1.requestFocus();
+                et_loc_add2.setText("");
+                et_loc_city.setText("");
+                aet_loc_state.setText("");
+                aet_loc_zip.setText("");
+                et_loc_phone.setText("");
+                et_loc_note.setText("");
+
         }
 
 
@@ -367,8 +390,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
         btn_save_loc.setTypeface(tf1);
         btn_save_int.setTypeface(tf1);
-        btn_add_loc.setTypeface(tf1);
-        btn_add_int.setTypeface(tf1);
+        btn_edit_loc.setTypeface(tf1);
+        btn_edit_int.setTypeface(tf1);
         btn_next.setTypeface(tf1);
 
         et_loc_add1.setTypeface(tf1);
@@ -393,7 +416,6 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public void onClick(View v) {
                 if (!loc_adr) {
                     cb_loc.setChecked(false);
-
 
 
                     new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
@@ -439,7 +461,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                     cb_int.setChecked(false);
 
                     new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Address is empty,fill address")
+                            .setTitleText("Save Address")
                             .setConfirmText("OK")
 
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -481,7 +503,6 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                     startActivity(inte);*/
 
 
-
                     Intent intes = new Intent(getApplicationContext(), ProfileInfo.class);
                     startActivity(intes);
 
@@ -501,7 +522,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         });
 
 
-        btn_add_loc.setOnClickListener(new View.OnClickListener() {
+        btn_edit_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -530,7 +551,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         });
 
 
-        btn_add_int.setOnClickListener(new View.OnClickListener() {
+        btn_edit_int.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -1066,6 +1087,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                     if (status.equals("null")) {
                         Log.d("tag", "<--> state not available for this country");
                     } else {
+                        states.clear();
                         JSONObject jaa = new JSONObject(jsonStr);
                         JSONArray jj = jaa.getJSONArray("state");
                         Log.d("tag", "<-----S---->" + jj);
@@ -1167,6 +1189,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                     JSONObject jaa = new JSONObject(jsonStr);
                     JSONArray jj = jaa.getJSONArray("zip");
                     Log.d("tag", "<-----S---->" + jj);
+                    zip.clear();
 
                     //JSONArray ja = jo.getJSONArray(status);
 

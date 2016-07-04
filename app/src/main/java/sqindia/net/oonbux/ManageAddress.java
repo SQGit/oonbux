@@ -262,9 +262,20 @@ public class ManageAddress extends Activity {
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
                 String msg = jo.getString("message");
+                int count = Integer.valueOf(jo.getString("count"));
+
 
 
                 if (status.equals("success")) {
+
+
+
+                    if(count > 0){
+
+
+
+
+
 
                     JSONArray additional_address = jo.getJSONArray("local");
 
@@ -307,6 +318,16 @@ public class ManageAddress extends Activity {
 
                     }
 
+                    }
+                    else {
+
+                        Dialog_Add_Address cdd = new Dialog_Add_Address(ManageAddress.this, 0, daa);
+                        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        cdd.show();
+
+
+                    }
+
                     expandableListDetail = list_datas;
 
                     expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
@@ -314,7 +335,11 @@ public class ManageAddress extends Activity {
                     elv_addresList.setAdapter(expandableListAdapter);
 
 
-                } else {
+                }
+
+                else {
+
+
 
                 }
 

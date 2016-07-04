@@ -60,7 +60,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
     Toolbar toolbar;
     Fragment fragment;
     Context context = this;
-    ImageView btm_cam, nav_pro_pic;
+    ImageView btm_cam, nav_pro_pic,btm_chat;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     PhotoAdapter photoAdapter;
 
@@ -112,7 +112,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
         String asdf = sharedPreferences.getString("sessionid", "");
 
-        Log.d("tag", "" + asdf);
+        Log.e("tag", "" + asdf);
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -161,6 +161,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         btn_dash_shop = (Button) findViewById(R.id.btn_dash_shop_online);
 
         btm_cam = (ImageView) findViewById(R.id.cam);
+        btm_chat = (ImageView) findViewById(R.id.chat);
         nav_pro_pic = (ImageView) findViewById(R.id.nav_header_propic);
 
 
@@ -490,7 +491,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         });
 
 
-      /*  btm_cam.setOnClickListener(new View.OnClickListener() {
+        btm_cam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Toast.makeText(getApplicationContext(), "tsdf", Toast.LENGTH_LONG).show();
@@ -503,7 +504,6 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
             }
         });
-*/
 
         btn_add_shipment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -517,7 +517,17 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         });
 
 
-        final NavigationTabBar ntbSample4 = (NavigationTabBar) findViewById(R.id.ntb_sample_4);
+
+        btm_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goChat = new Intent(getApplicationContext(),Pal_Chat_List.class);
+                startActivity(goChat);
+            }
+        });
+
+
+    /*    final NavigationTabBar ntbSample4 = (NavigationTabBar) findViewById(R.id.ntb_sample_4);
         final int bgColor = Color.TRANSPARENT;
         final ArrayList<NavigationTabBar.Model> models4 = new ArrayList<>();
         models4.add(
@@ -569,7 +579,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             }
         });
 
-
+*/
 
 
     }

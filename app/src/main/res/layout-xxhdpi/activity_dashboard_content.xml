@@ -160,7 +160,7 @@
             android:orientation="horizontal">
 
 
-        <!--    <ImageView
+           <ImageView
                 android:id="@+id/chat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -204,14 +204,14 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="20dp"
                 android:layout_toRightOf="@+id/receive"
-                android:background="@drawable/pkg_ico" />-->
+                android:background="@drawable/pkg_ico" />
 
 
         </LinearLayout>
 
 
     </LinearLayout>
-     <include
+     <!--<include
          android:id="@+id/footer"
-         layout="@layout/nav_bottom_page" />
+         layout="@layout/nav_bottom_page" />-->
 </RelativeLayout>

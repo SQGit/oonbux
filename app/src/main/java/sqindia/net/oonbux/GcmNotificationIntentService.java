@@ -1,15 +1,17 @@
 package sqindia.net.oonbux;
 
+import android.app.ActivityManager;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.google.android.gms.gcm.GcmReceiver;
@@ -17,6 +19,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by Salman on 6/16/2016.
@@ -27,15 +31,38 @@ public class GcmNotificationIntentService extends IntentService {
     public static final String TAG = "GCMNotificationIntentService";
     NotificationCompat.Builder builder;
 
-    String notifi_body,notifi_title,gcm_data,from;
+    String notifi_body, notifi_title, gcm_data, from;
+    GcmListenerService gcmget;
+    String sts, message, simage, str_oonbux_id;
     public GcmNotificationIntentService() {
         super("GcmIntentService");
     }
 
-    GcmListenerService gcmget;
-    String sts,message;
+    public static boolean isAppIsInBackground(Context context) {
 
+        boolean isInBackground = true;
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
+                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    for (String activeProcess : processInfo.pkgList) {
+                        if (activeProcess.equals(context.getPackageName())) {
+                            isInBackground = false;
+                        }
+                    }
+                }
+            }
+        } else {
+            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+            ComponentName componentInfo = taskInfo.get(0).topActivity;
+            if (componentInfo.getPackageName().equals(context.getPackageName())) {
+                isInBackground = false;
+            }
+        }
 
+        return isInBackground;
+    }
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -78,10 +105,10 @@ public class GcmNotificationIntentService extends IntentService {
             }
         }*/
 
-       // Log.e("tagBundle ",""+intent.getExtras());
-       // Log.e("tagstring ",""+intent.getExtras().toString());
+        Log.e("tagBundle ", "" + intent.getExtras());
+        Log.e("tagstring ", "" + intent.getExtras().toString());
 
-        if(intent.getExtras().toString().contains("gcm.notification.title")){
+        if (intent.getExtras().toString().contains("gcm.notification.title")) {
 
 
             sts = extras.getString("type");
@@ -91,16 +118,57 @@ public class GcmNotificationIntentService extends IntentService {
             from = extras.getString("from");
 
 
-            Log.e("tag"," "+notifi_body +" -"+notifi_title+"*"+gcm_data);
+            Log.e("tag", " " + sts + notifi_body + " -" + notifi_title + "*" + gcm_data);
+
+
+          /*  try {
+                JSONObject json_serv = new JSONObject(gcm_data);
+
+                simage = json_serv.getString("firstname") + " " + json_serv.getString("lastname");
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }*/
+
 
             if (sts.equals("PALREQUEST")) {
+
+
+                Log.e("tag", " 0req");
+
+
+                try {
+                    JSONObject json_serv = new JSONObject(gcm_data);
+
+                    simage = json_serv.getString("firstname") + " " + json_serv.getString("lastname");
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 palRequest(gcm_data);
-            }
-            else if (sts.equals("PALRESPOND")) {
+
+            } else if (sts.equals("PALRESPOND")) {
+
+                Log.e("tag", " 1res");
+
+                try {
+                    JSONObject json_serv = new JSONObject(gcm_data);
+
+                    simage = json_serv.getString("firstname") + " " + json_serv.getString("lastname");
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 palRespond(gcm_data);
-            }
-            else if(sts.equals("ONETOONECHAT")){
+
+            } else if (sts.equals("ONETOONECHAT")) {
+
+                Log.e("tag", " 2chat");
 
                 gcm_data = extras.getString("data");
 
@@ -110,6 +178,7 @@ public class GcmNotificationIntentService extends IntentService {
 
                     message = json_serv.getString("message");
 
+                    str_oonbux_id = json_serv.getString("pal_oonbux_id");
 
 
                 } catch (JSONException e) {
@@ -117,10 +186,7 @@ public class GcmNotificationIntentService extends IntentService {
                 }
 
 
-
-
-
-                Log.e("tagBundle ",""+message);
+                Log.e("tagBundle ", "" + message);
                 onetoonechat(message);
             }
         }
@@ -128,11 +194,9 @@ public class GcmNotificationIntentService extends IntentService {
         GcmReceiver.completeWakefulIntent(intent);
     }
 
-
-
     private void sendNotification(String greetMsg) {
 
-        Log.e("tag","234"+greetMsg);
+        Log.e("tag", "234" + greetMsg);
 
         Intent resultIntent = new Intent(this, ChatPage.class);
         resultIntent.putExtra("get_Server", greetMsg);
@@ -161,14 +225,12 @@ public class GcmNotificationIntentService extends IntentService {
 
         mNotifyBuilder.setDefaults(defaults);
         // Set the content for Notification
-       // mNotifyBuilder.setContentText("New Alert from Palani");
+        // mNotifyBuilder.setContentText("New Alert from Palani");
         // Set autocancel
         mNotifyBuilder.setAutoCancel(true);
         // Post img_emg notification
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
-
-
 
     private void palRequest(String data) {
         Intent resultIntent = new Intent(this, PalAccept.class);
@@ -183,7 +245,7 @@ public class GcmNotificationIntentService extends IntentService {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(notifi_title)
-                .setContentText("Pal Request from - "+from)
+                .setContentText("Pal Request from - " + from)
                 .setSmallIcon(R.mipmap.launcher);
         mNotifyBuilder.setContentIntent(resultPendingIntent);
         int defaults = 0;
@@ -194,8 +256,6 @@ public class GcmNotificationIntentService extends IntentService {
         mNotifyBuilder.setAutoCancel(true);
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
-
-
 
     private void palRespond(String data) {
         Intent resultIntent = new Intent(this, PalAccept.class);
@@ -210,7 +270,7 @@ public class GcmNotificationIntentService extends IntentService {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(notifi_title)
-                .setContentText("Pal Respond from - "+from)
+                .setContentText("Pal Respond from - " + simage)
                 .setSmallIcon(R.mipmap.launcher);
         mNotifyBuilder.setContentIntent(resultPendingIntent);
         int defaults = 0;
@@ -222,27 +282,43 @@ public class GcmNotificationIntentService extends IntentService {
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
 
-
-
     private void onetoonechat(String gcm_data) {
 
-        Intent i = new Intent();
-        i.setAction("appendChatScreenMsg");
-        i.putExtra("get_Server", gcm_data);
-        this.sendBroadcast(i);
+/*
+        if (!isAppIsInBackground(getApplicationContext())) {
+
+            // app is in foreground, broadcast the push message
 
 
-        palmessage(gcm_data);
+            Intent i = new Intent();
+            i.setAction("appendChatScreenMsg");
+            i.putExtra("get_Server", gcm_data);
+            this.sendBroadcast(i);
+
+        } else {
+
+            palmessage(gcm_data);
+        }*/
 
 
+        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        String activityName = taskInfo.get(0).topActivity.getClassName();
+        Log.e("tag",""+activityName +Pal_Chat.class.getName());
+        if (activityName.equals(Pal_Chat.class.getName())) {
+            Intent i = new Intent();
+            i.setAction("appendChatScreenMsg");
+            i.putExtra("get_Server", gcm_data);
+            this.sendBroadcast(i);
+        } else {
+            palmessage(gcm_data);
+        }
 
 
     }
 
-
-
     private void palmessage(String data) {
-        Intent resultIntent = new Intent(this, ChatPage.class);
+        Intent resultIntent = new Intent(this, Pal_Chat.class);
         resultIntent.putExtra("get_Server", data);
         resultIntent.putExtra("sts", "Respond");
         resultIntent.setAction(Intent.ACTION_MAIN);
@@ -254,7 +330,7 @@ public class GcmNotificationIntentService extends IntentService {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(notifi_title)
-                .setContentText("Pal Respond from - "+from)
+                .setContentText("New Message From - " + str_oonbux_id)
                 .setSmallIcon(R.mipmap.launcher);
         mNotifyBuilder.setContentIntent(resultPendingIntent);
         int defaults = 0;
@@ -265,13 +341,6 @@ public class GcmNotificationIntentService extends IntentService {
         mNotifyBuilder.setAutoCancel(true);
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
-
-
-
-
-
-
-
 
 
 }

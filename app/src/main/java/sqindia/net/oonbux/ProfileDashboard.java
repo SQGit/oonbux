@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -42,12 +43,15 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -580,9 +584,15 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
     }
 
 
+
+
+
+
+
     private class UploadImageToServer extends AsyncTask<Void, Integer, String> {
 
         String img_path;
+        Bitmap bm;
 
         public UploadImageToServer(String path) {
 
@@ -604,6 +614,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         @Override
         protected String doInBackground(Void... params) {
 
+            bm = BitmapFactory.decodeFile(img_path);
             return uploadFile();
 
         }
@@ -612,12 +623,16 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         private String uploadFile() {
             String responseString = null;
             HttpClient httpclient = new DefaultHttpClient();
+
             HttpPost httppost = new HttpPost("http://oonsoft.eastus.cloudapp.azure.com/api/profilepic");
             httppost.setHeader("session_id", str_session_id);
 
             try {
-                MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+
+               MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 File sourceFile = new File(img_path);
+                Log.e("tag",""+img_path);
                 entity.addPart("fileUpload", new FileBody(sourceFile));
                 httppost.setEntity(entity);
                 HttpResponse response = httpclient.execute(httppost);
@@ -642,7 +657,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("tag", "Response from server: " + result);
+            Log.e("tag", "Response from server: " + result);
             psDialog.dismiss();
 
 
@@ -652,14 +667,14 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
                 String status = jo.getString("status");
 
                 String msg = jo.getString("message");
-                Log.d("tag", "<-----Status----->" + status);
+                Log.e("tag", "<-----Status----->" + status);
 
 
                 if (status.equals("success")) {
 
                     String url = jo.getString("url");
 
-                    Log.d("tag", url);
+                    Log.e("tag", url);
 
 
                     btn_finish.setVisibility(View.GONE);

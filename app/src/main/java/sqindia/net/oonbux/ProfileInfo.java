@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -16,13 +19,28 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +66,10 @@ public class ProfileInfo extends Activity {
     Bitmap bitmap;
     Uri uri;
     boolean img_frm_gal = false, img_success1, img_frm_web = false;
-    String web_photo;
+    String web_photo, str_session_id, photo_path;
     Context context = this;
     ArrayList<String> selectedPhotos = new ArrayList<>();
+    SweetAlertDialog sweetDialog;
 
 
     @Override
@@ -67,10 +86,12 @@ public class ProfileInfo extends Activity {
         str_phone = sharedPreferences.getString("phone", "");
         str_zip = sharedPreferences.getString("zip", "");
         str_state = sharedPreferences.getString("state", "");
+        str_session_id = sharedPreferences.getString("sessionid", "");
+
 
         Log.e("tag", "pfs" + get_profile_sts);
 
-      //  photoAdapter = new PhotoAdapter(this, selectedPhotos);
+        //  photoAdapter = new PhotoAdapter(this, selectedPhotos);
 
         btn_back = (ImageButton) findViewById(R.id.btn_back);
         btn_next = (Button) findViewById(R.id.button_submit);
@@ -112,7 +133,6 @@ public class ProfileInfo extends Activity {
         });
 
 
-
         disable();
         et_fname.setText(str_fname);
         et_lname.setText(str_lname);
@@ -122,30 +142,53 @@ public class ProfileInfo extends Activity {
         et_state.setText(str_state);
 
 
-        if (!((sharedPreferences.getString("web_photo_url", "")) == null)) {
+     /*   if (!((sharedPreferences.getString("web_photo_url", "")) == null)) {
+
+            Log.d("tag", "inside0");
             web_photo = sharedPreferences.getString("web_photo_url", "");
+
+            if (web_photo != null) {
+                Log.d("tag", "inside1");
+
+                Picasso.with(context)
+                        .load(web_photo)
+                        .fit()
+                        .into(iv_profile_pic);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("photourl", web_photo);
+                editor.commit();
+
+                img_frm_web = true;
+            }
+
+
+        } else if (!((sharedPreferences.getString("photourl", "")) == null)) {
+
+            Log.d("tag", "inside11");
+            web_photo = sharedPreferences.getString("web_photo_url", "");
+
+
+            if (web_photo != null) {
+                Log.d("tag", "inside1");
+
+                Picasso.with(context)
+                        .load(new File(web_photo))
+                        .fit()
+                        .into(iv_profile_pic);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("photourl", web_photo);
+                editor.commit();
+
+                img_frm_gal = true;
+            }
         }
 
 
-        if (web_photo != null) {
-            Log.d("tag", "inside");
+        if (sharedPreferences.getString("edit", "").isEmpty()) {
 
-            Picasso.with(context)
-                    .load(web_photo)
-                    .fit()
-                    .into(iv_profile_pic);
-
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("photourl", web_photo);
-            editor.commit();
-
-            img_frm_web = true;
-        }
-
-
-        if(sharedPreferences.getString("edit","").isEmpty()){
-
-        }
+        }*/
 
 
 
@@ -169,6 +212,26 @@ public class ProfileInfo extends Activity {
 
         }*/
 
+        Log.e("tag",""+sharedPreferences.getString("photo_path", ""));
+
+        if (sharedPreferences.getString("photo_path", "").equals("")) {
+
+            Log.e("tag","inside");
+
+        }
+        else{
+            Log.e("tag","outside");
+            photo_path = sharedPreferences.getString("photo_path", "");
+
+            img_frm_web = true;
+            img_frm_gal =true;
+
+            Picasso.with(context)
+                    .load(photo_path)
+                    .fit()
+                    .into(iv_profile_pic);
+        }
+
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
         Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
@@ -182,7 +245,6 @@ public class ProfileInfo extends Activity {
         et_phone.setTypeface(tf1);
         et_zip.setTypeface(tf1);
         et_state.setTypeface(tf1);
-
         btn_edit.setTypeface(tf1);
         btn_next.setTypeface(tf1);
 
@@ -202,16 +264,8 @@ public class ProfileInfo extends Activity {
         lt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if ((get_profile_sts.equals(""))) {
-                    //Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
-
-                } else {
-                    Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
-                    startActivity(inte);
-                }
-
-
+                Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
+                startActivity(inte);
             }
         });
 
@@ -225,28 +279,21 @@ public class ProfileInfo extends Activity {
 
                 if (img_frm_gal && img_frm_web) {
                     validatedatas();
-                }
-                else {
+                } else {
                     //Toast.makeText(getApplicationContext(), "Add Profile Picture", Toast.LENGTH_LONG).show();
 
                     new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Add Profile Picture!")
                             .setConfirmText("OK")
-
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sDialog) {
-
                                     sDialog.dismiss();
-
-
                                     PhotoPickerIntent intent = new PhotoPickerIntent(ProfileInfo.this);
                                     intent.setPhotoCount(1);
                                     intent.setColumn(3);
                                     intent.setShowCamera(true);
                                     startActivityForResult(intent, REQUEST_CODE);
-
-
                                 }
                             })
                             .show();
@@ -257,6 +304,7 @@ public class ProfileInfo extends Activity {
             }
         });
 
+
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,11 +314,10 @@ public class ProfileInfo extends Activity {
                 editor.putString("profile", "");
                 editor.putString("edit", "success");
                 editor.commit();
-
                 enable();
 
                 //    btn_edit.setBackgroundColor(getResources().getColor(R.color.hint_floating_dark));
-               // btn_edit.setVisibility(View.INVISIBLE);
+                // btn_edit.setVisibility(View.INVISIBLE);
                 btn_next.setVisibility(View.VISIBLE);
 
 
@@ -303,13 +350,11 @@ public class ProfileInfo extends Activity {
                             i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(i1);
                             finish();
-
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("login", "");
                             editor.commit();
                             sDialog.dismiss();
-
 
                         }
                     })
@@ -359,7 +404,7 @@ public class ProfileInfo extends Activity {
                                 editor.putString("phone", str_phone);
                                 editor.putString("state", str_state);
                                 editor.putString("zip", str_zip);
-                                editor.putString("photourl", web_photo);
+                                editor.putString("photourl", photo_path);
                                 //editor.putString("photo",selectedPhotos.get(0));
                                 editor.commit();
 
@@ -405,8 +450,8 @@ public class ProfileInfo extends Activity {
 
         List<String> photos = null;
 
-        if(resultCode != RESULT_CANCELED) {
-            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE ) {
+        if (resultCode != RESULT_CANCELED) {
+            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
 
                 if (data != null) {
                     photos = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
@@ -415,19 +460,24 @@ public class ProfileInfo extends Activity {
                 if (photos != null) {
                     selectedPhotos.addAll(photos);
                 }
-               // photoAdapter.notifyDataSetChanged();
+                // photoAdapter.notifyDataSetChanged();
 
                 web_photo = selectedPhotos.get(0);
 
-                Picasso.with(context)
-                        .load(new File(web_photo))
-                        .into(iv_profile_pic);
+                web_photo = selectedPhotos.get(0);
 
                 img_frm_gal = true;
+
+
+                new UploadImageToServer(web_photo).execute();
+
+
+
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("img_add", true);
+                editor.putString("photourl", web_photo);
                 editor.commit();
 
             }
@@ -456,6 +506,7 @@ public class ProfileInfo extends Activity {
         btn_edit.setEnabled(false);
 
     }
+
     public void disable() {
 
 
@@ -474,4 +525,123 @@ public class ProfileInfo extends Activity {
         img_edit.setEnabled(false);
         btn_edit.setEnabled(true);
     }
+
+
+    private class UploadImageToServer extends AsyncTask<Void, Integer, String> {
+
+        String img_path;
+        Bitmap bm;
+
+        public UploadImageToServer(String path) {
+
+            this.img_path = path;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            sweetDialog = new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetDialog.setTitleText("Loading");
+            sweetDialog.setCancelable(false);
+            sweetDialog.show();
+
+        }
+
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            bm = BitmapFactory.decodeFile(img_path);
+            return uploadFile();
+
+        }
+
+        @SuppressWarnings("deprecation")
+        private String uploadFile() {
+            String responseString = null;
+            HttpClient httpclient = new DefaultHttpClient();
+
+            HttpPost httppost = new HttpPost("http://oonsoft.eastus.cloudapp.azure.com/api/profilepic");
+            httppost.setHeader("session_id", str_session_id);
+
+            try {
+
+
+                MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                File sourceFile = new File(img_path);
+                Log.e("tag", "" + img_path);
+                entity.addPart("fileUpload", new FileBody(sourceFile));
+                httppost.setEntity(entity);
+                HttpResponse response = httpclient.execute(httppost);
+                HttpEntity r_entity = response.getEntity();
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == 200) {
+                    responseString = EntityUtils.toString(r_entity);
+                } else {
+                    responseString = "Error occurred! Http Status Code: "
+                            + statusCode;
+                }
+
+            } catch (ClientProtocolException e) {
+                responseString = e.toString();
+            } catch (IOException e) {
+                responseString = e.toString();
+            }
+
+            return responseString;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.e("tag", "Response from server: " + result);
+            sweetDialog.dismiss();
+
+
+            try {
+                JSONObject jo = new JSONObject(result);
+
+                String status = jo.getString("status");
+
+                String msg = jo.getString("message");
+                Log.e("tag", "<-----Status----->" + status);
+
+
+                if (status.equals("success")) {
+
+                    img_frm_web = true;
+                    String url = jo.getString("url");
+
+                    Log.e("tag", url);
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("web_photo_url", url);
+                    editor.putString("photo_path", url);
+                    editor.commit();
+
+                    Picasso.with(context)
+                            .load(new File(web_photo))
+                            .into(iv_profile_pic);
+
+                } else if (status.equals("fail")) {
+
+                    Toast.makeText(getApplicationContext(), "Profile Picture not uploaded.\nTry Again", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Profile Picture not uploaded.\nTry Again", Toast.LENGTH_LONG).show();
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+    }
+
+
 }

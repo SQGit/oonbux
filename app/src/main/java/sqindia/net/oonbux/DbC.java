@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by Salman on 5/27/2016.
@@ -47,10 +48,10 @@ public class DbC extends SQLiteOpenHelper {
         try {
             SQLiteDatabase sdb1;
             sdb1 = getWritableDatabase();
-            //sdb1.rawQuery(qry2,null);
             String query = "DELETE FROM cart WHERE id = " + txt;
 
-            // sdb1.delete("cart","size =?", new String[] { txt });
+            Log.e("tag","cart deleted"+query);
+
 
             sdb1.execSQL(query);
 
@@ -78,6 +79,19 @@ public class DbC extends SQLiteOpenHelper {
         } catch (Exception e) {
             System.out.println("DATABASE ERROR " + e);
 
+        }
+
+    }
+
+    public void del_table() {
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getWritableDatabase();
+            String query = "drop table cart;";
+            sdb1.execSQL(query);
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
         }
 
     }

@@ -119,6 +119,7 @@ public class Adapter_Shipment extends BaseAdapter {
 
             Picasso.with(activity)
                     .load(new File(data.get(position)))
+                    .fit()
                     .into(holder.iv_ship_img);
 
 

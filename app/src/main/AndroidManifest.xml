@@ -118,6 +118,7 @@
         <activity android:name=".MyPalLists"/>
         <activity android:name=".Pal_Chat_List"/>
         <activity android:name=".Pal_Chat"/>
+        <activity android:name=".ChoosePal_1"/>
 
 
         <meta-data

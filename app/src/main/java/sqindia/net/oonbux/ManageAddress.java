@@ -268,14 +268,7 @@ public class ManageAddress extends Activity {
 
                 if (status.equals("success")) {
 
-
-
                     if(count > 0){
-
-
-
-
-
 
                     JSONArray additional_address = jo.getJSONArray("local");
 

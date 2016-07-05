@@ -32,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.gigamole.library.ntb.NavigationTabBar;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 import com.squareup.picasso.Picasso;
@@ -56,7 +55,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
     com.rey.material.widget.TextView tv_nav_hd_ship_txt, tv_nav_hd_ship_id, tv_nav_cont_loc, tv_nav_cont_address, tv_nav_cont_phone, tv_nav_cont_prof, tv_nav_cont_pal_req, tv_nav_cont_how_it, tv_nav_cont_help_line, tv_nav_cont_share, tv_nav_cont_rec_pkg, tv_nav_cont_payment, tv_nav_cont_d_wallet, tv_nav_cont_logout;
     Button btn_nav_cont_loc_adr, btn_nav_cont_int_adr, btn_nav_cont_add_loc, btn_dash_ship, btn_dash_deliver, btn_dash_shop, btn_shop_online, btn_add_shipment, btn_done_shipment;
     com.rey.material.widget.TextView tv_dash_hd_txt;
-    String str_oonbux_id, str_photo, web_photo;
+    String str_oonbux_id, str_photo, web_photo,photo_path;
     Toolbar toolbar;
     Fragment fragment;
     Context context = this;
@@ -108,7 +107,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         va2_zip = sharedPreferences.getString("va2_zip", "");
         va2_country = sharedPreferences.getString("va2_country", "");
 
-        web_photo = sharedPreferences.getString("web_photo_url", "");
+        web_photo = sharedPreferences.getString("photo_path", "");
 
         String asdf = sharedPreferences.getString("sessionid", "");
 
@@ -165,7 +164,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         nav_pro_pic = (ImageView) findViewById(R.id.nav_header_propic);
 
 
-        if (web_photo != null) {
+     /*   if (web_photo != null) {
             Log.d("tag", "inside");
 
             Picasso.with(context)
@@ -173,8 +172,28 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                     .resize(50, 50)
                     .into(nav_pro_pic);
 
-        }
+        }*/
 
+
+
+        Log.e("tag",""+sharedPreferences.getString("photo_path", ""));
+
+        if (sharedPreferences.getString("photo_path", "").equals("")) {
+
+            Log.e("tag","inside");
+
+        }
+        else{
+            Log.e("tag","outside");
+            photo_path = sharedPreferences.getString("photo_path", "");
+
+
+
+            Picasso.with(context)
+                    .load(photo_path)
+                    .fit()
+                    .into(nav_pro_pic);
+        }
 
 
 

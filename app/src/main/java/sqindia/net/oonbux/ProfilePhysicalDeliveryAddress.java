@@ -67,6 +67,35 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
 
     @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+
+
+        if ((get_profile_sts.equals(""))) {
+                  /*  Intent inte = new Intent(getApplicationContext(), ProfileInfo.class);
+                    startActivity(inte);*/
+
+
+            Intent intes = new Intent(getApplicationContext(), ProfileInfo.class);
+            startActivity(intes);
+
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("profile", "");
+            editor.commit();
+
+            // Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
+        } else {
+            Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
+            startActivity(inte);
+        }
+
+
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_address);
@@ -350,7 +379,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             btn_save_loc.setVisibility(View.GONE);
 
         }
-        else{
+    /*    else{
                et_int_add1.setText("");
                 et_int_add1.requestFocus();
                 et_int_add2.setText("");
@@ -359,14 +388,14 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                 aet_int_zip.setText("");
                 et_int_phone.setText("");
                 et_int_note.setText("");
-        }
+        }*/
 
         if (sharedPreferences.getBoolean("adrsts1", false)) {
             int_adr = true;
             disable_int();
             btn_save_int.setVisibility(View.GONE);
         }
-        else{
+     /*   else{
 
               et_loc_add1.setText("");
                 et_loc_add1.requestFocus();
@@ -377,7 +406,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                 et_loc_phone.setText("");
                 et_loc_note.setText("");
 
-        }
+        }*/
 
 
         tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
@@ -492,6 +521,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
             }
         });
+
 
 
         lt_back.setOnClickListener(new View.OnClickListener() {

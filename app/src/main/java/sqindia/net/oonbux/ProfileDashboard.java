@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -43,15 +42,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,7 +65,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
     com.rey.material.widget.TextView tv_header;
     Button btn_logout, btn_finish;
     ImageView iv_profile;
-    String get_profile_sts, str_oonbux_id, str_state, str_zip, str_phone, str_fname, str_lname, str_photo, str_session_id, web_photo, vir_adr_sts;
+    String get_profile_sts, str_oonbux_id, str_state, str_zip, str_phone, str_fname, str_lname, str_photo, str_session_id, web_photo, vir_adr_sts,photo_path;
     Uri uri;
     Bitmap bitmap;
     com.rey.material.widget.LinearLayout lt_back;
@@ -86,6 +82,25 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
     Geocoder geocoder;
     Context context = this;
     private GoogleMap mMap;
+
+
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+
+        if ((get_profile_sts.equals(""))) {
+            //Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
+                  /*  Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
+                    startActivity(inte);*/
+            onBackPressed();
+
+        } else {
+            Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+            startActivity(inte);
+        }
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +119,8 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         web_photo = sharedPreferences.getString("web_photo_url", "");
         str_session_id = sharedPreferences.getString("sessionid", "");
         vir_adr_sts = sharedPreferences.getString("virtul_addr", "");
+
+        photo_path = sharedPreferences.getString("photo_path","");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -136,7 +153,41 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
         getLatlongtoImage();
 
-        if (web_photo != null) {
+
+
+
+
+        Log.e("tag",""+sharedPreferences.getString("photo_path", ""));
+
+        if (sharedPreferences.getString("photo_path", "").equals("")) {
+
+            Log.e("tag","inside");
+
+        }
+        else{
+            Log.e("tag","outside");
+            photo_path = sharedPreferences.getString("photo_path", "");
+
+
+
+            Picasso.with(context)
+                    .load(photo_path)
+                    .fit()
+                    .into(iv_profile);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+    /*    if (web_photo != null) {
 
             if (web_photo.contains("http://oonsoft.")) {
                 Log.d("tag", "inside");
@@ -157,7 +208,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
 
         }
-
+*/
 
     /*    if (!(web_photo.isEmpty())) {
             new LoadImage().execute(web_photo);
@@ -547,14 +598,11 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
                     btn_finish.setVisibility(View.GONE);
 
-                    if (str_photo != null) {
-                        new UploadImageToServer(str_photo).execute();
-                    } else {
 
-                        Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile Updated Successfully", 2);
-                        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        cdd.show();
-                    }
+                    Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile Updated Successfully", 2);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
 
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -563,12 +611,16 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
 
                 } else if (status.equals(null)) {
-                    Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();
+
+                    Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile not uploaded", 4);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
                 } else if (status.equals("fail")) {
 
-                    btn_finish.setVisibility(View.VISIBLE);
+                    btn_finish.setVisibility(View.INVISIBLE);
 
-                    Dialog_Msg cdd = new Dialog_Msg(ProfileDashboard.this, msg);
+                    Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile not uploaded", 4);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     cdd.show();
 
@@ -582,11 +634,6 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         }
 
     }
-
-
-
-
-
 
 
     private class UploadImageToServer extends AsyncTask<Void, Integer, String> {
@@ -630,9 +677,9 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
             try {
 
 
-               MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 File sourceFile = new File(img_path);
-                Log.e("tag",""+img_path);
+                Log.e("tag", "" + img_path);
                 entity.addPart("fileUpload", new FileBody(sourceFile));
                 httppost.setEntity(entity);
                 HttpResponse response = httpclient.execute(httppost);

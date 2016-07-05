@@ -87,7 +87,7 @@ public class SurfaceView extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent newe = new Intent(getApplicationContext(), ChoosePal.class);
+                Intent newe = new Intent(getApplicationContext(), ChoosePal_1.class);
                 startActivity(newe);
 
             }

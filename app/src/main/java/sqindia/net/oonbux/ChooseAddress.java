@@ -52,6 +52,9 @@ public class ChooseAddress extends Activity {
     ArrayList<HashMap<String, String>> us_lists;
     ArrayList<HashMap<String, String>> nig_lists;
 
+    DbC dbclass;
+    Context context = this;
+
     ArrayList<String> loc_lists = new ArrayList<>();
     ArrayList<String> int_lists = new ArrayList<>();
 
@@ -71,6 +74,8 @@ public class ChooseAddress extends Activity {
         str_country = sharedPreferences.getString("country", "");
         str_session_id = sharedPreferences.getString("sessionid", "");
 
+
+        dbclass = new DbC(context);
 
         on = (Button) findViewById(R.id.btn_on_pickup);
         off = (Button) findViewById(R.id.btn_off_pickup);
@@ -271,6 +276,8 @@ public class ChooseAddress extends Activity {
                                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                             @Override
                                             public void onClick(SweetAlertDialog sDialog) {
+
+                                                dbclass.del_table();
 
                                                 Intent newe = new Intent(getApplicationContext(), DashBoardActivity.class);
                                                 startActivity(newe);

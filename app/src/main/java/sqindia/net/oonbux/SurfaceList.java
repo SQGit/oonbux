@@ -88,15 +88,16 @@ public class SurfaceList extends BaseSwipeAdapter {
        bb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "deleted", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "deleted", Toast.LENGTH_SHORT).show();
 
                /* arrayList.remove(arrayList.size() - 1);
                 notifyDataSetChanged();*/
 
-                Log.d("tag",asdf);
+                Log.d("tag",asdf+position);
                 dbclass.deletedata("aa",asdf);
 
                 arrayList.remove(position);
+
 
                 notifyDataSetChanged();
 
@@ -142,6 +143,7 @@ public class SurfaceList extends BaseSwipeAdapter {
 
         Picasso.with(mContext)
                 .load(new File(dbc.get_photo()))
+                .fit()
                 .into(iv_ship_img);
 
 

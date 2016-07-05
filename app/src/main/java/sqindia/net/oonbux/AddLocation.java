@@ -52,6 +52,23 @@ public class AddLocation extends Activity {
     ArrayList<HashMap<String, String>> nig_lists;
 
     @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+
+        if (vir_sts == "0") {
+
+            Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
+            startActivity(inte);
+            finish();
+        } else {
+            Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+            startActivity(inte);
+        }
+
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addloction);
@@ -121,6 +138,8 @@ public class AddLocation extends Activity {
             new GetVirutal().execute();
 
         }
+
+
 
 
         lt_back.setOnClickListener(new View.OnClickListener() {

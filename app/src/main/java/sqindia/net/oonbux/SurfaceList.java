@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.ArrayList;
 
-
+//asdfdsaf
 public class SurfaceList extends BaseSwipeAdapter {
 
     private Context mContext;

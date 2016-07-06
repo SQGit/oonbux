@@ -24,6 +24,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 /**
  * Created by Salman on 6/29/2016.
  */
+//asdfadf
 public class Pal_Friends extends Fragment {
 
     ListView lv_mypals;

@@ -47,6 +47,8 @@ import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 
+//sadfaf
+
 @SuppressWarnings("deprecation")
 public class DashBoardActivity extends Activity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -256,15 +258,34 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
         tv_nav_cont_logout.setTypeface(tf);
 
-        tv_nav_hd_ship_id.setText(str_oonbux_id);
-        btn_add_shipment.setVisibility(View.VISIBLE);
-        btn_done_shipment.setVisibility(View.GONE);
-        progressBar.setProgress(33);
-        First_Fragment fragment = new First_Fragment();
-        FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
+        if(sharedPreferences.getString("shipment_photo","")!= null){
+
+            btn_add_shipment.setVisibility(View.GONE);
+            // btn_done_shipment.setVisibility(View.VISIBLE);
+
+            progressBar.setProgress(66);
+            btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
+            btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_brown));
+            btn_shop_online.setBackgroundColor(getResources().getColor(R.color.tab_default));
+
+            DeliverPackageFragment fragment = new DeliverPackageFragment();
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
 
 
+
+        }
+
+        else {
+            tv_nav_hd_ship_id.setText(str_oonbux_id);
+            btn_add_shipment.setVisibility(View.VISIBLE);
+            btn_done_shipment.setVisibility(View.GONE);
+            progressBar.setProgress(33);
+            First_Fragment fragment = new First_Fragment();
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
+
+        }
         btn_nav_cont_loc_adr.setText(va1_zip + "\n" + va1_country);
         btn_nav_cont_int_adr.setText(va2_zip + "\n" + va2_country);
 

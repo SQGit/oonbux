@@ -20,11 +20,21 @@
         android:textColor="#000000"
         android:textSize="25sp"/>
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:id="@+id/lview"
+        android:layout_above="@+id/layout_send"
+        android:layout_below="@+id/txt"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layout_send"
         android:layout_alignParentBottom="true"
-        android:background="@color/hint_floating_dark"
+        android:background="#081f40"
         android:orientation="horizontal"
         android:weightSum="4">
 
@@ -35,19 +45,22 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="10dp"
             android:layout_weight="3"
+            android:textColorHint="#FFFFFF"
             android:background="@null"
             android:hint="Enter message"
             android:textColor="#FFFFFF"
             android:lines="1"
             android:paddingLeft="10dp" />
 
-        <Button
+        <com.rey.material.widget.Button
             android:id="@+id/btn_send"
+            style="@style/Material.Drawable.Ripple"
+            android:layout_margin="5dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="#FFFFFF"
-            android:background="@null"
+            android:background="@drawable/backo"
             android:text="SEND"
             android:textSize="18dp" />
 

@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 
-
+//asdfdf
 public class First_Fragment extends Fragment {
 
     TextView htxt, txt1, txt_one, txt3, txt_two, txt5, txt_three, txt7, txt_four;

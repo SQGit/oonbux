@@ -18,8 +18,8 @@ import com.rey.material.widget.TextView;
  */
 public class ShipFragment extends Fragment {
 
-    com.rey.material.widget.TextView htxt,txt1, txt_one,txt3, txt_two,txt5, txt_three,txt7, txt_four;
-    Button btn1,btn2,gobtn;
+    com.rey.material.widget.TextView htxt, txt1, txt_one, txt3, txt_two, txt5, txt_three, txt7, txt_four;
+    Button btn1, btn2, gobtn;
     ImageView imgview;
 
 
@@ -28,7 +28,7 @@ public class ShipFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-        View v= inflater.inflate(R.layout.fragment_ship_package,container,false);
+        View v = inflater.inflate(R.layout.fragment_ship_package, container, false);
 
 
         htxt = (TextView) v.findViewById(R.id.htext);
@@ -65,7 +65,6 @@ public class ShipFragment extends Fragment {
 //        gobtn.setTypeface(tf);
 
 
-
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,8 +82,6 @@ public class ShipFragment extends Fragment {
                 txt_two.setText(getText(R.string.txt_1_2));
                 txt_three.setText(getText(R.string.txt_1_3));
                 txt_four.setText(getText(R.string.txt_1_4));
-
-
 
 
             }
@@ -109,17 +106,10 @@ public class ShipFragment extends Fragment {
                 txt_four.setText(getText(R.string.txt_4));
 
 
-
-
             }
         });
 
 
-
-
-
-
-
-        return  v;
+        return v;
     }
 }

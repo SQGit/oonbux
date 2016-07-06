@@ -194,7 +194,7 @@ public class GcmNotificationIntentService extends IntentService {
         GcmReceiver.completeWakefulIntent(intent);
     }
 
-    private void sendNotification(String greetMsg) {
+   /* private void sendNotification(String greetMsg) {
 
         Log.e("tag", "234" + greetMsg);
 
@@ -230,7 +230,7 @@ public class GcmNotificationIntentService extends IntentService {
         mNotifyBuilder.setAutoCancel(true);
         // Post img_emg notification
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
-    }
+    }*/
 
     private void palRequest(String data) {
         Intent resultIntent = new Intent(this, PalAccept.class);

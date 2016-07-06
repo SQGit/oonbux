@@ -29,6 +29,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 /**
  * Created by Salman on 4/22/2016.
  */
+//asfd
 public class AddLocation extends Activity {
 
     static String _id = "vir_addr_id";
@@ -46,8 +47,6 @@ public class AddLocation extends Activity {
     String str_session_id,vir_sts;
     SweetAlertDialog sweetAlertDialog;
     TextView tv_header, tv_sub_header1, tv_sub_header2;
-    ArrayList<GridviewDatas> us_datas = new ArrayList<GridviewDatas>();
-    ArrayList<GridviewDatas> nig_datas = new ArrayList<GridviewDatas>();
     ArrayList<HashMap<String, String>> us_lists;
     ArrayList<HashMap<String, String>> nig_lists;
 
@@ -296,7 +295,7 @@ public class AddLocation extends Activity {
                     JSONArray virtual_address = jo.getJSONArray("virtual_location");
                     Log.d("tag", "<-----virtual_address----->" + "" + virtual_address);
 
-                    GridviewDatas getSet = new GridviewDatas();
+                    //GridviewDatas getSet = new GridviewDatas();
                     for (int i = 0; i < virtual_address.length(); i++) {
                         JSONObject location_address = virtual_address.getJSONObject(i);
                         Log.d("tag", "<----Location_address-----> " + i + " " + location_address);

@@ -31,6 +31,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 /**
  * Created by Salman on 6/27/2016.
  */
+
+//asdff
+
 public class Adapter_PalLists extends BaseAdapter {
     Context context;
     HashMap<String, String> data = new HashMap<>();

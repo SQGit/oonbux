@@ -21,6 +21,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 /**
  * Created by Salman on 7/1/2016.
  */
+
+//asdfasfd
 public class Pal_Chat_List extends Activity {
 
     ListView lv_mypals;

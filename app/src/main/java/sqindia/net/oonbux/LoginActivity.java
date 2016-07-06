@@ -34,6 +34,7 @@ import java.io.IOException;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
+//asdfaf
 public class LoginActivity extends Activity {
     Button btn_login;
     TextView tv_donthav, tv_register;

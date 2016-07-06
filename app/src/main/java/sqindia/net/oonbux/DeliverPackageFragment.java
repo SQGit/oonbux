@@ -26,6 +26,8 @@ import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 
+//asdfsadf
+
 public class DeliverPackageFragment extends Fragment {
 
 
@@ -34,7 +36,6 @@ public class DeliverPackageFragment extends Fragment {
     ListView lv_deliver_list;
     Button btn_addshipment, btn_nextshipment;
     ArrayList<String> selectedPhotos = new ArrayList<>();
-    Shipment_Adapter ship_adapter;
     Adapter_Shipment adapt;
     Button btn_nxt;
     ArrayList<String> ship_size = new ArrayList<>();
@@ -53,6 +54,10 @@ public class DeliverPackageFragment extends Fragment {
 
 
         createDatabase();
+
+
+
+
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -89,6 +94,32 @@ public class DeliverPackageFragment extends Fragment {
 
         /*adapt = new Adapter_Shipment(getActivity(), shipment_photos);
         lv_deliver_list.setAdapter(adapt);*/
+
+
+
+        if(sharedPreferences.getString("shipment_photo","")!= null) {
+
+
+            shipment_photos.add(sharedPreferences.getString("shipment_photo",""));
+            Log.d("tag", "2" + shipment_photos.get(0));
+
+
+            adapt = new Adapter_Shipment(getActivity(), shipment_photos);
+            lv_deliver_list.setAdapter(adapt);
+            adapt.notifyDataSetChanged();
+            btn_nxt.setVisibility(View.VISIBLE);
+            btn_addshipment.setVisibility(View.INVISIBLE);
+
+
+
+
+        }
+
+
+
+
+
+
 
 
         if (cktis.equals("asdfg")) {

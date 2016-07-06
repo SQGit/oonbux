@@ -13,10 +13,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.rey.material.widget.Button;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,12 +29,16 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 /**
  * Created by Salman on 7/1/2016.
  */
+
+//asdfsdfa
 public class Pal_Chat extends Activity{
 
     public String asdf,server_data,str_get_message,str_session_id,str_oonbux_id,str_snd_message;
     EditText et_message;
     Button btn_send;
     TextView txt;
+    ListView lview;
+    SweetAlertDialog sweetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +62,12 @@ public class Pal_Chat extends Activity{
         btn_send = (Button) findViewById(R.id.btn_send);
         txt = (TextView) findViewById(R.id.txt);
 
+        lview = (ListView) findViewById(R.id.lview);
+
         if(!(str_get_message == null)){
-            txt.setText(str_get_message);
-        }
+
+            update_data(str_get_message);
+    }
 
 
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -87,18 +97,27 @@ public class Pal_Chat extends Activity{
             data = b.getString("get_Server");
 
             Log.e("tag0",""+data);
+           // data = b.toString();
 
-            data = b.toString();
+
+
 
             Log.e("tag`",""+data);
 
             str_get_message  = data;
 
-
+            update_data(data);
 
 
         }
     };
+
+    private void update_data(String data) {
+
+        this.str_get_message = data;
+        Log.d("tag",str_get_message);
+        txt.setText(str_get_message);
+    }
 
 
     @Override
@@ -121,6 +140,12 @@ public class Pal_Chat extends Activity{
         protected void onPreExecute() {
             super.onPreExecute();
 
+            sweetDialog = new SweetAlertDialog(Pal_Chat.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetDialog.setTitleText("Loading");
+            sweetDialog.setCancelable(false);
+            sweetDialog.show();
+
         }
 
         @Override
@@ -138,9 +163,9 @@ public class Pal_Chat extends Activity{
 
                 // 4. convert JSONObject to JSON to String
                 json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest2(Config.SER_URL + "profileupdate", json, str_session_id);
+                return jsonStr = HttpUtils.makeRequest2(Config.SER_URL + "onetoonechat", json, str_session_id);
             } catch (Exception e) {
-                Log.d("InputStream", e.getLocalizedMessage());
+                Log.e("InputStream", e.getLocalizedMessage());
             }
 
             return null;
@@ -149,9 +174,9 @@ public class Pal_Chat extends Activity{
 
         @Override
         protected void onPostExecute(String s) {
-            Log.d("tag", "<-----rerseres---->" + s);
+            Log.e("tag", "<-----rerseres---->" + s);
             super.onPostExecute(s);
-
+            sweetDialog.dismiss();
 
 
             try {

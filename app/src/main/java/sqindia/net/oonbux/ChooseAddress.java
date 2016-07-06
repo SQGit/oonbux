@@ -33,13 +33,16 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 /**
  * Created by Salman on 5/18/2016.
  */
+
+//adsfasd
+
 public class ChooseAddress extends Activity {
 
     com.rey.material.widget.LinearLayout lt_back;
     Button btn_payment;
     Spinner spin_one, spin_two;
     String[] sting,ss1;
-    ListAdapter_Class country_list_adapter;
+    //ListAdapter_Class country_list_adapter;
     Typeface tf, tf1;
     ArrayList<String> sss = new ArrayList<>();
 
@@ -370,7 +373,7 @@ public class ChooseAddress extends Activity {
                     JSONArray virtual_address = jo.getJSONArray("virtual_location");
                    // Log.d("tag", "<-----virtual_address----->" + "" + virtual_address);
 
-                    GridviewDatas getSet = new GridviewDatas();
+                    //GridviewDatas getSet = new GridviewDatas();
                     for (int i = 0; i < virtual_address.length(); i++) {
                         JSONObject location_address = virtual_address.getJSONObject(i);
                        // Log.d("tag", "<----Location_address-----> " + i + " " + location_address);

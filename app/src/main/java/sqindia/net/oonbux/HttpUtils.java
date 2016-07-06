@@ -21,6 +21,8 @@ import java.net.UnknownHostException;
 
 
 @SuppressWarnings("deprecation")
+
+//asdff
 public class HttpUtils {
 
     public static final String TAG = "tagH";

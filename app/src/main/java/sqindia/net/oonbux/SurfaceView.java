@@ -7,8 +7,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -18,20 +20,26 @@ import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.rey.material.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
+import me.iwf.photopicker.PhotoPickerActivity;
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 
+//asdfas
 public class SurfaceView extends Activity {
 
     ListView list;
     private SurfaceList mAdapter;
-
+    Adapter_Shipment adapt;
     DbC dbclass;
     Context context = this;
-
+    ArrayList<String> selectedPhotos = new ArrayList<>();
+    public final static int REQUEST_CODE = 1;
     SharedPreferences sharedPreferences;
     private SQLiteDatabase db;
-
+    public ArrayList<String> shipment_photos;
     ImageButton btn_next;
     TextView header;
     com.rey.material.widget.LinearLayout lt_back, lt_add;
@@ -47,7 +55,7 @@ public class SurfaceView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.surfaceview);
 
-
+        shipment_photos = new ArrayList<>();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SurfaceView.this);
 
         String size = sharedPreferences.getString("ship_size", "");
@@ -60,7 +68,7 @@ public class SurfaceView extends Activity {
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         lt_add = (LinearLayout) findViewById(R.id.layout_add);
         btn_continue = (Button) findViewById(R.id.button_continue);
-        btn_next = (ImageButton) findViewById(R.id.button_next);
+        //btn_next = (ImageButton) findViewById(R.id.button_next);
         btn_addpal = (Button) findViewById(R.id.button_addpal);
 
 
@@ -98,8 +106,16 @@ public class SurfaceView extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent newe = new Intent(getApplicationContext(), DashBoardActivity.class);
-                startActivity(newe);
+                /*Intent newe = new Intent(getApplicationContext(), DashBoardActivity.class);
+                startActivity(newe);*/
+
+                shipment_photos.clear();
+                PhotoPickerIntent intent = new PhotoPickerIntent(getApplicationContext());
+                intent.setPhotoCount(1);
+                intent.setColumn(4);
+                intent.setShowCamera(true);
+                startActivityForResult(intent, REQUEST_CODE);
+
 
             }
         });
@@ -178,4 +194,59 @@ public class SurfaceView extends Activity {
 
 
     }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        List<String> photos = null;
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+
+            Log.d("tag", "worked");
+            if (data != null) {
+                photos = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+            }
+            selectedPhotos.clear();
+
+            if (photos != null) {
+
+                selectedPhotos.addAll(photos);
+            }
+
+
+            Uri uri = Uri.fromFile(new File(selectedPhotos.get(0)));
+
+            Log.d("tag", selectedPhotos.get(0));
+            Log.d("tag", "" + uri);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("shipment_photo", selectedPhotos.get(0));
+            editor.commit();
+            shipment_photos.add(selectedPhotos.get(0));
+            // ship_adapter.notifyDataSetChanged();
+            Log.d("tag", "2" + shipment_photos.get(0));
+
+            /*adapt = new Adapter_Shipment(SurfaceView.this, shipment_photos);
+            list.setAdapter(adapt);*/
+
+            Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+            startActivity(inte);
+
+
+            //adapt.notifyDataSetChanged();
+
+
+        }
+    }
+
+
+
+
+
+
+
+
+
 }

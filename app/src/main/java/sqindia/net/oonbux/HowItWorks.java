@@ -12,6 +12,7 @@ import com.rey.material.widget.TextView;
 /**
  * Created by Salman on 4/18/2016.
  */
+//asfsadf
 public class HowItWorks extends Activity {
 
     ImageButton btn_back;

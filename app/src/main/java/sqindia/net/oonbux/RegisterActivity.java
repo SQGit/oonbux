@@ -32,6 +32,8 @@ import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+//afssadf
+
 public class RegisterActivity extends Activity {
     Button btn_submit;
     TextView tv_donthav, tv_register, tv_footer;

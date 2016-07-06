@@ -12,6 +12,9 @@ import android.view.WindowManager;
 
 import com.rey.material.widget.Button;
 
+
+//asd
+
 public class SplashActivity extends AppCompatActivity {
     Button btn_submit;
     String get_login_sts, get_register_sts, get_profile_sts;

@@ -27,6 +27,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 /**
  * Created by Salman on 6/28/2016.
  */
+
+//adsfsdf
+
 public class PalAccept extends Activity {
 
     String server_data, str_img_url, str_name, str_oonbux_id, str_email, str_phone, str_status, str_sessionid, str_sts, sss;

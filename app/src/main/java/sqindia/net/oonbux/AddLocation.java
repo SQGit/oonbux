@@ -1,8 +1,10 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -49,6 +51,9 @@ public class AddLocation extends Activity {
     TextView tv_header, tv_sub_header1, tv_sub_header2;
     ArrayList<HashMap<String, String>> us_lists;
     ArrayList<HashMap<String, String>> nig_lists;
+    private SQLiteDatabase db;
+    DbC dbclass;
+    Context context = this;
 
     @Override
     public void onBackPressed() {
@@ -101,6 +106,8 @@ public class AddLocation extends Activity {
         tv_sub_header2.setTypeface(tf1);
         btn_submit.setTypeface(tf1);
 
+        dbclass = new DbC(context);
+        createDatabase();
 
         us_lists = new ArrayList<>();
         nig_lists = new ArrayList<>();
@@ -231,6 +238,25 @@ public class AddLocation extends Activity {
 
     }
 
+    protected void createDatabase() {
+
+        Log.d("tag", "createdb");
+        db = openOrCreateDatabase("oonbux", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS virtual(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, addr_id VARCHAR, addr_line1 VARCHAR, addr_line2 VARCHAR, city VARCHAR, state VARCHAR, zip VARCHAR, country VARCHAR, loc VARCHAR );");
+
+    }
+
+
+    protected void deleteDatabase() {
+
+        Log.d("tag", "createdb");
+        db = openOrCreateDatabase("oonbux", Context.MODE_PRIVATE, null);
+       // db.execSQL("TRUNCATE table virtual");
+
+        db.delete("virtual",null,null);
+
+    }
+
 
     class GetVirutal extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
@@ -292,6 +318,10 @@ public class AddLocation extends Activity {
 
 
                 if (status.equals("success")) {
+
+                    deleteDatabase();
+
+
                     JSONArray virtual_address = jo.getJSONArray("virtual_location");
                     Log.d("tag", "<-----virtual_address----->" + "" + virtual_address);
 
@@ -324,6 +354,7 @@ public class AddLocation extends Activity {
 
                                 us_lists.add(map);
 
+                                dbclass.virtual_insert(us_address.getString("vir_addr_id"),us_address.getString("vir_addr_line1"),us_address.getString("vir_addr_line2"),us_address.getString("vir_addr_city"),us_address.getString("vir_addr_state"), us_address.getString("vir_addr_zip"),us_address.getString("vir_addr_country"),"0");
 
                             }
 
@@ -350,6 +381,10 @@ public class AddLocation extends Activity {
                                 map.put("vir_addr_country", nig_address.getString("vir_addr_country"));
 
                                 nig_lists.add(map);
+
+                                dbclass.virtual_insert(nig_address.getString("vir_addr_id"),nig_address.getString("vir_addr_line1"),nig_address.getString("vir_addr_line2"),nig_address.getString("vir_addr_city"),nig_address.getString("vir_addr_state"), nig_address.getString("vir_addr_zip"),nig_address.getString("vir_addr_country"),"1");
+
+
                             }
                         }
                     }
@@ -381,6 +416,12 @@ public class AddLocation extends Activity {
 
 
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        db.close();
+    }
 
 
 

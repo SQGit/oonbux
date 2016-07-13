@@ -261,7 +261,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         if(sharedPreferences.getString("shipment_photo","")!= null){
 
             btn_add_shipment.setVisibility(View.GONE);
-            // btn_done_shipment.setVisibility(View.VISIBLE);
+             btn_done_shipment.setVisibility(View.GONE);
 
             progressBar.setProgress(66);
             btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
@@ -340,7 +340,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
 
                     btn_add_shipment.setVisibility(View.GONE);
-                    // btn_done_shipment.setVisibility(View.VISIBLE);
+                     btn_done_shipment.setVisibility(View.GONE);
 
                     progressBar.setProgress(66);
                     btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));

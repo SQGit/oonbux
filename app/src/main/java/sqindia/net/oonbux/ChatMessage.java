@@ -3,7 +3,7 @@ package sqindia.net.oonbux;
 public class ChatMessage {
 
     private String content;
-    private String isMine;
+    private boolean isMine;
     private String message;
     private String messegeBy;
     private String name;
@@ -14,7 +14,7 @@ public class ChatMessage {
 
     }
 
-    public ChatMessage(String content, String isMine) {
+    public ChatMessage(String content, boolean isMine) {
         this.content = content;
         this.isMine = isMine;
     }
@@ -23,7 +23,7 @@ public class ChatMessage {
         return content;
     }
 
-    public String isMine() {
+    public boolean isMine() {
         return isMine;
     }
 

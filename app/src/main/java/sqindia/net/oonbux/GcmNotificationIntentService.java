@@ -34,6 +34,20 @@ public class GcmNotificationIntentService extends IntentService {
     String notifi_body, notifi_title, gcm_data, from;
     GcmListenerService gcmget;
     String sts, message, simage, str_oonbux_id;
+
+
+    public String ct_from_id,ct_message,ct_time,ct_message_id;
+
+
+
+
+
+
+
+
+
+
+
     public GcmNotificationIntentService() {
         super("GcmIntentService");
     }
@@ -175,18 +189,18 @@ public class GcmNotificationIntentService extends IntentService {
                 try {
                     JSONObject json_serv = new JSONObject(gcm_data);
 
-
                     message = json_serv.getString("message");
-
                     str_oonbux_id = json_serv.getString("pal_oonbux_id");
 
-
+                    ct_from_id = json_serv.getString("pal_oonbux_id");
+                    ct_message = json_serv.getString("message");
+                    ct_time = json_serv.getString("sent_utc_time");
+                    ct_message_id = json_serv.getString("message_id");
+                    Log.e("tag", ""+ct_from_id+ct_message+ct_time);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-
-                Log.e("tagBundle ", "" + message);
                 onetoonechat(message);
             }
         }
@@ -299,18 +313,23 @@ public class GcmNotificationIntentService extends IntentService {
 
             palmessage(gcm_data);
         }*/
-
-
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         String activityName = taskInfo.get(0).topActivity.getClassName();
         Log.e("tag",""+activityName +Pal_Chat.class.getName());
+
         if (activityName.equals(Pal_Chat.class.getName())) {
             Intent i = new Intent();
             i.setAction("appendChatScreenMsg");
             i.putExtra("get_Server", gcm_data);
+            i.putExtra("chat_from", ct_from_id);
+            i.putExtra("chat_message", ct_message);
+            i.putExtra("chat_time", ct_time);
+            i.putExtra("message_id", ct_message_id);
             this.sendBroadcast(i);
+            Log.e("tag11", ""+ct_from_id+ct_message+ct_time);
         } else {
+            Log.e("tag13", ""+ct_from_id+ct_message+ct_time);
             palmessage(gcm_data);
         }
 
@@ -318,9 +337,20 @@ public class GcmNotificationIntentService extends IntentService {
     }
 
     private void palmessage(String data) {
+
+
+
+
+        Log.e("tag", ""+ct_from_id+ct_message+ct_time);
+
         Intent resultIntent = new Intent(this, Pal_Chat.class);
         resultIntent.putExtra("get_Server", data);
         resultIntent.putExtra("sts", "Respond");
+
+        resultIntent.putExtra("chat_from", ct_from_id);
+        resultIntent.putExtra("chat_message", ct_message);
+        resultIntent.putExtra("chat_time", ct_time);
+        resultIntent.putExtra("message_id", ct_message_id);
         resultIntent.setAction(Intent.ACTION_MAIN);
         resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,

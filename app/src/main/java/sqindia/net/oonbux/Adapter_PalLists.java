@@ -173,7 +173,7 @@ public class Adapter_PalLists extends BaseAdapter {
                     context.startActivity(goChat);
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("oonbuxid", oonbux_id);
+                    editor.putString("pal_oonbuxid", oonbux_id);
                     editor.commit();
 
 

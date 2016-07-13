@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -65,6 +66,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
     String str_loc_country, str_loc_state, str_int_country, str_int_state;
 
     ArrayAdapter<String> adpater_states, adpater_states_, adapter_zips, adapter_zips_;
+
+    private SQLiteDatabase db;
+    DbC dbclass;
+    Context context = this;
 
 
     @Override
@@ -174,6 +179,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         } else {
             new GetCountry().execute();
         }
+
+
+        dbclass = new DbC(context);
+        createDatabase();
 
         spin_loc.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
@@ -746,6 +755,25 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        db.close();
+    }
+
+    protected void createDatabase() {
+
+        Log.d("tag", "createdb");
+        db = openOrCreateDatabase("oonbux", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS physical(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, addr_line1 VARCHAR, addr_line2 VARCHAR, city VARCHAR, state VARCHAR, zip VARCHAR, phone VARCHAR, country VARCHAR, note VARCHAR, loc VARCHAR );");
+    }
+
+
+
+
+
+
+
 
     public void validate(int i, String addr1, String addr2, String city, String state, String zip, String phone, String note, String country)
 
@@ -830,6 +858,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                                     editor.putBoolean("adrsts1", true);
                                     editor.commit();
 
+                                    dbclass.physical_insert(addr1,addr2,city,state,zip,phone,country,note,String.valueOf(i));
 
                                     // Toast.makeText(getApplicationContext(), "International address Updated", Toast.LENGTH_LONG).show();
                                     int_adr = true;

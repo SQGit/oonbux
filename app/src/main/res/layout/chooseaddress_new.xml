@@ -57,256 +57,280 @@
         android:layout_marginTop="15dp"
         android:background="#FFFFFF"
         android:orientation="vertical"
-        android:paddingBottom="35dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="15dp">
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.rey.material.widget.TextView
-                    android:id="@+id/tv_frm_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:gravity="left|bottom"
-                    android:text="From"
-                    android:textColor="@color/text_color"
-                    android:textSize="22sp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/tv_frm_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|bottom"
+                        android:gravity="left|bottom"
+                        android:text="From"
+                        android:textColor="@color/text_color"
+                        android:textSize="22sp" />
+
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/text_color" />
             </LinearLayout>
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/text_color" />
-        </LinearLayout>
-
-        <com.rey.material.widget.TextView
-            android:id="@+id/tv_shd_txt1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginTop="5dp"
-            android:text="NO 2,\nWestboag st \n Arizona"
-            android:textColor="#424242"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-
+            <com.rey.material.widget.TextView
+                android:id="@+id/tv_shd_txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="5dp"
+                android:text="NO 2,\nWestboag st \nArizona"
+                android:textColor="#424242"
+                android:textSize="16sp" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:background="#e0e0e0"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="5dp"
             android:orientation="vertical">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:background="@drawable/track"
-                    android:gravity="right">
-
-
-                    <com.rey.material.widget.Button
-                        android:id="@+id/btn_on_pickup"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:text="Local"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13sp" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/track"
+                        android:gravity="right">
 
-                    <com.rey.material.widget.Button
-                        android:id="@+id/btn_off_pickup"
+
+                        <com.rey.material.widget.Button
+                            android:id="@+id/btn_on_pickup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:background="@android:color/transparent"
+                            android:text="Local"
+                            android:textColor="#FFFFFF"
+                            android:textSize="13sp" />
+
+                        <com.rey.material.widget.Button
+                            android:id="@+id/btn_off_pickup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:background="@drawable/thumb"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="International"
+                            android:textColor="#FFFFFF"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/tv_pickup_txt"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:background="@drawable/thumb"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:text="International"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13sp" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|bottom"
+                        android:gravity="left|bottom"
+                        android:text="Pickup"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/text_color"
+                        android:textSize="22sp" />
 
 
-                <com.rey.material.widget.TextView
-                    android:id="@+id/tv_pickup_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:gravity="left|bottom"
-                    android:text="Pickup"
-                    android:textColor="@color/text_color"
-                    android:textSize="22sp" />
+                    <com.rey.material.widget.Spinner
+                        android:id="@+id/spin_one"
+                        style="@style/Material.Widget.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="25dp"
+                        android:gravity="right"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:popupBackground="#f5f5f5"
+                        android:textColor="#FF616161"
+                        android:textSize="13sp"
+                        app:spn_arrowSize="0dp"
+                        app:spn_dividerHeight="0dp"
+                        app:spn_labelEnable="true" />
 
 
-                <com.rey.material.widget.Spinner
-                    android:id="@+id/spin_one"
-                    style="@style/Material.Widget.Spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="25dp"
-                    android:gravity="right"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="20dp"
-                    android:popupBackground="#f5f5f5"
-                    android:textColor="#FF616161"
-                    android:textSize="13sp"
-                    app:spn_arrowSize="0dp"
-                    app:spn_dividerHeight="0dp"
-                    app:spn_labelEnable="true" />
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/down_ico" />
 
+                </FrameLayout>
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|bottom"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/down_ico" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/text_color" />
+            </LinearLayout>
 
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/text_color" />
+            <com.rey.material.widget.TextView
+                android:id="@+id/tv_shd_txt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="5dp"
+                android:text="NO 2,\nWestboag st \nArizona"
+                android:textColor="#424242"
+                android:textSize="14sp" />
         </LinearLayout>
 
-        <com.rey.material.widget.TextView
-            android:id="@+id/tv_shd_txt2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginTop="5dp"
-            android:text="NO 2,\nWestboag st \n Arizona"
-            android:textColor="#424242"
-            android:textSize="14sp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginTop="15dp"
+            android:paddingTop="5dp"
+            android:background="#e0e0e0"
+            android:paddingBottom="10dp"
             android:orientation="vertical">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
 
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:background="@drawable/track"
-                    android:gravity="right">
+                    android:layout_weight="2">
 
 
-                    <com.rey.material.widget.Button
-                        android:id="@+id/btn_on_to"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:text="Local"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13sp" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/track"
+                        android:gravity="right">
 
-                    <com.rey.material.widget.Button
-                        android:id="@+id/btn_off_to"
+
+                        <com.rey.material.widget.Button
+                            android:id="@+id/btn_on_to"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:background="@android:color/transparent"
+                            android:text="Local"
+                            android:textColor="#FFFFFF"
+                            android:textSize="13sp" />
+
+                        <com.rey.material.widget.Button
+                            android:id="@+id/btn_off_to"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:background="@drawable/thumb"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="International"
+                            android:textColor="#FFFFFF"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/tv_to_txt"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:background="@drawable/thumb"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:text="International"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13sp" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|bottom"
+                        android:gravity="left|bottom"
+                        android:text="To"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/text_color"
+                        android:textSize="22sp" />
 
 
-                <com.rey.material.widget.TextView
-                    android:id="@+id/tv_to_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:gravity="left|bottom"
-                    android:text="To"
-                    android:textColor="@color/text_color"
-                    android:textSize="22sp" />
+                    <com.rey.material.widget.Spinner
+                        android:id="@+id/spin_two"
+                        style="@style/Material.Widget.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="25dp"
+                        android:gravity="right"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:popupBackground="#f5f5f5"
+                        android:textColor="#FF616161"
+                        android:textSize="13sp"
+                        app:spn_arrowSize="0dp"
+                        app:spn_dividerHeight="0dp"
+                        app:spn_labelEnable="true" />
 
 
-                <com.rey.material.widget.Spinner
-                    android:id="@+id/spin_two"
-                    style="@style/Material.Widget.Spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="25dp"
-                    android:gravity="right"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="20dp"
-                    android:popupBackground="#f5f5f5"
-                    android:textColor="#FF616161"
-                    android:textSize="13sp"
-                    app:spn_arrowSize="0dp"
-                    app:spn_dividerHeight="0dp"
-                    app:spn_labelEnable="true" />
+                    <ImageView
+                        android:id="@+id/imageView3s"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/down_ico" />
 
+                </FrameLayout>
 
-                <ImageView
-                    android:id="@+id/imageView3s"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|bottom"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/down_ico" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/text_color" />
+            </LinearLayout>
 
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/text_color" />
+            <com.rey.material.widget.TextView
+                android:id="@+id/tv_shd_txt3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="5dp"
+                android:text="NO 474,\nNorth caroloina st \nBrizbane"
+                android:textColor="#424242"
+                android:textSize="14sp" />
         </LinearLayout>
-
-
-        <com.rey.material.widget.TextView
-            android:id="@+id/tv_shd_txt3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginTop="5dp"
-            android:text="NO 2,\nWestboag st \n Arizona"
-            android:textColor="#424242"
-            android:textSize="14sp" />
-
 
     </LinearLayout>
 

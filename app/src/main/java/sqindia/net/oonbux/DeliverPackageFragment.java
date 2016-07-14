@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 
@@ -71,13 +72,13 @@ public class DeliverPackageFragment extends Fragment {
         String cktis = sharedPreferences.getString("fromdash", "");
 
 
-        Log.d("tag", "0" + cktis);
+        Log.e("tag", "0" + cktis);
 
 
         shipment_photos = new ArrayList<>();
 
         shipment_photos.add(shipment_photo);
-        Log.d("tag", "1" + shipment_photos.get(0));
+        Log.e("tag", "1" + shipment_photos.get(0));
 
         lv_deliver_list = (ListView) getview.findViewById(R.id.deliver_list);
         btn_addshipment = (Button) getview.findViewById(R.id.add_sp_btn);
@@ -97,23 +98,7 @@ public class DeliverPackageFragment extends Fragment {
 
 
 
-        if(sharedPreferences.getString("shipment_photo","")!= null) {
 
-
-            shipment_photos.add(sharedPreferences.getString("shipment_photo",""));
-            Log.d("tag", "2" + shipment_photos.get(0));
-
-
-            adapt = new Adapter_Shipment(getActivity(), shipment_photos);
-            lv_deliver_list.setAdapter(adapt);
-            adapt.notifyDataSetChanged();
-            btn_nxt.setVisibility(View.VISIBLE);
-            btn_addshipment.setVisibility(View.INVISIBLE);
-
-
-
-
-        }
 
 
 
@@ -123,12 +108,36 @@ public class DeliverPackageFragment extends Fragment {
 
 
         if (cktis.equals("asdfg")) {
+
+            Log.e("tag",""+"dash0");
+
             btn_addshipment.setVisibility(View.INVISIBLE);
             adapt = new Adapter_Shipment(getActivity(), shipment_photos);
             lv_deliver_list.setAdapter(adapt);
         } else {
-            btn_addshipment.setVisibility(View.VISIBLE);
-            btn_nxt.setVisibility(View.INVISIBLE);
+
+
+            if(sharedPreferences.getString("shipment_photo","")!= null) {
+
+                shipment_photos.add(sharedPreferences.getString("shipment_photo",""));
+                Log.e("tag", "2" + shipment_photos.get(0));
+
+                Log.e("tag",""+"potos");
+
+                adapt = new Adapter_Shipment(getActivity(), shipment_photos);
+                lv_deliver_list.setAdapter(adapt);
+                adapt.notifyDataSetChanged();
+                btn_nxt.setVisibility(View.VISIBLE);
+                btn_addshipment.setVisibility(View.INVISIBLE);
+
+
+            }
+            else {
+
+                Log.e("tag", "" + "dash1");
+                btn_addshipment.setVisibility(View.VISIBLE);
+                btn_nxt.setVisibility(View.INVISIBLE);
+            }
         }
 
 
@@ -168,12 +177,14 @@ public class DeliverPackageFragment extends Fragment {
                 String size = sharedPreferences.getString("ship_size", "");
                 String pickup = sharedPreferences.getString("ship_pickup", "");
                 String photo = sharedPreferences.getString("shipment_photo", "");
+                String cost = sharedPreferences.getString("ship_cost", "");
 
 
                 if (size.equals("nil")) {
 
+                    Toast.makeText(getActivity(), "Please add Size for Shipment", Toast.LENGTH_SHORT).show();
 
-                    new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
+                    /*new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Please Add size for shipment")
                             .setConfirmText("Ok")
 
@@ -183,11 +194,14 @@ public class DeliverPackageFragment extends Fragment {
                                     sDialog.dismiss();
                                 }
                             })
-                            .show();
+                            .show();*/
 
 
                 } else {
-                    insertIntoDB(size, pickup, photo);
+                    insertIntoDB(size, pickup, photo,cost);
+
+
+
                     Intent ioi = new Intent(getActivity(), SurfaceView.class);
                     startActivity(ioi);
 
@@ -205,12 +219,12 @@ public class DeliverPackageFragment extends Fragment {
     protected void createDatabase() {
         Log.d("tag", "createdb");
         db = getActivity().openOrCreateDatabase("oonbux", Context.MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, size VARCHAR, pickup VARCHAR, photo VARCHAR);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, size VARCHAR, pickup VARCHAR, photo VARCHAR, cost VARCHAR);");
     }
 
-    protected void insertIntoDB(String a, String b, String c) {
+    protected void insertIntoDB(String a, String b, String c,String d) {
         Log.d("tag", "insertdb " + a + b + c);
-        String query = "INSERT INTO cart (size,pickup,photo) VALUES('" + a + "', '" + b + "', '" + c + "');";
+        String query = "INSERT INTO cart (size,pickup,photo,cost) VALUES('" + a + "', '" + b + "', '" + c + "', '" + d + "');";
         db.execSQL(query);
     }
 

@@ -21,7 +21,7 @@ public class DbC extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, size VARCHAR, pickup VARCHAR, photo VARCHAR);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, size VARCHAR, pickup VARCHAR, photo VARCHAR, cost VARCHAR);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS chat(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, sender VARCHAR, from_id VARCHAR, to_id VARCHAR, message VARCHAR, time VARCHAR, message_id VARCHAR );");
 
@@ -138,6 +138,7 @@ public class DbC extends SQLiteOpenHelper {
             SQLiteDatabase sdb1;
             sdb1 = getWritableDatabase();
             String query = "insert into physical (addr_line1,addr_line2,city,state,zip,phone,country,note,loc) VALUES(\""+addr_line1+"\",\""+addr_line2+"\",\""+city+"\",\""+state+"\",\""+zip+"\",\""+phone+"\",\""+country+"\",\""+note+"\",\""+def+"\");";
+            Log.e("tag",""+query);
             sdb1.execSQL(query);
         } catch (Exception e) {
             System.out.println("DATABASE ERROR " + e);

@@ -10,16 +10,18 @@ public class DbGclass {
     String _pickup;
     String _photo;
     String _id;
+    String _cost;
 
     public DbGclass() {
     }
 
-    public DbGclass(String size, String pickup, String photo, String id) {
+    public DbGclass(String size, String pickup, String photo, String id,String cost) {
 
         this._size = size;
         this._pickup = pickup;
         this._photo = photo;
         this._id = id;
+        this._cost = cost;
     }
 
     public String get_id() {
@@ -52,5 +54,13 @@ public class DbGclass {
 
     public void set_photo(String _photo) {
         this._photo = _photo;
+    }
+
+    public String get_cost() {
+        return _cost;
+    }
+
+    public void set_cost(String _cost) {
+        this._cost = _cost;
     }
 }

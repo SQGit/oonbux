@@ -157,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:gravity="left"
-                            android:text="4.99 doller"
+                            android:text="$4.99"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp" />
 

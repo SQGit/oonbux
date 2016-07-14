@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.util.Attributes;
 import com.rey.material.widget.Button;
@@ -49,6 +50,8 @@ public class SurfaceView extends Activity {
     public ArrayList<String> ship_pickup = new ArrayList<>();
     public ArrayList<String> ship_photo = new ArrayList<>();
 
+    public String[] cartss ;
+    public ArrayList<String> choose_cart = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +97,13 @@ public class SurfaceView extends Activity {
         btn_addpal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent newe = new Intent(getApplicationContext(), ChoosePal_1.class);
-                startActivity(newe);
-
+                if(mAdapter.choose_cart_from.size() > 0){
+                    Intent newe = new Intent(getApplicationContext(), ChoosePal_1.class);
+                    startActivity(newe);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Please choose items",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -105,27 +111,18 @@ public class SurfaceView extends Activity {
         lt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                /*Intent newe = new Intent(getApplicationContext(), DashBoardActivity.class);
-                startActivity(newe);*/
-
                 shipment_photos.clear();
                 PhotoPickerIntent intent = new PhotoPickerIntent(getApplicationContext());
                 intent.setPhotoCount(1);
                 intent.setColumn(4);
                 intent.setShowCamera(true);
                 startActivityForResult(intent, REQUEST_CODE);
-
-
             }
         });
-
 
         lt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
-                startActivity(inte);*/
                 onBackPressed();
             }
         });
@@ -134,10 +131,15 @@ public class SurfaceView extends Activity {
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent inte = new Intent(getApplicationContext(), ChooseAddress.class);
-                startActivity(inte);
-
+                if(mAdapter.choose_cart_from.size() > 0){
+                    Log.e("tag",""+"\n"+mAdapter.choose_cart_from.size());
+                    Intent inte = new Intent(getApplicationContext(), ChooseAddress.class);
+                    startActivity(inte);
+                }
+                else{
+                    Log.e("tag",""+"\n"+mAdapter.choose_cart_from.size());
+                    Toast.makeText(getApplicationContext(),"Please choose Any item",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -145,99 +147,55 @@ public class SurfaceView extends Activity {
 
 
     private void getFromDB() {
-
-
         ArrayList<DbGclass> dbdatalist = new ArrayList<DbGclass>();
         dbdatalist.clear();
-
         String query = " SELECT * FROM cart";
-
-
         Cursor c = dbclass.fetchdata(query);
-
-
         if (c != null) {
             if (c.moveToFirst()) {
                 do {
                     DbGclass dbc = new DbGclass();
-
                     dbc.set_id(String.valueOf(c.getInt(c.getColumnIndex("id"))));
-
                     dbc.set_size(c.getString(c.getColumnIndex("size")));
                     dbc.set_pickup(c.getString(c.getColumnIndex("pickup")));
                     dbc.set_photo(c.getString(c.getColumnIndex("photo")));
+                    dbc.set_cost(c.getString(c.getColumnIndex("cost")));
                     dbdatalist.add(dbc);
                 } while (c.moveToNext());
             }
         }
-
-
-       // adapter1 = new Adap_Shipment(ShipmentNext.this, dbdatalist);
-
-
-
         mAdapter = new SurfaceList(SurfaceView.this,dbdatalist);
         list.setAdapter(mAdapter);
-
         mAdapter.setMode(Attributes.Mode.Single);
-
-
     }
-
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         dbclass.del_last_row();
-
-
     }
-
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         List<String> photos = null;
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-
-            Log.d("tag", "worked");
             if (data != null) {
                 photos = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
             }
             selectedPhotos.clear();
-
             if (photos != null) {
-
                 selectedPhotos.addAll(photos);
             }
-
-
             Uri uri = Uri.fromFile(new File(selectedPhotos.get(0)));
-
-            Log.d("tag", selectedPhotos.get(0));
-            Log.d("tag", "" + uri);
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("shipment_photo1", selectedPhotos.get(0));
             editor.putString("shipment_photo", selectedPhotos.get(0));
             editor.commit();
             shipment_photos.add(selectedPhotos.get(0));
-            // ship_adapter.notifyDataSetChanged();
-            Log.d("tag", "2" + shipment_photos.get(0));
-
-            /*adapt = new Adapter_Shipment(SurfaceView.this, shipment_photos);
-            list.setAdapter(adapt);*/
-
             Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
             startActivity(inte);
-
-
-            //adapt.notifyDataSetChanged();
-
-
         }
     }
 

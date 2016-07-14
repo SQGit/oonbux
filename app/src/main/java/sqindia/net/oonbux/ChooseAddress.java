@@ -54,7 +54,7 @@ public class ChooseAddress extends Activity {
     ArrayList<HashMap<String, String>> us_lists;
     ArrayList<HashMap<String, String>> nig_lists;
 
-    String query;
+    String query,query1;
     DbC dbclass;
     Context context = this;
 
@@ -91,11 +91,13 @@ public class ChooseAddress extends Activity {
 
     HashMap<Integer, ArrayList<String>> physical_address = new HashMap<>();
     ArrayList<String> to_address = new ArrayList<>();
+    ArrayList<String> to_address1 = new ArrayList<>();
 
     String addr_line1, addr_line2, addr_city, addr_state, addr_zip, addr_country, addr_loc, addr_id;
 
 
-
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +164,9 @@ public class ChooseAddress extends Activity {
         us_lists = new ArrayList<>();
         nig_lists = new ArrayList<>();
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ChooseAddress.this);
+        editor = sharedPreferences.edit();
+
 
         btn_pickup_loc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,8 +196,8 @@ public class ChooseAddress extends Activity {
                 btn_to_loc.setBackgroundResource(R.drawable.thumb);
                 btn_to_intl.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 btn_to_intl.setTextColor(getResources().getColor(R.color.text_divider1));
-                query = "select * from virtual where loc = 0";
-                getToDB(query);
+                query1 = "select * from physical where loc = 0";
+                getToDB(query1);
 
             }
         });
@@ -203,8 +208,8 @@ public class ChooseAddress extends Activity {
                 btn_to_intl.setBackgroundResource(R.drawable.thumb);
                 btn_to_loc.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 btn_to_loc.setTextColor(getResources().getColor(R.color.text_divider1));
-                query = "select * from virtual where loc = 1";
-                getToDB(query);
+                query1 = "select * from physical where loc = 1";
+                getToDB(query1);
 
             }
         });
@@ -262,8 +267,8 @@ public class ChooseAddress extends Activity {
         btn_to_intl.setBackgroundResource(R.drawable.thumb);
         btn_to_loc.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         btn_to_loc.setTextColor(getResources().getColor(R.color.text_divider1));
-        query = "select * from physical where loc = 0";
-        getToDB(query);
+        query1 = "select * from physical where loc = 0";
+        getToDB(query1);
 
 
         spn_pickup_address.setOnItemClickListener(new Spinner.OnItemClickListener() {
@@ -305,7 +310,7 @@ public class ChooseAddress extends Activity {
             public boolean onItemClick(Spinner parent, View view, int position, long id) {
 
 
-                ArrayList<String> address = virtual_address1.get(position);
+                ArrayList<String> address = physical_address.get(position);
 
                 Log.e("tag", "siz" + address.size());
 
@@ -315,14 +320,14 @@ public class ChooseAddress extends Activity {
 
                 spn_to_address.setSelection(position);
 
-                addr_id = pickup_address_id.get(position);
-                addr_line1 = pickup_address_line1.get(position);
-                addr_line2 = pickup_address_line2.get(position);
-                addr_city = pickup_address_city.get(position);
-                addr_state = pickup_address_state.get(position);
-                addr_zip = pickup_address_zip.get(position);
-                addr_country = pickup_address_country.get(position);
-                addr_loc = pickup_address_loc.get(position);
+
+                addr_line1 = to_address_line1.get(position);
+                addr_line2 = to_address_line2.get(position);
+                addr_city = to_address_city.get(position);
+                addr_state = to_address_state.get(position);
+                addr_zip = to_address_zip.get(position);
+                addr_country = to_address_country.get(position);
+                addr_loc = to_address_loc.get(position);
 
 
                 tv_to_address.setText(addr_line1 + "\n" + addr_line2 + ", " + addr_city + "\n" + addr_state + "\n" + addr_zip + "\n" + addr_country);
@@ -369,6 +374,11 @@ public class ChooseAddress extends Activity {
 
                                                 dbclass.del_table();
 
+
+
+                                                editor.putString("shipment_photo1", "");
+                                                editor.commit();
+
                                                 Intent newe = new Intent(getApplicationContext(), DashBoardActivity.class);
                                                 startActivity(newe);
                                                 sDialog.dismiss();
@@ -404,7 +414,7 @@ public class ChooseAddress extends Activity {
         // ArrayList<DbGclass> dbdatalist = new ArrayList<DbGclass>();
         // dbdatalist.clear();
 
-        virtual_address.clear();
+       // virtual_address.clear();
         virtual_address1.clear();
 
         pickup_address.clear();
@@ -441,14 +451,14 @@ public class ChooseAddress extends Activity {
 
                     //(addr_id,addr_line1,addr_line2,city,state,zip,country,loc)
 
-                    virtual_address.put("address_id", c.getString(c.getColumnIndex("addr_id")));
+             /*       virtual_address.put("address_id", c.getString(c.getColumnIndex("addr_id")));
                     virtual_address.put("addr_line1", c.getString(c.getColumnIndex("addr_line1")));
                     virtual_address.put("addr_line2", c.getString(c.getColumnIndex("addr_line2")));
                     virtual_address.put("city", c.getString(c.getColumnIndex("city")));
                     virtual_address.put("state", c.getString(c.getColumnIndex("state")));
                     virtual_address.put("zip", c.getString(c.getColumnIndex("zip")));
                     virtual_address.put("country", c.getString(c.getColumnIndex("country")));
-                    virtual_address.put("loc", c.getString(c.getColumnIndex("loc")));
+                    virtual_address.put("loc", c.getString(c.getColumnIndex("loc")));*/
 
 
                     pickup_address.add(c.getString(c.getColumnIndex("city")) + " - " + c.getString(c.getColumnIndex("zip")));
@@ -488,40 +498,44 @@ public class ChooseAddress extends Activity {
         adapter.notifyDataSetChanged();
 
 
-        addr_id = pickup_address_id.get(0);
-        addr_line1 = pickup_address_line1.get(0);
-        addr_line2 = pickup_address_line2.get(0);
-        addr_city = pickup_address_city.get(0);
-        addr_state = pickup_address_state.get(0);
-        addr_zip = pickup_address_zip.get(0);
-        addr_country = pickup_address_country.get(0);
-        addr_loc = pickup_address_loc.get(0);
+        if(to_address_line1.size() >0) {
+
+            addr_id = pickup_address_id.get(0);
+            addr_line1 = pickup_address_line1.get(0);
+            addr_line2 = pickup_address_line2.get(0);
+            addr_city = pickup_address_city.get(0);
+            addr_state = pickup_address_state.get(0);
+            addr_zip = pickup_address_zip.get(0);
+            addr_country = pickup_address_country.get(0);
+            addr_loc = pickup_address_loc.get(0);
 
 
-        tv_pickup_address.setText(pickup_address_line1.get(0) + "\n" + pickup_address_line2.get(0) + ", " + pickup_address_city.get(0) + "\n" + pickup_address_state.get(0) + "\n" + pickup_address_zip.get(0) + "\n" + pickup_address_country.get(0));
+            tv_pickup_address.setText(pickup_address_line1.get(0) + "\n" + pickup_address_line2.get(0) + ", " + pickup_address_city.get(0) + "\n" + pickup_address_state.get(0) + "\n" + pickup_address_zip.get(0) + "\n" + pickup_address_country.get(0));
 
-       // tv_to_address.setText(pickup_address_line1.get(1) + "\n" + pickup_address_line2.get(1) + ", " + pickup_address_city.get(1) + "\n" + pickup_address_state.get(1) + "\n" + pickup_address_zip.get(1) + "\n" + pickup_address_country.get(1));
+            // tv_to_address.setText(pickup_address_line1.get(1) + "\n" + pickup_address_line2.get(1) + ", " + pickup_address_city.get(1) + "\n" + pickup_address_state.get(1) + "\n" + pickup_address_zip.get(1) + "\n" + pickup_address_country.get(1));
 
-        // adapter1 = new Adap_Shipment(ShipmentNext.this, dbdatalist);
-        //mAdapter = new SurfaceList(SurfaceView.this,dbdatalist);
-        // list.setAdapter(mAdapter);
-        //  mAdapter.setMode(Attributes.Mode.Single);
+            // adapter1 = new Adap_Shipment(ShipmentNext.this, dbdatalist);
+            //mAdapter = new SurfaceList(SurfaceView.this,dbdatalist);
+            // list.setAdapter(mAdapter);
+            //  mAdapter.setMode(Attributes.Mode.Single);
 
-
+        }
+        else{
+            spn_to_address.setEnabled(false);
+        }
     }
 
 
 
 
-    private void getToDB(String query) {
+    private void getToDB(String query1) {
 
 
         // ArrayList<DbGclass> dbdatalist = new ArrayList<DbGclass>();
         // dbdatalist.clear();
 
         physical_address.clear();
-        to_address.clear();
-
+        to_address1.clear();
 
 
         to_address_line1.clear();
@@ -536,7 +550,9 @@ public class ChooseAddress extends Activity {
         //  String query = " SELECT * FROM cart";
 
 
-        Cursor c = dbclass.fetchdata(query);
+        Cursor c = dbclass.fetchdata(query1);
+
+        Log.e("tag",query1+"\n"+c);
 
         rs = 0;
 
@@ -544,7 +560,10 @@ public class ChooseAddress extends Activity {
             if (c.moveToFirst()) {
                 do {
 
-                    pickup_address.add(c.getString(c.getColumnIndex("city")) + " - " + c.getString(c.getColumnIndex("zip")));
+
+                    Log.e("tag",""+c.getString(c.getColumnIndex("zip")));
+
+                    to_address1.add(c.getString(c.getColumnIndex("city")) + " - " + c.getString(c.getColumnIndex("zip")));
 
 
                     to_address.add(c.getString(c.getColumnIndex("addr_line1")));
@@ -578,30 +597,38 @@ public class ChooseAddress extends Activity {
             }
         }
 
-        MyAdapter adapter = new MyAdapter(ChooseAddress.this, R.layout.dropdown_lists3, pickup_address);
-        spn_to_address.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+       MyAdapter adapter1 = new MyAdapter(ChooseAddress.this, R.layout.dropdown_lists3, to_address1);
+        spn_to_address.setAdapter(adapter1);
+        adapter1.notifyDataSetChanged();
 
 
-        addr_id = pickup_address_id.get(0);
-        addr_line1 = pickup_address_line1.get(0);
-        addr_line2 = pickup_address_line2.get(0);
-        addr_city = pickup_address_city.get(0);
-        addr_state = pickup_address_state.get(0);
-        addr_zip = pickup_address_zip.get(0);
-        addr_country = pickup_address_country.get(0);
-        addr_loc = pickup_address_loc.get(0);
+        if(to_address_line1.size() >0) {
+
+            spn_to_address.setEnabled(true);
+
+            addr_line1 = to_address_line1.get(0);
+            addr_line2 = to_address_line2.get(0);
+            addr_city = to_address_city.get(0);
+            addr_state = to_address_state.get(0);
+            addr_zip = to_address_zip.get(0);
+            addr_country = to_address_country.get(0);
+            addr_loc = to_address_loc.get(0);
 
 
-     //   tv_pickup_address.setText(pickup_address_line1.get(0) + "\n" + pickup_address_line2.get(0) + ", " + pickup_address_city.get(0) + "\n" + pickup_address_state.get(0) + "\n" + pickup_address_zip.get(0) + "\n" + pickup_address_country.get(0));
+            //   tv_pickup_address.setText(pickup_address_line1.get(0) + "\n" + pickup_address_line2.get(0) + ", " + pickup_address_city.get(0) + "\n" + pickup_address_state.get(0) + "\n" + pickup_address_zip.get(0) + "\n" + pickup_address_country.get(0));
 
-        tv_to_address.setText(pickup_address_line1.get(1) + "\n" + pickup_address_line2.get(1) + ", " + pickup_address_city.get(1) + "\n" + pickup_address_state.get(1) + "\n" + pickup_address_zip.get(1) + "\n" + pickup_address_country.get(1));
+            tv_to_address.setText(to_address_line1.get(0) + "\n" + to_address_line2.get(0) + ", " + to_address_city.get(0) + "\n" + to_address_state.get(0) + "\n" + to_address_zip.get(0) + "\n" + to_address_country.get(0));
 
-        // adapter1 = new Adap_Shipment(ShipmentNext.this, dbdatalist);
-        //mAdapter = new SurfaceList(SurfaceView.this,dbdatalist);
-        // list.setAdapter(mAdapter);
-        //  mAdapter.setMode(Attributes.Mode.Single);
+            // adapter1 = new Adap_Shipment(ShipmentNext.this, dbdatalist);
+            //mAdapter = new SurfaceList(SurfaceView.this,dbdatalist);
+            // list.setAdapter(mAdapter);
+            //  mAdapter.setMode(Attributes.Mode.Single);
+        }
+        else
+        {
+            spn_to_address.setEnabled(false);
 
+        }
 
     }
 

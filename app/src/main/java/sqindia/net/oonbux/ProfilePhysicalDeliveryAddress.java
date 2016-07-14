@@ -763,7 +763,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
     protected void createDatabase() {
 
-        Log.d("tag", "createdb");
+        Log.e("tag", "createdb");
         db = openOrCreateDatabase("oonbux", Context.MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS physical(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, addr_line1 VARCHAR, addr_line2 VARCHAR, city VARCHAR, state VARCHAR, zip VARCHAR, phone VARCHAR, country VARCHAR, note VARCHAR, loc VARCHAR );");
     }
@@ -825,6 +825,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                                     editor.putBoolean("adrsts0", true);
                                     editor.commit();
 
+
+                                    dbclass.physical_insert(addr1,addr2,city,state,zip,phone,country,note,String.valueOf(i));
 
                                     loc_adr = true;
                                 } else {

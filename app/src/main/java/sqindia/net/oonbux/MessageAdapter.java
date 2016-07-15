@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+
 public class MessageAdapter extends ArrayAdapter<ChatMessage> {
 
     private Activity activity;
@@ -29,7 +30,7 @@ public class MessageAdapter extends ArrayAdapter<ChatMessage> {
         ChatMessage chatMessage = getItem(position);
         int viewType = getItemViewType(position);
 
-        if (chatMessage.isMine()) {
+        if (chatMessage.isMine() == 0) {
             layoutResource = R.layout.item_chat_left;
         } else {
             layoutResource = R.layout.item_chat_right;

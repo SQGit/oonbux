@@ -291,12 +291,12 @@
             style="@style/Material.Drawable.Ripple.Wave.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/lft_wallet_ico"
+            android:drawableLeft="@drawable/lft_helpline_ico"
             android:drawablePadding="10dp"
             android:paddingBottom="7dp"
             android:paddingLeft="3dp"
             android:paddingTop="3dp"
-            android:text="LogOut"
+            android:text="Logout"
             android:textColor="@color/text_divider"
             android:textSize="18sp" />
 

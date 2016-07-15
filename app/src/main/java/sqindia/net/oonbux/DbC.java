@@ -97,7 +97,10 @@ public class DbC extends SQLiteOpenHelper {
             SQLiteDatabase sdb1;
             sdb1 = getWritableDatabase();
             String query = "drop table cart;";
+            String query1 = "drop table chat;";
             sdb1.execSQL(query);
+            sdb1.execSQL(query1);
+
         } catch (Exception e) {
             System.out.println("DATABASE ERROR " + e);
         }
@@ -117,6 +120,31 @@ public class DbC extends SQLiteOpenHelper {
             Log.e("tag",""+e);
         }
     }
+
+
+
+
+    public Cursor chat_getdata(String from,String to) {
+        Cursor cur = null;
+
+        String query = "select * from chat where to_id  = \""+to+ "\";"  ;
+
+        Log.e("tag",""+query);
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getReadableDatabase();
+            cur = sdb1.rawQuery(query, null);
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+
+        }
+
+        return cur;
+    }
+
+
+
 
 
 

@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="salman"
+        android:text=""
         android:id="@+id/txt"
         android:textColor="#000000"
         android:textSize="25sp"/>
@@ -24,6 +24,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/lview"
         android:layout_above="@+id/layout_send"
+        android:divider="@android:color/transparent"
         android:layout_below="@+id/txt"
         android:layout_height="wrap_content">
 

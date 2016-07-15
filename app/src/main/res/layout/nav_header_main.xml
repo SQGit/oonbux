@@ -50,9 +50,10 @@
         <com.rey.material.widget.TextView
             android:id="@+id/textview_id"
             style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="110dp"
+            android:layout_width="80dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/login_reg_button"

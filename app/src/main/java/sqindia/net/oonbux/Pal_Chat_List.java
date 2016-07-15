@@ -1,12 +1,14 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -30,7 +32,7 @@ public class Pal_Chat_List extends Activity {
     String str_sessionid;
     HashMap<String, String> map ;
     ArrayList<HashMap<String, String>> pal_datas;
-    
+    com.rey.material.widget.LinearLayout lt_back;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +44,25 @@ public class Pal_Chat_List extends Activity {
         str_sessionid = sharedPreferences.getString("sessionid", "");
 
         lv_mypals = (ListView) findViewById(R.id.lview);
+        lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
 
         pal_datas = new ArrayList<>();
         map = new HashMap<String, String>();
 
         new getPalLists().execute();
+
+
+        lt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                startActivity(inte);
+                finish();
+            }
+        });
+
+
+
     }
 
 
@@ -102,6 +118,7 @@ public class Pal_Chat_List extends Activity {
             super.onPostExecute(jsonStr);
             sweetDialog.dismiss();
 
+            pal_datas.clear();
 
             try {
 

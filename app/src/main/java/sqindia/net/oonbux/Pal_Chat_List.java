@@ -47,7 +47,10 @@ public class Pal_Chat_List extends Activity {
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
 
         pal_datas = new ArrayList<>();
-        map = new HashMap<String, String>();
+        //map = new HashMap<String, String>();
+
+
+        pal_datas.clear();
 
         new getPalLists().execute();
 
@@ -118,7 +121,7 @@ public class Pal_Chat_List extends Activity {
             super.onPostExecute(jsonStr);
             sweetDialog.dismiss();
 
-            pal_datas.clear();
+
 
             try {
 
@@ -137,8 +140,13 @@ public class Pal_Chat_List extends Activity {
                         String subd = jo.getString("friends");
 
                         JSONArray friends_list = jo.getJSONArray("friends");
-                        Log.e("tag", "<-----friends_list----->" + "" + friends_list);
+                        Log.e("tag", "<-----friends_list-chat---->" + "" + friends_list);
 
+
+                        map = new HashMap<String, String>();
+
+                        pal_datas.clear();
+                        map.clear();
 
                         for (int i = 0; i < friends_list.length(); i++) {
 
@@ -153,12 +161,18 @@ public class Pal_Chat_List extends Activity {
                             map.put("photourl", datas.getString("photourl"));
                             map.put("status", datas.getString("status"));
 
+                            Log.e("tag",""+map.get("firstname"));
 
                             pal_datas.add(map);
 
+                           // map.clear();
+
                         }
 
+                        for(int i = 0;i <pal_datas.size();i++){
+                            Log.e("tag",""+pal_datas.get(i));
 
+                        }
                         Adapter_PalLists staff_adapter = new Adapter_PalLists(getApplicationContext(), pal_datas, count,4);
 
                         lv_mypals.setAdapter(staff_adapter);

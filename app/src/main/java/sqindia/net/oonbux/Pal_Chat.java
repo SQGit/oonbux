@@ -9,18 +9,30 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.InflateException;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rey.material.widget.Button;
+import com.rey.material.widget.LinearLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,12 +41,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import android.view.LayoutInflater.Factory;
 
 
 public class Pal_Chat extends Activity {
 
     public String asdf, server_data, str_get_message, str_session_id, str_pal_oonbux_id, str_snd_message, str_oonbux_id;
-    public String ct_from_id, ct_to_id, ct_message, ct_time, ct_message_id;
+    public String ct_from_id, ct_to_id, ct_message, ct_time, ct_message_id,receiver;
     EditText et_message;
     Button btn_send;
     TextView txt;
@@ -55,6 +68,10 @@ public class Pal_Chat extends Activity {
 
     public int id;
 
+    private List<ChatMessage> chatMessages;
+    public String my_oonbux,pal_oonbux;
+
+    com.rey.material.widget.LinearLayout lt_back, lt_setting;
 
 
     BroadcastReceiver appendChatScreenMsgReceiver = new BroadcastReceiver() {
@@ -75,50 +92,49 @@ public class Pal_Chat extends Activity {
             ct_message = b.getString("chat_message");
             ct_time = b.getString("chat_time");
 
-
             Log.e("tag`", "" + data + ct_from_id + ct_message + ct_time);
-
             str_get_message = data;
 
-
             sender = 1;
-           // ct_from_id = sharedPreferences.getString("oonbuxid", "");
-           // ct_to_id = sharedPreferences.getString("pal_oonbuxid", "");
-
-           // update_data(data);
-
 
             ct_to_id = sharedPreferences.getString("pal_oonbuxid", "");
+
+            receiver = ct_from_id;
+
 
             get_data();
 
 
         }
     };
-    private SQLiteDatabase db;
-    private List<ChatMessage> chatMessages;
-    private ArrayAdapter<ChatMessage> adapter;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pal_chat);
 
-
         Pal_Chat.this.registerReceiver(this.appendChatScreenMsgReceiver, new IntentFilter("appendChatScreenMsg"));
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Pal_Chat.this);
+        lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
+        lt_setting = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_settings);
+
+
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Pal_Chat.this);
         str_session_id = sharedPreferences.getString("sessionid", "");
         str_pal_oonbux_id = sharedPreferences.getString("pal_oonbuxid", "");
         ct_to_id = sharedPreferences.getString("pal_oonbuxid", "");
         str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
-        ct_from_id = sharedPreferences.getString("oonbuxid", "");
 
+
+        receiver = sharedPreferences.getString("pal_oonbuxid","");
 
         chatMessages = new ArrayList<>();
 
         dbclass = new DbC(context);
-        createDatabase();
+
         Intent getData = getIntent();
 
         str_get_message = getData.getStringExtra("get_Server");
@@ -129,14 +145,18 @@ public class Pal_Chat extends Activity {
         ct_time = getData.getStringExtra("chat_time");
         ct_message_id = getData.getStringExtra("chat_message_id");
 
-        if (!(ct_message == null)) {
 
-            sender = 1;
+        if(sharedPreferences.getString("pal_oonbuxid","").isEmpty()){
 
-            ct_to_id = sharedPreferences.getString("oonbuxid", "");
-            insert_data();
-            update_data(str_get_message);
+            receiver = ct_from_id;
+            Log.e("tag","0_das"+receiver);
         }
+        else{
+
+            receiver = sharedPreferences.getString("pal_oonbuxid","");
+            Log.e("tag","1_das"+receiver);
+        }
+       // receiver = ct_from_id;
 
 
         et_message = (EditText) findViewById(R.id.message);
@@ -148,6 +168,60 @@ public class Pal_Chat extends Activity {
 
         get_data();
 
+        lt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(), Pal_Chat_List.class);
+                startActivity(inte);
+                finish();
+            }
+        });
+
+
+        lt_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // openOptionsMenu();
+
+
+
+                PopupMenu popup = new PopupMenu(Pal_Chat.this, lt_setting);
+
+                popup.getMenuInflater().inflate(R.menu.task_menus, popup.getMenu());
+
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()) {
+
+
+                            case R.id.delete: {
+                                Log.e("tag","worked");
+                                return true;
+                            }
+
+
+                            default: {
+                                return true;
+                            }
+
+
+                        }
+
+
+                    }
+                });
+
+                popup.show();
+
+
+
+
+
+
+            }
+        });
 
 
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -156,8 +230,21 @@ public class Pal_Chat extends Activity {
 
                 str_snd_message =et_message.getText().toString();
                 ct_message = et_message.getText().toString();
-                ct_from_id = str_oonbux_id;
-                ct_to_id = str_pal_oonbux_id;
+               // ct_from_id = str_oonbux_id;
+               // ct_to_id = str_pal_oonbux_id;
+
+                if(sharedPreferences.getString("pal_oonbuxid","").isEmpty()){
+                    str_pal_oonbux_id = ct_from_id;
+                    receiver = ct_from_id;
+                    Log.e("tag","0"+str_pal_oonbux_id+"\n"+ct_from_id);
+                }
+                else{
+
+                    str_pal_oonbux_id = sharedPreferences.getString("pal_oonbuxid","");
+                    Log.e("tag","1"+str_pal_oonbux_id+"\n"+ct_from_id);
+                }
+
+
                 if (et_message.getText().toString().trim().equals("")) {
                     Toast.makeText(Pal_Chat.this, "Please input some text...", Toast.LENGTH_SHORT).show();
                 } else {
@@ -169,23 +256,36 @@ public class Pal_Chat extends Activity {
 
     }
 
+
+
+
+
+
     public void insert_data() {
-        dbclass.chat_insert(sender, ct_from_id, ct_to_id, ct_message, ct_time, ct_message_id);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Pal_Chat.this);
+        if(sharedPreferences.getString("pal_oonbuxid","").isEmpty()){
+            receiver = ct_from_id;
+            Log.e("tag", "1_receiver"+receiver);
+        }
+        else{
+            receiver = sharedPreferences.getString("pal_oonbuxid","");
+            Log.e("tag", "0_receiver"+receiver);
+        }
+
+        dbclass.chat_insert(sender, ct_from_id, ct_to_id, ct_message, ct_time, ct_message_id,receiver);
         get_data();
+
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        db.close();
-    }
 
     public void get_data() {
         Log.e("tag", "get_data");
 
+
         messageAdapter = new MsgAdminAdapter(Pal_Chat.this);
 
-        Cursor c = dbclass.chat_getdata(ct_from_id, ct_to_id);
+        Cursor c = dbclass.chat_getdata(ct_from_id, ct_to_id,receiver);
         send_msg.clear();
         get_msg.clear();
 
@@ -227,72 +327,74 @@ public class Pal_Chat extends Activity {
         lview = (ListView) findViewById(R.id.lview);
         lview.setAdapter(messageAdapter);
 
+    }
 
-      //  getmessagedata();
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //getMenuInflater().inflate(R.menu.task_menus, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.task_menus, menu);
+//        MenuItem pinMenuItem1 = menu.getItem(0).getSubMenu().getItem(0);
+//        MenuItem pinMenuItem2 = menu.getItem(0).getSubMenu().getItem(1);
+//
+//       // applyFontToMenuItem(pinMenuItem1);
+//        //applyFontToMenuItem(pinMenuItem2);
+//        return true;
+
+
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.task_menus, menu);
+        return super.onCreateOptionsMenu(menu);
+
+
+
+
+
 
     }
 
 
-    public void getmessagedata(){
-        messageAdapter = new MsgAdminAdapter(Pal_Chat.this);
 
-        if(send_msg.size()>0){
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
 
-
-        for(int i = 0 ;i< send_msg.size();i++){
-            Log.e("tag","values"+send_msg.get(i));
-
-                ChatMessage chatMessage = new ChatMessage(send_msg.get(i), 0);
-                chatMessages.add(chatMessage);
-                chatMessage.setMessage(send_msg.get(i));
-                chatMessage.setMessegeBy("me");
-                chat_list.add(chatMessage);
-                messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_OUTGOING);
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.delete:
+               Log.e("tag","worked");
 
         }
-        }
 
-        if(get_msg.size()>0) {
-            for (int i = 0; i < get_msg.size(); i++) {
-                Log.e("tag",""+get_msg.get(i));
-
-                    ChatMessage chatMessage = new ChatMessage(get_msg.get(i), 1);
-                    chatMessages.add(chatMessage);
-                    chatMessage.setMessage(get_msg.get(i));
-                    chatMessage.setMessegeBy("user");
-                    chat_list.add(chatMessage);
-                    messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_INCOMING);
-
-            }
-        }
-
-
-
-        lview.setAdapter(messageAdapter);
-//        messageAdapter.notifyDataSetChanged();
-
-
-
+        return super.onOptionsItemSelected(item);
     }
 
 
-    private void update_data(String data) {
-
-        this.str_get_message = data;
-        Log.d("tag", str_get_message);
-       // txt.setText(str_get_message);
-
-        insert_data();
+    private void applyFontToMenuItem(MenuItem mi)
+    {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/merriweather.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        //mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+      //  mi.setTitle(mNewTitle);
     }
 
 
-    protected void createDatabase() {
 
-        Log.d("tag", "createdb");
-        db = openOrCreateDatabase("oonbux", Context.MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS chat(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, sender VARCHAR, from_id VARCHAR, to_id VARCHAR, message VARCHAR, time VARCHAR, message_id VARCHAR );");
 
-    }
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected void onDestroy() {
@@ -357,13 +459,12 @@ public class Pal_Chat extends Activity {
 
                 if (status.equals("success")) {
 
+                    ct_message = jo.getString("message");
+                    ct_message_id = jo.getString("message_id");
+                    ct_time = jo.getString("sent_utc_time");
                     sender = 0;
-                    //ct_from_id = sharedPreferences.getString("oonbuxid", "");
-                   // ct_to_id = sharedPreferences.getString("pal_oonbuxid", "");
                     insert_data();
                     et_message.setText("");
-                    //  et_message.setText("");
-                    // et_message.requestFocus();
 
                 } else if (status.equals(null)) {
                     Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();

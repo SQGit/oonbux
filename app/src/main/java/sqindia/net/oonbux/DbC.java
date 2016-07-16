@@ -23,7 +23,7 @@ public class DbC extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, size VARCHAR, pickup VARCHAR, photo VARCHAR, cost VARCHAR);");
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS chat(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, sender VARCHAR, from_id VARCHAR, to_id VARCHAR, message VARCHAR, time VARCHAR, message_id VARCHAR );");
+        db.execSQL("CREATE TABLE IF NOT EXISTS chat(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, sender VARCHAR, from_id VARCHAR, to_id VARCHAR, message VARCHAR, time VARCHAR, message_id VARCHAR, receiver VARCHAR );");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS virtual(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, addr_id VARCHAR, addr_line1 VARCHAR, addr_line2 VARCHAR, city VARCHAR, state VARCHAR, zip VARCHAR, country VARCHAR, loc VARCHAR );");
 
@@ -108,12 +108,12 @@ public class DbC extends SQLiteOpenHelper {
     }
 
 
-    public void chat_insert(int sender,String chat_from,String chat_message,String chat_to,String time,String msg_id) {
+    public void chat_insert(int sender,String chat_from,String chat_message,String chat_to,String time,String msg_id,String receiver) {
         try {
             SQLiteDatabase sdb1;
             sdb1 = getWritableDatabase();
-            String query = "insert into chat (sender,from_id,message,to_id,time,message_id) VALUES(\""+String.valueOf(sender)+"\",\""+chat_from+"\",\""+chat_to+"\",\""+chat_message+"\",\""+time+"\",\""+msg_id+"\");";
-            Log.e("tag",""+query+"\n"+sender+chat_from+chat_to+chat_message+msg_id);
+            String query = "insert into chat (sender,from_id,message,to_id,time,message_id,receiver) VALUES(\""+String.valueOf(sender)+"\",\""+chat_from+"\",\""+chat_to+"\",\""+chat_message+"\",\""+time+"\",\""+msg_id+"\",\""+receiver+"\");";
+            Log.e("tag",""+query+"\n"+receiver);
             sdb1.execSQL(query);
         } catch (Exception e) {
             System.out.println("DATABASE ERROR " + e);
@@ -124,10 +124,10 @@ public class DbC extends SQLiteOpenHelper {
 
 
 
-    public Cursor chat_getdata(String from,String to) {
+    public Cursor chat_getdata(String from,String to,String reciver) {
         Cursor cur = null;
 
-        String query = "select * from chat where to_id  = \""+to+ "\";"  ;
+        String query = "select * from chat where receiver  = \""+reciver+ "\";"  ;
 
         Log.e("tag",""+query);
 

@@ -506,7 +506,7 @@ public class ProfileInfo extends Activity {
         et_state.setEnabled(true);
         et_state.setTextColor(getResources().getColor(R.color.text_color));
         img_edit.setEnabled(true);
-        btn_edit.setEnabled(false);
+
 
     }
 

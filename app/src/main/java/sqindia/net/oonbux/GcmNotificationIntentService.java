@@ -38,7 +38,7 @@ public class GcmNotificationIntentService extends IntentService {
     String sts, message, simage, str_oonbux_id;
 
 
-    public String ct_from_id,ct_to_id,ct_message,ct_time,ct_message_id;
+    public String ct_from_id,ct_to_id,ct_message,ct_time,ct_message_id,receiver;
 
 
 
@@ -196,6 +196,7 @@ public class GcmNotificationIntentService extends IntentService {
                     str_oonbux_id = json_serv.getString("pal_oonbux_id");
 
                     ct_from_id = json_serv.getString("pal_oonbux_id");
+                    receiver = ct_from_id;
                     ct_message = json_serv.getString("message");
                     ct_time = json_serv.getString("sent_utc_time");
                     ct_message_id = json_serv.getString("message_id");
@@ -207,7 +208,7 @@ public class GcmNotificationIntentService extends IntentService {
 
                     dbclass = new DbC(context);
 
-                    dbclass.chat_insert(1, ct_from_id,ct_to_id, ct_message, ct_time, ct_message_id);
+                    dbclass.chat_insert(1, ct_from_id,ct_to_id, ct_message, ct_time, ct_message_id,receiver);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

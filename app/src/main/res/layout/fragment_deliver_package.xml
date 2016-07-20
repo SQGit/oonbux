@@ -9,19 +9,19 @@
     <com.rey.material.widget.Button
         android:id="@+id/add_sp_btn"
         style="@style/Material.Drawable.Ripple.Wave"
-        android:layout_width="150dp"
-        android:layout_height="35dp"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_28sdp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/backo"
         android:drawableLeft="@drawable/ship"
         android:gravity="center"
-        android:paddingLeft="15dp"
+        android:paddingLeft="@dimen/_13sdp"
         android:text="Add Shipment"
         android:textColor="@color/colorAccent"
-        android:textSize="14sp" />
+        android:textSize="@dimen/_11sdp" />
 
     <com.rey.material.widget.ListView
         android:id="@+id/deliver_list"
@@ -52,16 +52,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/login_reg_button"
-        android:drawablePadding="20dp"
+        android:drawablePadding="@dimen/_18sdp"
         style="@style/Material.Drawable.Ripple.Wave"
         android:drawableRight="@drawable/back_rt_ico"
-        android:paddingLeft="30dp"
-        android:paddingRight="20dp"
+        android:paddingLeft="@dimen/_30sdp"
+        android:paddingRight="@dimen/_20sdp"
         android:text="Next"
         android:textColor="#FFFFFF"
-        android:textSize="22sp" />
+        android:textSize="@dimen/_20sdp" />
 
 
 </RelativeLayout>

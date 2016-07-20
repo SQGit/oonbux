@@ -43,7 +43,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:text="Additional Address"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textSize="@dimen/_22sdp" />
 
 
             <com.rey.material.widget.LinearLayout

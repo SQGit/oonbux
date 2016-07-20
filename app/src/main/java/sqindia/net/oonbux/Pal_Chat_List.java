@@ -144,7 +144,6 @@ public class Pal_Chat_List extends Activity {
 
 
                         map = new HashMap<String, String>();
-
                         pal_datas.clear();
                         map.clear();
 
@@ -152,7 +151,7 @@ public class Pal_Chat_List extends Activity {
 
                             JSONObject datas = friends_list.getJSONObject(i);
 
-
+                            map = new HashMap<String, String>();
                             map.put("oonbux_id", datas.getString("oonbux_id"));
                             map.put("firstname", datas.getString("firstname"));
                             map.put("lastname", datas.getString("lastname"));

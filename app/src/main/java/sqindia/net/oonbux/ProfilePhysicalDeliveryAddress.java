@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -55,7 +56,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
     SweetAlertDialog sweetAlertDialog;
     MyAdapter adapter_a, adapter_b, adapter_c;
 
-    String str_country, str_state;
+    String str_country, str_state,cont,stat,zp;
 
     ArrayList<String> country = new ArrayList<>();
     ArrayList<String> states = new ArrayList<>();
@@ -162,7 +163,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         lt_add_address = (LinearLayout) findViewById(R.id.layout_add);
 
 
-        if (!Config.isNetworkAvailable(ProfilePhysicalDeliveryAddress.this)) {
+   /*     if (!Config.isNetworkAvailable(ProfilePhysicalDeliveryAddress.this)) {
             new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Oops!")
                     .setContentText("No network Available!")
@@ -178,17 +179,28 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                     .show();
         } else {
             new GetCountry().execute();
-        }
+        }*/
 
 
         dbclass = new DbC(context);
         createDatabase();
 
+
+        get_CountryDB();
+
+
+
+
+
+
+
         spin_loc.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
                 str_loc_country = spin_loc.getSelectedItem().toString();
-                new GetState(str_loc_country, 0).execute();
+                //new GetState(str_loc_country, 0).execute();
+
+                get_StateDB(0);
             }
         });
 
@@ -205,8 +217,9 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             @Override
             public boolean onItemClick(Spinner parent, View view, int position, long id) {
 
-                str_int_country = spin_int.getSelectedItem().toString();
-                new GetState(str_int_country, 1).execute();
+                get_StateDB(1);
+               // str_int_country = spin_int.getSelectedItem().toString();
+                //new GetState(str_int_country, 1).execute();
                 return true;
             }
         });
@@ -215,8 +228,9 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         aet_loc_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                str_loc_country = spin_loc.getSelectedItem().toString();
-                new GetState(str_loc_country, 0).execute();
+               // str_loc_country = spin_loc.getSelectedItem().toString();
+               // new GetState(str_loc_country, 0).execute();
+                get_StateDB(0);
                 aet_loc_state.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
@@ -224,8 +238,9 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         aet_int_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                str_int_country = spin_loc.getSelectedItem().toString();
-                new GetState(str_int_country, 1).execute();
+                //str_int_country = spin_loc.getSelectedItem().toString();
+                //new GetState(str_int_country, 1).execute();
+                get_StateDB(1);
                 aet_int_state.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
@@ -237,9 +252,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_loc_state.getText().toString() != null) {
-                        str_loc_country = spin_loc.getSelectedItem().toString();
-                        str_loc_state = aet_loc_state.getText().toString();
-                        new GetZip(str_loc_country, str_loc_state, 0).execute();
+                      //  str_loc_country = spin_loc.getSelectedItem().toString();
+                       // str_loc_state = aet_loc_state.getText().toString();
+                       // new GetZip(str_loc_country, str_loc_state, 0).execute();
+                        get_ZipDB(0);
                         aet_loc_zip.requestFocus();
                         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         return true;
@@ -257,9 +273,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_int_state.getText().toString() != null) {
-                        str_int_country = spin_int.getSelectedItem().toString();
-                        str_int_state = aet_int_state.getText().toString();
-                        new GetZip(str_int_country, str_int_state, 1).execute();
+                       // str_int_country = spin_int.getSelectedItem().toString();
+                       // str_int_state = aet_int_state.getText().toString();
+                       // new GetZip(str_int_country, str_int_state, 1).execute();
+                        get_ZipDB(1);
                         aet_int_zip.requestFocus();
                         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         return true;
@@ -279,9 +296,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_loc_state.getText().toString() != null) {
-                        str_country = spin_loc.getSelectedItem().toString();
-                        str_state = aet_loc_state.getText().toString();
-                        new GetZip(str_country, str_state, 0).execute();
+                        //str_country = spin_loc.getSelectedItem().toString();
+                        //str_state = aet_loc_state.getText().toString();
+                        // GetZip(str_country, str_state, 0).execute();
+                        get_ZipDB(0);
                         aet_loc_zip.requestFocus();
                         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         return true;
@@ -300,9 +318,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_int_state.getText().toString() != null) {
-                        str_int_country = spin_int.getSelectedItem().toString();
-                        str_int_state = aet_int_state.getText().toString();
-                        new GetZip(str_int_country, str_int_state, 1).execute();
+                       // str_int_country = spin_int.getSelectedItem().toString();
+                       // str_int_state = aet_int_state.getText().toString();
+                       // new GetZip(str_int_country, str_int_state, 1).execute();
+                        get_ZipDB(1);
                         aet_int_zip.requestFocus();
                         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         return true;
@@ -320,9 +339,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         aet_loc_zip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                str_loc_country = spin_loc.getSelectedItem().toString();
-                str_loc_state = aet_loc_state.getText().toString();
-                new GetZip(str_loc_country, str_loc_state, 0).execute();
+               // str_loc_country = spin_loc.getSelectedItem().toString();
+               // str_loc_state = aet_loc_state.getText().toString();
+                //new GetZip(str_loc_country, str_loc_state, 0).execute();
+                get_ZipDB(0);
                 aet_loc_zip.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
@@ -331,9 +351,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         aet_int_zip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                str_int_country = spin_int.getSelectedItem().toString();
-                str_int_state = aet_int_state.getText().toString();
-                new GetZip(str_int_country, str_int_state, 1).execute();
+                //str_int_country = spin_int.getSelectedItem().toString();
+                //str_int_state = aet_int_state.getText().toString();
+               // new GetZip(str_int_country, str_int_state, 1).execute();
+                get_ZipDB(0);
                 aet_loc_zip.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
@@ -755,6 +776,112 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
     }
 
+    private void get_CountryDB() {
+
+
+
+            Cursor cont_cursor = dbclass.getCountry();
+
+            if (cont_cursor != null) {
+                if (cont_cursor.moveToFirst()) {
+                    do {
+
+                        String cont = cont_cursor.getString(cont_cursor.getColumnIndex("country"));
+                        Log.e("tag",""+cont);
+                        country.add(cont);
+
+
+                        adapter_a = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
+                        spin_loc.setAdapter(adapter_a);
+
+                        adapter_b = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
+                        spin_int.setAdapter(adapter_b);
+
+
+                    } while (cont_cursor.moveToNext());
+                }
+            }
+
+            get_StateDB(0);
+
+
+
+
+    }
+
+    private void get_StateDB(int s) {
+
+        if (s == 0) {
+            cont = spin_loc.getSelectedItem().toString();
+        } else {
+            cont = spin_int.getSelectedItem().toString();
+        }
+
+
+        Cursor cont_cursor = dbclass.getState(cont);
+
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String stat = cont_cursor.getString(cont_cursor.getColumnIndex("state"));
+                    Log.e("tag", "" + stat);
+                    states.add(stat);
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+
+
+       // adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, states);
+        adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, states);
+
+        if (s == 0) {
+            aet_loc_state.setAdapter(adpater_states);
+        } else {
+            aet_int_state.setAdapter(adpater_states_);}
+    }
+
+
+
+    private void get_ZipDB(int s) {
+
+        if (s == 0) {
+            cont = spin_loc.getSelectedItem().toString();
+            stat = aet_loc_state.getText().toString();
+        } else {
+            cont = spin_int.getSelectedItem().toString();
+            stat = aet_int_state.getText().toString();
+        }
+
+
+        Cursor cont_cursor = dbclass.getZip(cont,stat);
+
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String zp = cont_cursor.getString(cont_cursor.getColumnIndex("zip"));
+                    Log.e("tag",""+zp);
+                    zip.add(zp);
+
+
+                    adapter_zips = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, zip);
+
+                    if (s == 0) {
+                        aet_loc_zip.setAdapter(adapter_zips);
+                    } else {
+                        aet_int_zip.setAdapter(adapter_zips);}
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+
+
+    }
+
+
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -1022,6 +1149,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             return row;
         }
     }
+
+
 
     class GetCountry extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {

@@ -24,20 +24,25 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rey.material.widget.Button;
+import com.rey.material.widget.ImageButton;
 import com.rey.material.widget.LinearLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -49,7 +54,7 @@ public class Pal_Chat extends Activity {
     public String asdf, server_data, str_get_message, str_session_id, str_pal_oonbux_id, str_snd_message, str_oonbux_id;
     public String ct_from_id, ct_to_id, ct_message, ct_time, ct_message_id,receiver;
     EditText et_message;
-    Button btn_send;
+   // Button btn_send;
     TextView txt;
     ListView lview;
     SweetAlertDialog sweetDialog;
@@ -57,14 +62,21 @@ public class Pal_Chat extends Activity {
     Context context = this;
     int sender;
     boolean isMine = true;
-
+    private SQLiteDatabase db;
     MsgAdminAdapter messageAdapter;
 
     ArrayList<String> send_msg = new ArrayList<>();
     ArrayList<String> get_msg = new ArrayList<>();
 
     ArrayList<ChatMessage> chat_list = new ArrayList<ChatMessage>();
-    ArrayList<ChatMessage> lv2= new ArrayList<ChatMessage>();
+    ArrayList<String> chat_msg_id;
+
+    com.rey.material.widget.TextView tv_header;
+
+    HashMap<String, String> map ;
+    ArrayList<HashMap<String, String>> pal_datas;
+
+    ImageButton btn_send;
 
     public int id;
 
@@ -73,13 +85,20 @@ public class Pal_Chat extends Activity {
 
     com.rey.material.widget.LinearLayout lt_back, lt_setting;
 
+    SharedPreferences sharedPreferences;
+    ChatMessage chatMessage;
+    String str_sessionid,my_image,user_image;
+
+
 
     BroadcastReceiver appendChatScreenMsgReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+
+
             String data;
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Pal_Chat.this);
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Pal_Chat.this);
 
             Bundle b = intent.getExtras();
 
@@ -91,6 +110,7 @@ public class Pal_Chat extends Activity {
             ct_from_id = b.getString("chat_from");
             ct_message = b.getString("chat_message");
             ct_time = b.getString("chat_time");
+            ct_message_id = b.getString("message_id");
 
             Log.e("tag`", "" + data + ct_from_id + ct_message + ct_time);
             str_get_message = data;
@@ -99,8 +119,11 @@ public class Pal_Chat extends Activity {
 
             ct_to_id = sharedPreferences.getString("pal_oonbuxid", "");
 
+
+
             receiver = ct_from_id;
 
+            get_img_path();
 
             get_data();
 
@@ -116,18 +139,38 @@ public class Pal_Chat extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pal_chat);
 
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
+
+        Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
+
         Pal_Chat.this.registerReceiver(this.appendChatScreenMsgReceiver, new IntentFilter("appendChatScreenMsg"));
+
+         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_sessionid = sharedPreferences.getString("sessionid", "");
+
 
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         lt_setting = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_settings);
 
+        tv_header = (com.rey.material.widget.TextView) findViewById(R.id.tv_hd_txt);
 
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Pal_Chat.this);
+        et_message = (EditText) findViewById(R.id.message);
+        btn_send = (ImageButton) findViewById(R.id.btn_send);
+       // txt = (TextView) findViewById(R.id.txt);
+
+        lview = (ListView) findViewById(R.id.lview);
+
+        tv_header.setTypeface(tf1);
+        et_message.setTypeface(tf);
+        //btn_send.setTypeface(tf);
+
+
+       // final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Pal_Chat.this);
         str_session_id = sharedPreferences.getString("sessionid", "");
         str_pal_oonbux_id = sharedPreferences.getString("pal_oonbuxid", "");
         ct_to_id = sharedPreferences.getString("pal_oonbuxid", "");
         str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
-
+        createDatabase();
 
         receiver = sharedPreferences.getString("pal_oonbuxid","");
 
@@ -135,7 +178,7 @@ public class Pal_Chat extends Activity {
 
         dbclass = new DbC(context);
 
-        Intent getData = getIntent();
+        final Intent getData = getIntent();
 
         str_get_message = getData.getStringExtra("get_Server");
 
@@ -143,10 +186,22 @@ public class Pal_Chat extends Activity {
         ct_from_id = getData.getStringExtra("chat_from");
         ct_message = getData.getStringExtra("chat_message");
         ct_time = getData.getStringExtra("chat_time");
-        ct_message_id = getData.getStringExtra("chat_message_id");
+        ct_message_id = getData.getStringExtra("message_id");
 
 
-        if(sharedPreferences.getString("pal_oonbuxid","").isEmpty()){
+       /* if(sharedPreferences.getString("pal_oonbuxid","").isEmpty()){
+
+            receiver = ct_from_id;
+            Log.e("tag","0_das"+receiver);
+        }
+        else{
+
+            receiver = sharedPreferences.getString("pal_oonbuxid","");
+            Log.e("tag","1_das"+receiver);
+        }*/
+
+
+        if(!(ct_from_id ==  null)){
 
             receiver = ct_from_id;
             Log.e("tag","0_das"+receiver);
@@ -159,11 +214,22 @@ public class Pal_Chat extends Activity {
        // receiver = ct_from_id;
 
 
-        et_message = (EditText) findViewById(R.id.message);
-        btn_send = (Button) findViewById(R.id.btn_send);
-        txt = (TextView) findViewById(R.id.txt);
+        lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        lview = (ListView) findViewById(R.id.lview);
+               // final ChatMessage message = chatMessage;
+              //  Log.e("tag",chat_msg_id.get(position)+""+position +"\t");
+                //Log.e("tag",""+chatMessage.getMessage_id());
+
+                Log.e("tag","msg_id_click "+ chat_msg_id.get(position));
+
+                dbclass.chat_delete(chat_msg_id.get(position));
+               get_data();
+
+            }
+        });
+
 
 
         get_data();
@@ -183,8 +249,6 @@ public class Pal_Chat extends Activity {
             public void onClick(View v) {
                // openOptionsMenu();
 
-
-
                 PopupMenu popup = new PopupMenu(Pal_Chat.this, lt_setting);
 
                 popup.getMenuInflater().inflate(R.menu.task_menus, popup.getMenu());
@@ -195,18 +259,18 @@ public class Pal_Chat extends Activity {
 
                         switch (item.getItemId()) {
 
-
                             case R.id.delete: {
                                 Log.e("tag","worked");
+                                dbclass.del_table1();
+                                createDatabase();
+                                get_data();
+                                messageAdapter.notifyDataSetChanged();
                                 return true;
                             }
-
 
                             default: {
                                 return true;
                             }
-
-
                         }
 
 
@@ -214,11 +278,6 @@ public class Pal_Chat extends Activity {
                 });
 
                 popup.show();
-
-
-
-
-
 
             }
         });
@@ -233,7 +292,7 @@ public class Pal_Chat extends Activity {
                // ct_from_id = str_oonbux_id;
                // ct_to_id = str_pal_oonbux_id;
 
-                if(sharedPreferences.getString("pal_oonbuxid","").isEmpty()){
+            /*    if(sharedPreferences.getString("pal_oonbuxid","").isEmpty()){
                     str_pal_oonbux_id = ct_from_id;
                     receiver = ct_from_id;
                     Log.e("tag","0"+str_pal_oonbux_id+"\n"+ct_from_id);
@@ -242,7 +301,28 @@ public class Pal_Chat extends Activity {
 
                     str_pal_oonbux_id = sharedPreferences.getString("pal_oonbuxid","");
                     Log.e("tag","1"+str_pal_oonbux_id+"\n"+ct_from_id);
+                }*/
+
+
+
+
+                if(!(ct_from_id == null)){
+
+                    str_pal_oonbux_id = ct_from_id;
+                    Log.e("tag","0_das"+receiver);
                 }
+                else{
+
+                    str_pal_oonbux_id = sharedPreferences.getString("pal_oonbuxid","");
+                    Log.e("tag","1_das"+receiver);
+                }
+
+
+
+
+
+
+
 
 
                 if (et_message.getText().toString().trim().equals("")) {
@@ -259,11 +339,26 @@ public class Pal_Chat extends Activity {
 
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        db.close();
+    }
+
+    protected void createDatabase() {
+
+        Log.d("tag", "createdb");
+        db = openOrCreateDatabase("oonbux", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS chat(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, sender VARCHAR, from_id VARCHAR, to_id VARCHAR, message VARCHAR, time VARCHAR, message_id VARCHAR, receiver VARCHAR );");
+
+    }
+
+
 
 
     public void insert_data() {
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Pal_Chat.this);
+         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Pal_Chat.this);
         if(sharedPreferences.getString("pal_oonbuxid","").isEmpty()){
             receiver = ct_from_id;
             Log.e("tag", "1_receiver"+receiver);
@@ -282,12 +377,16 @@ public class Pal_Chat extends Activity {
     public void get_data() {
         Log.e("tag", "get_data");
 
+        my_image = sharedPreferences.getString("photo_path", "");
 
         messageAdapter = new MsgAdminAdapter(Pal_Chat.this);
 
         Cursor c = dbclass.chat_getdata(ct_from_id, ct_to_id,receiver);
         send_msg.clear();
         get_msg.clear();
+
+        chat_msg_id = new ArrayList<>();
+        chat_msg_id.clear();
 
         if (c != null) {
             if (c.moveToFirst()) {
@@ -297,35 +396,50 @@ public class Pal_Chat extends Activity {
 
                     String message = String.valueOf(c.getString(c.getColumnIndex("message")));
 
+                    //chat_msg_id.add(c.getString(c.getColumnIndex("message_id")));
+
+                    String msg_id = String.valueOf(c.getString(c.getColumnIndex("message_id")));
+
 
                     if (id == 0) {
+
+                        Log.e("tag","msg_id_send "+ msg_id);
+                        chat_msg_id.add(msg_id);
+
                         send_msg.add(message);
-                        Log.e("tag", "send" + send_msg.size());
-                        ChatMessage chatMessage = new ChatMessage(message, 0);
+                       // Log.e("tag", "send" + send_msg.size()+"\t"+ct_message_id);
+                        chatMessage = new ChatMessage(message, 0,ct_message_id);
                         chatMessages.add(chatMessage);
                         chatMessage.setMessage(message);
+                        chatMessage.setMessage_id(msg_id);
                         chatMessage.setMessegeBy("me");
                         chat_list.add(chatMessage);
-                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_OUTGOING);
+                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_OUTGOING,msg_id,my_image);
 
                     }
                     else {
-                        get_msg.add(message);
 
-                        ChatMessage chatMessage = new ChatMessage(message, 1);
+                        Log.e("tag","msg_id_get "+ msg_id);
+                        chat_msg_id.add(msg_id);
+
+                        get_msg.add(message);
+                        chatMessage = new ChatMessage(message, 1,ct_message_id);
                         chatMessages.add(chatMessage);
                         chatMessage.setMessage(message);
+                        chatMessage.setMessage_id(msg_id);
                         chatMessage.setMessegeBy("user");
                         chat_list.add(chatMessage);
-                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_INCOMING);
-                        Log.e("tag", "get" + get_msg.size());
+                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_INCOMING,msg_id,user_image);
+                      //  Log.e("tag", "get" + get_msg.size()+"\t"+ct_message_id);
                     }
                 } while (c.moveToNext());
             }
         }
 
         lview = (ListView) findViewById(R.id.lview);
+
         lview.setAdapter(messageAdapter);
+        lview.setSelection(lview.getAdapter().getCount()-1);
 
     }
 
@@ -384,6 +498,151 @@ public class Pal_Chat extends Activity {
 
 
 
+    private void get_img_path() {
+
+
+       /* new getPalLists().execute();
+
+        for(int i =0 ;i<pal_datas.size();i++){
+            HashMap<String, String> result = new HashMap<String, String>();
+
+            result = pal_datas.get(i);
+            if(result.get("oonbux_id") == receiver){
+                Log.e("tag",""+result.get("photourl"));
+            }
+        }*/
+
+
+
+    }
+
+
+
+
+    class getPalLists extends AsyncTask<String, Void, String> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            sweetDialog = new SweetAlertDialog(Pal_Chat.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetDialog.setTitleText("Loading");
+            sweetDialog.setCancelable(false);
+            sweetDialog.show();
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+
+
+            try {
+
+                String virtual_url = Config.SER_URL + "pal/friends";
+                Log.e("tag",""+virtual_url);
+
+                JSONObject jsonobject = HttpUtils.getPalLists(virtual_url, str_sessionid);
+
+                Log.d("tag", "" + jsonobject.toString());
+
+                if (jsonobject.toString() == "sam") {
+                    new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("Try Check your Network")
+                            .setConfirmText("OK")
+                            .show();
+                }
+
+                json = jsonobject.toString();
+
+                return json;
+            } catch (Exception e) {
+                Log.e("InputStream", "" + e.getLocalizedMessage());
+                jsonStr = "";
+            }
+            return jsonStr;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            super.onPostExecute(jsonStr);
+            sweetDialog.dismiss();
+
+
+
+            try {
+
+                JSONObject jo = new JSONObject(jsonStr);
+                String status = jo.getString("status");
+                String msg = jo.getString("message");
+                int count = Integer.valueOf(jo.getString("count"));
+
+                Log.e("tag", "<-----count---->" + count);
+
+                if (status.equals("success")) {
+
+                    if (count > 0) {
+
+
+                        String subd = jo.getString("friends");
+
+                        JSONArray friends_list = jo.getJSONArray("friends");
+                        Log.e("tag", "<-----friends_list-chat---->" + "" + friends_list);
+
+
+                        map = new HashMap<String, String>();
+                        pal_datas.clear();
+                        map.clear();
+
+                        for (int i = 0; i < friends_list.length(); i++) {
+
+                            JSONObject datas = friends_list.getJSONObject(i);
+
+                            map = new HashMap<String, String>();
+                            map.put("oonbux_id", datas.getString("oonbux_id"));
+                            map.put("firstname", datas.getString("firstname"));
+                            map.put("lastname", datas.getString("lastname"));
+                            map.put("email", datas.getString("email"));
+                            map.put("loc_phone", datas.getString("loc_phone"));
+                            map.put("photourl", datas.getString("photourl"));
+                            map.put("status", datas.getString("status"));
+
+                            Log.e("tag",""+map.get("firstname"));
+
+                            pal_datas.add(map);
+
+                            // map.clear();
+
+                        }
+
+                        for(int i = 0;i <pal_datas.size();i++){
+                            Log.e("tag",""+pal_datas.get(i));
+
+                        }
+
+                    } else {
+
+                    }
+
+                } else {
+
+                    new SweetAlertDialog(Pal_Chat.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("Try Check your Network")
+                            .setConfirmText("OK")
+                            .show();
+
+                }
+
+
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
+
+    }
 
 
 
@@ -425,7 +684,7 @@ public class Pal_Chat extends Activity {
             try {
 
                 JSONObject jsonObject = new JSONObject();
-
+                str_snd_message = str_snd_message.trim();
                 jsonObject.accumulate("pal_oonbux_id", str_pal_oonbux_id);
                 jsonObject.accumulate("message", str_snd_message);
 

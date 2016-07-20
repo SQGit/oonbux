@@ -14,15 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="@dimen/_8sdp"
+        android:layout_marginRight="@dimen/_8sdp"
         android:background="#606060"
-        android:padding="5dp">
+        android:padding="@dimen/_4sdp">
 
         <com.github.siyamed.shapeimageview.CircularImageView
             android:id="@+id/imgview"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="3dp"
             android:background="@drawable/photo_ico"
@@ -44,11 +44,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:gravity="left"
                     android:text="Name : "
                     android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_name"
@@ -58,7 +58,7 @@
                     android:gravity="left"
                     android:text="ANDY RODUS"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
 
@@ -71,11 +71,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:gravity="left"
                     android:text="Oonbux Id : "
                     android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_oonbuxid"
@@ -85,7 +85,7 @@
                     android:gravity="left"
                     android:text="IB566FD33"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
 
@@ -98,11 +98,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:gravity="left"
                     android:text="Email : "
                     android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_mail"
@@ -112,7 +112,7 @@
                     android:gravity="left"
                     android:text="rodusmail@oonbux.com"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_14sdp" />
 
 
             </LinearLayout>
@@ -127,11 +127,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:gravity="left"
                     android:text="Phone : "
                     android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_phone"
@@ -141,7 +141,7 @@
                     android:gravity="left"
                     android:text="984546544"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
 
@@ -155,10 +155,10 @@
         android:background="@drawable/login_reg_button"
         android:id="@+id/layout_request"
         android:layout_alignParentRight="true"
-        android:padding="10dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="15dp"
+        android:padding="@dimen/_8sdp"
+        android:layout_marginRight="@dimen/_13sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_13sdp"
         android:layout_height="wrap_content">
 
         <com.rey.material.widget.TextView
@@ -170,7 +170,7 @@
             android:gravity="center"
             android:text="Request?"
             android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:textSize="@dimen/_10sdp" />
 
         <!-- <ImageView
              android:layout_width="wrap_content"
@@ -189,8 +189,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginRight="@dimen/_18sdp"
         android:background="@drawable/backo"
         android:padding="1dp">
 
@@ -204,7 +204,7 @@
             android:padding="3dp"
             android:text="Accept"
             android:textColor="#af7735"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_18sdp" />
 
         <View
             android:layout_width="1dp"
@@ -221,7 +221,7 @@
             android:padding="3dp"
             android:text="Reject"
             android:textColor="#af7735"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_18sdp" />
     </LinearLayout>
 
 

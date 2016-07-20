@@ -1,8 +1,10 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -49,6 +51,11 @@ public class RegisterActivity extends Activity {
     ListAdapter_Class country_list_adapter, state_list_adapter, zip_list_adapter;
 
     ArrayAdapter<String> adpater_states;
+    ArrayAdapter<String> adapter_zip;
+
+    DbC dbclass;
+    Context context = this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,9 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
         getIds_Fonts();
         str_country = "us";
-        if (!Config.isNetworkAvailable(RegisterActivity.this)) {
+        dbclass = new DbC(context);
+
+      /*  if (!Config.isNetworkAvailable(RegisterActivity.this)) {
             new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Oops!")
                     .setContentText("No network Available!")
@@ -73,14 +82,18 @@ public class RegisterActivity extends Activity {
             new GetCountry().execute();
 
 
-        }
+        }*/
+
+
+        get_CountryDB();
 
         spin.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-                str_country = spin.getSelectedItem().toString();
+                //str_country = spin.getSelectedItem().toString();
                 states.clear();
-                new GetState(str_country).execute();
+                get_StateDB();
+                //new GetState(str_country).execute();
 
             }
         });
@@ -88,9 +101,10 @@ public class RegisterActivity extends Activity {
         aet_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                str_country = spin.getSelectedItem().toString();
+                //str_country = spin.getSelectedItem().toString();
                 states.clear();
-                new GetState(str_country).execute();
+                get_StateDB();
+                //new GetState(str_country).execute();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
         });
@@ -102,7 +116,10 @@ public class RegisterActivity extends Activity {
                         str_country = spin.getSelectedItem().toString();
                         str_state = aet_state.getText().toString();
                         zip.clear();
-                        new GetZip(str_country, str_state).execute();
+
+                        get_ZipDB();
+
+                      //  new GetZip(str_country, str_state).execute();
                         aet_zip.requestFocus();
                         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                         return true;
@@ -124,7 +141,8 @@ public class RegisterActivity extends Activity {
                     str_country = spin.getSelectedItem().toString();
                     str_state = aet_state.getText().toString();
                     zip.clear();
-                    new GetZip(str_country, str_state).execute();
+                    get_ZipDB();
+                    //new GetZip(str_country, str_state).execute();
                     aet_zip.requestFocus();
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 } else {
@@ -145,16 +163,115 @@ public class RegisterActivity extends Activity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validatedatas();
+
+
+                if (!Config.isNetworkAvailable(RegisterActivity.this)) {
+                    new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("No network Available!")
+                            .setConfirmText("OK")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                                    finish();
+                                }
+                            })
+                            .show();
+                } else {
+                    validatedatas();
+
+
+                }
+
+
+
+
             }
         });
 
 
-        adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, states);
-        aet_state.setAdapter(adpater_states);
+
 
 
     }
+
+    private void get_CountryDB() {
+
+        Cursor cont_cursor = dbclass.getCountry();
+
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String cont = cont_cursor.getString(cont_cursor.getColumnIndex("country"));
+                    Log.e("tag",""+cont);
+                    country.add(cont);
+
+                    country_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists, country);
+                    spin.setAdapter(country_list_adapter);
+
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+
+        get_StateDB();
+
+    }
+
+
+    private void get_StateDB() {
+
+        String country = spin.getSelectedItem().toString();
+
+        Cursor cont_cursor = dbclass.getState(country);
+
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String stat = cont_cursor.getString(cont_cursor.getColumnIndex("state"));
+                    Log.e("tag",""+stat);
+                    states.add(stat);
+
+                    adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, states);
+                    aet_state.setAdapter(adpater_states);
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+
+
+    }
+
+
+    private void get_ZipDB() {
+
+        String country = spin.getSelectedItem().toString();
+        String state = aet_state.getText().toString();
+
+        Cursor cont_cursor = dbclass.getZip(country,state);
+
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String zp = cont_cursor.getString(cont_cursor.getColumnIndex("zip"));
+                    Log.e("tag",""+zp);
+                    zip.add(zp);
+
+
+                    adapter_zip = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, zip);
+                    aet_zip.setAdapter(adapter_zip);
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+
+
+    }
+
 
     private void getIds_Fonts() {
         btn_submit = (Button) findViewById(R.id.button_submit);
@@ -237,6 +354,8 @@ public class RegisterActivity extends Activity {
             et_fname.requestFocus();
         }
     }
+
+
 
     class RegisterTask extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {

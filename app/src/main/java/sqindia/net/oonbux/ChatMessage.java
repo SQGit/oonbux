@@ -8,19 +8,30 @@ public class ChatMessage {
     private String messegeBy;
     private String name;
     private String userImage;
+    private String message_id;
 
     public ChatMessage()
     {
 
     }
 
-    public ChatMessage(String content, int isMine) {
+    public ChatMessage(String content, int isMine,String id) {
         this.content = content;
         this.isMine = isMine;
+        this.message_id = id;
     }
 
     public String getContent() {
         return content;
+    }
+
+    public String getMessage_id() {
+        return message_id;
+    }
+
+    public void setMessage_id(String message_id) {
+
+        this.message_id = message_id;
     }
 
     public int isMine() {

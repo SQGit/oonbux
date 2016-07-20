@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/_40sdp"
         android:background="#070b23">
 
         <FrameLayout
@@ -22,7 +22,7 @@
             <com.rey.material.widget.LinearLayout
                 android:id="@+id/layout_back"
                 style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="80dp"
+                android:layout_width="@dimen/_70sdp"
                 android:layout_height="match_parent">
 
                 <ImageButton
@@ -43,14 +43,14 @@
                 android:gravity="center"
                 android:text="Profile Info"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textSize="@dimen/_22sdp" />
 
 
         <com.rey.material.widget.Button
             android:id="@+id/button_edit"
             style="@style/Material.Drawable.Ripple.Wave.Light"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/ll"
             android:layout_gravity="right|center_vertical"
@@ -63,7 +63,7 @@
             android:paddingRight="10dp"
             android:text="Edit"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_18sdp" />
         </FrameLayout>
 
     </LinearLayout>
@@ -72,7 +72,7 @@
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/_150sdp"
         android:layout_below="@+id/ll1"
         android:gravity="center">
 
@@ -83,14 +83,14 @@
 
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:id="@+id/nav_header_propic"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_margin="15dp"
                 android:background="@drawable/photo_ico"
                 android:padding="10dp"
                 app:siBorderColor="@color/colorAccent"
-                app:siBorderWidth="3dp" />
+                app:siBorderWidth="@dimen/_2sdp" />
 
 
             <ImageView
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:src="@drawable/cam_plus_ico" />
 
 
@@ -137,7 +137,7 @@
                 android:inputType="textPersonName"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
-                android:textSize="22sp"
+                android:textSize="@dimen/_19sdp"
                 app:met_accentTypeface="fonts/prox.otf"
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
@@ -159,7 +159,7 @@
                 android:inputType="textPersonName"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
-                android:textSize="22sp"
+                android:textSize="@dimen/_19sdp"
                 app:met_accentTypeface="fonts/prox.otf"
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
@@ -181,7 +181,7 @@
 
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
-                android:textSize="22sp"
+                android:textSize="@dimen/_19sdp"
                 app:met_accentTypeface="fonts/prox.otf"
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
@@ -204,7 +204,7 @@
                 android:maxLength="10"
                 android:paddingLeft="5dp"
                 android:paddingRight="13dp"
-                android:textSize="22sp"
+                android:textSize="@dimen/_19sdp"
                 app:met_accentTypeface="fonts/prox.otf"
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
@@ -225,7 +225,7 @@
                 android:inputType="phone"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
-                android:textSize="22sp"
+                android:textSize="@dimen/_19sdp"
                 app:met_accentTypeface="fonts/prox.otf"
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
@@ -245,7 +245,7 @@
                 android:inputType="textPersonName"
                 android:paddingLeft="5dp"
                 android:paddingRight="12dp"
-                android:textSize="22sp"
+                android:textSize="@dimen/_19sdp"
                 app:met_accentTypeface="fonts/prox.otf"
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
@@ -270,7 +270,7 @@
         <com.rey.material.widget.Button
             android:id="@+id/button_submit"
             style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="150dp"
+            android:layout_width="@dimen/_120sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
             android:background="@drawable/login_reg_button"
@@ -280,7 +280,7 @@
             android:paddingRight="20dp"
             android:text="Next"
             android:textColor="#FFFFFF"
-            android:textSize="22sp" />
+            android:textSize="@dimen/_22sdp" />
     </LinearLayout>
 
 </RelativeLayout>

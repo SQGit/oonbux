@@ -83,13 +83,11 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
         <activity android:name=".HowItWorks" />
-        <activity android:name=".ContactUs" />
-        <activity
-            android:name=".PalRequest"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
+
 
         <activity android:name=".ProfileDashboard" />
-        <activity android:name=".Invite_Pal" />
+
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/img_Picker" />
@@ -99,26 +97,21 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
         <activity android:name=".AddLocation" />
-        <activity android:name=".ShipmentNext" />
-        <activity android:name=".ChoosePal" />
-        <activity android:name=".ChooseAddress" />
-        <activity android:name=".AddPal" />
 
-        <activity android:name=".SwipeList" />
+        <activity android:name=".ChooseAddress" />
+
 
         <activity android:name=".SurfaceView" />
-        <activity android:name=".ChatPage"/>
+
         <activity android:name=".ManageAddress"/>
-        <activity android:name=".MyPals"/>
-        <activity android:name=".SearchPal"/>
-        <activity android:name=".PendingbyMe"/>
-        <activity android:name=".PendingbyPal"/>
+
         <activity android:name=".PalAccept"/>
 
         <activity android:name=".MyPalLists"/>
         <activity android:name=".Pal_Chat_List"/>
         <activity android:name=".Pal_Chat"/>
         <activity android:name=".ChoosePal_1"/>
+        <activity android:name=".AddLocationNew"/>
 
 
         <meta-data

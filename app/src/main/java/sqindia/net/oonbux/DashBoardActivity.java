@@ -149,7 +149,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_logout = (TextView) findViewById(R.id.txt12);
 
         btn_add_shipment = (Button) findViewById(R.id.add_ship_button);
-        btn_done_shipment = (Button) findViewById(R.id.add_done_button);
+        //btn_done_shipment = (Button) findViewById(R.id.add_done_button);
 
         btn_nav_cont_loc_adr = (Button) findViewById(R.id.btn1);
         btn_nav_cont_int_adr = (Button) findViewById(R.id.btn2);
@@ -263,7 +263,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             Log.e("tag",""+sharedPreferences.getString("shipment_photo1",""));
 
             btn_add_shipment.setVisibility(View.GONE);
-            btn_done_shipment.setVisibility(View.GONE);
+            //btn_done_shipment.setVisibility(View.GONE);
 
             Log.e("tag",""+"2nd");
 
@@ -284,7 +284,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
             tv_nav_hd_ship_id.setText(str_oonbux_id);
             btn_add_shipment.setVisibility(View.VISIBLE);
-            btn_done_shipment.setVisibility(View.GONE);
+           // btn_done_shipment.setVisibility(View.GONE);
             progressBar.setProgress(33);
             First_Fragment fragment = new First_Fragment();
             FragmentManager fm = getFragmentManager();
@@ -317,7 +317,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             public void onClick(View v) {
 
                 btn_add_shipment.setVisibility(View.VISIBLE);
-                btn_done_shipment.setVisibility(View.GONE);
+               // btn_done_shipment.setVisibility(View.GONE);
                 progressBar.setProgress(33);
                 btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_brown));
                 btn_dash_deliver.setBackgroundColor(getResources().getColor(R.color.tab_default));
@@ -356,7 +356,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
 
                     btn_add_shipment.setVisibility(View.GONE);
-                     btn_done_shipment.setVisibility(View.GONE);
+                   //  btn_done_shipment.setVisibility(View.GONE);
 
                     progressBar.setProgress(66);
                     btn_dash_ship.setBackgroundColor(getResources().getColor(R.color.tab_default));
@@ -376,7 +376,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             public void onClick(View v) {
 
                 btn_add_shipment.setVisibility(View.GONE);
-                btn_done_shipment.setVisibility(View.GONE);
+               // btn_done_shipment.setVisibility(View.GONE);
 
 
                 progressBar.setProgress(100);
@@ -411,8 +411,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 editor.commit();
 
 
-                Intent inte = new Intent(getApplicationContext(), AddLocation.class);
-                inte.putExtra("sts", 1);
+                Intent inte = new Intent(getApplicationContext(), AddLocationNew.class);
+               // inte.putExtra("sts", 1);
                 startActivity(inte);
 
                 // toggle.syncState();
@@ -682,7 +682,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frame_container, fragment).commit();
 
             btn_add_shipment.setVisibility(View.GONE);
-            btn_done_shipment.setVisibility(View.GONE);
+           // btn_done_shipment.setVisibility(View.GONE);
 
             //btm_cam.setImageURI(uri);
         }

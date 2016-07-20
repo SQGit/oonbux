@@ -23,6 +23,8 @@ public class DbC extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, size VARCHAR, pickup VARCHAR, photo VARCHAR, cost VARCHAR);");
 
+        db.execSQL("CREATE TABLE IF NOT EXISTS region(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, country VARCHAR, state VARCHAR, zip VARCHAR);");
+
         db.execSQL("CREATE TABLE IF NOT EXISTS chat(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, sender VARCHAR, from_id VARCHAR, to_id VARCHAR, message VARCHAR, time VARCHAR, message_id VARCHAR, receiver VARCHAR );");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS virtual(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, addr_id VARCHAR, addr_line1 VARCHAR, addr_line2 VARCHAR, city VARCHAR, state VARCHAR, zip VARCHAR, country VARCHAR, loc VARCHAR );");
@@ -97,14 +99,48 @@ public class DbC extends SQLiteOpenHelper {
             SQLiteDatabase sdb1;
             sdb1 = getWritableDatabase();
             String query = "drop table cart;";
-            String query1 = "drop table chat;";
+
             sdb1.execSQL(query);
-            sdb1.execSQL(query1);
+
 
         } catch (Exception e) {
             System.out.println("DATABASE ERROR " + e);
         }
 
+    }
+
+
+
+    public void del_table1() {
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getWritableDatabase();
+
+            String query = "delete from chat;";
+           // String query = "drop table chat;";
+
+
+            sdb1.execSQL(query);
+
+
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+        }
+
+    }
+
+
+    public void region_insert(String country,String state,String zip) {
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getWritableDatabase();
+            String query = "insert into region (country,state,zip) VALUES(\""+country+"\",\""+state+"\",\""+zip+"\");";
+            sdb1.execSQL(query);
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+            Log.e("tag",""+e);
+        }
     }
 
 
@@ -119,6 +155,22 @@ public class DbC extends SQLiteOpenHelper {
             System.out.println("DATABASE ERROR " + e);
             Log.e("tag",""+e);
         }
+    }
+
+    public void chat_delete(String id) {
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getWritableDatabase();
+            String query = "DELETE FROM chat WHERE message_id = \""+ id +"\";" ;
+            Log.e("tag",""+query);
+            sdb1.execSQL(query);
+
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+
+        }
+
     }
 
 
@@ -175,6 +227,65 @@ public class DbC extends SQLiteOpenHelper {
     }
 
 
+    public Cursor getCountry() {
+        Cursor cur = null;
+
+        String query = "select DISTINCT country from region;"  ;
+
+        Log.e("tag",""+query);
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getReadableDatabase();
+            cur = sdb1.rawQuery(query, null);
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+
+        }
+
+        return cur;
 
 
+    }
+
+    public Cursor getState(String country) {
+
+        Cursor cur = null;
+
+        String query = "select DISTINCT state from region where country = \""+ country +"\";"  ;
+
+        Log.e("tag",""+query);
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getReadableDatabase();
+            cur = sdb1.rawQuery(query, null);
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+
+        }
+
+        return cur;
+    }
+
+    public Cursor getZip(String country, String state) {
+        Cursor cur = null;
+
+        String query = "select DISTINCT zip from region where country = \""+ country +"\" and state = \""+ state +"\";"  ;
+
+        Log.e("tag",""+query);
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getReadableDatabase();
+            cur = sdb1.rawQuery(query, null);
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+
+        }
+
+        return cur;
+
+
+    }
 }

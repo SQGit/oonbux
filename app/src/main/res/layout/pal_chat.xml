@@ -5,18 +5,13 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-   <!-- <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:scrollbars="vertical" />-->
+
 
 
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_alignParentTop="true"
         android:background="#070b23">
 
@@ -28,7 +23,7 @@
             <com.rey.material.widget.LinearLayout
                 android:id="@+id/layout_back"
                 style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="80dp"
+                android:layout_width="@dimen/_70sdp"
                 android:layout_height="match_parent">
 
                 <ImageButton
@@ -36,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:background="@drawable/back_ico" />
             </com.rey.material.widget.LinearLayout>
 
@@ -48,15 +43,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Chat"
+                android:text="Chat Room"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textSize="@dimen/_22sdp" />
 
 
             <com.rey.material.widget.LinearLayout
                 android:id="@+id/layout_settings"
                 style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="80dp"
+                android:layout_width="@dimen/_70sdp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:gravity="right">
@@ -66,8 +61,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="15dp"
-                    android:background="@android:drawable/ic_menu_sort_by_size" />
+                    android:layout_marginRight="@dimen/_13sdp"
+                    android:background="@drawable/sett_ico" />
             </com.rey.material.widget.LinearLayout>
 
         </FrameLayout>
@@ -75,58 +70,56 @@
 
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/txt"
-        android:textColor="#000000"
-        android:textSize="25sp"/>
 
     <ListView
-        android:layout_width="wrap_content"
         android:id="@+id/lview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/layout_send"
-        android:divider="@android:color/transparent"
+        android:background="@drawable/bg_dash"
         android:layout_below="@+id/ll1"
-        android:layout_height="wrap_content">
+        android:divider="@android:color/transparent">
 
     </ListView>
 
     <LinearLayout
+        android:id="@+id/layout_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/layout_send"
         android:layout_alignParentBottom="true"
-        android:background="#081f40"
+        android:background="#241f1c"
         android:orientation="horizontal"
-        android:weightSum="4">
+
+        android:padding="@dimen/_8sdp">
 
         <EditText
             android:id="@+id/message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="3"
-            android:textColorHint="#FFFFFF"
-            android:background="@null"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:background="@drawable/chat_send_msg"
             android:hint="Enter message"
-            android:textColor="#FFFFFF"
             android:lines="1"
-            android:paddingLeft="10dp" />
+            android:paddingBottom="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="@dimen/_16sdp" />
 
-        <com.rey.material.widget.Button
+
+
+        <com.rey.material.widget.ImageButton
             android:id="@+id/btn_send"
             style="@style/Material.Drawable.Ripple"
-            android:layout_margin="5dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/backo"
-            android:text="SEND"
-            android:textSize="18dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/circl_bg"
+            android:padding="@dimen/_13sdp"
+            android:src="@drawable/arrow_ico" />
 
     </LinearLayout>
 

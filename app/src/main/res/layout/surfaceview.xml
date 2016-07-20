@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/_40sdp"
         android:background="#070b23">
 
         <FrameLayout
@@ -18,7 +18,7 @@
             <com.rey.material.widget.LinearLayout
                 android:id="@+id/layout_back"
                 style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="80dp"
+                android:layout_width="@dimen/_70sdp"
                 android:layout_height="match_parent">
 
                 <ImageButton
@@ -26,7 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:background="@drawable/back_ico" />
             </com.rey.material.widget.LinearLayout>
 
@@ -40,13 +40,13 @@
                 android:gravity="center"
                 android:text="Add Shipment"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:textSize="@dimen/_22sdp" />
 
 
             <com.rey.material.widget.LinearLayout
                 android:id="@+id/layout_add"
                 style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="80dp"
+                android:layout_width="@dimen/_70sdp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:gravity="right">
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="@dimen/_13sdp"
                     android:background="@drawable/plus_ico" />
             </com.rey.material.widget.LinearLayout>
 
@@ -69,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll1"
-        android:layout_marginBottom="80dp" />
+        android:layout_marginBottom="@dimen/_70sdp" />
 
 
     <LinearLayout
@@ -77,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="@dimen/_13sdp"
         android:orientation="horizontal">
 
         <com.rey.material.widget.Button
@@ -85,14 +85,14 @@
             style="@style/Material.Drawable.Ripple.Wave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/_18sdp"
+            android:layout_marginRight="@dimen/_13sdp"
             android:layout_weight="1"
             android:background="@color/text_color"
             android:drawableLeft="@drawable/pal_add_wt_ico"
-            android:drawablePadding="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:drawablePadding="@dimen/_4sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingRight="@dimen/_8sdp"
             android:text="Send to Pal"
             android:textColor="#FFFFFF" />
 
@@ -102,14 +102,14 @@
             style="@style/Material.Drawable.Ripple.Wave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/_18sdp"
+            android:layout_marginRight="@dimen/_13sdp"
             android:layout_weight="1"
             android:background="@color/text_color"
-            android:drawablePadding="5dp"
+            android:drawablePadding="@dimen/_4sdp"
             android:drawableRight="@drawable/back_rt_ico"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingRight="@dimen/_8sdp"
             android:text="Continue"
             android:textColor="#FFFFFF" />
 

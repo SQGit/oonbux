@@ -97,6 +97,7 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
         <activity android:name=".AddLocation" />
+        <activity android:name=".AddLocationNew"/>
 
         <activity android:name=".ChooseAddress" />
 

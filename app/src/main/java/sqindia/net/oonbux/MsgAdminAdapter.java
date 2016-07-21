@@ -6,7 +6,9 @@ package sqindia.net.oonbux;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.support.v4.util.Pair;
 
 import android.util.Log;
@@ -37,7 +39,11 @@ public class MsgAdminAdapter extends BaseAdapter {
 
     DbC dbclass;
     Context context ;
-    String photo_path;
+    String my_photo,pal_photo;
+
+    SharedPreferences sharedPreferences;
+
+    String my_img;
 
 
 
@@ -48,12 +54,14 @@ public class MsgAdminAdapter extends BaseAdapter {
         messages = new ArrayList<Pair<ChatMessage, Integer>>();
         message_id = new ArrayList<Pair<ChatMessage, Integer>>();
     }
-    public void addMessage(ChatMessage message, int direction,String msg_id,String photo) {
+    public void addMessage(ChatMessage message, int direction,String msg_id,String photo,String pal_poto) {
         messages.add(new Pair(message, direction));
         message_id.add(new Pair(msg_id,direction));
 
-        this.photo_path = photo;
+        this.my_photo = photo;
         this.msg_id.add(msg_id);
+
+        this.pal_photo = pal_poto;
 
         notifyDataSetChanged();
     }
@@ -83,11 +91,13 @@ public class MsgAdminAdapter extends BaseAdapter {
         //show message on left or right, depending on if
         //it's incoming or outgoing
 
-        Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/prox.otf");
-
         context = activity;
 
+        Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/prox.otf");
         dbclass = new DbC(context);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        my_img = sharedPreferences.getString("photo_path", "");
 
         if (convertView == null) {
             int res = 0;
@@ -109,12 +119,27 @@ public class MsgAdminAdapter extends BaseAdapter {
 
         ImageView user_image = (ImageView) convertView.findViewById(R.id.image_profile);
 
-        Log.e("tag",""+photo_path);
+        Log.e("tag",""+my_photo+"\t"+pal_photo);
 
+
+
+        if (direction == DIRECTION_INCOMING) {
             Picasso.with(context)
-                    .load(photo_path)
+                    .load(pal_photo)
                     .fit()
                     .into(user_image);
+
+
+
+        } else if (direction == DIRECTION_OUTGOING) {
+            Picasso.with(context)
+                    .load(my_img)
+                    .fit()
+                    .into(user_image);
+        }
+
+
+
 
 
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 /**
@@ -131,16 +132,74 @@ public class DbC extends SQLiteOpenHelper {
     }
 
 
+
+
+
+    public void insertFast(String a,String b,String c) {
+
+        // you can use INSERT only
+      //  String sql = "INSERT OR REPLACE INTO region ( country, state, zip ) VALUES ( \""+a+"\",\""+b+"\",\""+c+"\")";
+
+        String sql = "INSERT OR REPLACE INTO region (  country, state, zip ) VALUES ( ?, ?, ? )";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        /*
+         * According to the docs http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html
+         * Writers should use beginTransactionNonExclusive() or beginTransactionWithListenerNonExclusive(SQLiteTransactionListener)
+         * to start a transaction. Non-exclusive mode allows database file to be in readable by other threads executing queries.
+         */
+        db.beginTransactionNonExclusive();
+        // db.beginTransaction();
+
+        SQLiteStatement stmt = db.compileStatement(sql);
+
+       // String sql = "INSERT OR REPLACE INTO " + tableName + " ( name, description ) VALUES ( ?, ? )";
+
+            stmt.bindString(1,a);
+            stmt.bindString(2,b);
+            stmt.bindString(2,c);
+
+
+
+
+            stmt.execute();
+            stmt.clearBindings();
+
+
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+       // db.close();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void region_insert(String country,String state,String zip) {
         try {
             SQLiteDatabase sdb1;
             sdb1 = getWritableDatabase();
             String query = "insert into region (country,state,zip) VALUES(\""+country+"\",\""+state+"\",\""+zip+"\");";
             sdb1.execSQL(query);
+
+            //sdb1.close();
         } catch (Exception e) {
             System.out.println("DATABASE ERROR " + e);
             Log.e("tag",""+e);
         }
+
+
     }
 
 
@@ -238,6 +297,8 @@ public class DbC extends SQLiteOpenHelper {
             SQLiteDatabase sdb1;
             sdb1 = getReadableDatabase();
             cur = sdb1.rawQuery(query, null);
+
+            //sdb1.close();
         } catch (Exception e) {
             System.out.println("DATABASE ERROR " + e);
 
@@ -260,6 +321,7 @@ public class DbC extends SQLiteOpenHelper {
             SQLiteDatabase sdb1;
             sdb1 = getReadableDatabase();
             cur = sdb1.rawQuery(query, null);
+           // sdb1.close();
         } catch (Exception e) {
             System.out.println("DATABASE ERROR " + e);
 

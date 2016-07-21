@@ -52,7 +52,7 @@ import android.view.LayoutInflater.Factory;
 public class Pal_Chat extends Activity {
 
     public String asdf, server_data, str_get_message, str_session_id, str_pal_oonbux_id, str_snd_message, str_oonbux_id;
-    public String ct_from_id, ct_to_id, ct_message, ct_time, ct_message_id,receiver;
+    public String ct_from_id, ct_to_id, ct_message, ct_time, ct_message_id,receiver,pal_photo;
     EditText et_message;
    // Button btn_send;
     TextView txt;
@@ -111,6 +111,7 @@ public class Pal_Chat extends Activity {
             ct_message = b.getString("chat_message");
             ct_time = b.getString("chat_time");
             ct_message_id = b.getString("message_id");
+            pal_photo = b.getString("pal_photo");
 
             Log.e("tag`", "" + data + ct_from_id + ct_message + ct_time);
             str_get_message = data;
@@ -187,6 +188,7 @@ public class Pal_Chat extends Activity {
         ct_message = getData.getStringExtra("chat_message");
         ct_time = getData.getStringExtra("chat_time");
         ct_message_id = getData.getStringExtra("message_id");
+        pal_photo = getData.getStringExtra("pal_photo");
 
 
        /* if(sharedPreferences.getString("pal_oonbuxid","").isEmpty()){
@@ -214,7 +216,19 @@ public class Pal_Chat extends Activity {
        // receiver = ct_from_id;
 
 
-        lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    lview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            Log.e("tag","msg_id_click "+ chat_msg_id.get(position));
+
+            dbclass.chat_delete(chat_msg_id.get(position));
+            get_data();
+            return true;
+        }
+    });
+
+
+    /*    lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -228,7 +242,7 @@ public class Pal_Chat extends Activity {
                get_data();
 
             }
-        });
+        });*/
 
 
 
@@ -414,7 +428,7 @@ public class Pal_Chat extends Activity {
                         chatMessage.setMessage_id(msg_id);
                         chatMessage.setMessegeBy("me");
                         chat_list.add(chatMessage);
-                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_OUTGOING,msg_id,my_image);
+                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_OUTGOING,msg_id,my_image,pal_photo);
 
                     }
                     else {
@@ -429,7 +443,7 @@ public class Pal_Chat extends Activity {
                         chatMessage.setMessage_id(msg_id);
                         chatMessage.setMessegeBy("user");
                         chat_list.add(chatMessage);
-                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_INCOMING,msg_id,user_image);
+                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_INCOMING,msg_id,user_image,pal_photo);
                       //  Log.e("tag", "get" + get_msg.size()+"\t"+ct_message_id);
                     }
                 } while (c.moveToNext());

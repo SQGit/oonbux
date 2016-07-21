@@ -505,7 +505,7 @@ public class ProfileInfo extends Activity {
         et_zip.setTextColor(getResources().getColor(R.color.text_color));
         et_state.setEnabled(true);
         et_state.setTextColor(getResources().getColor(R.color.text_color));
-        img_edit.setEnabled(true);
+        //img_edit.setEnabled(true);
 
 
     }
@@ -525,8 +525,8 @@ public class ProfileInfo extends Activity {
         et_zip.setTextColor(getResources().getColor(R.color.hint_floating_dark));
         et_state.setEnabled(false);
         et_state.setTextColor(getResources().getColor(R.color.hint_floating_dark));
-        img_edit.setEnabled(false);
-        btn_edit.setEnabled(true);
+        //img_edit.setEnabled(false);
+       // btn_edit.setEnabled(true);
     }
 
 

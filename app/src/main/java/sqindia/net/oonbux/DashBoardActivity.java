@@ -411,8 +411,8 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
                 editor.commit();
 
 
-                Intent inte = new Intent(getApplicationContext(), AddLocationNew.class);
-               // inte.putExtra("sts", 1);
+                Intent inte = new Intent(getApplicationContext(), AddLocation.class);
+                inte.putExtra("sts", 1);
                 startActivity(inte);
 
                 // toggle.syncState();

@@ -13,10 +13,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
@@ -41,13 +38,13 @@ public class RegisterActivity extends Activity {
     TextView tv_donthav, tv_register, tv_footer;
     LinearLayout ll_login;
     MaterialEditText et_fname, et_lname, et_email, et_phone, et_pass, et_repass;
-    MaterialAutoCompleteTextView  aet_state, aet_zip;
+    MaterialAutoCompleteTextView   aet_zips;
     String str_fname, str_lname, str_country, str_email, str_phone, str_pass, str_repass, str_state, str_zip;
     SweetAlertDialog sweetAlertDialog;
     ArrayList<String> country = new ArrayList<>();
     ArrayList<String> states = new ArrayList<>();
     ArrayList<String> zip = new ArrayList<>();
-    Spinner spin;
+    Spinner spin_country,spin_states,spin_zip;
     ListAdapter_Class country_list_adapter, state_list_adapter, zip_list_adapter;
 
     ArrayAdapter<String> adpater_states;
@@ -87,10 +84,10 @@ public class RegisterActivity extends Activity {
 
         get_CountryDB();
 
-        spin.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+        spin_country.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-                //str_country = spin.getSelectedItem().toString();
+                //str_country = spin_country.getSelectedItem().toString();
                 states.clear();
                 get_StateDB();
                 //new GetState(str_country).execute();
@@ -98,10 +95,25 @@ public class RegisterActivity extends Activity {
             }
         });
 
-        aet_state.setOnClickListener(new View.OnClickListener() {
+        spin_states.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+
+                zip.clear();
+               // get_ZipDB();
+                get_zipServ();
+                //str_country = spin_country.getSelectedItem().toString();
+                //states.clear();
+                //get_StateDB();
+                //new GetState(str_country).execute();
+
+            }
+        });
+
+       /* aet_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //str_country = spin.getSelectedItem().toString();
+                //str_country = spin_country.getSelectedItem().toString();
                 states.clear();
                 get_StateDB();
                 //new GetState(str_country).execute();
@@ -113,7 +125,7 @@ public class RegisterActivity extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_state.getText().toString() != null) {
-                        str_country = spin.getSelectedItem().toString();
+                        str_country = spin_country.getSelectedItem().toString();
                         str_state = aet_state.getText().toString();
                         zip.clear();
 
@@ -131,14 +143,15 @@ public class RegisterActivity extends Activity {
                 }
                 return false;
             }
-        });
+        });*/
 
+/*
 
         aet_zip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (aet_state.getText().toString() != null) {
-                    str_country = spin.getSelectedItem().toString();
+                    str_country = spin_country.getSelectedItem().toString();
                     str_state = aet_state.getText().toString();
                     zip.clear();
                     get_ZipDB();
@@ -152,6 +165,7 @@ public class RegisterActivity extends Activity {
                 }
             }
         });
+*/
 
         ll_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,7 +223,7 @@ public class RegisterActivity extends Activity {
                     country.add(cont);
 
                     country_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists, country);
-                    spin.setAdapter(country_list_adapter);
+                    spin_country.setAdapter(country_list_adapter);
 
 
                 } while (cont_cursor.moveToNext());
@@ -223,7 +237,7 @@ public class RegisterActivity extends Activity {
 
     private void get_StateDB() {
 
-        String country = spin.getSelectedItem().toString();
+        String country = spin_country.getSelectedItem().toString();
 
         Cursor cont_cursor = dbclass.getState(country);
 
@@ -236,20 +250,33 @@ public class RegisterActivity extends Activity {
                     states.add(stat);
 
                     adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, states);
-                    aet_state.setAdapter(adpater_states);
+
+                    state_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists, states);
+                    spin_states.setAdapter(state_list_adapter);
 
                 } while (cont_cursor.moveToNext());
             }
         }
 
+        get_zipServ();
 
+
+    }
+
+
+    private void get_zipServ(){
+        str_country = spin_country.getSelectedItem().toString();
+        str_state = spin_states.getSelectedItem().toString();
+        zip.clear();
+        new GetZip(str_country, str_state).execute();
+        spin_zip.requestFocus();
     }
 
 
     private void get_ZipDB() {
 
-        String country = spin.getSelectedItem().toString();
-        String state = aet_state.getText().toString();
+        String country = spin_country.getSelectedItem().toString();
+        String state = spin_states.getSelectedItem().toString();
 
         Cursor cont_cursor = dbclass.getZip(country,state);
 
@@ -261,15 +288,12 @@ public class RegisterActivity extends Activity {
                     Log.e("tag",""+zp);
                     zip.add(zp);
 
-
                     adapter_zip = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, zip);
-                    aet_zip.setAdapter(adapter_zip);
+                    spin_zip.setAdapter(adapter_zip);
 
                 } while (cont_cursor.moveToNext());
             }
         }
-
-
     }
 
 
@@ -285,9 +309,12 @@ public class RegisterActivity extends Activity {
         et_pass = (MaterialEditText) findViewById(R.id.edittext_pass);
         et_repass = (MaterialEditText) findViewById(R.id.edittext_repass);
         et_phone = (MaterialEditText) findViewById(R.id.edittext_phone);
-        aet_state = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_state);
-        aet_zip = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_zipcode);
-        spin = (com.rey.material.widget.Spinner) findViewById(R.id.spin_country);
+      //  aet_state = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_state);
+       // aet_zip = (MaterialAutoCompleteTextView) findViewById(R.id.edittext_zipcode);
+        spin_country = (com.rey.material.widget.Spinner) findViewById(R.id.spin_country);
+        spin_states = (com.rey.material.widget.Spinner) findViewById(R.id.spin_states);
+        spin_zip = (com.rey.material.widget.Spinner) findViewById(R.id.spin_zip);
+
         final Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
         btn_submit.setTypeface(tf);
         tv_donthav.setTypeface(tf);
@@ -299,8 +326,8 @@ public class RegisterActivity extends Activity {
         et_pass.setTypeface(tf);
         et_repass.setTypeface(tf);
         et_phone.setTypeface(tf);
-        aet_zip.setTypeface(tf);
-        aet_state.setTypeface(tf);
+       // aet_zip.setTypeface(tf);
+       // aet_state.setTypeface(tf);
     }
 
     public void validatedatas() {
@@ -310,25 +337,22 @@ public class RegisterActivity extends Activity {
         str_pass = et_pass.getText().toString();
         str_repass = et_repass.getText().toString();
         str_phone = et_phone.getText().toString();
-        str_zip = aet_zip.getText().toString();
-        str_state = aet_state.getText().toString();
+        str_zip = spin_zip.getSelectedItem().toString();
+        //aet_zip.getText().toString();
+        str_state = spin_states.getSelectedItem().toString();
+        //aet_state.getText().toString();
+
         if (!str_fname.isEmpty()) {
             if (!str_lname.isEmpty()) {
                 if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
                     if (!(str_pass.isEmpty() || str_pass.length() < 4 || str_pass.length() > 10)) {
                         if (str_repass.matches(str_pass)) {
                             if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
-                                if (!str_state.isEmpty()) {
-                                    if (!(str_zip.isEmpty() || str_zip.length() < 3)) {
+
+
                                         new RegisterTask().execute();
-                                    } else {
-                                        aet_zip.setError("Enter zipcode");
-                                        aet_zip.requestFocus();
-                                    }
-                                } else {
-                                    aet_state.setError("Enter State");
-                                    aet_state.requestFocus();
-                                }
+
+
                             } else {
                                 et_phone.setError("Enter valid phone number");
                                 et_phone.requestFocus();
@@ -416,7 +440,7 @@ public class RegisterActivity extends Activity {
                     if (msg.contains("Email")) {
                         et_email.requestFocus();
                     } else if (msg.contains("Region")) {
-                        aet_state.requestFocus();
+                       // aet_state.requestFocus();
                     }
                 }
             } catch (JSONException e) {
@@ -492,7 +516,7 @@ public class RegisterActivity extends Activity {
                     Log.d("tag", "<-----Statusss----->" + daa);
                 }
                 country_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists, country);
-                spin.setAdapter(country_list_adapter);
+                spin_country.setAdapter(country_list_adapter);
 
 
             } catch (JSONException e) {
@@ -654,8 +678,14 @@ public class RegisterActivity extends Activity {
                         Log.d("tag", "<-----Statusss----->" + daa);
                     }
 
-                    ArrayAdapter<String> adapter_zip = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, zip);
-                    aet_zip.setAdapter(adapter_zip);
+
+                //    adapter_zip = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, zip);
+
+                    zip_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists, zip);
+                    spin_zip.setAdapter(zip_list_adapter);
+
+                   //ArrayAdapter<String> adapter_zip = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, zip);
+                  //  aet_zip.setAdapter(adapter_zip);
 
                    /* zip_list_adapter = new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists2, zip);
                     aet_zip.setAdapter(zip_list_adapter);*/
@@ -670,7 +700,7 @@ public class RegisterActivity extends Activity {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     sweetAlertDialog.dismiss();
-                                    aet_state.requestFocus();
+                                    //aet_state.requestFocus();
                                 }
                             })
                             .show();

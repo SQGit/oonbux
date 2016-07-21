@@ -34,6 +34,9 @@ public class SplashActivity extends AppCompatActivity {
     public int version=0;
     SharedPreferences sharedPreferences;
 
+
+    public int a,s,d;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,6 +177,9 @@ public class SplashActivity extends AppCompatActivity {
 
 
 
+
+
+
     class GetAllRegions extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
@@ -207,6 +213,8 @@ public class SplashActivity extends AppCompatActivity {
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
+
+
             try {
 
                 JSONObject jo = new JSONObject(jsonStr);
@@ -231,11 +239,21 @@ public class SplashActivity extends AppCompatActivity {
                     JSONArray json_arr_state = json_cont.getJSONArray("state");
                    // Log.e("tag", "<-----country----->" + country + "\t" + json_arr_state);
 
+                    Log.e("tag", "<-----0-----> " + json_arr_regions.length() );
+
                     for (int j = 0; j < json_arr_state.length(); j++) {
                         JSONObject json_stat = new JSONObject(new String(json_arr_state.getString(j)));
                         String state = json_stat.getString("statename");
                         JSONArray json_arr_zip = json_stat.getJSONArray("zip");
                      //   Log.e("tag", "<-----country----->" + state + "\t" + json_arr_zip);
+
+                        Log.e("tag", j+" <-----1.1_s-----> " + s );
+
+                        Log.e("tag", "<-----1.2-L---> " + json_arr_zip.length() );
+                        s = s + json_arr_zip.length();
+                        Log.e("tag", "<-----1.3-f---> " + s );
+
+                        dbclass.region_insert(country,state,"zip");
 
                         for (int k = 0; k < json_arr_zip.length(); k++) {
                             String zip = json_arr_zip.getString(k);
@@ -244,9 +262,12 @@ public class SplashActivity extends AppCompatActivity {
 
                          //   Log.e("tag","regions:  "+country+state+zip);
 
-                            dbclass.region_insert(country,state,zip);
+                           // dbclass.region_insert(country,state,zip);
+
+                           // dbclass.insertFast(country,state,zip);
 
                         }
+
                     }
                 }
 

@@ -35,7 +35,7 @@ public class GcmNotificationIntentService extends IntentService {
 
     String notifi_body, notifi_title, gcm_data, from;
     GcmListenerService gcmget;
-    String sts, message, simage, str_oonbux_id;
+    String sts, message, simage, str_oonbux_id,pal_photo;
 
 
     public String ct_from_id,ct_to_id,ct_message,ct_time,ct_message_id,receiver;
@@ -200,8 +200,13 @@ public class GcmNotificationIntentService extends IntentService {
                     ct_message = json_serv.getString("message");
                     ct_time = json_serv.getString("sent_utc_time");
                     ct_message_id = json_serv.getString("message_id");
+                    pal_photo = json_serv.getString("photo_url");
+
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     ct_to_id =  sharedPreferences.getString("oonbuxid", "");
+
+
+
 
                     Log.e("tag", " chat_notification \n"+ct_from_id+"\n"+ct_to_id+"\n"+ct_message+"\n"+ct_time);
 
@@ -339,6 +344,7 @@ public class GcmNotificationIntentService extends IntentService {
             i.putExtra("chat_message", ct_message);
             i.putExtra("chat_time", ct_time);
             i.putExtra("message_id", ct_message_id);
+            i.putExtra("pal_photo", pal_photo);
             this.sendBroadcast(i);
             Log.e("tag11", ""+ct_from_id+ct_message+ct_time);
         } else {
@@ -364,6 +370,7 @@ public class GcmNotificationIntentService extends IntentService {
         resultIntent.putExtra("chat_message", ct_message);
         resultIntent.putExtra("chat_time", ct_time);
         resultIntent.putExtra("message_id", ct_message_id);
+        resultIntent.putExtra("pal_photo", pal_photo);
         resultIntent.setAction(Intent.ACTION_MAIN);
         resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,

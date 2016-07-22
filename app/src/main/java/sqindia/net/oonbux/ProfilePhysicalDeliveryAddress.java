@@ -56,11 +56,14 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
     SweetAlertDialog sweetAlertDialog;
     MyAdapter adapter_a, adapter_b, adapter_c;
 
+    int i =0;
     String str_country, str_state,cont,stat,zp;
 
     ArrayList<String> country = new ArrayList<>();
     ArrayList<String> states = new ArrayList<>();
     ArrayList<String> zip = new ArrayList<>();
+
+    ListAdapter_Class adapter_loc_country,adapter_int_country,adapter_loc_state,adapter_int_state,adapter_loc_zip,adapter_int_zip;
 
     ///MaterialAutoCompleteTextView  aet_loc_zip,  aet_int_zip;
 
@@ -206,7 +209,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                // str_loc_country = spin_loc.getSelectedItem().toString();
                 //new GetState(str_loc_country, 0).execute();
 
-                get_StateDB(0);
+                get_StateDB();
             }
         });
         spin_int.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
@@ -216,7 +219,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                 //new GetState(str_loc_country, 0).execute();
                 Log.e("tag","spinclick"+spin_int.getSelectedItem().toString());
                // get_StateIntDB();
-                get_StateDB(1);
+                get_StateInt();
             }
         });
 
@@ -226,7 +229,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
                 zip.clear();
-                get_zipServ();
+                get_zipServ(0);
             }
         });
 
@@ -234,7 +237,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
                 zip.clear();
-                get_zipServint();
+                //get_zipServint();
+                get_zipServ(1);
             }
         });
 
@@ -826,16 +830,32 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         );
 
 
+       // spin_loc_state.setSelection(getIndex(spin_loc_state, "DE"));
+
+
+
+
     }
 
+ /*   private int getIndex(Spinner spin_loc_state, String de) {
+
+
+            int index = 0;
+
+            for (int i=0;i<spin_loc_state.getCount();i++){
+                if (spin_loc_state.getItemAtPosition(i).toString().equalsIgnoreCase(de)){
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+
+    }*/
 
 
     private void get_CountryDB() {
 
-
-
             Cursor cont_cursor = dbclass.getCountry();
-
             if (cont_cursor != null) {
                 if (cont_cursor.moveToFirst()) {
                     do {
@@ -844,63 +864,64 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                         Log.e("tag",""+cont);
                         country.add(cont);
 
+                        /*adapter_a = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
+                        spin_loc.setAdapter(adapter_a);*/
 
-                        adapter_a = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
-                        spin_loc.setAdapter(adapter_a);
+                        adapter_loc_country= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, country);
+                        spin_loc.setAdapter(adapter_loc_country);
 
-                        adapter_b = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
-                        spin_int.setAdapter(adapter_b);
+                       /* adapter_b = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
+                        spin_int.setAdapter(adapter_b);*/
 
+                        adapter_int_country= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, country);
+                        spin_int.setAdapter(adapter_int_country);
 
                     } while (cont_cursor.moveToNext());
                 }
             }
 
-            get_StateDB(0);
-
-             get_StateDB(1);
-
-
-
+            get_StateDB();
+        get_StateInt();
     }
 
 
-
-
-
-
-    private void get_zipServ(){
-        str_country = spin_loc.getSelectedItem().toString();
-        str_state = spin_loc_state.getSelectedItem().toString();
-        zip.clear();
-        new GetZip(str_country, str_state,0).execute();
-
-    }
-
-    private void get_zipServint(){
-        str_country = spin_int.getSelectedItem().toString();
-        str_state = spin_int_state.getSelectedItem().toString();
-        zip.clear();
-        new GetZip(str_country, str_state,1).execute();
-
-    }
-
-
-
-
-    private void get_StateDB(int s) {
-
+    private void get_StateDB() {
         states.clear();
 
-        if (s == 0) {
             cont = spin_loc.getSelectedItem().toString();
-        } else {
-            cont = spin_int.getSelectedItem().toString();
-        }
 
 
         Cursor cont_cursor = dbclass.getState(cont);
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
 
+                    String stat = cont_cursor.getString(cont_cursor.getColumnIndex("state"));
+                    Log.e("tag", "" + stat);
+                    states.add(stat);
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+        //adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, states);
+       /* adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, states);
+        spin_loc_state.setAdapter(adpater_states);*/
+
+
+        adapter_loc_state= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, states);
+        spin_loc_state.setAdapter(adapter_loc_state);
+
+        get_zipServ(0);
+
+        // get_zipServint();
+    }
+
+
+    private void get_StateInt() {
+        states.clear();
+            cont = spin_int.getSelectedItem().toString();
+
+        Cursor cont_cursor = dbclass.getState(cont);
         if (cont_cursor != null) {
             if (cont_cursor.moveToFirst()) {
                 do {
@@ -914,18 +935,49 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         }
 
 
-         //adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists2, R.id.text_spin, states);
-        adpater_states = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, states);
-        spin_loc_state.setAdapter(adpater_states);
-
-        adpater_states1 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, states);
+      /*  adpater_states1 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, states);
         Log.e("tag", "" + "state inside");
-        spin_int_state.setAdapter(adpater_states1);
+        spin_int_state.setAdapter(adpater_states1);*/
 
 
-        get_zipServ();
-        get_zipServint();
+        adapter_int_state= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, states);
+        spin_int_state.setAdapter(adapter_int_state);
+
+
+
+        // get_zipServ(0);
+        // get_zipServint();
     }
+
+
+
+    private void get_zipServ(int s){
+
+        if(s == 0){
+            str_country = spin_loc.getSelectedItem().toString();
+            str_state = spin_loc_state.getSelectedItem().toString();
+        }
+        else {
+            str_country = spin_int.getSelectedItem().toString();
+            str_state = spin_int_state.getSelectedItem().toString();
+        }
+
+        zip.clear();
+        new GetZip(str_country, str_state,s).execute();
+
+    }
+
+   /* private void get_zipServint(){
+        str_country = spin_int.getSelectedItem().toString();
+        str_state = spin_int_state.getSelectedItem().toString();
+        zip.clear();
+        new GetZip(str_country, str_state,1).execute();
+
+    }*/
+
+
+
+
 
 
     private void get_StateIntDB() {
@@ -1199,8 +1251,16 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         et_loc_phone.setText(str_loc_phone);
         et_loc_note.setText(str_loc_note);
 
+        spin_loc_state.setSelection(((ArrayAdapter<String>)spin_loc_state.getAdapter()).getPosition("NJ"));
+
 
     }
+
+
+
+
+
+
 
 
     private void getfromdata_int() {
@@ -1215,6 +1275,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
      //   aet_int_zip.setText(str_int_zip);
         et_int_phone.setText(str_int_phone);
         et_int_note.setText(str_int_note);
+
+
+
+
 
     }
 
@@ -1550,11 +1614,23 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                     Log.d("tag", "<---->" + "" + get_sts);
                     if (get_sts == 0) {
 
-                        adapter_zips = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, zip);
-                        spin_loc_zip.setAdapter(adapter_zips);
+                        /*adapter_zips = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, zip);
+                        spin_loc_zip.setAdapter(adapter_zips);*/
+
+                        adapter_loc_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
+                        spin_loc_zip.setAdapter(adapter_loc_zip);
+
+                        if(i ==0){
+                            get_zipServ(1);
+                            i =1;
+                        }
+
                     } else {
-                        adapter_zips_ = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, zip);
-                        spin_int_zip.setAdapter(adapter_zips_);
+                        /*adapter_zips_ = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, zip);
+                        spin_int_zip.setAdapter(adapter_zips_);*/
+
+                        adapter_int_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
+                        spin_int_zip.setAdapter(adapter_int_zip);
                     }
 
                 } catch (JSONException e) {

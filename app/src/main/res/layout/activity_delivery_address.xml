@@ -268,6 +268,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_1sdp"
                                 android:layout_weight="1">
 
                                 <FrameLayout
@@ -390,7 +391,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_3sdp"
                             android:orientation="horizontal">
 
                             <com.rengwuxian.materialedittext.MaterialEditText
@@ -399,6 +399,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:hint="City"
+                                android:layout_marginTop="@dimen/_2sdp"
                                 android:imeOptions="actionNext"
                                 android:inputType="textPersonName"
                                 android:paddingLeft="5dp"

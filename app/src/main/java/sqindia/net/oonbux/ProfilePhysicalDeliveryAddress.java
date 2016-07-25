@@ -8,22 +8,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
@@ -47,10 +43,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
     com.rey.material.widget.LinearLayout lt_back;
     MaterialEditText et_loc_add1, et_loc_add2, et_loc_city, et_loc_phone, et_loc_note, et_int_add1, et_int_add2, et_int_city, et_int_phone, et_int_note;
     String get_profile_sts, str_def_adr, str_loc_add1, str_loc_add2, str_loc_city, str_loc_zip, str_loc_phone,
-            str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_zip, str_int_phone, str_int_note;
+            str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_zip, str_int_phone, str_int_note,str_session_id;
     CheckBox cb_loc, cb_int;
     boolean loc_adr, int_adr;
-    Spinner spin_loc, spin_int,spin_loc_state,spin_int_state,spin_loc_zip,spin_int_zip;
+    Spinner spin_loc_country, spin_int_country,spin_loc_state,spin_int_state,spin_loc_zip,spin_int_zip;
     String[] countries;
     Typeface tf, tf1;
     SweetAlertDialog sweetAlertDialog;
@@ -58,7 +54,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
     int i =0;
     String str_country, str_state,cont,stat,zp;
-
+    SweetAlertDialog sweetDialog;
     ArrayList<String> country = new ArrayList<>();
     ArrayList<String> states = new ArrayList<>();
     ArrayList<String> zip = new ArrayList<>();
@@ -74,7 +70,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
     private SQLiteDatabase db;
     DbC dbclass;
     Context context = this;
-
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public void onBackPressed() {
@@ -90,15 +87,17 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             startActivity(intes);
 
 
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("profile", "");
-            editor.commit();
+             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+             editor = sharedPreferences.edit();
+             editor.putString("profile", "");
+             editor.commit();
 
             // Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
         } else {
-            Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
-            startActivity(inte);
+            /*Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
+            startActivity(inte);*/
+            super.onBackPressed();
+            finish();
         }
 
 
@@ -111,8 +110,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         setContentView(R.layout.activity_delivery_address);
 
         countries = new String[]{"US", "NIGERIA", "GAANA"};
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
         get_profile_sts = sharedPreferences.getString("profile", "");
+
+        str_session_id = sharedPreferences.getString("sessionid", "");
         Log.e("tag", "pfs" + get_profile_sts);
 
         str_loc_add1 = sharedPreferences.getString("loc_addr1", "");
@@ -132,7 +133,6 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         str_int_country = sharedPreferences.getString("int_country", "");
         str_int_note = sharedPreferences.getString("int_note", "");
         str_def_adr = sharedPreferences.getString("default_adr", "");
-
 
         tv_header = (TextView) findViewById(R.id.tv_hd_txt);
         tv_sub_hdr_loc = (TextView) findViewById(R.id.tv_shd_txt_loc);
@@ -160,8 +160,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         bottom_lt = (LinearLayout) findViewById(R.id.bottom);
         cb_loc = (CheckBox) findViewById(R.id.checkbox_local);
         cb_int = (CheckBox) findViewById(R.id.checkbox_int);
-        spin_loc = (Spinner) findViewById(R.id.loc_spin_country);
-        spin_int = (Spinner) findViewById(R.id.int_spin_country);
+        spin_loc_country = (Spinner) findViewById(R.id.loc_spin_country);
+        spin_int_country = (Spinner) findViewById(R.id.int_spin_country);
 
         spin_loc_state = (Spinner) findViewById(R.id.loc_spin_states);
         spin_int_state = (Spinner) findViewById(R.id.int_spin_states);
@@ -195,81 +195,281 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         createDatabase();
 
 
-        get_CountryDB();
+        if ((get_profile_sts.equals(""))) {
+            bottom_lt.setVisibility(View.VISIBLE);
+
+        } else {
+            bottom_lt.setVisibility(View.GONE);
+            disable_loc();
+            disable_int();
+            btn_save_loc.setVisibility(View.GONE);
+            btn_save_int.setVisibility(View.GONE);
+        }
+
+
+
+        Log.e("tag","0"+sharedPreferences.getBoolean("adrsts0", false));
+            if (!(sharedPreferences.getBoolean("adrsts0", false))) {
+            Log.e("tag","insdie");
+            enable_loc();
+            btn_save_loc.setVisibility(View.VISIBLE);
+            get_loc_from_Db();
+        }
+        else{
+            Log.e("tag","outsid");
+            loc_adr = true;
+            get_loc_from_Shared();
+            btn_save_loc.setVisibility(View.GONE);
+            disable_loc();
+        }
+
+
+        if (!(sharedPreferences.getBoolean("adrsts1", false))) {
+            Log.e("tag","insdie_int");
+            enable_int();
+            btn_save_int.setVisibility(View.VISIBLE);
+            get_intl_from_Db();
+        }
+        else{
+            Log.e("tag","outsid_int");
+            int_adr = true;
+            get_int_from_Shared();
+            btn_save_int.setVisibility(View.GONE);
+            disable_int();
+        }
 
 
 
 
+        if (!(str_loc_add1.equals("null"))) {
+
+            getfromdata_loc();
+        } else {
+            enable_loc();
+        }
+
+
+        if (!(str_int_add1.equals("null"))) {
+
+            getfromdata_int();
+        } else {
+            enable_int();
+        }
 
 
 
-        spin_loc.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+
+        // get_loc_from_Db();
+
+
+
+        spin_loc_country.setOnItemClickListener(new Spinner.OnItemClickListener() {
             @Override
-            public void onItemSelected(Spinner parent, View view, int position, long id) {
-               // str_loc_country = spin_loc.getSelectedItem().toString();
-                //new GetState(str_loc_country, 0).execute();
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+                str_loc_country = spin_loc_country.getSelectedItem().toString();
+                get_LocState_from_Db();
+                Log.e("tag","itemclick_loc");
 
-                get_StateDB();
+                editor = sharedPreferences.edit();
+                editor.putString("loc_country", str_loc_country);
+                editor.commit();
+
+                return false;
             }
         });
-        spin_int.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+
+        spin_loc_state.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+
+                spin_loc_state.setSelection(position);
+
+                str_loc_state = spin_loc_state.getSelectedItem().toString();
+
+                zip.clear();
+               // get_zipServ(0);
+                get_loc_zip_from_service();
+
+                editor = sharedPreferences.edit();
+                editor.putString("loc_state", str_loc_state);
+                editor.commit();
+
+                return false;
+            }
+        });
+
+        spin_loc_zip.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+
+                spin_loc_zip.setSelection(position);
+
+                str_loc_country = spin_loc_country.getSelectedItem().toString();
+                str_loc_state = spin_loc_state.getSelectedItem().toString();
+                str_loc_zip = spin_loc_zip.getSelectedItem().toString();
+
+                Log.e("tag",""+str_loc_country+str_loc_state+str_loc_zip);
+                dbclass.region_update(str_loc_country,str_loc_state,str_loc_zip);
+
+                editor = sharedPreferences.edit();
+                editor.putString("loc_zip", str_loc_zip);
+                editor.commit();
+
+                return false;
+            }
+        });
+
+
+
+        spin_int_country.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+                str_int_country = spin_int_country.getSelectedItem().toString();
+                //get_StateInt();
+                get_intl_State_from_Db();
+                Log.e("tag","itemclick_int");
+                editor = sharedPreferences.edit();
+                editor.putString("int_country", str_int_country);
+                editor.commit();
+
+                return false;
+            }
+        });
+
+
+
+        spin_int_state.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+
+                str_int_state = spin_int_state.getSelectedItem().toString();
+
+                zip.clear();
+                // get_zipServ(0);
+                get_intl_zip_from_service();
+
+                editor = sharedPreferences.edit();
+                editor.putString("int_state", str_int_state);
+                editor.commit();
+
+                return false;
+            }
+        });
+
+        spin_int_zip.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+
+
+                str_int_country = spin_int_country.getSelectedItem().toString();
+                str_int_state = spin_int_state.getSelectedItem().toString();
+                str_int_zip = spin_int_zip.getSelectedItem().toString();
+
+                dbclass.region_update(str_int_country,str_int_state,str_int_zip);
+
+                editor = sharedPreferences.edit();
+                editor.putString("int_zip", str_int_zip);
+                editor.commit();
+
+                return false;
+            }
+        });
+
+
+
+
+      /*  spin_loc_country.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-             //   str_loc_country = spin_loc.getSelectedItem().toString();
+               // str_loc_country = spin_loc_country.getSelectedItem().toString();
                 //new GetState(str_loc_country, 0).execute();
-                Log.e("tag","spinclick"+spin_int.getSelectedItem().toString());
+
+                get_LocState_from_Db();
+            }
+        });*/
+      /*  spin_int_country.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+             //   str_loc_country = spin_loc_country.getSelectedItem().toString();
+                //new GetState(str_loc_country, 0).execute();
+                Log.e("tag","spinclick"+spin_int_country.getSelectedItem().toString());
                // get_StateIntDB();
                 get_StateInt();
             }
-        });
+        });*/
 
 
 
-        spin_loc_state.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+       /* spin_loc_state.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
                 zip.clear();
                 get_zipServ(0);
             }
-        });
+        });*/
 
-        spin_int_state.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+        /*spin_int_state.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
                 zip.clear();
                 //get_zipServint();
                 get_zipServ(1);
             }
-        });
+        });*/
+
+      /*  spin_loc_zip.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+
+                str_loc_country = spin_loc_country.getSelectedItem().toString();
+                str_loc_state = spin_loc_state.getSelectedItem().toString();
+                str_loc_zip = spin_loc_zip.getSelectedItem().toString();
+
+                dbclass.region_update(str_loc_country,str_loc_state,str_loc_zip);
+            }
+        });*/
+
+
+       /* spin_int_zip.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+
+                str_int_country = spin_int_country.getSelectedItem().toString();
+                str_int_state = spin_int_state.getSelectedItem().toString();
+                str_int_zip = spin_int_zip.getSelectedItem().toString();
+
+                dbclass.region_update(str_int_country,str_int_state,str_int_zip);
+            }
+        });*/
 
 
 
 
 
-       /* spin_int.setOnItemClickListener(new Spinner.OnItemClickListener() {
+       /* spin_int_country.setOnItemClickListener(new Spinner.OnItemClickListener() {
             @Override
             public boolean onItemClick(Spinner parent, View view, int position, long id) {
-                Log.e("tag","1_spinclick"+spin_int.getSelectedItem().toString());
+                Log.e("tag","1_spinclick"+spin_int_country.getSelectedItem().toString());
                 get_StateIntDB();
                 return true;
             }
         });*/
 
-/*        spin_int.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+/*        spin_int_country.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-                str_int_country = spin_int.getSelectedItem().toString();
+                str_int_country = spin_int_country.getSelectedItem().toString();
                 new GetState(str_int_country, 1).execute();
             }
         });*/
 
 
-   /*     spin_int.setOnItemClickListener(new Spinner.OnItemClickListener() {
+   /*     spin_int_country.setOnItemClickListener(new Spinner.OnItemClickListener() {
             @Override
             public boolean onItemClick(Spinner parent, View view, int position, long id) {
 
-                get_StateDB(1);
-               // str_int_country = spin_int.getSelectedItem().toString();
+                get_LocState_from_Db(1);
+               // str_int_country = spin_int_country.getSelectedItem().toString();
                 //new GetState(str_int_country, 1).execute();
                 return true;
             }
@@ -279,9 +479,9 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
       /*  aet_loc_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // str_loc_country = spin_loc.getSelectedItem().toString();
+               // str_loc_country = spin_loc_country.getSelectedItem().toString();
                // new GetState(str_loc_country, 0).execute();
-                get_StateDB(0);
+                get_LocState_from_Db(0);
                 aet_loc_state.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
@@ -289,10 +489,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
      /*   aet_int_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //str_int_country = spin_loc.getSelectedItem().toString();
+                //str_int_country = spin_loc_country.getSelectedItem().toString();
                 //new GetState(str_int_country, 1).execute();
                 //get_StateIntDB();
-                get_StateDB(1);
+                get_LocState_from_Db(1);
                 aet_int_state.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
@@ -304,7 +504,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_loc_state.getText().toString() != null) {
-                      //  str_loc_country = spin_loc.getSelectedItem().toString();
+                      //  str_loc_country = spin_loc_country.getSelectedItem().toString();
                        // str_loc_state = aet_loc_state.getText().toString();
                        // new GetZip(str_loc_country, str_loc_state, 0).execute();
                         get_ZipDB(0);
@@ -325,7 +525,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_int_state.getText().toString() != null) {
-                       // str_int_country = spin_int.getSelectedItem().toString();
+                       // str_int_country = spin_int_country.getSelectedItem().toString();
                        // str_int_state = aet_int_state.getText().toString();
                        // new GetZip(str_int_country, str_int_state, 1).execute();
                       //  get_ZipIntDB();
@@ -349,7 +549,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_loc_state.getText().toString() != null) {
-                        //str_country = spin_loc.getSelectedItem().toString();
+                        //str_country = spin_loc_country.getSelectedItem().toString();
                         //str_state = aet_loc_state.getText().toString();
                         // GetZip(str_country, str_state, 0).execute();
                         get_ZipDB(0);
@@ -371,7 +571,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
                     if (aet_int_state.getText().toString() != null) {
-                       // str_int_country = spin_int.getSelectedItem().toString();
+                       // str_int_country = spin_int_country.getSelectedItem().toString();
                        // str_int_state = aet_int_state.getText().toString();
                        // new GetZip(str_int_country, str_int_state, 1).execute();
                        // get_ZipIntDB();
@@ -393,7 +593,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         /*aet_loc_zip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // str_loc_country = spin_loc.getSelectedItem().toString();
+               // str_loc_country = spin_loc_country.getSelectedItem().toString();
                // str_loc_state = aet_loc_state.getText().toString();
                 //new GetZip(str_loc_country, str_loc_state, 0).execute();
                 get_ZipDB(0);
@@ -405,7 +605,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         aet_int_zip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //str_int_country = spin_int.getSelectedItem().toString();
+                //str_int_country = spin_int_country.getSelectedItem().toString();
                 //str_int_state = aet_int_state.getText().toString();
                // new GetZip(str_int_country, str_int_state, 1).execute();
 
@@ -433,39 +633,13 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         }
 
 
-        if (!(str_loc_add1.equals("null"))) {
-
-            getfromdata_loc();
-        } else {
-            enable_loc();
-        }
 
 
-        if (!(str_int_add1.equals("null"))) {
-
-            getfromdata_int();
-        } else {
-            enable_int();
-        }
 
 
-        if ((get_profile_sts.equals(""))) {
-            bottom_lt.setVisibility(View.VISIBLE);
-        } else {
-            bottom_lt.setVisibility(View.GONE);
-            disable_loc();
-            disable_int();
-            btn_save_loc.setVisibility(View.GONE);
-            btn_save_int.setVisibility(View.GONE);
-        }
 
 
-        if (sharedPreferences.getBoolean("adrsts0", false)) {
-            loc_adr = true;
-            disable_loc();
-            btn_save_loc.setVisibility(View.GONE);
 
-        }
     /*    else{
                et_int_add1.setText("");
                 et_int_add1.requestFocus();
@@ -477,11 +651,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                 et_int_note.setText("");
         }*/
 
-        if (sharedPreferences.getBoolean("adrsts1", false)) {
-            int_adr = true;
-            disable_int();
-            btn_save_int.setVisibility(View.GONE);
-        }
+
      /*   else{
 
               et_loc_add1.setText("");
@@ -643,18 +813,37 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             @Override
             public void onClick(View v) {
 
-                loc_adr = false;
-                btn_save_loc.setVisibility(View.VISIBLE);
-                enable_loc();
 
-                bottom_lt.setVisibility(View.VISIBLE);
+                if ((get_profile_sts.equals(""))) {
+                    loc_adr = false;
+                    btn_save_loc.setVisibility(View.VISIBLE);
+                    enable_loc();
 
-                et_loc_add1.requestFocus();
+                    bottom_lt.setVisibility(View.VISIBLE);
 
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("profile", "");
-                editor.commit();
+                    et_loc_add1.requestFocus();
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("profile", "");
+                    editor.commit();
+
+
+                } else {
+                    loc_adr = false;
+                    btn_save_loc.setVisibility(View.VISIBLE);
+                    enable_loc();
+                    bottom_lt.setVisibility(View.VISIBLE);
+                    et_loc_add1.requestFocus();
+
+
+                    btn_next.setText("Update");
+                    btn_next.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                }
+
+
+
+
 
                /* et_loc_add1.setText("");
                 et_loc_add1.requestFocus();
@@ -672,27 +861,40 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             @Override
             public void onClick(View v) {
 
-                int_adr = false;
-                btn_save_int.setVisibility(View.VISIBLE);
-                enable_int();
 
-                bottom_lt.setVisibility(View.VISIBLE);
 
-                et_int_add1.requestFocus();
 
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("profile", "");
-                editor.commit();
+                if ((get_profile_sts.equals(""))) {
 
-                /*et_int_add1.setText("");
-                et_int_add1.requestFocus();
-                et_int_add2.setText("");
-                et_int_city.setText("");
-                aet_int_state.setText("");
-                aet_int_zip.setText("");
-                et_int_phone.setText("");
-                et_int_note.setText("");*/
+                    int_adr = false;
+                    btn_save_int.setVisibility(View.VISIBLE);
+                    enable_int();
+
+                    bottom_lt.setVisibility(View.VISIBLE);
+
+                    et_int_add1.requestFocus();
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("profile", "");
+                    editor.commit();
+
+                } else {
+
+                    int_adr = false;
+                    btn_save_int.setVisibility(View.VISIBLE);
+                    enable_int();
+
+                    bottom_lt.setVisibility(View.VISIBLE);
+
+                    et_int_add1.requestFocus();
+
+                    btn_next.setText("Update");
+                    btn_next.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+
+                }
+
+
             }
         });
 
@@ -708,7 +910,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                 str_loc_zip = spin_loc_zip.getSelectedItem().toString();
                 str_loc_phone = et_loc_phone.getText().toString();
                 str_loc_note = et_loc_note.getText().toString();
-                str_loc_country = spin_loc.getSelectedItem().toString();
+                str_loc_country = spin_loc_country.getSelectedItem().toString();
 
 
                 validate(0, str_loc_add1, str_loc_add2, str_loc_city, str_loc_state, str_loc_zip, str_loc_phone, str_loc_note, str_loc_country);
@@ -728,7 +930,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                 str_int_zip = spin_int_zip.getSelectedItem().toString();
                 str_int_phone = et_int_phone.getText().toString();
                 str_int_note = et_int_note.getText().toString();
-                str_int_country = spin_int.getSelectedItem().toString();
+                str_int_country = spin_int_country.getSelectedItem().toString();
 
                 validate(1, str_int_add1, str_int_add2, str_int_city, str_int_state, str_int_zip, str_int_phone, str_int_note, str_int_country);
 
@@ -740,13 +942,19 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                                         @Override
                                         public void onClick(View v) {
 
+
+
+                                            if ((get_profile_sts.equals(""))) {
+
+
+
+
                                             if (!(loc_adr || int_adr)) {
                                                 //Toast.makeText(getApplicationContext(), "Fill addresses", Toast.LENGTH_LONG).show();
 
                                                 new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
                                                         .setTitleText("Fill Address")
                                                         .setConfirmText("OK")
-
                                                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                                             @Override
                                                             public void onClick(SweetAlertDialog sDialog) {
@@ -808,7 +1016,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
                                                 String virtualaddr = sharedPreferences.getString("virtul_addr", "");
 
-                                                if (virtualaddr.equals("")) {
+                                               /* if (virtualaddr.equals("")) {
 
                                                     editor = sharedPreferences.edit();
                                                     editor.putString("vir_sts", "0");
@@ -817,12 +1025,143 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                                                     Intent inte = new Intent(getApplicationContext(), AddLocation.class);
                                                     inte.putExtra("sts", 0);
                                                     startActivity(inte);
-                                                } else {
+                                                } */
+
+                                                if(sharedPreferences.getString("vir_sts","").equals("0")){
+
+                                                    Intent inte = new Intent(getApplicationContext(), AddLocation.class);
+                                                    inte.putExtra("sts", 0);
+                                                    startActivity(inte);
+
+                                                }
+                                                else {
                                                     Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
                                                     startActivity(inte);
                                                 }
 
                                             }
+
+
+
+
+                                            }
+
+
+
+
+
+                                            else {
+
+
+
+
+                                                if (!(loc_adr || int_adr)) {
+                                                    //Toast.makeText(getApplicationContext(), "Fill addresses", Toast.LENGTH_LONG).show();
+
+                                                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                                                            .setTitleText("Fill Address")
+                                                            .setConfirmText("OK")
+                                                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                                @Override
+                                                                public void onClick(SweetAlertDialog sDialog) {
+
+                                                                    sDialog.dismiss();
+                                                                }
+                                                            })
+                                                            .show();
+
+
+                                                } else if (!(cb_loc.isChecked() || cb_int.isChecked())) {
+
+                                                    // Toast.makeText(getApplicationContext(), "choose default address", Toast.LENGTH_LONG).show();
+
+                                                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                                                            .setTitleText("Choose Default Address")
+                                                            .setConfirmText("OK")
+                                                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                                @Override
+                                                                public void onClick(SweetAlertDialog sDialog) {
+                                                                    sDialog.dismiss();
+                                                                }
+                                                            })
+                                                            .show();
+
+                                                } else {
+
+                                                    if (cb_loc.isChecked()) {
+                                                        str_def_adr = "LOCAL";
+                                                    } else {
+                                                        str_def_adr = "INTERNATIONAL";
+                                                    }
+
+                                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                    editor.putString("default_adr", str_def_adr);
+                                                    editor.commit();
+
+
+                                                    Log.d("tag", sharedPreferences.getString("loc_addr1", ""));
+                                                    Log.d("tag", sharedPreferences.getString("loc_addr2", ""));
+                                                    Log.d("tag", sharedPreferences.getString("loc_city", ""));
+                                                    Log.d("tag", sharedPreferences.getString("loc_state", ""));
+                                                    Log.d("tag", sharedPreferences.getString("loc_zip", ""));
+                                                    Log.d("tag", sharedPreferences.getString("loc_phone", ""));
+                                                    Log.d("tag", sharedPreferences.getString("loc_note", ""));
+
+                                                    Log.d("tag", sharedPreferences.getString("int_addr1", ""));
+                                                    Log.d("tag", sharedPreferences.getString("int_addr2", ""));
+                                                    Log.d("tag", sharedPreferences.getString("int_city", ""));
+                                                    Log.d("tag", sharedPreferences.getString("int_state", ""));
+                                                    Log.d("tag", sharedPreferences.getString("int_zip", ""));
+                                                    Log.d("tag", sharedPreferences.getString("int_phone", ""));
+                                                    Log.d("tag", sharedPreferences.getString("int_note", ""));
+                                                    Log.d("tag", sharedPreferences.getString("default_adr", ""));
+                                                    Log.d("tag", sharedPreferences.getString("loc_country", ""));
+                                                    Log.d("tag", sharedPreferences.getString("int_country", ""));
+
+
+                                                    new Profile_Update_Task().execute();
+
+
+
+                                                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                         }
                                     }
 
@@ -836,6 +1175,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
 
     }
+
+
 
  /*   private int getIndex(Spinner spin_loc_state, String de) {
 
@@ -853,45 +1194,161 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
     }*/
 
 
-    private void get_CountryDB() {
 
-            Cursor cont_cursor = dbclass.getCountry();
-            if (cont_cursor != null) {
-                if (cont_cursor.moveToFirst()) {
-                    do {
+    private void get_loc_from_Shared() {
 
-                        String cont = cont_cursor.getString(cont_cursor.getColumnIndex("country"));
-                        Log.e("tag",""+cont);
-                        country.add(cont);
 
-                        /*adapter_a = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
-                        spin_loc.setAdapter(adapter_a);*/
 
-                        adapter_loc_country= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, country);
-                        spin_loc.setAdapter(adapter_loc_country);
+        get_loc_from_Db();
+        /*int spinnerPosition = adapter_loc_country.getPosition(str_loc_country);
+        spin_loc_country.setSelection(spinnerPosition);*/
+        //get_LocState_from_Db();
+        /*int spinnerPosition1 = adapter_loc_state.getPosition(str_loc_state);
+        spin_loc_state.setSelection(spinnerPosition1);
+        get_loc_zip_from_service();*/
+        /*int spinnerPosition2 = adapter_loc_country.getPosition(str_loc_zip);
+        spin_loc_zip.setSelection(spinnerPosition2);*/
 
-                       /* adapter_b = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
-                        spin_int.setAdapter(adapter_b);*/
+      /*  country.add(str_loc_country);
+        adapter_loc_country= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, country);
+        spin_loc_country.setAdapter(adapter_loc_country);
+        states.add(str_loc_state);
+        adapter_loc_state= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, states);
+        spin_loc_state.setAdapter(adapter_loc_state);
+        zip.add(str_loc_zip);
+        adapter_loc_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
+        spin_loc_zip.setAdapter(adapter_loc_zip);*/
 
-                        adapter_int_country= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, country);
-                        spin_int.setAdapter(adapter_int_country);
 
-                    } while (cont_cursor.moveToNext());
-                }
-            }
-
-            get_StateDB();
-        get_StateInt();
     }
 
 
-    private void get_StateDB() {
+
+    private void get_int_from_Shared() {
+
+        str_int_country = sharedPreferences.getString("int_country", "");
+        str_int_state = sharedPreferences.getString("int_state", "");
+        str_int_zip = sharedPreferences.getString("int_zip", "");
+
+        get_intl_from_Db();
+        int spinnerPosition = adapter_int_country.getPosition(str_int_country);
+        spin_int_country.setSelection(spinnerPosition);
+        get_intl_State_from_Db();
+        int spinnerPosition1 = adapter_int_state.getPosition(str_int_state);
+        spin_int_state.setSelection(spinnerPosition1);
+        get_intl_zip_from_service();
+        int spinnerPosition2 = adapter_int_zip.getPosition(str_int_zip);
+        spin_int_zip.setSelection(spinnerPosition2);
+
+      /*  country.add(str_loc_country);
+        adapter_loc_country= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, country);
+        spin_loc_country.setAdapter(adapter_loc_country);
+        states.add(str_loc_state);
+        adapter_loc_state= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, states);
+        spin_loc_state.setAdapter(adapter_loc_state);
+        zip.add(str_loc_zip);
+        adapter_loc_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
+        spin_loc_zip.setAdapter(adapter_loc_zip);*/
+
+
+    }
+
+
+
+
+
+
+
+    private void get_loc_from_Db() {
+
+        country.clear();
+
+        Cursor cont_cursor = dbclass.getCountry();
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String cont = cont_cursor.getString(cont_cursor.getColumnIndex("country"));
+                    Log.e("tag",""+cont);
+                    country.add(cont);
+
+                        /*adapter_a = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
+                        spin_loc_country.setAdapter(adapter_a);*/
+
+                    adapter_loc_country= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, country);
+                    spin_loc_country.setAdapter(adapter_loc_country);
+
+                       /* adapter_b = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
+                        spin_int_country.setAdapter(adapter_b);*/
+
+                       /* adapter_int_country= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, country);
+                        spin_int_country.setAdapter(adapter_int_country);*/
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+
+
+
+        if (!(sharedPreferences.getBoolean("adrsts0", false))) {
+            Log.e("tag","insdie0");
+
+            get_LocState_from_Db();
+
+        }
+        else{
+            Log.e("tag","outsid1");
+
+            str_loc_country = sharedPreferences.getString("loc_country", "");
+
+
+            int spinnerPosition = adapter_loc_country.getPosition(str_loc_country);
+            spin_loc_country.setSelection(spinnerPosition);
+
+
+            get_LocState_from_Db();
+
+        }
+
+
+
+        // get_StateInt();
+    }
+
+
+
+    private void get_intl_from_Db() {
+
+        country.clear();
+
+        Cursor cont_cursor = dbclass.getCountry();
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String cont = cont_cursor.getString(cont_cursor.getColumnIndex("country"));
+                    Log.e("tag",""+cont);
+                    country.add(cont);
+                        adapter_int_country= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, country);
+                        spin_int_country.setAdapter(adapter_int_country);
+                } while (cont_cursor.moveToNext());
+            }
+        }
+        if (!(sharedPreferences.getBoolean("adrsts1", false))) {
+            Log.e("tag","insdie0");
+            get_intl_State_from_Db();
+        }
+    }
+
+
+
+
+    private void get_LocState_from_Db() {
         states.clear();
 
-            cont = spin_loc.getSelectedItem().toString();
+            str_loc_country = spin_loc_country.getSelectedItem().toString();
 
-
-        Cursor cont_cursor = dbclass.getState(cont);
+        Cursor cont_cursor = dbclass.getState(str_loc_country);
         if (cont_cursor != null) {
             if (cont_cursor.moveToFirst()) {
                 do {
@@ -911,15 +1368,85 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         adapter_loc_state= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, states);
         spin_loc_state.setAdapter(adapter_loc_state);
 
-        get_zipServ(0);
+       // get_zipServ(0);
 
         // get_zipServint();
+        //get_ZipDB();
+
+        if (!(sharedPreferences.getBoolean("adrsts0", false))) {
+            Log.e("tag","insdie01");
+
+            get_loc_zip_from_service();
+
+        }
+
+        else{
+
+            str_loc_state = sharedPreferences.getString("loc_state", "");
+            int spinnerPosition1 = adapter_loc_state.getPosition(str_loc_state);
+            spin_loc_state.setSelection(spinnerPosition1);
+            get_loc_zip_from_service();
+
+        }
+
+
     }
 
 
-    private void get_StateInt() {
+
+    private void get_intl_State_from_Db() {
         states.clear();
-            cont = spin_int.getSelectedItem().toString();
+
+        str_int_country = spin_int_country.getSelectedItem().toString();
+
+
+        Cursor cont_cursor = dbclass.getState(str_int_country);
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String stat = cont_cursor.getString(cont_cursor.getColumnIndex("state"));
+                    Log.e("tag", "" + stat);
+                    states.add(stat);
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+
+        adapter_int_state= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, states);
+        spin_int_state.setAdapter(adapter_int_state);
+
+        if (!(sharedPreferences.getBoolean("adrsts1", false))) {
+            Log.e("tag","insdie01");
+
+            //get_intl_zip_from_service();
+
+            zip.add("1001");
+            zip.add("1002");
+            zip.add("1003");
+            zip.add("1004");
+            zip.add("1005");
+
+            adapter_int_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
+            spin_int_zip.setAdapter(adapter_int_zip);
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+    private void get_StateInt() {
+        country.clear();
+            cont = spin_int_country.getSelectedItem().toString();
 
         Cursor cont_cursor = dbclass.getState(cont);
         if (cont_cursor != null) {
@@ -943,32 +1470,113 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         adapter_int_state= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, states);
         spin_int_state.setAdapter(adapter_int_state);
 
+      //  get_ZipDB1();
 
+     /*   if(str_int_zip.equals("")){
+
+            zip.add("1001");
+            zip.add("1002");
+            zip.add("1003");
+            zip.add("1004");
+            zip.add("1005");
+
+            adapter_loc_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
+            spin_loc_zip.setAdapter(adapter_loc_zip);
+        }*/
 
         // get_zipServ(0);
         // get_zipServint();
     }
 
 
+    private void get_ZipDB() {
+
+        String country = spin_loc_country.getSelectedItem().toString();
+        String state = spin_loc_state.getSelectedItem().toString();
+
+        Cursor cont_cursor = dbclass.getZip(country,state);
+
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String zp = cont_cursor.getString(cont_cursor.getColumnIndex("zip"));
+                    Log.e("tag",""+zp);
+                    zip.add(zp);
+
+
+                    adapter_loc_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
+                    spin_loc_zip.setAdapter(adapter_loc_zip);
+
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+    }
+
+    private void get_ZipDB1() {
+
+        String country = spin_int_country.getSelectedItem().toString();
+        String state = spin_int_state.getSelectedItem().toString();
+
+        Cursor cont_cursor = dbclass.getZip(country,state);
+
+        if (cont_cursor != null) {
+            if (cont_cursor.moveToFirst()) {
+                do {
+
+                    String zp = cont_cursor.getString(cont_cursor.getColumnIndex("zip"));
+                    Log.e("tag",""+zp);
+                    zip.add(zp);
+
+                    adapter_int_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
+                    spin_int_zip.setAdapter(adapter_int_zip);
+
+                } while (cont_cursor.moveToNext());
+            }
+        }
+    }
+
+
+
+    private void get_loc_zip_from_service(){
+        str_country = spin_loc_country.getSelectedItem().toString();
+        str_state = spin_loc_state.getSelectedItem().toString();
+        zip.clear();
+        Log.e("tag","insid_loc");
+       new GetZip(str_country, str_state,0).execute();
+    }
+
+
+
+    private void get_intl_zip_from_service(){
+        str_country = spin_int_country.getSelectedItem().toString();
+        str_state = spin_int_state.getSelectedItem().toString();
+        zip.clear();
+        Log.e("tag","insid_int");
+       // new GetZip(str_country, str_state,1).execute();
+        new GetZip1(str_country, str_state).execute();
+    }
+
 
     private void get_zipServ(int s){
 
         if(s == 0){
-            str_country = spin_loc.getSelectedItem().toString();
+            str_country = spin_loc_country.getSelectedItem().toString();
             str_state = spin_loc_state.getSelectedItem().toString();
         }
         else {
-            str_country = spin_int.getSelectedItem().toString();
+            str_country = spin_int_country.getSelectedItem().toString();
             str_state = spin_int_state.getSelectedItem().toString();
         }
 
         zip.clear();
-        new GetZip(str_country, str_state,s).execute();
+       // new GetZip(str_country, str_state,s).execute();
 
     }
 
    /* private void get_zipServint(){
-        str_country = spin_int.getSelectedItem().toString();
+        str_country = spin_int_country.getSelectedItem().toString();
         str_state = spin_int_state.getSelectedItem().toString();
         zip.clear();
         new GetZip(str_country, str_state,1).execute();
@@ -976,14 +1584,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
     }*/
 
 
-
-
-
-
     private void get_StateIntDB() {
 
 
-            cont = spin_int.getSelectedItem().toString();
+            cont = spin_int_country.getSelectedItem().toString();
 
 
 
@@ -1012,15 +1616,13 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         spin_int_state.setAdapter(adapter_c);
     }
 
-
-
     private void get_ZipDB(int s) {
 
         if (s == 0) {
-            cont = spin_loc.getSelectedItem().toString();
+            cont = spin_loc_country.getSelectedItem().toString();
             stat = spin_loc_state.getSelectedItem().toString();
         } else {
-            cont = spin_int.getSelectedItem().toString();
+            cont = spin_int_country.getSelectedItem().toString();
             stat = spin_int_state.getSelectedItem().toString();
         }
 
@@ -1051,11 +1653,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
     }
 
-
     private void get_ZipIntDB() {
 
 
-            cont = spin_int.getSelectedItem().toString();
+            cont = spin_int_country.getSelectedItem().toString();
             stat =  spin_int_state.getSelectedItem().toString();
 
 
@@ -1251,7 +1852,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         et_loc_phone.setText(str_loc_phone);
         et_loc_note.setText(str_loc_note);
 
-        spin_loc_state.setSelection(((ArrayAdapter<String>)spin_loc_state.getAdapter()).getPosition("NJ"));
+        //spin_loc_state.setSelection(((ArrayAdapter<String>)spin_loc_state.getAdapter()).getPosition("NJ"));
 
 
     }
@@ -1288,11 +1889,11 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         et_loc_add1.setEnabled(true);
         et_loc_add2.setEnabled(true);
         et_loc_city.setEnabled(true);
-      //  aet_loc_state.setEnabled(true);
-       // aet_loc_zip.setEnabled(true);
         et_loc_phone.setEnabled(true);
         et_loc_note.setEnabled(true);
-        spin_loc.setEnabled(true);
+        spin_loc_country.setEnabled(true);
+        spin_loc_state.setEnabled(true);
+        spin_loc_zip.setEnabled(true);
 
     }
 
@@ -1300,11 +1901,11 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         et_int_add1.setEnabled(true);
         et_int_add2.setEnabled(true);
         et_int_city.setEnabled(true);
-        //aet_int_state.setEnabled(true);
-      //  aet_int_zip.setEnabled(true);
         et_int_phone.setEnabled(true);
         et_int_note.setEnabled(true);
-        spin_int.setEnabled(true);
+        spin_int_country.setEnabled(true);
+        spin_int_state.setEnabled(true);
+        spin_int_zip.setEnabled(true);
 
     }
 
@@ -1313,23 +1914,25 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         et_loc_add1.setEnabled(false);
         et_loc_add2.setEnabled(false);
         et_loc_city.setEnabled(false);
-      //  aet_loc_state.setEnabled(false);
-       // aet_loc_zip.setEnabled(false);
         et_loc_phone.setEnabled(false);
         et_loc_note.setEnabled(false);
-        spin_loc.setEnabled(false);
+        spin_loc_country.setEnabled(false);
+        spin_loc_state.setEnabled(false);
+        spin_loc_zip.setEnabled(false);
     }
 
     public void disable_int() {
         et_int_add1.setEnabled(false);
         et_int_add2.setEnabled(false);
         et_int_city.setEnabled(false);
-       // aet_int_state.setEnabled(false);
-      //  aet_int_zip.setEnabled(false);
         et_int_phone.setEnabled(false);
         et_int_note.setEnabled(false);
-        spin_int.setEnabled(false);
+        spin_int_country.setEnabled(false);
+        spin_int_state.setEnabled(false);
+        spin_int_zip.setEnabled(false);
     }
+
+
 
 
     public class MyAdapter extends ArrayAdapter<String> {
@@ -1421,10 +2024,10 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                     Log.d("tag", "<-----Statusss----->" + daa);
                 }
                 adapter_a = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
-                spin_loc.setAdapter(adapter_a);
+                spin_loc_country.setAdapter(adapter_a);
 
                 adapter_b = new MyAdapter(ProfilePhysicalDeliveryAddress.this, R.layout.dropdown_lists1, country);
-                spin_int.setAdapter(adapter_b);
+                spin_int_country.setAdapter(adapter_b);
 
 
             } catch (JSONException e) {
@@ -1552,7 +2155,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
             sweetAlertDialog = new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
             sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
-            sweetAlertDialog.setTitleText("Loading");
+            sweetAlertDialog.setTitleText("Loading0");
             sweetAlertDialog.setCancelable(false);
             sweetAlertDialog.show();
 
@@ -1581,7 +2184,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             super.onPostExecute(jsonStr);
             if (jsonStr == "") {
 
-            } else {
+            }
+            else {
 
                 try {
                     JSONObject jo = new JSONObject(jsonStr);
@@ -1612,26 +2216,38 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                     }
 
                     Log.d("tag", "<---->" + "" + get_sts);
-                    if (get_sts == 0) {
+                  //  if (get_sts == 0) {
 
-                        /*adapter_zips = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, zip);
-                        spin_loc_zip.setAdapter(adapter_zips);*/
 
                         adapter_loc_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
                         spin_loc_zip.setAdapter(adapter_loc_zip);
 
-                        if(i ==0){
-                            get_zipServ(1);
-                            i =1;
-                        }
 
-                    } else {
-                        /*adapter_zips_ = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_lists6, R.id.text_spin, zip);
-                        spin_int_zip.setAdapter(adapter_zips_);*/
+                    if (!(sharedPreferences.getBoolean("adrsts0", false))) {
+                        Log.e("tag","insdie01");
+                    }
+
+                    else{
+
+
+
+                        str_loc_zip = sharedPreferences.getString("loc_zip", "");
+
+                        Log.e("tag","zip_local"+str_loc_zip);
+
+                        int spinnerPosition2 = adapter_loc_zip.getPosition(str_loc_zip);
+                        spin_loc_zip.setSelection(spinnerPosition2);
+
+                    }
+
+
+
+                  /*  }
+                    else {
 
                         adapter_int_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
                         spin_int_zip.setAdapter(adapter_int_zip);
-                    }
+                    }*/
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1653,6 +2269,225 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+    class GetZip1 extends AsyncTask<String, Void, String> {
+
+        String get_cont, get_state;
+        int get_sts;
+
+        public GetZip1(String cont, String state) {
+            this.get_cont = cont;
+            this.get_state = state;
+
+        }
+
+
+        protected void onPreExecute() {
+
+            sweetAlertDialog = new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetAlertDialog.setTitleText("Loading1");
+            sweetAlertDialog.setCancelable(false);
+            sweetAlertDialog.show();
+
+            super.onPreExecute();
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+            try {
+                String zip_url = Config.SER_URL + "region/zip";
+                JSONObject jsonobject = HttpUtils.getData3(zip_url, get_cont, get_state);
+                Log.e("tag", "jj" + jsonobject);
+                json = jsonobject.toString();
+                return json;
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            sweetAlertDialog.dismiss();
+            super.onPostExecute(jsonStr);
+            if (jsonStr == "") {
+
+            }
+            else {
+
+                try {
+                    JSONObject jo = new JSONObject(jsonStr);
+                    String status = jo.getString("zip");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Statasdfus----->" + status);
+
+                    JSONObject jaa = new JSONObject(jsonStr);
+                    JSONArray jj = jaa.getJSONArray("zip");
+                    Log.d("tag", "<-----S---->" + jj);
+                    zip.clear();
+
+                    for (int i1 = 0; i1 < jj.length(); i1++) {
+
+
+                        String daa = jj.getString(i1);
+                        zip.add(daa);
+                        Log.d("tag", "<-----Statusss----->" + daa);
+
+                    }
+
+                    Log.d("tag", "<---->" + "" + get_sts);
+
+                    adapter_int_zip= new ListAdapter_Class(getApplicationContext(), R.layout.dropdown_lists1, zip);
+                    spin_int_zip.setAdapter(adapter_int_zip);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("No zips associated with given state \n try again")
+                            .setConfirmText("OK")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.dismiss();
+                                }
+                            })
+                            .show();
+
+                }
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+    class Profile_Update_Task extends AsyncTask<String, Void, String> {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            sweetDialog = new SweetAlertDialog(ProfilePhysicalDeliveryAddress.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetDialog.setTitleText("Loading");
+            sweetDialog.setCancelable(false);
+            sweetDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String json = "", jsonStr = "";
+
+            try {
+
+                JSONObject jsonObject = new JSONObject();
+
+
+                jsonObject.accumulate("loc_addr_line1", sharedPreferences.getString("loc_addr1", ""));
+                jsonObject.accumulate("loc_addr_line2", sharedPreferences.getString("loc_addr2", ""));
+                jsonObject.accumulate("loc_addr_city", sharedPreferences.getString("loc_city", ""));
+                jsonObject.accumulate("loc_addr_state", sharedPreferences.getString("loc_state", ""));
+                jsonObject.accumulate("loc_addr_zip", sharedPreferences.getString("loc_zip", ""));
+                jsonObject.accumulate("loc_phone", sharedPreferences.getString("loc_phone", ""));
+                jsonObject.accumulate("loc_delivery_note", sharedPreferences.getString("loc_note", ""));
+                jsonObject.accumulate("loc_addr_country", sharedPreferences.getString("loc_country", ""));
+
+                jsonObject.accumulate("int_addr_line1", sharedPreferences.getString("int_addr1", ""));
+                jsonObject.accumulate("int_addr_line2", sharedPreferences.getString("int_addr2", ""));
+                jsonObject.accumulate("int_addr_city", sharedPreferences.getString("int_city", ""));
+                jsonObject.accumulate("int_addr_state", sharedPreferences.getString("int_state", ""));
+                jsonObject.accumulate("int_addr_zip", sharedPreferences.getString("int_zip", ""));
+                jsonObject.accumulate("int_phone", sharedPreferences.getString("int_phone", ""));
+                jsonObject.accumulate("int_delivery_note", sharedPreferences.getString("int_note", ""));
+                jsonObject.accumulate("int_addr_country", sharedPreferences.getString("int_country", ""));
+
+                // 4. convert JSONObject to JSON to String
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest2(Config.SER_URL + "profileupdate", json, str_session_id);
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("tag", "<-----rerseres---->" + s);
+            super.onPostExecute(s);
+
+            sweetDialog.dismiss();
+
+            try {
+                JSONObject jo = new JSONObject(s);
+
+                String status = jo.getString("status");
+
+                String msg = jo.getString("message");
+                Log.d("tag", "<-----Status----->" + status);
+
+
+                if (status.equals("success")) {
+
+                    btn_next.setVisibility(View.GONE);
+
+
+                    Dialog_new cdd = new Dialog_new(ProfilePhysicalDeliveryAddress.this, "Profile Updated Successfully", 7);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
+
+                } else  {
+
+                    Dialog_new cdd = new Dialog_new(ProfilePhysicalDeliveryAddress.this, "Profile not uploaded \nTry Again Later.", 8);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

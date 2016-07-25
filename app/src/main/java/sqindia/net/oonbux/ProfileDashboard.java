@@ -481,6 +481,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("virtul_addr", "success");
+                    editor.putString("vir_sts","1");
                     editor.commit();
 
                     new Profile_Update_Task().execute();

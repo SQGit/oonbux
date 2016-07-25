@@ -112,7 +112,7 @@
         <activity android:name=".Pal_Chat_List"/>
         <activity android:name=".Pal_Chat"/>
         <activity android:name=".ChoosePal_1"/>
-        <activity android:name=".AddLocationNew"/>
+
 
 
         <meta-data

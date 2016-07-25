@@ -399,7 +399,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:hint="City"
-                                android:layout_marginTop="@dimen/_2sdp"
                                 android:imeOptions="actionNext"
                                 android:inputType="textPersonName"
                                 android:paddingLeft="5dp"

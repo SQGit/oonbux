@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,11 +50,6 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
-/**
- * Created by Salman on 4/15/2016.
- */
-
-//asdfaf
 
 public class ProfileInfo extends Activity {
 
@@ -276,6 +273,10 @@ public class ProfileInfo extends Activity {
             @Override
             public void onClick(View v) {
 
+
+                if ((get_profile_sts.equals(""))) {
+
+
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
                 img_success1 = sharedPreferences.getBoolean("img_add", false);
                 btn_edit.setBackgroundColor(getResources().getColor(R.color.text_color));
@@ -300,8 +301,13 @@ public class ProfileInfo extends Activity {
                                 }
                             })
                             .show();
+                }
 
 
+                }
+
+                else {
+                    validatedatas();
                 }
 
             }
@@ -314,7 +320,7 @@ public class ProfileInfo extends Activity {
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("profile", "");
+              //  editor.putString("profile", "");
                 editor.putString("edit", "success");
                 editor.commit();
                 enable();
@@ -322,6 +328,8 @@ public class ProfileInfo extends Activity {
                 //    btn_edit.setBackgroundColor(getResources().getColor(R.color.hint_floating_dark));
                 // btn_edit.setVisibility(View.INVISIBLE);
                 btn_next.setVisibility(View.VISIBLE);
+                btn_next.setText("Update");
+                btn_next.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 
 
             }
@@ -371,8 +379,8 @@ public class ProfileInfo extends Activity {
                     .show();
 
         } else {
-            Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
-            startActivity(inte);
+           // onBackPressed();
+            super.onBackPressed();
             finish();
         }
 
@@ -411,10 +419,23 @@ public class ProfileInfo extends Activity {
                                 //editor.putString("photo",selectedPhotos.get(0));
                                 editor.commit();
 
-                                disable();
 
-                                Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
-                                startActivity(inte);
+
+                                if ((get_profile_sts.equals(""))) {
+                                    disable();
+                                    Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
+                                    startActivity(inte);
+                                } else {
+                                    disable();
+                                    new Profile_Update_Task().execute();
+                                }
+
+
+
+
+
+
+
 
                             } else {
                                 et_zip.setError("Enter zipcode");
@@ -645,6 +666,101 @@ public class ProfileInfo extends Activity {
         }
 
     }
+
+
+
+
+    class Profile_Update_Task extends AsyncTask<String, Void, String> {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            sweetDialog = new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
+            sweetDialog.setTitleText("Loading");
+            sweetDialog.setCancelable(false);
+            sweetDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String json = "", jsonStr = "";
+
+            try {
+
+                JSONObject jsonObject = new JSONObject();
+
+
+                jsonObject.accumulate("firstname",str_fname );
+                jsonObject.accumulate("lastname",str_lname );
+                jsonObject.accumulate("email",str_email );
+                jsonObject.accumulate("phone",str_phone );
+                jsonObject.accumulate("state",str_state );
+                jsonObject.accumulate("country",sharedPreferences.getString("country",""));
+
+
+
+
+                // 4. convert JSONObject to JSON to String
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest2(Config.SER_URL + "profileupdate", json, str_session_id);
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("tag", "<-----rerseres---->" + s);
+            super.onPostExecute(s);
+
+            sweetDialog.dismiss();
+
+            try {
+                JSONObject jo = new JSONObject(s);
+
+                String status = jo.getString("status");
+
+                String msg = jo.getString("message");
+                Log.d("tag", "<-----Status----->" + status);
+
+
+                if (status.equals("success")) {
+
+                    btn_next.setVisibility(View.GONE);
+
+
+                    Dialog_new cdd = new Dialog_new(ProfileInfo.this, "Profile Updated Successfully", 7);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
+
+                } else  {
+
+                    Dialog_new cdd = new Dialog_new(ProfileInfo.this, "Profile not uploaded \nTry Again Later.", 8);
+                    cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    cdd.show();
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+
+
+
 
 
 }

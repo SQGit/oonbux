@@ -53,6 +53,7 @@ public class ListAdapter_Class extends ArrayAdapter<String> {
 
         label.setTypeface(tf);
 
+
         label.setText(data_lists.get(position));
 
 

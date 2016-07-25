@@ -198,6 +198,42 @@ public class DbC extends SQLiteOpenHelper {
             System.out.println("DATABASE ERROR " + e);
             Log.e("tag",""+e);
         }
+    }
+
+
+    public void region_insert1(String country, String state, String zip) {
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getWritableDatabase();
+            String query = "insert into region (country,state,zip) VALUES(\""+country+"\",\""+state+"\",\""+zip+"\");";
+            Log.e("tag",""+query);
+            sdb1.execSQL(query);
+
+            //sdb1.close();
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+            Log.e("tag",""+e);
+        }
+
+    }
+
+
+
+
+    public void region_update(String country,String state,String zip) {
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getWritableDatabase();
+            String query = "update region set zip = \""+zip+"\" where state =\""+state+"\" and country =\""+country+"\";";
+            Log.e("tag",""+query);
+            sdb1.execSQL(query);
+
+            //sdb1.close();
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+            Log.e("tag",""+e);
+        }
 
 
     }
@@ -350,4 +386,6 @@ public class DbC extends SQLiteOpenHelper {
 
 
     }
+
+
 }

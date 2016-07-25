@@ -172,6 +172,7 @@ public class RegisterActivity extends Activity {
             public void onClick(View v) {
                 Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(login_intent);
+                finish();
             }
         });
         btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +260,7 @@ public class RegisterActivity extends Activity {
         }
 
         get_zipServ();
+       // get_ZipDB();
 
 
     }
@@ -431,6 +433,7 @@ public class RegisterActivity extends Activity {
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("register", "SUCCESS");
+                    editor.putString("vir_sts","0");
                     editor.commit();
                 } else if (status.equals("fail")) {
                     Dialog_Msg cdd = new Dialog_Msg(RegisterActivity.this, msg);

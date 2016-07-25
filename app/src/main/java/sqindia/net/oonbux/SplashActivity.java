@@ -247,24 +247,26 @@ public class SplashActivity extends AppCompatActivity {
                         JSONArray json_arr_zip = json_stat.getJSONArray("zip");
                      //   Log.e("tag", "<-----country----->" + state + "\t" + json_arr_zip);
 
-                        Log.e("tag", j+" <-----1.1_s-----> " + s );
+                        Log.e("tag", state + j + " <-----1.1_s-----> " + s );
 
                         Log.e("tag", "<-----1.2-L---> " + json_arr_zip.length() );
                         s = s + json_arr_zip.length();
                         Log.e("tag", "<-----1.3-f---> " + s );
 
-                        dbclass.region_insert(country,state,"zip");
-
-                        for (int k = 0; k < json_arr_zip.length(); k++) {
-                            String zip = json_arr_zip.getString(k);
-                          //  Log.e("tag", "<-----country----->" + zip);
+                        dbclass.region_insert(country,state,"0000");
 
 
-                         //   Log.e("tag","regions:  "+country+state+zip);
 
-                           // dbclass.region_insert(country,state,zip);
+                            for (int k = 0; k < json_arr_zip.length(); k++) {
+                                String zip = json_arr_zip.getString(k);
+                                //  Log.e("tag", "<-----country----->" + zip);
 
-                           // dbclass.insertFast(country,state,zip);
+
+                                //   Log.e("tag","regions:  "+country+state+zip);
+
+                                // dbclass.region_insert(country,state,zip);
+
+                                    //dbclass.region_insert1(country,state,zip);
 
                         }
 

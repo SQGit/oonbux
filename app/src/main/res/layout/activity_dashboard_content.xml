@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dash">
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="#070b23">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/menu_ico"
+            android:padding="10dp" />
+
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/tv_hd_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="Dashboard"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_22sdp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_below="@+id/ll1"
+        android:background="#FFFFFF"
+        android:weightSum="3">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/btn_dash_ship"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:background="@color/tab_brown"
+            android:drawableLeft="@drawable/lft_btn_1_ico"
+            android:paddingLeft="2dp"
+            android:paddingRight="10dp"
+            android:text="Ship your package abroad"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_12sdp" />
+
+        <com.rey.material.widget.Button
+            android:id="@+id/btn_dash_deliver"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/tab_default"
+            android:drawableLeft="@drawable/lft_btn_2_ico"
+            android:paddingLeft="5dp"
+            android:text="Deliver your package"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_12sdp" />
+
+        <com.rey.material.widget.Button
+            android:id="@+id/btn_dash_shop_online"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1"
+            android:background="@color/tab_default"
+            android:drawableLeft="@drawable/lft_btn_3_ico"
+            android:padding="10dp"
+            android:paddingLeft="5dp"
+            android:text="Shop online with one address"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_12sdp" />
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ll2"
+        android:indeterminate="false"
+        android:max="100"
+        android:minWidth="200dp"
+        android:progressDrawable="@drawable/progress" />
+
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll5"
+        android:layout_below="@id/progressBar1"></FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp">
+
+            <com.rey.material.widget.Button
+                android:id="@+id/add_ship_button"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center|center_horizontal"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/backo"
+                android:drawableLeft="@drawable/ship"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:text="Add Shipment"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/_11sdp" />
+
+
+            <!--            <com.rey.material.widget.Button
+                            android:id="@+id/add_done_button"
+                            style="@style/Material.Drawable.Ripple.Touch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:background="#e6851d"
+                            android:drawableLeft="@drawable/done_ico"
+                            android:drawablePadding="5dp"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="Next"
+                            android:textColor="@color/text_color_hint_light"
+                            android:textSize="14sp" />-->
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/btm_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@color/bottom_page"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/chat_ico" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+
+                android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/grp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/group_ico" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/cam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cam_ico" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/receive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/receive_ico" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/pkg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/pkg_ico" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <!-- <include
+         android:id="@+id/footer"
+         layout="@layout/nav_bottom_page" />-->
+</RelativeLayout>

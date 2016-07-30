@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -93,7 +94,18 @@ public class Dialog_new extends Dialog {
             Drawable img = c.getResources().getDrawable(R.drawable.done_ico);
             btn_close.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
 
-        }else {
+        }
+
+        else if (i == 5) {
+
+            btn_close.setText("OK");
+            imgview.setImageDrawable(c.getResources().getDrawable(R.drawable.msg_ico));
+            btn_close.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+
+        }
+
+
+        else {
 
             btn_close.setText("Close");
             imgview.setImageDrawable(c.getResources().getDrawable(R.drawable.msg_ico));
@@ -108,7 +120,7 @@ public class Dialog_new extends Dialog {
             public void onClick(View v) {
 
                 if (i == 0) {
-                    Intent goD = new Intent(c.getApplicationContext(), LoginActivity.class);
+                    Intent goD = new Intent(c.getApplicationContext(), NewLoginActivity.class);
                     c.startActivity(goD);
                     c.finish();
                     dismiss();
@@ -134,6 +146,12 @@ public class Dialog_new extends Dialog {
                     c.finish();
                     dismiss();
                 }
+
+                else if (i == 5) {
+                    c.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    //c.finish();
+                    dismiss();
+                }
                 else if (i == 7 || i == 8) {
                     Intent goD = new Intent(c.getApplicationContext(), ProfileDashboard.class);
                     c.startActivity(goD);
@@ -153,4 +171,13 @@ public class Dialog_new extends Dialog {
 
 
     }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dismiss();
+    }
+
+
 }

@@ -140,16 +140,16 @@ public class Adapter_Shipment extends BaseAdapter {
                     }*/
                     if (isChecked) {
 
-                        editor.putString("ship_size", "small");
+                        editor.putString("ship_size", "Small");
                         editor.commit();
 
 
                         if (holder.ck_add.isChecked()) {
-                            holder.perpric.setText("$3.00 /Pickup");
+                            holder.perpric.setText("$ 3.00 /Pickup");
                             editor.putString("ship_cost", "$3.00");
                             editor.commit();
                         } else {
-                            holder.perpric.setText("$3.99 /Pickup");
+                            holder.perpric.setText("$ 3.99 /Pickup");
                             editor.putString("ship_cost", "$3.99");
                             editor.commit();
                         }
@@ -178,16 +178,16 @@ public class Adapter_Shipment extends BaseAdapter {
                     }*/
                     if (isChecked) {
 
-                        editor.putString("ship_size", "medium");
+                        editor.putString("ship_size", "Medium");
                         editor.commit();
 
                         if (holder.ck_add.isChecked()) {
-                            holder.perpric.setText("$4.00 /Pickup");
-                            editor.putString("ship_cost", "$4.00");
+                            holder.perpric.setText("$ 4.00 /Pickup");
+                            editor.putString("ship_cost", "$ 4.00");
                             editor.commit();
                         } else {
-                            holder.perpric.setText("$4.99 /Pickup");
-                            editor.putString("ship_cost", "$4.99");
+                            holder.perpric.setText("$ 4.99 /Pickup");
+                            editor.putString("ship_cost", "$ 4.99");
                             editor.commit();
                         }
                         holder.ck_sml.setChecked(false);
@@ -214,17 +214,17 @@ public class Adapter_Shipment extends BaseAdapter {
                     }*/
                     if (isChecked) {
 
-                        editor.putString("ship_size", "large");
+                        editor.putString("ship_size", "Large");
                         editor.commit();
 
 
                         if (holder.ck_add.isChecked()) {
-                            holder.perpric.setText("$5.00 /Pickup");
-                            editor.putString("ship_cost", "$5.00");
+                            holder.perpric.setText("$ 5.00 /Pickup");
+                            editor.putString("ship_cost", "$ 5.00");
                             editor.commit();
                         } else {
-                            holder.perpric.setText("$5.99 /Pickup");
-                            editor.putString("ship_cost", "$5.99");
+                            holder.perpric.setText("$ 5.99 /Pickup");
+                            editor.putString("ship_cost", "$ 5.99");
                             editor.commit();
                         }
 
@@ -253,37 +253,37 @@ public class Adapter_Shipment extends BaseAdapter {
 
 
                     if (isChecked) {
-                        editor.putString("ship_pickup", "yes");
+                        editor.putString("ship_pickup", "Yes");
                         editor.commit();
                     } else {
-                        editor.putString("ship_pickup", "no");
+                        editor.putString("ship_pickup", "No");
                         editor.commit();
                     }
 
 
                     if (isChecked && holder.ck_sml.isChecked()) {
                         holder.perpric.setText("$3.00 /Pickup");
-                        editor.putString("ship_cost", "$3.00");
+                        editor.putString("ship_cost", "$ 3.00");
                         editor.commit();
                     } else if ((!isChecked && holder.ck_sml.isChecked())) {
                         holder.perpric.setText("$3.99 /Pickup");
-                        editor.putString("ship_cost", "$3.99");
+                        editor.putString("ship_cost", "$ 3.99");
                         editor.commit();
                     } else if (isChecked && holder.ck_med.isChecked()) {
                         holder.perpric.setText("$4.00 /Pickup");
-                        editor.putString("ship_cost", "$4.00");
+                        editor.putString("ship_cost", "$ 4.00");
                         editor.commit();
                     } else if (!isChecked && holder.ck_med.isChecked()) {
                         holder.perpric.setText("$4.99 /Pickup");
-                        editor.putString("ship_cost", "$4.99");
+                        editor.putString("ship_cost", "$ 4.99");
                         editor.commit();
                     } else if (isChecked && holder.ck_lrg.isChecked()) {
                         holder.perpric.setText("$5.00 /Pickup");
-                        editor.putString("ship_cost", "$5.00");
+                        editor.putString("ship_cost", "$ 5.00");
                         editor.commit();
                     } else if (!isChecked && holder.ck_lrg.isChecked()) {
                         holder.perpric.setText("$5.99 /Pickup");
-                        editor.putString("ship_cost", "$5.99");
+                        editor.putString("ship_cost", "$ 5.99");
                         editor.commit();
                     } else {
                         Toast.makeText(activity, "Please add Size", Toast.LENGTH_SHORT).show();

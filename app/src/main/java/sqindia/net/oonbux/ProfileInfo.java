@@ -1,6 +1,7 @@
 package sqindia.net.oonbux;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,15 +10,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +29,7 @@ import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.EditText;
 import com.rey.material.widget.TextView;
 import com.squareup.picasso.Picasso;
 
@@ -70,6 +75,10 @@ public class ProfileInfo extends Activity {
     Context context = this;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     SweetAlertDialog sweetDialog;
+    Typeface tf, tf1;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    Dialog loading_dialog;
 
 
     @Override
@@ -77,7 +86,10 @@ public class ProfileInfo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actitiy_profile_info);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+        tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
+        tf1 = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
 
         get_profile_sts = sharedPreferences.getString("profile", "");
         str_fname = sharedPreferences.getString("fname", "");
@@ -108,12 +120,39 @@ public class ProfileInfo extends Activity {
         img_edit = (ImageView) findViewById(R.id.img_change);
 
 
+        header.setTypeface(tf);
+
+        et_fname.setTypeface(tf1);
+        et_lname.setTypeface(tf1);
+        et_email.setTypeface(tf1);
+        et_phone.setTypeface(tf1);
+        et_zip.setTypeface(tf1);
+        et_state.setTypeface(tf1);
+        btn_edit.setTypeface(tf1);
+        btn_next.setTypeface(tf1);
+
+
+        disable();
+
+        et_fname.setText(str_fname);
+        et_lname.setText(str_lname);
+        et_email.setText(str_email);
+        et_phone.setText(str_phone);
+        et_zip.setText(str_zip);
+        et_state.setText(str_state);
+
+        setupUI(findViewById(R.id.top));
+
+
+
         if ((get_profile_sts.equals(""))) {
             btn_next.setVisibility(View.VISIBLE);
             lt_back.setVisibility(View.GONE);
+            btn_next.setText("Next");
         } else {
             btn_next.setVisibility(View.GONE);
             lt_back.setVisibility(View.VISIBLE);
+            btn_next.setText("Update");
         }
 
 
@@ -133,120 +172,32 @@ public class ProfileInfo extends Activity {
         });
 
 
-        disable();
-        et_fname.setText(str_fname);
-        et_lname.setText(str_lname);
-        et_email.setText(str_email);
-        et_phone.setText(str_phone);
-        et_zip.setText(str_zip);
-        et_state.setText(str_state);
-
-
-     /*   if (!((sharedPreferences.getString("web_photo_url", "")) == null)) {
-
-            Log.d("tag", "inside0");
-            web_photo = sharedPreferences.getString("web_photo_url", "");
-
-            if (web_photo != null) {
-                Log.d("tag", "inside1");
-
-                Picasso.with(context)
-                        .load(web_photo)
-                        .fit()
-                        .into(iv_profile_pic);
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("photourl", web_photo);
-                editor.commit();
-
-                img_frm_web = true;
-            }
-
-
-        } else if (!((sharedPreferences.getString("photourl", "")) == null)) {
-
-            Log.d("tag", "inside11");
-            web_photo = sharedPreferences.getString("web_photo_url", "");
-
-
-            if (web_photo != null) {
-                Log.d("tag", "inside1");
-
-                Picasso.with(context)
-                        .load(new File(web_photo))
-                        .fit()
-                        .into(iv_profile_pic);
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("photourl", web_photo);
-                editor.commit();
-
-                img_frm_gal = true;
-            }
-        }
-
-
-        if (sharedPreferences.getString("edit", "").isEmpty()) {
-
-        }*/
-
-
-
-       /* if (!(web_photo.equals(""))) {
-
-            uri = Uri.fromFile(new File(web_photo));
-
-            try {
-                bitmap = null;
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            iv_profile_pic.setImageBitmap(bitmap);
-
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("photourl", web_photo);
-            editor.commit();
-
-        }*/
-
-        Log.e("tag",""+sharedPreferences.getString("photo_path", ""));
+        Log.e("tag", "photo_: " + sharedPreferences.getString("photo_path", ""));
 
         if (sharedPreferences.getString("photo_path", "").equals("")) {
 
-            Log.e("tag","inside");
+            Log.e("tag", "inside");
+            if (!(sharedPreferences.getString("photourl", "").equals(""))) {
 
-        }
-        else{
-            Log.e("tag","outside");
+                Log.e("tag", "photo_: " + sharedPreferences.getString("photo_path", ""));
+                Picasso.with(context)
+                        .load(new File(sharedPreferences.getString("photourl", "")))
+                        .fit()
+                        .into(iv_profile_pic);
+            }
+
+        } else {
+            Log.e("tag", "outside");
             photo_path = sharedPreferences.getString("photo_path", "");
 
             img_frm_web = true;
-            img_frm_gal =true;
+            img_frm_gal = true;
 
             Picasso.with(context)
                     .load(photo_path)
-                    .fit()
+                    .resize(80, 80)
                     .into(iv_profile_pic);
         }
-
-
-        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
-        Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
-
-
-        header.setTypeface(tf);
-
-        et_fname.setTypeface(tf1);
-        et_lname.setTypeface(tf1);
-        et_email.setTypeface(tf1);
-        et_phone.setTypeface(tf1);
-        et_zip.setTypeface(tf1);
-        et_state.setTypeface(tf1);
-        btn_edit.setTypeface(tf1);
-        btn_next.setTypeface(tf1);
 
 
         img_edit.setOnClickListener(new View.OnClickListener() {
@@ -277,36 +228,19 @@ public class ProfileInfo extends Activity {
                 if ((get_profile_sts.equals(""))) {
 
 
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
-                img_success1 = sharedPreferences.getBoolean("img_add", false);
-                btn_edit.setBackgroundColor(getResources().getColor(R.color.text_color));
+                    btn_edit.setBackgroundDrawable(getResources().getDrawable(R.drawable.login_reg_button));
 
-                if (img_frm_gal && img_frm_web) {
-                    validatedatas();
+                    if (img_frm_gal && img_frm_web) {
+                        validatedatas();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Plese Add Profile Picture", Toast.LENGTH_LONG).show();
+                        PhotoPickerIntent intent = new PhotoPickerIntent(ProfileInfo.this);
+                        intent.setPhotoCount(1);
+                        intent.setColumn(3);
+                        intent.setShowCamera(true);
+                        startActivityForResult(intent, REQUEST_CODE);
+                    }
                 } else {
-                    //Toast.makeText(getApplicationContext(), "Add Profile Picture", Toast.LENGTH_LONG).show();
-
-                    new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Add Profile Picture!")
-                            .setConfirmText("OK")
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
-                                    PhotoPickerIntent intent = new PhotoPickerIntent(ProfileInfo.this);
-                                    intent.setPhotoCount(1);
-                                    intent.setColumn(3);
-                                    intent.setShowCamera(true);
-                                    startActivityForResult(intent, REQUEST_CODE);
-                                }
-                            })
-                            .show();
-                }
-
-
-                }
-
-                else {
                     validatedatas();
                 }
 
@@ -318,19 +252,21 @@ public class ProfileInfo extends Activity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-              //  editor.putString("profile", "");
-                editor.putString("edit", "success");
-                editor.commit();
+                btn_edit.setEnabled(false);
+               // btn_edit.setClickable(false);
+               // btn_edit.setBackground(getResources().getDrawable(R.drawable.login_reg_button_disable));
+                btn_edit.setBackgroundResource(R.drawable.login_reg_button_disable);
+               // btn_edit.setBackgroundDrawable(getResources().getDrawable(R.drawable.login_reg_button_disable));
                 enable();
 
+               /* SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                //  editor.putString("profile", "");
+                editor.putString("edit", "success");
+                editor.commit();
+                enable();*/
                 //    btn_edit.setBackgroundColor(getResources().getColor(R.color.hint_floating_dark));
                 // btn_edit.setVisibility(View.INVISIBLE);
-                btn_next.setVisibility(View.VISIBLE);
-                btn_next.setText("Update");
-                btn_next.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-
 
             }
         });
@@ -341,50 +277,14 @@ public class ProfileInfo extends Activity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-
-
         if ((get_profile_sts.equals(""))) {
-            new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Do you want to exit the Application?")
-                    .setConfirmText("Yes!")
-                    .setCancelText("No")
-
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            Intent i1 = new Intent(Intent.ACTION_MAIN);
-                            i1.setAction(Intent.ACTION_MAIN);
-                            i1.addCategory(Intent.CATEGORY_HOME);
-                            i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(i1);
-                            finish();
-                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("login", "");
-                            editor.commit();
-                            sDialog.dismiss();
-
-                        }
-                    })
-                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            sweetAlertDialog.dismiss();
-
-                        }
-                    })
-                    .show();
-
+            DialogYesNo dialog_exit = new DialogYesNo(ProfileInfo.this, "Do You Want to Exit ?", 1);
+            dialog_exit.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog_exit.show();
         } else {
-           // onBackPressed();
             super.onBackPressed();
             finish();
         }
-
-
     }
 
 
@@ -393,68 +293,42 @@ public class ProfileInfo extends Activity {
 
         str_fname = et_fname.getText().toString();
         str_lname = et_lname.getText().toString();
-        str_email = et_email.getText().toString();
+
         str_phone = et_phone.getText().toString();
-        str_zip = et_zip.getText().toString();
-        str_state = et_state.getText().toString();
 
 
         if (!str_fname.isEmpty()) {
             if (!str_lname.isEmpty()) {
-                if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
-                    if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
-                        if (!str_state.isEmpty()) {
-                            if (!(str_zip.isEmpty() || str_zip.length() < 3)) {
+                if (!(str_phone.isEmpty() || str_phone.length() < 10)) {
 
 
-                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("fname", str_fname);
-                                editor.putString("lname", str_lname);
-                                editor.putString("mail", str_email);
-                                editor.putString("phone", str_phone);
-                                editor.putString("state", str_state);
-                                editor.putString("zip", str_zip);
-                                editor.putString("photourl", photo_path);
-                                //editor.putString("photo",selectedPhotos.get(0));
-                                editor.commit();
+                    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+                    editor = sharedPreferences.edit();
+                    editor.putString("fname", str_fname);
+                    editor.putString("lname", str_lname);
+                    editor.putString("mail", str_email);
+                    editor.putString("phone", str_phone);
+                    editor.putString("state", str_state);
+                    editor.putString("zip", str_zip);
+                    editor.putString("photourl", photo_path);
+                    editor.commit();
 
 
-
-                                if ((get_profile_sts.equals(""))) {
-                                    disable();
-                                    Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
-                                    startActivity(inte);
-                                } else {
-                                    disable();
-                                    new Profile_Update_Task().execute();
-                                }
-
-
-
-
-
-
-
-
-                            } else {
-                                et_zip.setError("Enter zipcode");
-                                et_zip.requestFocus();
-
-                            }
-                        } else {
-                            et_state.setError("Enter State");
-                            et_state.requestFocus();
-                        }
+                    if ((get_profile_sts.equals(""))) {
+                        disable();
+                        Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
+                        startActivity(inte);
                     } else {
-                        et_phone.setError("Enter valid phone number");
-                        et_phone.requestFocus();
-
+                        disable();
+                        new Profile_Update_Task().execute();
                     }
+
                 } else {
-                    et_email.setError("Enter a valid email address!");
-                    et_email.requestFocus();
+                    et_phone.setError("Enter valid phone number");
+                    et_phone.requestFocus();
+
                 }
+
             } else {
                 et_lname.setError("Enter a Last Name!");
                 et_lname.requestFocus();
@@ -496,8 +370,6 @@ public class ProfileInfo extends Activity {
                 new UploadImageToServer(web_photo).execute();
 
 
-
-
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("img_add", true);
@@ -519,13 +391,13 @@ public class ProfileInfo extends Activity {
         et_lname.setEnabled(true);
         et_lname.setTextColor(getResources().getColor(R.color.text_color));
         et_email.setEnabled(false);
-        et_email.setTextColor(getResources().getColor(R.color.text_color));
+        //et_email.setTextColor(getResources().getColor(R.color.text_color));
         et_phone.setEnabled(true);
         et_phone.setTextColor(getResources().getColor(R.color.text_color));
-        et_zip.setEnabled(true);
-        et_zip.setTextColor(getResources().getColor(R.color.text_color));
-        et_state.setEnabled(true);
-        et_state.setTextColor(getResources().getColor(R.color.text_color));
+        et_zip.setEnabled(false);
+        // et_zip.setTextColor(getResources().getColor(R.color.text_color));
+        et_state.setEnabled(false);
+        //  et_state.setTextColor(getResources().getColor(R.color.text_color));
         //img_edit.setEnabled(true);
 
 
@@ -547,7 +419,7 @@ public class ProfileInfo extends Activity {
         et_state.setEnabled(false);
         et_state.setTextColor(getResources().getColor(R.color.hint_floating_dark));
         //img_edit.setEnabled(false);
-       // btn_edit.setEnabled(true);
+        // btn_edit.setEnabled(true);
     }
 
 
@@ -564,11 +436,12 @@ public class ProfileInfo extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            sweetDialog = new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.PROGRESS_TYPE);
-            sweetDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
-            sweetDialog.setTitleText("Loading");
-            sweetDialog.setCancelable(false);
-            sweetDialog.show();
+            loading_dialog = new Dialog(ProfileInfo.this);
+            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            loading_dialog.setContentView(R.layout.dialog_loading);
+            loading_dialog.setCancelable(false);
+            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            loading_dialog.show();
 
         }
 
@@ -620,7 +493,7 @@ public class ProfileInfo extends Activity {
         @Override
         protected void onPostExecute(String result) {
             Log.e("tag", "Response from server: " + result);
-            sweetDialog.dismiss();
+            loading_dialog.dismiss();
 
 
             try {
@@ -637,7 +510,7 @@ public class ProfileInfo extends Activity {
                     img_frm_web = true;
                     String url = jo.getString("url");
 
-                    Log.e("tag", url);
+                    Log.e("tag","poto "+ url);
 
 
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
@@ -647,7 +520,8 @@ public class ProfileInfo extends Activity {
                     editor.commit();
 
                     Picasso.with(context)
-                            .load(new File(web_photo))
+                            .load(url)
+                            .fit()
                             .into(iv_profile_pic);
 
                 } else if (status.equals("fail")) {
@@ -668,20 +542,19 @@ public class ProfileInfo extends Activity {
     }
 
 
-
-
     class Profile_Update_Task extends AsyncTask<String, Void, String> {
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
+
 
         protected void onPreExecute() {
             super.onPreExecute();
 
-            sweetDialog = new SweetAlertDialog(ProfileInfo.this, SweetAlertDialog.PROGRESS_TYPE);
-            sweetDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
-            sweetDialog.setTitleText("Loading");
-            sweetDialog.setCancelable(false);
-            sweetDialog.show();
+            loading_dialog = new Dialog(ProfileInfo.this);
+            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            loading_dialog.setContentView(R.layout.dialog_loading);
+            loading_dialog.setCancelable(false);
+            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            loading_dialog.show();
 
         }
 
@@ -694,14 +567,12 @@ public class ProfileInfo extends Activity {
                 JSONObject jsonObject = new JSONObject();
 
 
-                jsonObject.accumulate("firstname",str_fname );
-                jsonObject.accumulate("lastname",str_lname );
-                jsonObject.accumulate("email",str_email );
-                jsonObject.accumulate("phone",str_phone );
-                jsonObject.accumulate("state",str_state );
-                jsonObject.accumulate("country",sharedPreferences.getString("country",""));
-
-
+                jsonObject.accumulate("firstname", str_fname);
+                jsonObject.accumulate("lastname", str_lname);
+                jsonObject.accumulate("email", str_email);
+                jsonObject.accumulate("phone", str_phone);
+                jsonObject.accumulate("state", str_state);
+                jsonObject.accumulate("country", sharedPreferences.getString("country", ""));
 
 
                 // 4. convert JSONObject to JSON to String
@@ -718,9 +589,10 @@ public class ProfileInfo extends Activity {
         @Override
         protected void onPostExecute(String s) {
             Log.d("tag", "<-----rerseres---->" + s);
+            loading_dialog.dismiss();
             super.onPostExecute(s);
 
-            sweetDialog.dismiss();
+
 
             try {
                 JSONObject jo = new JSONObject(s);
@@ -741,7 +613,8 @@ public class ProfileInfo extends Activity {
                     cdd.show();
 
 
-                } else  {
+                }
+                else {
 
                     Dialog_new cdd = new Dialog_new(ProfileInfo.this, "Profile not uploaded \nTry Again Later.", 8);
                     cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -749,7 +622,8 @@ public class ProfileInfo extends Activity {
 
                 }
 
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -758,6 +632,32 @@ public class ProfileInfo extends Activity {
     }
 
 
+
+    public void setupUI(View view) {
+
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(ProfileInfo.this);
+                    return false;
+                }
+            });
+        }
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
 
 
 

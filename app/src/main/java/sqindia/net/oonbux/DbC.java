@@ -201,6 +201,72 @@ public class DbC extends SQLiteOpenHelper {
     }
 
 
+    public Cursor region_get(String zip) {
+        Cursor cur = null;
+        String query = "select * from region where zip = \""+zip+"\";";
+        Log.e("tag",""+query);
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getReadableDatabase();
+            cur = sdb1.rawQuery(query, null);
+            Log.e("tag",""+cur);
+            //sdb1.close();
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+        }
+        return cur;
+    }
+
+
+    public Cursor region_getall() {
+        Cursor cur = null;
+
+        String query = "select * from region;";
+
+        Log.e("tag",""+query);
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getReadableDatabase();
+            cur = sdb1.rawQuery(query, null);
+            Log.e("tag",""+cur);
+            //sdb1.close();
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+
+        }
+
+        return cur;
+
+
+    }
+
+
+
+    public Cursor region_db(String query) {
+        Cursor cur = null;
+
+       // String query = "select * from region;";
+
+        Log.e("tag",""+query);
+
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getReadableDatabase();
+            cur = sdb1.rawQuery(query, null);
+            Log.e("tag",""+cur);
+            //sdb1.close();
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+
+        }
+
+        return cur;
+
+
+    }
+
+
     public void region_insert1(String country, String state, String zip) {
 
         try {
@@ -313,6 +379,20 @@ public class DbC extends SQLiteOpenHelper {
             SQLiteDatabase sdb1;
             sdb1 = getWritableDatabase();
             String query = "insert into physical (addr_line1,addr_line2,city,state,zip,phone,country,note,loc) VALUES(\""+addr_line1+"\",\""+addr_line2+"\",\""+city+"\",\""+state+"\",\""+zip+"\",\""+phone+"\",\""+country+"\",\""+note+"\",\""+def+"\");";
+            Log.e("tag",""+query);
+            sdb1.execSQL(query);
+        } catch (Exception e) {
+            System.out.println("DATABASE ERROR " + e);
+            Log.e("tag",""+e);
+        }
+    }
+
+    public void physical_update(String addr_line1,String addr_line2,String city,String state,String zip,String phone,String country,String note,String def) {
+        try {
+            SQLiteDatabase sdb1;
+            sdb1 = getWritableDatabase();
+            String query = "update physical set addr_line1 = \""+addr_line1+"\" addr_line2 = \""+addr_line2+"\" city = \""+city+"\" state = \""+state+"\" zip = \""+zip+"\" phone = \""+phone+"\" country = \""+country+"\" note = \""+note+"\" where loc = \""+def+"\";";
+            //(addr_line1,addr_line2,city,state,zip,phone,country,note,loc) VALUES(\""+addr_line1+"\",\""+addr_line2+"\",\""+city+"\",\""+state+"\",\""+zip+"\",\""+phone+"\",\""+country+"\",\""+note+"\",\""+def+"\");";
             Log.e("tag",""+query);
             sdb1.execSQL(query);
         } catch (Exception e) {

@@ -13,9 +13,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -46,7 +50,7 @@ public class RegisterActivity extends Activity {
     ArrayList<String> zip = new ArrayList<>();
     Spinner spin_country,spin_states,spin_zip;
     ListAdapter_Class country_list_adapter, state_list_adapter, zip_list_adapter;
-
+    ScrollView scroll;
     ArrayAdapter<String> adpater_states;
     ArrayAdapter<String> adapter_zip;
 
@@ -109,6 +113,33 @@ public class RegisterActivity extends Activity {
 
             }
         });
+
+
+
+
+
+   /*     et_phone.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
+                                               @Override
+                                               public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
+                                                   if (actionId == EditorInfo.IME_ACTION_DONE) {
+                                                       if (et_phone.getText().length() > 9) {
+                                                                scroll.fullScroll(View.FOCUS_DOWN);
+                                                           spin_country.requestFocus();
+                                                           spin_country.hasFocus();
+                                                           Log.e("tag","ind");
+                                                           //spin_country.performClick();
+                                                           //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+                                                           return true;
+                                                       } else {
+                                                           et_phone.requestFocus();
+                                                           getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                                                           return true;
+                                                       }
+                                                   }
+                                                   return false;
+                                               }
+                                           });*/
+
 
        /* aet_state.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,6 +347,7 @@ public class RegisterActivity extends Activity {
         spin_country = (com.rey.material.widget.Spinner) findViewById(R.id.spin_country);
         spin_states = (com.rey.material.widget.Spinner) findViewById(R.id.spin_states);
         spin_zip = (com.rey.material.widget.Spinner) findViewById(R.id.spin_zip);
+        scroll = (ScrollView) findViewById(R.id.scrollview);
 
         final Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
         btn_submit.setTypeface(tf);
@@ -434,6 +466,7 @@ public class RegisterActivity extends Activity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("register", "SUCCESS");
                     editor.putString("vir_sts","0");
+                    editor.putString("additional","");
                     editor.commit();
                 } else if (status.equals("fail")) {
                     Dialog_Msg cdd = new Dialog_Msg(RegisterActivity.this, msg);
@@ -665,6 +698,34 @@ public class RegisterActivity extends Activity {
             sweetAlertDialog.dismiss();
             super.onPostExecute(jsonStr);
             if (jsonStr == "") {
+
+                new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Oops!")
+                        .setContentText("Try Again Later")
+                        .setConfirmText("OK")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        })
+                        .show();
+
+            }
+            else if(jsonStr == null){
+
+                new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Oops!")
+                        .setContentText("No Network Found.\n Try Again Later")
+                        .setConfirmText("OK")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        })
+                        .show();
+
             } else {
                 try {
                     JSONObject jo = new JSONObject(jsonStr);
@@ -678,7 +739,7 @@ public class RegisterActivity extends Activity {
                     for (int i1 = 0; i1 < jj.length(); i1++) {
                         String daa = jj.getString(i1);
                         zip.add(daa);
-                        Log.d("tag", "<-----Statusss----->" + daa);
+                        //Log.d("tag", "<-----Statusss----->" + daa);
                     }
 
 

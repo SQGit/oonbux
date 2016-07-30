@@ -15,8 +15,7 @@ import com.rey.material.widget.TextView;
 //asfsadf
 public class HowItWorks extends Activity {
 
-    ImageButton btn_back;
-    TextView header;
+    TextView header,tv_content;
     com.rey.material.widget.LinearLayout lt_back;
 
 
@@ -28,10 +27,13 @@ public class HowItWorks extends Activity {
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
+        Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
 
         header = (TextView) findViewById(R.id.tv_hd_txt);
+        tv_content = (TextView) findViewById(R.id.tv_shd_txt);
 
         header.setTypeface(tf);
+        tv_content.setTypeface(tf1);
 
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
 

@@ -41,6 +41,7 @@ public class listview_adapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
+    private HashMap<String, List<String>> expandable_ListDetails;
     SweetAlertDialog sweetDialog;
     public String str_session_id;
     public String str_addr_id,str_addr_line1,str_addr_line2,str_addr_city,str_addr_state,str_addr_country,str_addr_zip,str_addr_note,str_addr_phone,str_addr_type;
@@ -48,11 +49,11 @@ public class listview_adapter extends BaseExpandableListAdapter {
     ArrayList<String> daa = new ArrayList<>();
 
     public listview_adapter(Activity act, Context context, List<String> expandableListTitle,
-                            HashMap<String, List<String>> expandableListDetail) {
+                            HashMap<String, List<String>> expandableListDetail,HashMap<String, List<String>> exp_datas1) {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
-
+        this.expandable_ListDetails = exp_datas1;
         this.activity = act;
 
 
@@ -63,8 +64,26 @@ public class listview_adapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .get(expandedListPosition);
+
+        str_addr_id = this.expandableListDetail.get(expandableListTitle.get(listPosition)).get(0);
+        //Log.e("tag",""+ str_addr_id);
+        str_addr_line1 = expandableListDetail.get(expandableListTitle.get(listPosition)).get(1);
+        str_addr_line2 = expandableListDetail.get(expandableListTitle.get(listPosition)).get(2);
+        str_addr_city = expandableListDetail.get(expandableListTitle.get(listPosition)).get(3);
+        str_addr_state = expandableListDetail.get(expandableListTitle.get(listPosition)).get(4);
+        str_addr_country = expandableListDetail.get(expandableListTitle.get(listPosition)).get(5);
+        str_addr_zip= expandableListDetail.get(expandableListTitle.get(listPosition)).get(6);
+        str_addr_note= expandableListDetail.get(expandableListTitle.get(listPosition)).get(7);
+        str_addr_phone= expandableListDetail.get(expandableListTitle.get(listPosition)).get(8);
+        str_addr_type= expandableListDetail.get(expandableListTitle.get(listPosition)).get(9);
+
+
+       // Log.e("tag",""+this.expandableListDetail.get(expandableListTitle.get(listPosition)).get(expandedListPosition));
+
+
+
+
+        return this.expandableListDetail.get(expandableListTitle.get(listPosition)).get(expandedListPosition);
     }
 
     @Override
@@ -75,7 +94,72 @@ public class listview_adapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
+
+         String expandedListText = (String) getChild(listPosition, expandedListPosition);
+
+        if(expandedListPosition == 0){
+            expandedListText = "Address Id : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+        if(expandedListPosition == 1){
+            expandedListText = "Address Line 1 : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+        if(expandedListPosition == 2){
+            expandedListText = "Address Line 2 : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+        if(expandedListPosition == 3){
+            expandedListText = "Country : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+        if(expandedListPosition == 4){
+            expandedListText = "State : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+        if(expandedListPosition == 5){
+            expandedListText = "City : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+        if(expandedListPosition == 6){
+            expandedListText = "Zip : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+        if(expandedListPosition == 7){
+            expandedListText = "Note : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+        if(expandedListPosition == 8){
+            expandedListText = "Phone : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+        if(expandedListPosition == 9){
+            expandedListText = "Address Type : "+expandedListText;
+            Log.e("tag",""+expandedListText);
+        }
+
+
+
+      //  Log.e("tag",""+listPosition+expandedListPosition);
+
+       // String asdf = expandable_ListDetails.get(0).get(0);
+
+
+
+        /*str_addr_id = expandableListDetail.get(expandableListTitle.get(listPosition)).get(0);
+        Log.e("tag",""+str_addr_id);
+        str_addr_line1 = expandableListDetail.get(expandableListTitle.get(listPosition)).get(1);
+        str_addr_line2 = expandableListDetail.get(expandableListTitle.get(listPosition)).get(2);
+        str_addr_city = expandableListDetail.get(expandableListTitle.get(listPosition)).get(3);
+        str_addr_state = expandableListDetail.get(expandableListTitle.get(listPosition)).get(4);
+        str_addr_country = expandableListDetail.get(expandableListTitle.get(listPosition)).get(5);
+        str_addr_zip= expandableListDetail.get(expandableListTitle.get(listPosition)).get(6);
+        str_addr_note= expandableListDetail.get(expandableListTitle.get(listPosition)).get(7);
+        str_addr_phone= expandableListDetail.get(expandableListTitle.get(listPosition)).get(8);
+        str_addr_type= expandableListDetail.get(expandableListTitle.get(listPosition)).get(9);*/
+
+
+        //String asdf = str_addr_id +"\n"+ str_addr_line1 +"\n"+ str_addr_line2 +"\n"+ str_addr_city +"\n"+ str_addr_state +"\n"+ str_addr_country +"\n"+ str_addr_zip +"\n"+ str_addr_phone +"\n"+ str_addr_note +"\n"+ str_addr_type ;
 
         tf = Typeface.createFromAsset(context.getAssets(), "fonts/prox.otf");
 
@@ -146,6 +230,17 @@ public class listview_adapter extends BaseExpandableListAdapter {
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.listgroup, null);
         }
+
+
+        if(listPosition %2 ==0){
+
+        }
+        else {
+
+        }
+
+
+
         TextView listTitleTextView = (TextView) convertView
                 .findViewById(R.id.list_group);
         listTitleTextView.setTypeface(tf);
@@ -172,6 +267,7 @@ public class listview_adapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
 
                 str_addr_id = expandableListDetail.get(expandableListTitle.get(listPosition)).get(0);
+                Log.e("tag",""+str_addr_id);
                 str_addr_line1 = expandableListDetail.get(expandableListTitle.get(listPosition)).get(1);
                 str_addr_line2 = expandableListDetail.get(expandableListTitle.get(listPosition)).get(2);
                 str_addr_city = expandableListDetail.get(expandableListTitle.get(listPosition)).get(3);

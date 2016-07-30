@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.rey.material.widget.Button;
+import com.rey.material.widget.EditText;
 import com.rey.material.widget.TextView;
 
 /**
@@ -22,7 +23,8 @@ public class ChoosePal_1 extends Activity {
 
     TextView tv_header;
     LinearLayout lt_back, lt_add;
-    Button btn_next;
+    Button btn_next,btn_submit;
+    EditText et_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,8 @@ public class ChoosePal_1 extends Activity {
         tv_header = (TextView) findViewById(R.id.tv_hd_txt);
         lt_back = (LinearLayout) findViewById(R.id.layout_back);
         lt_add = (LinearLayout) findViewById(R.id.layout_add);
-
+        et_search = (EditText) findViewById(R.id.et_searchtxt);
+        btn_submit = (Button) findViewById(R.id.button_submit);
         btn_next = (Button) findViewById(R.id.button_next);
 
         lt_add.setVisibility(View.GONE);
@@ -42,6 +45,8 @@ public class ChoosePal_1 extends Activity {
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
         tv_header.setTypeface(tf1);
         btn_next.setTypeface(tf);
+        btn_submit.setTypeface(tf);
+        et_search.setTypeface(tf);
 
         lt_back.setOnClickListener(new View.OnClickListener() {
             @Override

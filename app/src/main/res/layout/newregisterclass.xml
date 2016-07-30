@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register_newbg"
+    android:id="@+id/top"
+    android:orientation="vertical">
+
+
+    <com.rey.material.widget.TextView
+        android:id="@+id/textview_header_reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:text="Register"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/_22sdp" />
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom"
+        android:layout_marginTop="@dimen/_140sdp"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:orientation="vertical">
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/textview_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Location Details"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_16sdp" />
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/textview_sub_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:gravity="center"
+            android:text="Please fill all the following details to proceed"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_11sdp" />
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_indicator1"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/indicator" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_indicator2"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/indicator_hover" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_indicator3"
+            android:background="@drawable/indicator_hover" />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:orientation="vertical">
+
+
+        <com.rey.material.widget.Button
+            android:id="@+id/button_submit"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/login_reg_button"
+            android:drawablePadding="@dimen/_10sdp"
+            android:drawableRight="@drawable/arrow_ico"
+            android:paddingLeft="@dimen/_30sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:text="Submit"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_18sdp" />
+
+        <LinearLayout
+            android:id="@+id/linear_login_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/textview_footer_txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Already have an Account?"
+                android:textColor="#FFFFFF" />
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/textview_footer_txt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=" Login"
+                android:textColor="#d97810" />
+        </LinearLayout>
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/textview_sub_footer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/terms"
+            android:textColor="#e0e0e0"
+            android:textSize="@dimen/_7sdp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

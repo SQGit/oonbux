@@ -37,6 +37,8 @@ public class Dialog_Add_Address extends Dialog {
     int sts;
     ImageView close;
     SweetAlertDialog sweetDialog;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     public Dialog_Add_Address(Activity activity, int k, ArrayList<String> ddd) {
         super(activity);
@@ -52,7 +54,7 @@ public class Dialog_Add_Address extends Dialog {
         setContentView(R.layout.dialog_add_address);
 
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
+         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
 
         str_session_id = sharedPreferences.getString("sessionid", "");
 
@@ -85,7 +87,14 @@ public class Dialog_Add_Address extends Dialog {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                if(sharedPreferences.getString("additional", "").equals("")){
+                    dismiss();
+                    c.finish();
+                }
+                else{
+                    dismiss();
+                }
+
             }
         });
 
@@ -243,6 +252,10 @@ public class Dialog_Add_Address extends Dialog {
 
 
                 if (status.equals("success")) {
+
+                    editor = sharedPreferences.edit();
+                    editor.putString("additional","success");
+                    editor.commit();
 
 
                     Log.d("tag", "<-----Status----->" + msg);

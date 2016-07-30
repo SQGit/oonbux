@@ -111,6 +111,12 @@ public class SurfaceView extends Activity {
         lt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("ship_pickup", "no");
+                editor.commit();
+
                 shipment_photos.clear();
                 PhotoPickerIntent intent = new PhotoPickerIntent(getApplicationContext());
                 intent.setPhotoCount(1);
@@ -143,7 +149,6 @@ public class SurfaceView extends Activity {
             }
         });
     }
-
 
 
     private void getFromDB() {

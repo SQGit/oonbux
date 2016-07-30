@@ -145,7 +145,7 @@
                     <LinearLayout
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:background="#ef8d23"
+
                         android:gravity="top">
 
                         <com.rey.material.widget.CheckBox
@@ -191,7 +191,8 @@
                                     app:met_accentTypeface="fonts/prox.otf"
                                     app:met_baseColor="@color/text_divider_light"
                                     app:met_floatingLabel="normal"
-                                    app:met_floatingLabelTextColor="#0f1025"
+
+                                    app:met_floatingLabelTextColor="@color/hint_floating_dark"
                                     app:met_primaryColor="@color/text_divider_light"
                                     app:met_textColor="#FFFFFF"
                                     app:met_textColorHint="#f5f5f5"
@@ -211,7 +212,7 @@
                                     app:met_accentTypeface="fonts/prox.otf"
                                     app:met_baseColor="@color/text_divider_light"
                                     app:met_floatingLabel="normal"
-                                    app:met_floatingLabelTextColor="#0f1025"
+                                    app:met_floatingLabelTextColor="@color/hint_floating_dark"
                                     app:met_primaryColor="@color/text_divider_light"
                                     app:met_textColor="#FFFFFF"
                                     app:met_textColorHint="#f5f5f5"
@@ -597,7 +598,6 @@
                     <LinearLayout
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:background="#ef8d23"
                         android:gravity="top">
 
                         <com.rey.material.widget.CheckBox

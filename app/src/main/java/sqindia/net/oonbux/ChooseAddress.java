@@ -47,7 +47,7 @@ public class ChooseAddress extends Activity {
 
     TextView tv_from, tv_to, tv_pickup, tv_sub1, tv_pickup_address, tv_to_address, tv_header, tv_carttxt, tv_cart;
 
-    String str_name, str_oonbux_id, str_phone, str_state, str_zip, str_country, str_session_id;
+    String str_name, str_oonbux_id, str_phone, str_state, str_zip, str_country, str_session_id,phy_def_address;
 
     Button btn_pickup_loc, btn_pickup_intl, btn_to_loc, btn_to_intl;
     SweetAlertDialog sweetAlertDialog;
@@ -114,6 +114,8 @@ public class ChooseAddress extends Activity {
         str_oonbux_id = sharedPreferences.getString("oonbuxid", "");
         str_country = sharedPreferences.getString("country", "");
         str_session_id = sharedPreferences.getString("sessionid", "");
+
+        phy_def_address = sharedPreferences.getString("default_adr", "");
 
 
         dbclass = new DbC(context);
@@ -264,11 +266,29 @@ public class ChooseAddress extends Activity {
         getVirtualDB(query);
 
 
-        btn_to_intl.setBackgroundResource(R.drawable.thumb);
-        btn_to_loc.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        btn_to_loc.setTextColor(getResources().getColor(R.color.text_divider1));
-        query1 = "select * from physical where loc = 0";
-        getToDB(query1);
+
+
+        if (phy_def_address.equals("LOCAL")) {
+
+
+            btn_to_loc.setBackgroundResource(R.drawable.thumb);
+            btn_to_intl.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            btn_to_intl.setTextColor(getResources().getColor(R.color.text_divider1));
+            query1 = "select * from physical where loc = 0";
+            getToDB(query1);
+
+
+        } else if (phy_def_address.equals("INTERNATIONAL")) {
+
+            btn_to_intl.setBackgroundResource(R.drawable.thumb);
+            btn_to_loc.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            btn_to_loc.setTextColor(getResources().getColor(R.color.text_divider1));
+            query1 = "select * from physical where loc = 1";
+            getToDB(query1);
+
+        }
+
+
 
 
         spn_pickup_address.setOnItemClickListener(new Spinner.OnItemClickListener() {
@@ -855,7 +875,6 @@ public class ChooseAddress extends Activity {
 
             TextView label = (TextView) row.findViewById(R.id.text_spin);
             label.setTypeface(tf);
-
             label.setText(list_datas.get(position));
             return row;
         }

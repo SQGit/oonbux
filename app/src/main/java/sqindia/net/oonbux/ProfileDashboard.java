@@ -265,7 +265,14 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
             @Override
             public void onClick(View v) {
 
-                new SweetAlertDialog(ProfileDashboard.this, SweetAlertDialog.WARNING_TYPE)
+
+
+
+                DialogYesNo dialog_logout = new DialogYesNo(ProfileDashboard.this, "Do You Want to Logout ?",0);
+                dialog_logout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog_logout.show();
+
+               /* new SweetAlertDialog(ProfileDashboard.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Do you want to Logout the Application?")
                         .setConfirmText("Yes!")
                         .setCancelText("No")
@@ -292,7 +299,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
                             }
                         })
-                        .show();
+                        .show();*/
 
             }
         });

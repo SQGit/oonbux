@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -428,7 +429,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
             public void onClick(View v) {
 
 
-                new SweetAlertDialog(DashBoardActivity.this, SweetAlertDialog.WARNING_TYPE)
+               /* new SweetAlertDialog(DashBoardActivity.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Do you want to Logout the Application?")
                         .setConfirmText("Yes!")
                         .setCancelText("No")
@@ -455,7 +456,22 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
                             }
                         })
-                        .show();
+                        .show();*/
+
+                drawer.closeDrawer(Gravity.LEFT);
+
+                DialogYesNo dialog_logout = new DialogYesNo(DashBoardActivity.this, "Do You Want to Logout ?",0);
+                dialog_logout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog_logout.show();
+
+
+
+
+
+
+
+
+
 
 
             }
@@ -465,6 +481,9 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_prof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                drawer.closeDrawer(Gravity.LEFT);
+
                 Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
                 startActivity(inte);
             }
@@ -473,11 +492,33 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         tv_nav_cont_how_it.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  Intent inte = new Intent(getApplicationContext(), HowItWorks.class);
-                startActivity(inte);*/
 
-                Intent inte = new Intent(getApplicationContext(), Sampl.class);
+                drawer.closeDrawer(Gravity.LEFT);
+
+               Intent inte = new Intent(getApplicationContext(), HowItWorks.class);
                 startActivity(inte);
+
+               /* Intent inte = new Intent(getApplicationContext(), Sampl.class);
+                startActivity(inte);*/
+            }
+        });
+
+        tv_nav_cont_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.closeDrawer(Gravity.LEFT);
+
+                Intent share = new Intent(android.content.Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+                // Add data to the intent, the receiving app will decide
+                // what to do with it.
+                share.putExtra(Intent.EXTRA_SUBJECT, "Oonbux is shipping items wherever you wants...");
+                share.putExtra(Intent.EXTRA_TEXT, "http://www.sqindia.net");
+
+                startActivity(Intent.createChooser(share, "Share Oonbux !"));
             }
         });
 
@@ -707,7 +748,12 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
         //super.onBackPressed();
 
 
-        new SweetAlertDialog(DashBoardActivity.this, SweetAlertDialog.WARNING_TYPE)
+
+        DialogYesNo dialog_exit = new DialogYesNo(DashBoardActivity.this, "Do You Want to Exit ?",1);
+        dialog_exit.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog_exit.show();
+
+       /* new SweetAlertDialog(DashBoardActivity.this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Do you want to exit the Application?")
                 .setConfirmText("Yes!")
                 .setCancelText("No")
@@ -734,7 +780,7 @@ public class DashBoardActivity extends Activity implements NavigationView.OnNavi
 
                     }
                 })
-                .show();
+                .show();*/
 
 
     }

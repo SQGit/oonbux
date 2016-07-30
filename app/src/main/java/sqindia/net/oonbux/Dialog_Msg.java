@@ -60,4 +60,10 @@ public class Dialog_Msg extends Dialog {
 
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dismiss();
+    }
 }

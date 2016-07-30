@@ -63,13 +63,19 @@
 
 
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".SplashActivity" android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".RegisterClassNew" android:windowSoftInputMode="stateAlwaysHidden|stateHidden"/>
+
+        <activity android:name=".NewLoginActivity" android:windowSoftInputMode="stateAlwaysHidden|stateHidden"/>
+
+
         <activity
             android:name=".LoginActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />

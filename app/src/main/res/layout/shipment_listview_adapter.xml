@@ -166,6 +166,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:drawablePadding="@dimen/_8sdp"
             android:textSize="@dimen/_13sdp"
             android:gravity="center_vertical"
             android:text="Add to Pickup" />

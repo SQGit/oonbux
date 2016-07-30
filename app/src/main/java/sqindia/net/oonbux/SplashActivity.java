@@ -11,10 +11,12 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.rey.material.widget.Button;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,12 +30,13 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class SplashActivity extends AppCompatActivity {
     Button btn_submit;
     String get_login_sts, get_register_sts, get_profile_sts;
-    private ProgressBar progress;
+   // private ProgressBar progress;
     DbC dbclass;
     Context context = this;
     public int version=0;
     SharedPreferences sharedPreferences;
-
+    SharedPreferences.Editor editor;
+    AVLoadingIndicatorView loader;
 
     public int a,s,d;
 
@@ -42,12 +45,14 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        progress = (ProgressBar) findViewById(R.id.progressbar);
+       // progress = (ProgressBar) findViewById(R.id.progressbar);
         btn_submit = (Button) findViewById(R.id.button_submit);
-
-
+        loader = (AVLoadingIndicatorView) findViewById(R.id.avloadingIndicatorView);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
         btn_submit.setTypeface(tf);
+
+
+        btn_submit.setVisibility(View.GONE);
 
         dbclass = new DbC(context);
 
@@ -55,6 +60,8 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
+        editor = sharedPreferences.edit();
+
         get_login_sts = sharedPreferences.getString("login", "");
         get_register_sts = sharedPreferences.getString("register", "");
         get_profile_sts = sharedPreferences.getString("profile", "");
@@ -63,6 +70,15 @@ public class SplashActivity extends AppCompatActivity {
         Log.e("tag", "register_status" + get_register_sts);
         Log.e("tag", "profile_status" + get_profile_sts);
 
+        editor.putString("reg_country", "");
+        editor.putString("reg_state", "");
+        editor.putString("reg_zip", "");
+        editor.putString("reg_fname", "");
+        editor.putString("reg_lname", "");
+        editor.putString("reg_email", "");
+        editor.putString("reg_phone", "");
+        editor.putString("reg_pass", "");
+        editor.commit();
 
 
         if (!Config.isNetworkAvailable(SplashActivity.this)) {
@@ -75,19 +91,25 @@ public class SplashActivity extends AppCompatActivity {
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                             finish();
+                            sweetAlertDialog.dismiss();
                         }
                     })
                     .show();
         } else {
 
-            if (!get_profile_sts.equals("")) {
-                Intent login_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
-                startActivity(login_intent);
-                finish();
+
+            if(!(sharedPreferences.getString("profile","").equals(""))){
+
+                if(!(sharedPreferences.getString("login","").equals(""))) {
+                    Intent profile_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    startActivity(profile_intent);
+                    finish();
+                }
             }
             else {
 
-                progress.setVisibility(View.VISIBLE);
+                //progress.setVisibility(View.VISIBLE);
+                loader.setVisibility(View.VISIBLE);
                 btn_submit.setVisibility(View.GONE);
 
                 new GetVersion().execute();
@@ -106,7 +128,43 @@ public class SplashActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((get_register_sts.equals(""))) {
+
+
+                if(sharedPreferences.getString("register","").equals("")){
+
+                    Intent login_intent = new Intent(getApplicationContext(), RegisterClassNew.class);
+                    startActivity(login_intent);
+                    finish();
+
+                }
+                else
+                {
+                    if(sharedPreferences.getString("login","").equals("")){
+
+                        Intent login_intent = new Intent(getApplicationContext(), NewLoginActivity.class);
+                        startActivity(login_intent);
+                        finish();
+
+                    }
+                    else{
+
+                        if(sharedPreferences.getString("profile","").equals("")){
+                            Intent profile_intent = new Intent(getApplicationContext(), ProfileInfo.class);
+                            startActivity(profile_intent);
+                            finish();
+                        }
+                        else {
+                            Intent dash_intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+                            startActivity(dash_intent);
+                            finish();
+                        }
+                    }
+
+                }
+
+
+
+           /*     if ((get_register_sts.equals(""))) {
                     Intent login_intent = new Intent(getApplicationContext(), RegisterActivity.class);
                     startActivity(login_intent);
                     finish();
@@ -128,7 +186,7 @@ public class SplashActivity extends AppCompatActivity {
                             finish();
                         }
                     }
-                }
+                }*/
             }
         });
     }
@@ -159,12 +217,14 @@ public class SplashActivity extends AppCompatActivity {
         Log.e("tag", "inside regions@@" +version);
         if(Integer.valueOf(sharedPreferences.getString("db_version","")) == version)
         {
-            progress.setVisibility(View.GONE);
+            //progress.setVisibility(View.GONE);
+            loader.setVisibility(View.GONE);
             btn_submit.setVisibility(View.VISIBLE);
 
         }
         else{
-            progress.setVisibility(View.VISIBLE);
+           // progress.setVisibility(View.VISIBLE);
+            loader.setVisibility(View.VISIBLE);
             btn_submit.setVisibility(View.GONE);
 
             new GetAllRegions().execute();
@@ -253,7 +313,7 @@ public class SplashActivity extends AppCompatActivity {
                         s = s + json_arr_zip.length();
                         Log.e("tag", "<-----1.3-f---> " + s );
 
-                        dbclass.region_insert(country,state,"0000");
+                       // dbclass.region_insert(country,state,"0000");
 
 
 
@@ -261,19 +321,16 @@ public class SplashActivity extends AppCompatActivity {
                                 String zip = json_arr_zip.getString(k);
                                 //  Log.e("tag", "<-----country----->" + zip);
 
-
                                 //   Log.e("tag","regions:  "+country+state+zip);
-
-                                // dbclass.region_insert(country,state,zip);
-
+                                 dbclass.region_insert(country,state,zip);
                                     //dbclass.region_insert1(country,state,zip);
-
                         }
 
                     }
                 }
 
-                progress.setVisibility(View.GONE);
+               // progress.setVisibility(View.GONE);
+                loader.setVisibility(View.GONE);
                 btn_submit.setVisibility(View.VISIBLE);
 
 
@@ -281,18 +338,9 @@ public class SplashActivity extends AppCompatActivity {
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                new SweetAlertDialog(SplashActivity.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Oops!")
-                        .setContentText("Network Error,Try Again Later.")
-                        .setConfirmText("OK")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                finish();
-                                sweetAlertDialog.dismiss();
-                            }
-                        })
-                        .show();
+                Dialog_Msg dialog_fail = new Dialog_Msg(SplashActivity.this, "Network Error!,\nPlease Try Again Later.");
+                dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog_fail.show();
             }
         }
     }
@@ -333,6 +381,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
+            loader.setVisibility(View.GONE);
             super.onPostExecute(jsonStr);
             try {
 

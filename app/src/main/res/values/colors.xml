@@ -18,5 +18,7 @@
     <color name="progress_bg">#61c561</color>
     <color name="white">#FFFFFF</color>
     <color name="text_divider1">#eeeeee</color>
+    <color name="text_Red">#d50000</color>
+    <color name= "aaa">#121323</color>
 
 </resources>

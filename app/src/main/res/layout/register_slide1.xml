@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="@dimen/_15sdp"
+    android:id="@+id/top"
+    android:layout_height="match_parent">
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edittext_zip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/zip_ico"
+        android:hint="Enter Zip"
+        android:inputType="number"
+        android:paddingLeft="5dp"
+        android:imeOptions="actionDone"
+        android:paddingRight="10dp"
+        android:textSize="@dimen/_18sdp"
+        android:maxLength="6"
+        app:met_accentTypeface="fonts/prox.otf"
+        app:met_baseColor="@color/text_divider_light"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelTextColor="@color/hint_floating"
+        app:met_primaryColor="@color/text_color"
+        app:met_textColor="@color/text_color"
+        app:met_textColorHint="@color/text_color_hint"
+        app:met_underlineColor="@color/text_divider" />
+
+    <com.rey.material.widget.TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview_manual"
+        android:text="Find Zip Code"
+        style="@style/Material.Drawable.Ripple.Wave.Light"
+        android:layout_gravity="right|center_vertical"
+        android:textColor="@color/text_color"
+        android:padding="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"/>
+
+</FrameLayout>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edittext_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/state_ico"
+        android:hint="State"
+        android:inputType="textPersonName"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:textSize="@dimen/_18sdp"
+        app:met_accentTypeface="fonts/prox.otf"
+        app:met_baseColor="@color/text_divider_light"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelTextColor="@color/hint_floating"
+        app:met_primaryColor="@color/text_color"
+        app:met_textColor="@color/text_color"
+        app:met_textColorHint="@color/text_color_hint"
+        app:met_underlineColor="@color/text_divider" />
+
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edittext_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/country_ico"
+        android:hint="Country"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:textSize="@dimen/_18sdp"
+        app:met_accentTypeface="fonts/prox.otf"
+        app:met_baseColor="@color/text_divider_light"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelTextColor="@color/hint_floating"
+        app:met_primaryColor="@color/text_color"
+        app:met_textColor="@color/text_color"
+        app:met_textColorHint="@color/text_color_hint"
+        app:met_underlineColor="@color/text_divider" />
+
+</LinearLayout>

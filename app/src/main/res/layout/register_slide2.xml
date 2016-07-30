@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="@dimen/_15sdp"
+    android:layout_height="match_parent">
+
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edittext_fname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/lft_pro_ico"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:textSize="@dimen/_18sdp"
+        android:imeOptions="actionNext"
+        app:met_accentTypeface="fonts/prox.otf"
+        app:met_baseColor="@color/text_divider_light"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelTextColor="@color/hint_floating"
+        app:met_primaryColor="@color/text_color"
+        app:met_textColor="@color/text_color"
+        app:met_textColorHint="@color/text_color_hint"
+        app:met_underlineColor="@color/text_divider" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edittext_lname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/lft_pro_ico"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:textSize="@dimen/_18sdp"
+        app:met_accentTypeface="fonts/prox.otf"
+        app:met_baseColor="@color/text_divider_light"
+        app:met_floatingLabel="normal"
+        android:imeOptions="actionNext"
+        app:met_floatingLabelTextColor="@color/hint_floating"
+        app:met_primaryColor="@color/text_color"
+        app:met_textColor="@color/text_color"
+        app:met_textColorHint="@color/text_color_hint"
+        app:met_underlineColor="@color/text_divider" />
+
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edittext_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/email_ico"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:textSize="@dimen/_18sdp"
+        android:imeOptions="actionDone"
+        app:met_accentTypeface="fonts/prox.otf"
+        app:met_baseColor="@color/text_divider_light"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelTextColor="@color/hint_floating"
+        app:met_primaryColor="@color/text_color"
+        app:met_textColor="@color/text_color"
+        app:met_textColorHint="@color/text_color_hint"
+        app:met_underlineColor="@color/text_divider" />
+
+</LinearLayout>

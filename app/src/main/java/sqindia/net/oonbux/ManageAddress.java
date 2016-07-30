@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,11 +42,15 @@ public class ManageAddress extends Activity {
     listview_adapter expandableListAdapter;
     List<String> expandableListTitle;
     HashMap<String, List<String>> expandableListDetail;
+    HashMap<String, List<String>> expandableListDetail1;
     String str_session_id;
     LinearLayout lt_add, lt_back;
     TextView tv_header;
     HashMap<String, List<String>> list_datas = new HashMap<String, List<String>>();
     ArrayList<String> daa = new ArrayList<>();
+
+
+    HashMap<String, List<String>> list_datas1 = new HashMap<String, List<String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,19 +300,34 @@ public class ManageAddress extends Activity {
 
 
                         List<String> listitem = new ArrayList<String>();
+                        List<String> address_headers = new ArrayList<>();
+
                         listitem.add(address_id);
+                        address_headers.add("Address Id : "+address_id);
                         listitem.add(address_line1);
+                        address_headers.add("Address Line 1 : "+address_line1);
                         listitem.add(address_line2);
+                        address_headers.add("Address Line 2 : "+address_line2);
                         listitem.add(address_country);
+                        address_headers.add("Country : "+address_country);
                         listitem.add(address_state);
+                        address_headers.add("State : "+address_state);
                         listitem.add(address_city);
+                        address_headers.add("City : "+address_city);
                         listitem.add(address_zip);
+                        address_headers.add("zip  : "+address_zip);
                         listitem.add(address_note);
+                        address_headers.add("Note : : "+address_note);
                         listitem.add(address_phone);
+                        address_headers.add("Phone : "+address_phone);
                         listitem.add(address_type);
+                        address_headers.add("Address Type : "+address_type);
 
 
-                        list_datas.put(address_city + "," + address_zip + "," + address_country, listitem);
+                        list_datas.put(address_city + ", " + address_zip + " - " + address_country, listitem);
+
+                        list_datas1.put(address_zip + " - " + address_country, address_headers);
+
 
 
                     }
@@ -323,9 +343,10 @@ public class ManageAddress extends Activity {
                     }
 
                     expandableListDetail = list_datas;
+                    expandableListDetail1 = list_datas1;
 
                     expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-                    expandableListAdapter = new listview_adapter(ManageAddress.this, getApplicationContext(), expandableListTitle, expandableListDetail);
+                    expandableListAdapter = new listview_adapter(ManageAddress.this, getApplicationContext(), expandableListTitle, expandableListDetail,expandableListDetail1);
                     elv_addresList.setAdapter(expandableListAdapter);
 
 

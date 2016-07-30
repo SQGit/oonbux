@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/top"
     android:background="@drawable/bg_profile"
     android:orientation="vertical">
 
@@ -46,24 +47,24 @@
                 android:textSize="@dimen/_22sdp" />
 
 
-        <com.rey.material.widget.Button
-            android:id="@+id/button_edit"
-            style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/ll"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="5dp"
-            android:background="@color/text_color"
-            android:drawableLeft="@drawable/edit_ico"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="Edit"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/_18sdp" />
+            <com.rey.material.widget.Button
+                android:id="@+id/button_edit"
+                style="@style/Material.Drawable.Ripple.Wave.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/ll"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/login_reg_button"
+                android:drawableLeft="@drawable/edit_ico"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Edit"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_18sdp" />
         </FrameLayout>
 
     </LinearLayout>
@@ -83,8 +84,8 @@
 
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:id="@+id/nav_header_propic"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_85sdp"
+                android:layout_height="@dimen/_85sdp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_margin="15dp"
                 android:background="@drawable/photo_ico"
@@ -95,11 +96,12 @@
 
             <ImageView
                 android:id="@+id/img_change"
-                style="@style/Material.Drawable.Ripple.Touch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/Material.Drawable.Ripple.Wave.Light"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginTop="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_45sdp"
+                android:padding="@dimen/_10sdp"
                 android:src="@drawable/cam_plus_ico" />
 
 
@@ -142,7 +144,7 @@
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
                 app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
+                app:met_primaryColor="@color/text_color"
                 app:met_textColor="@color/text_color"
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
@@ -164,7 +166,7 @@
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
                 app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
+                app:met_primaryColor="@color/text_color"
                 app:met_textColor="@color/text_color"
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
@@ -186,7 +188,7 @@
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
                 app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
+                app:met_primaryColor="@color/text_color"
                 app:met_textColor="@color/text_color"
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
@@ -199,7 +201,7 @@
                 android:drawableRight="@drawable/mobile_ico"
                 android:enabled="false"
                 android:hint="Phone"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:paddingLeft="5dp"
@@ -209,7 +211,7 @@
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
                 app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
+                app:met_primaryColor="@color/text_color"
                 app:met_textColor="@color/text_color"
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
@@ -230,7 +232,7 @@
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
                 app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
+                app:met_primaryColor="@color/text_color"
                 app:met_textColor="@color/text_color"
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
@@ -250,7 +252,7 @@
                 app:met_baseColor="@color/text_divider_light"
                 app:met_floatingLabel="normal"
                 app:met_floatingLabelTextColor="@color/hint_floating"
-                app:met_primaryColor="@color/text_divider_light"
+                app:met_primaryColor="@color/text_color"
                 app:met_textColor="@color/text_color"
                 app:met_textColorHint="@color/text_color_hint"
                 app:met_underlineColor="@color/text_divider" />
@@ -270,14 +272,15 @@
         <com.rey.material.widget.Button
             android:id="@+id/button_submit"
             style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="@dimen/_120sdp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
             android:background="@drawable/login_reg_button"
+            android:drawablePadding="@dimen/_10sdp"
             android:drawableRight="@drawable/arrow_ico"
             android:gravity="center|center_horizontal|center_vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="@dimen/_30sdp"
+            android:paddingRight="@dimen/_20sdp"
             android:text="Next"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_22sdp" />

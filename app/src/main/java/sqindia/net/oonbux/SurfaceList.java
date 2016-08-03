@@ -23,6 +23,8 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.ArrayList;
 
+import sqindia.net.oonbux.config.DbC;
+
 //asdfdsaf
 public class SurfaceList extends BaseSwipeAdapter {
 
@@ -40,6 +42,7 @@ public class SurfaceList extends BaseSwipeAdapter {
     String price;
     CheckBox cb_cart;
         SurfaceView surface;
+    ImageView img_delete;
 
     public ArrayList<String> choose_cart_from = new ArrayList<>();
 
@@ -84,21 +87,36 @@ public class SurfaceList extends BaseSwipeAdapter {
         });
 
 
-        bb = (Button) v.findViewById(R.id.delete);
+       // bb = (Button) v.findViewById(R.id.delete);
+
+        img_delete = (ImageView) v.findViewById(R.id.img_delete);
 
 
-        bb.setOnClickListener(new View.OnClickListener() {
+        img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //Toast.makeText(mContext, "deleted", Toast.LENGTH_SHORT).show();
-               /* arrayList.remove(arrayList.size() - 1);
-                notifyDataSetChanged();*/
+            public void onClick(View v) {
                 Log.e("tag", asdf + position);
+
                 dbclass.deletedata("aa", asdf);
                 arrayList.remove(position);
                 notifyDataSetChanged();
             }
         });
+
+
+/*
+        bb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(mContext, "deleted", Toast.LENGTH_SHORT).show();
+               *//**//* arrayList.remove(arrayList.size() - 1);
+                notifyDataSetChanged();*//**//*
+                Log.e("tag", asdf + position);
+                dbclass.deletedata("aa", asdf);
+                arrayList.remove(position);
+                notifyDataSetChanged();
+            }
+        });*/
 
 
         tv_size = (com.rey.material.widget.TextView) v.findViewById(R.id.tv_size);
@@ -118,7 +136,7 @@ public class SurfaceList extends BaseSwipeAdapter {
         tv_size_txt.setTypeface(tf);
         tv_price_txt.setTypeface(tf);
         tv_pickup_txt.setTypeface(tf);
-        bb.setTypeface(tf);
+//        bb.setTypeface(tf);
 
 
         opt.setText(dbc.get_id());

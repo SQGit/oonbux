@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_dash"
-    tools:context=".ProfilePhysicalDeliveryAddress">
+    android:id="@id/top"
+    android:background="@drawable/bg_dash">
 
 
     <LinearLayout
@@ -26,49 +26,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.rey.material.widget.LinearLayout
-                    android:id="@+id/layout_back"
-                    style="@style/Material.Drawable.Ripple.Touch"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent">
 
-                    <ImageButton
-                        android:id="@+id/btn_back"
+
+                    <ImageView
+                        android:id="@+id/layout_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/back_ico" />
-                </com.rey.material.widget.LinearLayout>
+                        android:paddingBottom="@dimen/_12sdp"
+                        android:paddingLeft="@dimen/_15sdp"
+                        android:paddingRight="@dimen/_40sdp"
+                        android:paddingTop="@dimen/_12sdp"
+                        android:src="@drawable/back_ico" />
+
 
 
                 <com.rey.material.widget.TextView
                     android:id="@+id/tv_hd_txt"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:gravity="center|center_horizontal|center_vertical"
                     android:text="Delivery Address"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp" />
 
 
-                <com.rey.material.widget.LinearLayout
-                    android:id="@+id/layout_add"
-                    style="@style/Material.Drawable.Ripple.Touch"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
-                    android:gravity="right">
 
-                    <ImageButton
-                        android:id="@+id/button_add_pal"
+
+                    <ImageView
+                        android:id="@+id/layout_add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/plus_ico" />
-                </com.rey.material.widget.LinearLayout>
+                        android:paddingBottom="@dimen/_12sdp"
+                        android:paddingLeft="@dimen/_30sdp"
+                        android:paddingRight="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_12sdp"
+                        android:src="@drawable/plus_ico" />
+
 
             </FrameLayout>
 
@@ -498,7 +495,7 @@
                             <com.rengwuxian.materialedittext.MaterialEditText
                                 android:id="@+id/edittext_loc_note"
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
+                                android:layout_height="30dp"
                                 android:gravity="top|left"
                                 android:hint="Delivery Note"
                                 android:imeOptions="actionDone"
@@ -894,7 +891,7 @@
                             <com.rengwuxian.materialedittext.MaterialEditText
                                 android:id="@+id/edittext_int_note"
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
+                                android:layout_height="30dp"
                                 android:gravity="top|left"
                                 android:hint="Delivery Note"
                                 android:imeOptions="actionDone"

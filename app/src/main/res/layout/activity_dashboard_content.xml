@@ -4,31 +4,34 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_dash">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:background="#070b23">
 
-        <ImageButton
+        <ImageView
+            android:id="@+id/img_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/menu_ico"
-            android:padding="10dp" />
+            android:paddingBottom="@dimen/_12sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_30sdp"
+            android:paddingTop="@dimen/_12sdp"
+            android:src="@drawable/menu_ico" />
 
 
         <com.rey.material.widget.TextView
             android:id="@+id/tv_hd_txt"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="center_horizontal|center|center_vertical"
             android:gravity="center"
             android:text="Dashboard"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_22sdp" />
-    </LinearLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/ll2"
@@ -158,37 +161,48 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/chat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/chat_ico" />
+                    android:layout_gravity="center"
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:paddingRight="@dimen/_18sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:src="@drawable/chat_ico" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
 
-                android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/grp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/group_ico" />
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/grp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:paddingRight="@dimen/_18sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:src="@drawable/group_ico" />
             </LinearLayout>
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/cam"
@@ -198,29 +212,39 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/receive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/receive_ico" />
+                    android:layout_gravity="center"
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:paddingRight="@dimen/_18sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:src="@drawable/receive_ico" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/pkg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/pkg_ico" />
+                    android:layout_gravity="center"
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:paddingRight="@dimen/_18sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:src="@drawable/pkg_ico" />
             </LinearLayout>
 
         </LinearLayout>

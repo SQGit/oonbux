@@ -291,7 +291,7 @@
             style="@style/Material.Drawable.Ripple.Wave.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/lft_helpline_ico"
+            android:drawableLeft="@drawable/logout_ico"
             android:drawablePadding="@dimen/_10sdp"
             android:paddingBottom="@dimen/_4sdp"
             android:paddingLeft="3dp"

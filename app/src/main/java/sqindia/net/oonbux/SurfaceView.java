@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,6 +28,11 @@ import java.util.List;
 
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
+import sqindia.net.oonbux.Activity.ChooseAddress;
+import sqindia.net.oonbux.Activity.ChoosePal_1;
+import sqindia.net.oonbux.Activity.DashBoardActivity;
+import sqindia.net.oonbux.Adapter.Adapter_Shipment;
+import sqindia.net.oonbux.config.DbC;
 
 //asdfas
 public class SurfaceView extends Activity {
@@ -39,11 +45,12 @@ public class SurfaceView extends Activity {
     ArrayList<String> selectedPhotos = new ArrayList<>();
     public final static int REQUEST_CODE = 1;
     SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     private SQLiteDatabase db;
     public ArrayList<String> shipment_photos;
     ImageButton btn_next;
     TextView header;
-    com.rey.material.widget.LinearLayout lt_back, lt_add;
+    ImageView lt_back, lt_add;
     Button btn_delete, btn_addpal, btn_continue;
 
     public ArrayList<String> ship_size = new ArrayList<>();
@@ -52,6 +59,7 @@ public class SurfaceView extends Activity {
 
     public String[] cartss ;
     public ArrayList<String> choose_cart = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +76,8 @@ public class SurfaceView extends Activity {
         list = (ListView) findViewById(R.id.listview);
 
         header = (TextView) findViewById(R.id.tv_hd_txt);
-        lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
-        lt_add = (LinearLayout) findViewById(R.id.layout_add);
+        lt_back = (ImageView) findViewById(R.id.layout_back);
+        lt_add = (ImageView) findViewById(R.id.layout_add);
         btn_continue = (Button) findViewById(R.id.button_continue);
         //btn_next = (ImageButton) findViewById(R.id.button_next);
         btn_addpal = (Button) findViewById(R.id.button_addpal);
@@ -97,6 +105,11 @@ public class SurfaceView extends Activity {
         btn_addpal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                editor = sharedPreferences.edit();
+                editor.putString("shipment_photo", "");
+                editor.commit();
+
                 if(mAdapter.choose_cart_from.size() > 0){
                     Intent newe = new Intent(getApplicationContext(), ChoosePal_1.class);
                     startActivity(newe);
@@ -111,6 +124,8 @@ public class SurfaceView extends Activity {
         lt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -137,6 +152,11 @@ public class SurfaceView extends Activity {
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                editor = sharedPreferences.edit();
+                editor.putString("shipment_photo", "");
+                editor.commit();
+
                 if(mAdapter.choose_cart_from.size() > 0){
                     Log.e("tag",""+"\n"+mAdapter.choose_cart_from.size());
                     Intent inte = new Intent(getApplicationContext(), ChooseAddress.class);

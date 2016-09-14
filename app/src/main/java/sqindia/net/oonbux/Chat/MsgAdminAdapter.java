@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.support.v4.util.Pair;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,34 +18,28 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import sqindia.net.oonbux.config.DbC;
 import sqindia.net.oonbux.R;
+import sqindia.net.oonbux.config.DbC;
 
 public class MsgAdminAdapter extends BaseAdapter {
     public static final int DIRECTION_INCOMING = 0;
     public static final int DIRECTION_OUTGOING = 1;
-    private List<Pair<ChatMessage, Integer>> messages;
-
-    private List<Pair<ChatMessage, Integer>> message_id;
-    private LayoutInflater layoutInflater;
     Activity activity;
-
-    private ArrayList<String> msg_id = new ArrayList<>();
-    //private Context context;
-
     DbC dbclass;
     Context context ;
     String my_photo,pal_photo;
-
     SharedPreferences sharedPreferences;
-
+    //private Context context;
     String my_img;
+    private List<Pair<ChatMessage, Integer>> messages;
+    private List<Pair<ChatMessage, Integer>> message_id;
+    private LayoutInflater layoutInflater;
+    private ArrayList<String> msg_id = new ArrayList<>();
 
 
 
@@ -104,15 +97,13 @@ public class MsgAdminAdapter extends BaseAdapter {
 
         if (convertView == null) {
             int res = 0;
-            if (direction == DIRECTION_INCOMING) {
-                res = R.layout.item_chat_right_admin;
-
-
-
-            } else if (direction == DIRECTION_OUTGOING) {
+            if (direction == DIRECTION_OUTGOING) {
                 res = R.layout.item_chat_left_admin;
+            } else if (direction == DIRECTION_INCOMING) {
+                res = R.layout.item_chat_right_admin;
             }
             convertView = layoutInflater.inflate(res, viewGroup, false);
+            my_img = sharedPreferences.getString("photo_path", "");
         }
         final ChatMessage message = messages.get(i).first;
 ///        final ChatMessage messageids = message_id.get(i).first;
@@ -122,7 +113,9 @@ public class MsgAdminAdapter extends BaseAdapter {
 
         ImageView user_image = (ImageView) convertView.findViewById(R.id.image_profile);
 
-        Log.e("tag",""+my_photo+"\t"+pal_photo);
+        Log.e("tag", "my_photo" + my_photo);
+
+        Log.e("tag", "pal_photo" + pal_photo);
 
 
 
@@ -136,7 +129,7 @@ public class MsgAdminAdapter extends BaseAdapter {
 
         } else if (direction == DIRECTION_OUTGOING) {
             Picasso.with(context)
-                    .load(my_img)
+                    .load(my_photo)
                     .fit()
                     .into(user_image);
         }

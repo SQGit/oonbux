@@ -5,18 +5,24 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 
-import sqindia.net.oonbux.Activity.NewLoginActivity;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import sqindia.net.oonbux.Activity.Login;
 import sqindia.net.oonbux.R;
+import sqindia.net.oonbux.config.Config;
+import sqindia.net.oonbux.config.HttpUtils;
 
 /**
  * Created by Salman on 7/26/2016.
@@ -26,16 +32,18 @@ public class DialogYesNo extends Dialog {
     public Activity c;
     public int i;
     TextView tv_content;
-    Button btn_yes,btn_no;
+    Button btn_yes, btn_no;
     String content, get_profile_sts;
     ImageView imgview;
+    String session_id;
 
 
-    public DialogYesNo(Activity activity, String txt, int i) {
+    public DialogYesNo(Activity activity, String txt, int i, String session) {
         super(activity);
         this.c = activity;
         this.content = txt;
         this.i = i;
+        this.session_id = session;
     }
 
     @Override
@@ -75,17 +83,13 @@ public class DialogYesNo extends Dialog {
             @Override
             public void onClick(View v) {
 
-                if(i ==0) {
+                if (i == 0) {
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("login", "");
                     editor.commit();
-                    Intent inte = new Intent(c.getApplicationContext(), NewLoginActivity.class);
-                    c.startActivity(inte);
-                    c.finish();
-                    dismiss();
-                }
-                else if(i ==1){
+                    new logout_task().execute();
+                } else if (i == 1) {
 
                     Intent exit = new Intent(Intent.ACTION_MAIN);
                     exit.setAction(Intent.ACTION_MAIN);
@@ -118,4 +122,59 @@ public class DialogYesNo extends Dialog {
         super.onStop();
         dismiss();
     }
+
+
+    class logout_task extends AsyncTask<String, Void, String> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected String doInBackground(String... params) {
+            String json = "", jsonStr = "";
+            try {
+                String virtual_url = Config.SER_URL + "logout";
+                JSONObject jsonobject = HttpUtils.logout(virtual_url, session_id);
+                Log.e("tag_", "0" + jsonobject.toString());
+                if (jsonobject.toString() == "sam") {
+                    Log.e("tag_", "1" + jsonobject.toString());
+                }
+                json = jsonobject.toString();
+                return json;
+            } catch (Exception e) {
+                Log.e("InputStream", "2" + e.toString());
+                jsonStr = "";
+            }
+            return jsonStr;
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag_", "<-----rerseres---->" + jsonStr);
+            super.onPostExecute(jsonStr);
+            try {
+                JSONObject jo = new JSONObject(jsonStr);
+                String status = jo.getString("status");
+                String msg = jo.getString("message");
+                if (status.equals("success")) {
+
+                    Toast.makeText(c.getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
+
+                    Intent inte = new Intent(c.getApplicationContext(), Login.class);
+                    c.startActivity(inte);
+                    c.finish();
+                    dismiss();
+
+                } else {
+                    Log.e("tag_", "error");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.e("tag_", "3" + e.getLocalizedMessage());
+                Toast.makeText(c.getApplicationContext(), "Network Error, Please Try Again Later.", Toast.LENGTH_SHORT).show();
+                dismiss();
+            }
+        }
+    }
+
+
 }

@@ -6,6 +6,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -134,6 +135,146 @@ public class HttpUtils {
         }
 
     }
+
+
+    public static JSONObject getCity(String url) throws JSONException {
+        InputStream is = null;
+        String result = "";
+        JSONObject jArray = null;
+
+        // Download JSON data from URL
+        try {
+
+
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(url);
+            //  HttpPost httppost = new HttpPost(url);
+            // httpGet.setHeader("X-Originating-Ip", "103.48.181.209");
+            httpGet.setHeader("Accept", "application/json");
+            HttpResponse response = httpclient.execute(httpGet);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+
+        } catch (Exception e) {
+            Log.e("tag", "Error in http connection " + e.toString());
+            result = "sam";
+            is = null;
+            return jArray;
+
+        }
+
+        // Convert response to string
+
+        if (is.equals(null)) {
+
+            result = "sam";
+            jArray = new JSONObject(result);
+            return jArray;
+
+        } else {
+
+
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        is, "iso-8859-1"), 8);
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                is.close();
+                result = sb.toString();
+            } catch (Exception e) {
+                Log.e("tag", "Error converting result " + e.toString());
+                result = "sam";
+            }
+
+            try {
+
+                jArray = new JSONObject(result);
+            } catch (JSONException e) {
+                Log.e("tag", result);
+                Log.e("tag", jArray.toString());
+                Log.e("tag", "Error parsing data " + e.toString());
+
+
+            }
+
+            return jArray;
+        }
+
+    }
+
+
+    public static JSONObject logout(String url, String session) throws JSONException {
+        InputStream is = null;
+        String result = "";
+        JSONObject jArray = null;
+        Log.e("tag_", "started");
+        try {
+
+            HttpPost httppost = new HttpPost(url);
+            httppost.setHeader("session_id", session);
+            DefaultHttpClient client = new DefaultHttpClient();
+            HttpResponse response = null;
+            String text;
+            try {
+                response = client.execute(httppost);
+                Log.e("tag_", "stsL_" + response.getStatusLine());
+                Log.e("tag_", "stsL_" + response.getStatusLine().getReasonPhrase());
+                Log.e("tag_", "stsL_" + response.getStatusLine().getStatusCode());
+            } catch (IOException e) {
+                Log.e("INFO", e.getMessage());
+            }
+
+
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+            Log.e("tag_", "stsL2_" + is);
+
+        } catch (Exception e) {
+            Log.e("tag", "Error in http connection " + e.toString());
+
+        }
+
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            result = sb.toString();
+            Log.e("tag_", "stsL20ifaft_" + result);
+        } catch (Exception e) {
+            Log.e("tag", "Error converting result " + e.toString());
+            // result = "sam";
+        }
+
+        try {
+            jArray = new JSONObject(result);
+            Log.e("tag_", "stsL21if_" + jArray);
+        } catch (JSONException e) {
+            Log.e("tag0", result);
+            Log.e("tag2", "Error parsing data " + e.toString());
+        }
+
+        return jArray;
+        // return jArray;
+        // }
+
+    }
+
+
+
+
+
+
+
+
 
 
     public static JSONObject getData2(String url, String country) {

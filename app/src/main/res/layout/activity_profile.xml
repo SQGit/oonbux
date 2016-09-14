@@ -14,26 +14,13 @@
         <LinearLayout
             android:id="@+id/ll1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/_40sdp"
             android:background="#070b23">
 
             <FrameLayout
                 android:id="@+id/bck_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-
-
-                    <ImageView
-                        android:id="@+id/layout_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingBottom="@dimen/_12sdp"
-                        android:paddingLeft="@dimen/_15sdp"
-                        android:paddingRight="@dimen/_40sdp"
-                        android:paddingTop="@dimen/_12sdp"
-                        android:src="@drawable/back_ico" />
 
 
                 <com.rey.material.widget.TextView
@@ -45,7 +32,18 @@
                     android:gravity="center"
                     android:text="Profile"
                     android:textColor="#FFFFFF"
-                    android:textSize="24sp" />
+                    android:textSize="@dimen/_22sdp" />
+
+                <ImageView
+                    android:id="@+id/layout_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="@dimen/_12sdp"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:paddingRight="@dimen/_40sdp"
+                    android:paddingTop="@dimen/_12sdp"
+                    android:src="@drawable/back_ico" />
             </FrameLayout>
         </LinearLayout>
 
@@ -60,20 +58,20 @@
                 android:id="@+id/nav_header_propic"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
+                android:paddingLeft="@dimen/_4sdp"
                 android:src="@drawable/lft_logo_ico" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:padding="@dimen/_2sdp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_marginLeft="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -85,20 +83,20 @@
                         android:gravity="center"
                         android:text=" Oonbux Id:"
                         android:textColor="@color/white"
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/_11sdp" />
 
                     <TextView
                         android:id="@+id/textview_id"
-                        android:layout_width="110dp"
-                        android:layout_height="25dp"
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:background="@drawable/login_reg_button"
                         android:gravity="center"
                         android:padding="1dp"
                         android:text=""
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/_11sdp"
                         android:textStyle="bold" />
 
 
@@ -109,50 +107,50 @@
                     android:id="@+id/textview_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:drawableLeft="@drawable/lft_loc_ico"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:paddingLeft="2dp"
                     android:text="Houston 75648"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_14sdp" />
 
 
                 <TextView
                     android:id="@+id/textview_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:drawableLeft="@drawable/phone_ico"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:paddingLeft="2dp"
                     android:text="+443232432"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:id="@+id/textview_fname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:drawableLeft="@drawable/lft_pro_ico"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:paddingLeft="2dp"
                     android:text="Sam"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:id="@+id/textview_lname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:drawableLeft="@drawable/lft_pro_ico"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/_8sdp"
                     android:paddingLeft="2dp"
                     android:text="Andres"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
 
@@ -194,7 +192,7 @@
                     android:paddingRight="10dp"
                     android:text="Logout"
                     android:textColor="@color/text_color"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
 
 
             </LinearLayout>
@@ -215,22 +213,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_weight="1"
-                android:drawablePadding="10dp"
-                android:paddingBottom="8dp"
-                android:paddingLeft="2dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:paddingTop="@dimen/_6sdp"
                 android:text="Physical Delivery Address"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_15sdp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="@dimen/_14sdp"
                 android:background="@drawable/bckr_ico" />
 
         </LinearLayout>
@@ -241,7 +236,7 @@
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/_125sdp"
             tools:context=".MapsActivity" />
 
         <View
@@ -262,21 +257,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_weight="1"
-                android:drawablePadding="10dp"
-                android:paddingBottom="8dp"
-                android:paddingLeft="2dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:paddingTop="@dimen/_6sdp"
                 android:text="Profile Info"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_15sdp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="@dimen/_14sdp"
                 android:background="@drawable/bckr_ico" />
 
         </LinearLayout>
@@ -287,6 +280,7 @@
             android:background="#383a49" />
 
         <LinearLayout
+            android:id="@+id/pers_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#090c1e"
@@ -297,21 +291,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_weight="1"
-                android:drawablePadding="10dp"
-                android:paddingBottom="8dp"
-                android:paddingLeft="2dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:paddingTop="@dimen/_6sdp"
                 android:text="Personal Preferences"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_15sdp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="@dimen/_14sdp"
                 android:background="@drawable/bckr_ico" />
 
         </LinearLayout>
@@ -320,7 +312,6 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#383a49" />
-
 
 
     </LinearLayout>
@@ -337,21 +328,20 @@
         <com.rey.material.widget.Button
             android:id="@+id/button_finish"
             style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/_4sdp"
             android:background="@drawable/login_reg_button"
-            android:drawablePadding="10dp"
+            android:drawablePadding="@dimen/_8sdp"
             android:drawableRight="@drawable/arrow_ico"
             android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="20dp"
-            android:paddingTop="5dp"
+            android:inputType="textCapCharacters"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_16sdp"
             android:text="Finish"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_18sdp" />
 
 
         <TextView
@@ -360,14 +350,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center"
             android:layout_weight="1"
-            android:drawablePadding="10dp"
             android:gravity="center"
-            android:paddingBottom="8dp"
+            android:paddingBottom="@dimen/_6sdp"
             android:paddingLeft="2dp"
-            android:paddingTop="8dp"
+            android:paddingTop="@dimen/_6sdp"
             android:text="Version 1.10"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_12sdp" />
 
 
     </LinearLayout>

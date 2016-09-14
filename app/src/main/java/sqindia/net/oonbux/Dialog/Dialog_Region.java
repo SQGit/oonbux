@@ -23,9 +23,9 @@ import com.rey.material.widget.TextView;
 
 import java.util.ArrayList;
 
-import sqindia.net.oonbux.config.DbC;
+import sqindia.net.oonbux.Activity.Register;
 import sqindia.net.oonbux.R;
-import sqindia.net.oonbux.Activity.RegisterClassNew;
+import sqindia.net.oonbux.config.DbC;
 
 
 /**
@@ -49,7 +49,7 @@ public class Dialog_Region extends Dialog {
     String query, str_country, str_state, str_zip;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    RegisterClassNew regi;
+    Register regi;
 
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -132,7 +132,7 @@ public class Dialog_Region extends Dialog {
                 R.layout.register_zip,};
 
         dbclass = new DbC(activity);
-        regi = new RegisterClassNew();
+        regi = new Register();
 
         img_back.setVisibility(View.GONE);
 

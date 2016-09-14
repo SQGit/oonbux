@@ -1,57 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/backo"
-    android:layout_marginLeft="1dp"
-    android:layout_marginTop="1dp"
-    android:layout_marginRight="1dp"
-    android:layout_marginBottom="5dp"
-    android:padding="2dp"
+    android:layout_height="@dimen/_30sdp"
+    android:layout_marginBottom="@dimen/_4sdp"
+    android:layout_marginRight="@dimen/_1sdp"
+    android:background="@color/text_color"
     android:orientation="horizontal">
 
-    <com.rey.material.widget.TextView
-        android:id="@+id/list_group"
+
+    <LinearLayout
+        android:id="@+id/btn_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/_1sdp">
+
+        <ImageView
+            android:id="@+id/open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:src="@drawable/back_rt_ico" />
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/list_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="4356,Kansas,Us"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_18sdp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="5dp"
-        android:text="text"
-        android:layout_marginLeft="2dp"
-        android:textColor="#ffffff"
-        android:textSize="20sp" />
-
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/down_ico"
-        android:id="@+id/open"
-        android:padding="10dp"
-        android:background="@color/bottom_page"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_gravity="center_vertical"
-  />
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_marginRight="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:src="@drawable/edit_elv" />
 
     <ImageView
-        android:layout_width="35dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/edit"
-        android:padding="5dp"
-        android:id="@+id/edit" />
-
-    <ImageView
-        android:layout_width="35dp"
-        android:layout_height="match_parent"
         android:id="@+id/delete"
-        android:layout_marginLeft="10dp"
-        android:padding="5dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/delete"
-        android:layout_gravity="center_vertical" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_marginRight="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:src="@drawable/del_ico" />
 
 
 </LinearLayout>

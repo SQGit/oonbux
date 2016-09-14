@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,25 +10,171 @@
     <com.rey.material.widget.Button
         android:id="@+id/add_sp_btn"
         style="@style/Material.Drawable.Ripple.Wave"
-        android:layout_width="@dimen/_130sdp"
+        android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_28sdp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:background="@drawable/backo"
         android:drawableLeft="@drawable/ship"
         android:gravity="center"
         android:paddingLeft="@dimen/_13sdp"
-        android:text="Add Shipment"
+        android:text="Change Shipment"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/_11sdp" />
 
-    <com.rey.material.widget.ListView
-        android:id="@+id/deliver_list"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/add_sp_btn"></com.rey.material.widget.ListView>
+        android:layout_below="@+id/add_sp_btn"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/listview_drawable"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/imgview"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:background="@drawable/photo_ico"
+                    app:siBorderColor="@color/colorAccent"
+                    app:siBorderWidth="0.5dp" />
+
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_per"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="$ 3.00 /Pickup"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/_10sdp" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/tv_ship_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/_8sdp"
+                    android:gravity="left"
+                    android:text="Select shipment size"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/_16sdp" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp">
+
+                    <com.rey.material.widget.CheckBox
+                        android:id="@+id/cb_small"
+                        style="@style/checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:checked="false"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:text="Small"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <com.rey.material.widget.CheckBox
+                        android:id="@+id/cb_medium"
+                        style="@style/checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:text="Medium"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <com.rey.material.widget.CheckBox
+                        android:id="@+id/cb_large"
+                        style="@style/checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:text="Large"
+                        android:textSize="@dimen/_13sdp" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:gravity="center_horizontal|bottom|center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/lft_logo_ico"
+                    android:padding="@dimen/_5sdp" />
+
+                -->
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+        <!--      <com.rey.material.widget.CheckBox
+                  android:id="@+id/cb_addto"
+                  style="@style/checkbox"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="right"
+                  android:drawablePadding="@dimen/_8sdp"
+                  android:textSize="@dimen/_13sdp"
+                  android:gravity="center_vertical"
+                  android:text="Add to Pickup" />-->
+
+
+    </LinearLayout>
 
 
     <!--     <com.rey.material.widget.Button
@@ -46,22 +193,23 @@
              android:textSize="14sp" />-->
 
 
+
     <com.rey.material.widget.Button
         android:id="@+id/button_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Material.Drawable.Ripple.Wave"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_35sdp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/login_reg_button"
-        android:drawablePadding="@dimen/_18sdp"
-        style="@style/Material.Drawable.Ripple.Wave"
         android:drawableRight="@drawable/back_rt_ico"
-        android:paddingLeft="@dimen/_30sdp"
-        android:paddingRight="@dimen/_20sdp"
-        android:text="Next"
+        android:gravity="center"
+        android:inputType="textCapCharacters"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_16sdp"
+        android:text="Add to Cart"
         android:textColor="#FFFFFF"
-        android:textSize="@dimen/_20sdp" />
+        android:textSize="@dimen/_15sdp" />
 
 
 </RelativeLayout>

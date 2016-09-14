@@ -1,9 +1,6 @@
 package sqindia.net.oonbux.Adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +67,7 @@ public class Gridview_adapter extends BaseAdapter {
         // final GridviewDatas getSet = vir_addrs.get(position);
 
 
+
         LayoutInflater inflat = (LayoutInflater) c1.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         view = inflat.inflate(R.layout.gridview_adpater, null);
@@ -101,6 +99,40 @@ public class Gridview_adapter extends BaseAdapter {
         lss = new ArrayList<>();
 
 
+        if (position == selected_position) {
+            cb_choose.setChecked(true);
+        } else {
+            cb_choose.setChecked(false);
+        }
+
+
+        cb_choose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+                if (isChecked) {
+                    selected_position = position;
+                } else {
+                    selected_position = -1;
+                }
+
+                notifyDataSetChanged();
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
 
 
     /*    cb_choose.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +156,7 @@ public class Gridview_adapter extends BaseAdapter {
         //cb_choose.setChecked(array[position]);
 
 
-        cb_choose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       /* cb_choose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -151,7 +183,7 @@ public class Gridview_adapter extends BaseAdapter {
 
                     Log.d("tag", position + "us_yes" + sharedPreferences.getString("virtual_address1", ""));
 
-                 /*   selected_position =  position;
+                 *//*   selected_position =  position;
                     array[position] = true;
                     lss.add(resultp.get(AddLocation._id));
 
@@ -171,7 +203,7 @@ public class Gridview_adapter extends BaseAdapter {
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c1);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("virtual_address", sb.toString());
-                        editor.commit();*/
+                        editor.commit();*//*
 
 
                 } else {
@@ -187,7 +219,7 @@ public class Gridview_adapter extends BaseAdapter {
                 }
 
             }
-        });
+        });*/
 
 
 
@@ -220,4 +252,6 @@ public class Gridview_adapter extends BaseAdapter {
 
         return view;
     }
+
+
 }

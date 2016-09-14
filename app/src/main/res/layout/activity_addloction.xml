@@ -87,7 +87,7 @@
             <GridView
                 android:id="@+id/grd_usa"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/_170sdp"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/ll3"
                 android:numColumns="2"
@@ -132,7 +132,7 @@
             <GridView
                 android:id="@+id/grd_nig"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/_170sdp"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/ll4"
                 android:numColumns="2">
@@ -145,20 +145,21 @@
     <com.rey.material.widget.Button
         android:id="@+id/button_submit"
         style="@style/Material.Drawable.Ripple.Wave.Light"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_35sdp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/login_reg_button"
         android:drawableRight="@drawable/arrow_ico"
         android:gravity="center"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:inputType="textCapCharacters"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingRight="@dimen/_16sdp"
         android:text="Submit"
         android:textColor="#FFFFFF"
-        android:textSize="22sp" />
+        android:textSize="@dimen/_18sdp" />
 
 
 </RelativeLayout>

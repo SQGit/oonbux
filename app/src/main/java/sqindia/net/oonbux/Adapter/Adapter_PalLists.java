@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -30,12 +31,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import sqindia.net.oonbux.Activity.Dashboard;
 import sqindia.net.oonbux.Chat.Pal_Chat;
-import sqindia.net.oonbux.config.Config;
-import sqindia.net.oonbux.Activity.DashBoardActivity;
+import sqindia.net.oonbux.Dialog.Dialog_Anim_Loading;
 import sqindia.net.oonbux.Dialog.Dialog_Msg;
-import sqindia.net.oonbux.config.HttpUtils;
 import sqindia.net.oonbux.R;
+import sqindia.net.oonbux.config.Config;
+import sqindia.net.oonbux.config.HttpUtils;
 
 
 public class Adapter_PalLists extends BaseAdapter {
@@ -54,6 +56,8 @@ public class Adapter_PalLists extends BaseAdapter {
     Activity activity;
     Dialog loading_dialog,dialog;
     Typeface tf;
+
+    Dialog_Anim_Loading dialog_loading;
 
     public Adapter_PalLists(Activity act, Context cont, ArrayList<HashMap<String, String>> dat, int k, int s) {
 
@@ -129,8 +133,9 @@ public class Adapter_PalLists extends BaseAdapter {
 
 
         if (sts == 0) {
-            lt_request.setVisibility(View.INVISIBLE);
+            lt_request.setVisibility(View.VISIBLE);
             lt_submit.setVisibility(View.GONE);
+            tv_req.setText("Chat");
 
 
         } else if (sts == 1) {
@@ -170,7 +175,7 @@ public class Adapter_PalLists extends BaseAdapter {
             public void onClick(View v) {
 
 
-                if(sts == 4){
+                if (sts == 4 || sts == 0) {
                     result = datas.get(position);
                     String oonbux_id = result.get("oonbux_id");
                     Intent goChat = new Intent(context,Pal_Chat.class);
@@ -275,12 +280,15 @@ public class Adapter_PalLists extends BaseAdapter {
     class sendRequestPal extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            loading_dialog = new Dialog(activity);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+            dialog_loading = new Dialog_Anim_Loading(activity);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount = 1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         }
 
         protected String doInBackground(String... params) {
@@ -306,6 +314,7 @@ public class Adapter_PalLists extends BaseAdapter {
             } catch (Exception e) {
                 Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
+                dialog_loading.dismiss();
             }
             return jsonStr;
 
@@ -315,7 +324,7 @@ public class Adapter_PalLists extends BaseAdapter {
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
 
 
             try {
@@ -335,7 +344,7 @@ public class Adapter_PalLists extends BaseAdapter {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     sweetAlertDialog.dismiss();
-                                    Intent goDash = new Intent(context, DashBoardActivity.class);
+                                    Intent goDash = new Intent(context, Dashboard.class);
                                     context.startActivity(goDash);
                                 }
                             })
@@ -357,7 +366,7 @@ public class Adapter_PalLists extends BaseAdapter {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
-                            Intent goDash = new Intent(context, DashBoardActivity.class);
+                            Intent goDash = new Intent(context, Dashboard.class);
                             context.startActivity(goDash);
                         }
                     });
@@ -390,7 +399,7 @@ public class Adapter_PalLists extends BaseAdapter {
                     }
                     else {
 
-                        Dialog_Msg dialog_fail = new Dialog_Msg(activity, "Try Again Later");
+                        Dialog_Msg dialog_fail = new Dialog_Msg(activity, "Network Error \nTry Again Later");
                         dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                         dialog_fail.show();
                     }
@@ -400,6 +409,10 @@ public class Adapter_PalLists extends BaseAdapter {
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+
+                Dialog_Msg dialog_fail = new Dialog_Msg(activity, "Network Error \nTry Again Later");
+                dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog_fail.show();
             }
 
         }
@@ -411,12 +424,15 @@ public class Adapter_PalLists extends BaseAdapter {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            loading_dialog = new Dialog(activity);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+            dialog_loading = new Dialog_Anim_Loading(activity);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount = 1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         }
 
         protected String doInBackground(String... params) {
@@ -444,6 +460,7 @@ public class Adapter_PalLists extends BaseAdapter {
             } catch (Exception e) {
                 Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
+                dialog_loading.dismiss();
             }
             return jsonStr;
 
@@ -453,7 +470,7 @@ public class Adapter_PalLists extends BaseAdapter {
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
 
 
             try {
@@ -466,7 +483,7 @@ public class Adapter_PalLists extends BaseAdapter {
                 if (status.equals("success")) {
 
                     Log.e("tag", "<-----result----->" + "" + status + msg);
-                    Intent goDash = new Intent(context, DashBoardActivity.class);
+                    Intent goDash = new Intent(context, Dashboard.class);
                     context.startActivity(goDash);
 
 
@@ -482,6 +499,9 @@ public class Adapter_PalLists extends BaseAdapter {
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+                Dialog_Msg dialog_fail = new Dialog_Msg(activity, "Try Again Later");
+                dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog_fail.show();
             }
 
         }

@@ -1,6 +1,7 @@
 package sqindia.net.oonbux.Profile;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -51,12 +52,13 @@ import java.util.List;
 
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
-import sqindia.net.oonbux.config.Config;
 import sqindia.net.oonbux.Dialog.DialogYesNo;
+import sqindia.net.oonbux.Dialog.Dialog_Anim_Loading;
 import sqindia.net.oonbux.Dialog.Dialog_Msg;
 import sqindia.net.oonbux.Dialog.Dialog_new;
-import sqindia.net.oonbux.config.HttpUtils;
 import sqindia.net.oonbux.R;
+import sqindia.net.oonbux.config.Config;
+import sqindia.net.oonbux.config.HttpUtils;
 
 
 public class ProfileInfo extends Activity {
@@ -65,7 +67,7 @@ public class ProfileInfo extends Activity {
     String get_profile_sts, str_fname, str_lname, str_email, str_phone, str_zip, str_state, str_photo;
    // com.rey.material.widget.LinearLayout lt_back;
     Button btn_next, btn_edit;
-    TextView header;
+    TextView header, tv_prof_txt;
     MaterialEditText et_fname, et_lname, et_email, et_phone, et_zip, et_state;
     ImageView btn_back,iv_profile_pic, img_edit;
     boolean img_frm_gal = false, img_success1, img_frm_web = false;
@@ -76,7 +78,17 @@ public class ProfileInfo extends Activity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Dialog loading_dialog;
+    Dialog_Anim_Loading dialog_loading;
 
+    Button btn_public, btn_private;
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +127,11 @@ public class ProfileInfo extends Activity {
         iv_profile_pic = (ImageView) findViewById(R.id.nav_header_propic);
         img_edit = (ImageView) findViewById(R.id.img_change);
 
+        //    btn_public = (Button) findViewById(R.id.btn_public);
+        //   btn_private = (Button) findViewById(R.id.btn_private);
+
+        //tv_prof_txt = (TextView) findViewById(R.id.tv_profile_txt);
+
 
         header.setTypeface(tf);
 
@@ -126,6 +143,10 @@ public class ProfileInfo extends Activity {
         et_state.setTypeface(tf1);
         btn_edit.setTypeface(tf1);
         btn_next.setTypeface(tf1);
+
+        // btn_public.setTypeface(tf1);
+        //  btn_private.setTypeface(tf1);
+        //  tv_prof_txt.setTypeface(tf1);
 
 
         disable();
@@ -150,6 +171,13 @@ public class ProfileInfo extends Activity {
             btn_back.setVisibility(View.VISIBLE);
             btn_next.setText("Update");
         }
+
+
+        if (sharedPreferences.getString("from_profile", "") != "") {
+            btn_next.setVisibility(View.GONE);
+            btn_back.setVisibility(View.VISIBLE);
+        }
+
 
 
         et_lname.setOnEditorActionListener(new MaterialEditText.OnEditorActionListener() {
@@ -208,11 +236,54 @@ public class ProfileInfo extends Activity {
         });
 
 
+
+
+      /*  btn_public.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_public.setBackgroundResource(R.drawable.thumb);
+                btn_private.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                btn_private.setTextColor(getResources().getColor(R.color.text_divider1));
+            }
+        });
+
+
+        btn_private.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_private.setBackgroundResource(R.drawable.thumb);
+                btn_public.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                btn_public.setTextColor(getResources().getColor(R.color.text_divider1));
+            }
+        });*/
+
+
+
+
+
+
+
+
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
-                startActivity(inte);
+
+
+                ActivityOptions options = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    options = ActivityOptions.makeScaleUpAnimation(btn_back, 0,
+                            0, btn_back.getWidth(),
+                            btn_back.getHeight());
+                    startActivity(inte, options.toBundle());
+                } else {
+                    inte.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(inte);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                }
+                finish();
+
+
             }
         });
 
@@ -290,20 +361,25 @@ public class ProfileInfo extends Activity {
 
     }
 
-
     @Override
     public void onBackPressed() {
         if ((get_profile_sts.equals(""))) {
-            DialogYesNo dialog_exit = new DialogYesNo(ProfileInfo.this, "Do You Want to Exit ?", 1);
-            dialog_exit.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog_exit.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            dialog_exit.show();
+
+            if (sharedPreferences.getString("from_profile", "") != "") {
+                super.onBackPressed();
+                finish();
+            } else {
+
+                DialogYesNo dialog_exit = new DialogYesNo(ProfileInfo.this, "Do You Want to Exit ?", 1, "nothing");
+                dialog_exit.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog_exit.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog_exit.show();
+            }
         } else {
             super.onBackPressed();
             finish();
         }
     }
-
 
     public void validatedatas() {
 
@@ -333,8 +409,23 @@ public class ProfileInfo extends Activity {
 
                     if ((get_profile_sts.equals(""))) {
                         disable();
-                        Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
-                        startActivity(inte);
+                        Intent intent_phyaddress = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
+
+                        ActivityOptions options = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                            options = ActivityOptions.makeScaleUpAnimation(img_edit, 0,
+                                    0, img_edit.getWidth(),
+                                    img_edit.getHeight());
+                            startActivity(intent_phyaddress, options.toBundle());
+                        } else {
+                            intent_phyaddress.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent_phyaddress);
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                        }
+                        finish();
+
+
+
                     } else {
                         disable();
                         new Profile_Update_Task().execute();
@@ -359,7 +450,6 @@ public class ProfileInfo extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -398,7 +488,6 @@ public class ProfileInfo extends Activity {
             }
         }
     }
-
 
     public void enable() {
 
@@ -441,6 +530,23 @@ public class ProfileInfo extends Activity {
         // btn_edit.setEnabled(true);
     }
 
+    public void setupUI(View view) {
+
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(ProfileInfo.this);
+                    return false;
+                }
+            });
+        }
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
 
     private class UploadImageToServer extends AsyncTask<Void, Integer, String> {
 
@@ -455,12 +561,23 @@ public class ProfileInfo extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading_dialog = new Dialog(ProfileInfo.this);
+            /*loading_dialog = new Dialog(ProfileInfo.this);
             loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             loading_dialog.setContentView(R.layout.dialog_loading);
             loading_dialog.setCancelable(false);
             loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+            loading_dialog.show();*/
+
+
+            dialog_loading = new Dialog_Anim_Loading(ProfileInfo.this);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount = 1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
         }
 
@@ -477,12 +594,10 @@ public class ProfileInfo extends Activity {
         private String uploadFile() {
             String responseString = null;
             HttpClient httpclient = new DefaultHttpClient();
-
             HttpPost httppost = new HttpPost("http://oonsoft.eastus.cloudapp.azure.com/api/profilepic");
             httppost.setHeader("session_id", str_session_id);
 
             try {
-
 
                 MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                 File sourceFile = new File(img_path);
@@ -498,68 +613,46 @@ public class ProfileInfo extends Activity {
                     responseString = "Error occurred! Http Status Code: "
                             + statusCode;
                 }
-
             } catch (ClientProtocolException e) {
                 responseString = e.toString();
             } catch (IOException e) {
                 responseString = e.toString();
             }
-
             return responseString;
-
         }
-
         @Override
         protected void onPostExecute(String result) {
             Log.e("tag", "Response from server: " + result);
-            loading_dialog.dismiss();
-
-
+            dialog_loading.dismiss();
             try {
                 JSONObject jo = new JSONObject(result);
-
                 String status = jo.getString("status");
-
                 String msg = jo.getString("message");
                 Log.e("tag", "<-----Status----->" + status);
-
-
                 if (status.equals("success")) {
-
                     img_frm_web = true;
                     String url = jo.getString("url");
-
                     Log.e("tag","poto "+ url);
-
-
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileInfo.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("web_photo_url", url);
                     editor.putString("photo_path", url);
                     editor.commit();
-
                     Picasso.with(context)
                             .load(url)
                             .fit()
                             .into(iv_profile_pic);
-
                 } else if (status.equals("fail")) {
-
                     Toast.makeText(getApplicationContext(), "Profile Picture not uploaded.\nTry Again", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Profile Picture not uploaded.\nTry Again", Toast.LENGTH_LONG).show();
                 }
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
         }
 
     }
-
 
     class Profile_Update_Task extends AsyncTask<String, Void, String> {
 
@@ -568,12 +661,15 @@ public class ProfileInfo extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            loading_dialog = new Dialog(ProfileInfo.this);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+            dialog_loading = new Dialog_Anim_Loading(ProfileInfo.this);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount = 1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
         }
 
@@ -608,7 +704,7 @@ public class ProfileInfo extends Activity {
         @Override
         protected void onPostExecute(String s) {
             Log.d("tag", "<-----rerseres---->" + s);
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
             super.onPostExecute(s);
 
             if(s!=null) {
@@ -652,34 +748,6 @@ public class ProfileInfo extends Activity {
                 dialog_fail.show();
             }
         }
-    }
-
-
-
-    public void setupUI(View view) {
-
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(ProfileInfo.this);
-                    return false;
-                }
-            });
-        }
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                View innerView = ((ViewGroup) view).getChildAt(i);
-                setupUI(innerView);
-            }
-        }
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
     }
 
 

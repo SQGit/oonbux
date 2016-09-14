@@ -9,14 +9,13 @@ import android.widget.ImageView;
 
 import com.rey.material.widget.TextView;
 
-import sqindia.net.oonbux.Activity.DashBoardActivity;
 import sqindia.net.oonbux.R;
 
 /**
  * Created by Salman on 4/18/2016.
  */
 //asfsadf
-public class HowItWorks extends Activity {
+public class HowitWorks extends Activity {
 
     TextView header,tv_content;
     ImageView lt_back;
@@ -44,7 +43,7 @@ public class HowItWorks extends Activity {
         lt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                Intent inte = new Intent(getApplicationContext(), Dashboard.class);
                 startActivity(inte);
             }
         });

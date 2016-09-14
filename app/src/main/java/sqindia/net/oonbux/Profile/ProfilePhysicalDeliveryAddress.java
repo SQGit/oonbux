@@ -1,7 +1,7 @@
 package sqindia.net.oonbux.Profile;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,28 +32,34 @@ import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.Spinner;
 import com.rey.material.widget.TextView;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import sqindia.net.oonbux.Activity.AddLocation;
+import sqindia.net.oonbux.Activity.ManageAddress;
+import sqindia.net.oonbux.Adapter.ListAdapter_Class;
+import sqindia.net.oonbux.Dialog.Dialog_Anim_Loading;
+import sqindia.net.oonbux.Dialog.Dialog_new;
+import sqindia.net.oonbux.R;
 import sqindia.net.oonbux.config.Config;
 import sqindia.net.oonbux.config.DbC;
-import sqindia.net.oonbux.Dialog.Dialog_new;
 import sqindia.net.oonbux.config.HttpUtils;
-import sqindia.net.oonbux.Adapter.ListAdapter_Class;
-import sqindia.net.oonbux.Activity.ManageAddress;
-import sqindia.net.oonbux.R;
 
 
 public class ProfilePhysicalDeliveryAddress extends Activity {
 
+    public SharedPreferences sharedPreferences;
+    public SharedPreferences.Editor editor;
     LinearLayout bottom_lt;
     TextView tv_header, tv_sub_hdr_loc, tv_sub_hdr_int;
     Button btn_save_loc, btn_save_int, btn_next, btn_edit_loc, btn_edit_int;
-    ImageView lt_back,lt_add;
+    ImageView lt_back, lt_add, loc_map, int_map;
     MaterialEditText et_loc_add1, et_loc_add2, et_loc_city, et_loc_phone, et_loc_note, et_int_add1, et_int_add2, et_int_city, et_int_phone, et_int_note;
     String get_profile_sts, str_def_adr, str_loc_add1, str_loc_add2, str_loc_city, str_loc_zip, str_loc_phone,
             str_loc_note, str_int_add1, str_int_add2, str_int_city, str_int_zip, str_int_phone, str_int_note, str_session_id;
@@ -64,29 +70,29 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
     Typeface tf, tf1;
     MyAdapter adapter_a, adapter_b, adapter_c;
     ImageView img_loc_country, img_loc_state, img_loc_zip,img_int_country, img_int_state, img_int_zip;
-
     int i = 0;
     String str_country, str_state, cont, stat, zp;
     ArrayList<String> country = new ArrayList<>();
     ArrayList<String> states = new ArrayList<>();
-    ArrayList<String> zip = new ArrayList<>();
-
-    ListAdapter_Class adapter_loc_country, adapter_int_country, adapter_loc_state, adapter_int_state, adapter_loc_zip, adapter_int_zip;
 
     ///MaterialAutoCompleteTextView  aet_loc_zip,  aet_int_zip;
-
+    ArrayList<String> zip = new ArrayList<>();
+    ListAdapter_Class adapter_loc_country, adapter_int_country, adapter_loc_state, adapter_int_state, adapter_loc_zip, adapter_int_zip;
     String str_loc_country, str_loc_state, str_int_country, str_int_state;
-
     ArrayAdapter<String> adpater_states, adpater_states_, adapter_zips, adapter_zips_, adpater_states1, adapter_zips1;
     DbC dbclass;
     Context context = this;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    Dialog_Anim_Loading dialog_loading;
+    //  Dialog loading_dialog;
     private SQLiteDatabase db;
-    Dialog loading_dialog;
 
-
-
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
 
     @Override
     public void onBackPressed() {
@@ -97,16 +103,23 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                   /*  Intent inte = new Intent(getApplicationContext(), ProfileInfo.class);
                     startActivity(inte);*/
 
+            if (sharedPreferences.getString("from_profile", "") != "") {
+                super.onBackPressed();
+                finish();
+            } else {
 
-            Intent intes = new Intent(getApplicationContext(), ProfileInfo.class);
-            startActivity(intes);
+
+                Intent intes = new Intent(getApplicationContext(), ProfileInfo.class);
+                startActivity(intes);
+                finish();
 
 
-            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
-            editor = sharedPreferences.edit();
-            editor.putString("profile", "");
-            editor.commit();
+                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+                editor = sharedPreferences.edit();
+                editor.putString("profile", "");
+                editor.commit();
 
+            }
             // Toast.makeText(getApplicationContext(), "Please complete your profile", Toast.LENGTH_LONG).show();
         } else {
             /*Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
@@ -183,6 +196,9 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         img_int_country = (ImageView) findViewById(R.id.imageView_int_country);
         img_int_state = (ImageView) findViewById(R.id.imageView_int_state);
         img_int_zip = (ImageView) findViewById(R.id.imageView_int_zip);
+
+        loc_map = (ImageView) findViewById(R.id.imageViedw);
+        int_map = (ImageView) findViewById(R.id.image_view2);
 
 
         tv_header.setTypeface(tf);
@@ -345,6 +361,9 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                 editor.putString("loc_zip", str_loc_zip);
                 editor.commit();
 
+
+                new getCity("35235", 0).execute();
+
                 return false;
             }
         });
@@ -402,6 +421,8 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                 editor.putString("int_zip", str_int_zip);
                 editor.commit();
 
+                new getCity("96035", 1).execute();
+
                 return false;
             }
         });
@@ -411,7 +432,20 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             @Override
             public void onClick(View v) {
                 Intent addressPart = new Intent(getApplicationContext(), ManageAddress.class);
-                startActivity(addressPart);
+
+
+                ActivityOptions options = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    options = ActivityOptions.makeScaleUpAnimation(lt_add, 0,
+                            0, lt_add.getWidth(),
+                            lt_add.getHeight());
+                    startActivity(addressPart, options.toBundle());
+                } else {
+                    addressPart.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(addressPart);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                }
+
             }
         });
 
@@ -467,15 +501,49 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
                 if ((get_profile_sts.equals(""))) {
 
-                    Intent intes = new Intent(getApplicationContext(), ProfileInfo.class);
-                    startActivity(intes);
-                    editor = sharedPreferences.edit();
-                    editor.putString("profile", "");
-                    editor.commit();
+
+                    if (sharedPreferences.getString("from_profile", "") != "") {
+                        onBackPressed();
+                        finish();
+                    } else {
+
+
+                        Intent intes = new Intent(getApplicationContext(), ProfileInfo.class);
+
+
+                        ActivityOptions options = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                            options = ActivityOptions.makeScaleUpAnimation(lt_back, 0,
+                                    0, lt_back.getWidth(),
+                                    lt_back.getHeight());
+                            startActivity(intes, options.toBundle());
+                        } else {
+                            intes.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intes);
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                        }
+                        finish();
+
+
+                        editor = sharedPreferences.edit();
+                        editor.putString("profile", "");
+                        editor.commit();
+                    }
 
                 } else {
                     Intent goto_profile = new Intent(getApplicationContext(), ProfileDashboard.class);
-                    startActivity(goto_profile);
+
+                    ActivityOptions options = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        options = ActivityOptions.makeScaleUpAnimation(lt_back, 0,
+                                0, lt_back.getWidth(),
+                                lt_back.getHeight());
+                        startActivity(goto_profile, options.toBundle());
+                    } else {
+                        goto_profile.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(goto_profile);
+                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    }
                     finish();
                 }
 
@@ -675,11 +743,38 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
                                                         Intent inte = new Intent(getApplicationContext(), AddLocation.class);
                                                         inte.putExtra("sts", 0);
-                                                        startActivity(inte);
+
+
+                                                        ActivityOptions options = null;
+                                                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                                                            options = ActivityOptions.makeScaleUpAnimation(btn_next, 0,
+                                                                    0, btn_next.getWidth(),
+                                                                    btn_next.getHeight());
+                                                            startActivity(inte, options.toBundle());
+                                                        } else {
+                                                            inte.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                                            startActivity(inte);
+                                                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                                                        }
+                                                        finish();
+
+
 
                                                     } else {
                                                         Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
-                                                        startActivity(inte);
+
+                                                        ActivityOptions options = null;
+                                                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                                                            options = ActivityOptions.makeScaleUpAnimation(btn_next, 0,
+                                                                    0, btn_next.getWidth(),
+                                                                    btn_next.getHeight());
+                                                            startActivity(inte, options.toBundle());
+                                                        } else {
+                                                            inte.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                                            startActivity(inte);
+                                                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                                                        }
+                                                        finish();
                                                     }
 
                                                 }
@@ -749,11 +844,6 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
     }
 
-
-
-
-
-
     public void setupUI(View view) {
 
         if (!(view instanceof EditText)) {
@@ -771,19 +861,6 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             }
         }
     }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
-    }
-
-
-
-
-
 
     private void get_loc_from_Db() {
 
@@ -1007,6 +1084,13 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                                     editor.putString("loc_address", "success");
                                     editor.commit();
 
+                                    if (str_loc_zip != "") {
+                                        Picasso.with(getApplicationContext())
+                                                .load("https://maps.googleapis.com/maps/api/staticmap?center=02817&zoom=14&scale=2&size=200x200")
+                                                .fit()
+                                                .into(loc_map);
+                                    }
+
 
 
 
@@ -1055,6 +1139,17 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
                                     editor.putString("int_address", "success");
                                     editor.putBoolean("adrsts1", true);
                                     editor.commit();
+
+
+                                    if (str_int_zip != "") {
+                                        Picasso.with(getApplicationContext())
+                                                .load("https://maps.googleapis.com/maps/api/staticmap?center=98424&zoom=14&scale=2&size=200x200")
+                                                .fit()
+                                                .into(int_map);
+                                    }
+
+
+
 
                                     if ((get_profile_sts.equals(""))) {
                                         dbclass.physical_insert(addr1, addr2, city, state, zip, phone, country, note, String.valueOf(i));
@@ -1130,7 +1225,6 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         et_int_city.setText(str_int_city);
         et_int_phone.setText(str_int_phone);
         et_int_note.setText(str_int_note);
-
         img_int_country.setVisibility(View.GONE);
         img_int_state.setVisibility(View.GONE);
         img_int_zip.setVisibility(View.GONE);
@@ -1172,6 +1266,15 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         spin_loc_country.setEnabled(false);
         spin_loc_state.setEnabled(false);
         spin_loc_zip.setEnabled(false);
+
+        if (str_loc_zip != "") {
+            Picasso.with(getApplicationContext())
+                    .load("https://maps.googleapis.com/maps/api/staticmap?center=78582&zoom=14&scale=2&size=200x200")
+                    .fit()
+                    .into(loc_map);
+        }
+
+
     }
 
     public void disable_int() {
@@ -1183,6 +1286,15 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         spin_int_country.setEnabled(false);
         spin_int_state.setEnabled(false);
         spin_int_zip.setEnabled(false);
+
+
+        if (str_int_zip != "") {
+            Picasso.with(getApplicationContext())
+                    .load("https://maps.googleapis.com/maps/api/staticmap?center=98424&zoom=14&scale=2&size=200x200")
+                    .fit()
+                    .into(int_map);
+        }
+
     }
 
 
@@ -1222,17 +1334,21 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
 
     class Profile_Update_Task extends AsyncTask<String, Void, String> {
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
+        //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfilePhysicalDeliveryAddress.this);
 
         protected void onPreExecute() {
             super.onPreExecute();
 
-            loading_dialog = new Dialog(ProfilePhysicalDeliveryAddress.this);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+
+            dialog_loading = new Dialog_Anim_Loading(ProfilePhysicalDeliveryAddress.this);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount = 1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
         }
 
@@ -1279,7 +1395,7 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
             Log.d("tag", "<-----rerseres---->" + s);
             super.onPostExecute(s);
 
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
 
             try {
                 JSONObject jo = new JSONObject(s);
@@ -1317,6 +1433,119 @@ public class ProfilePhysicalDeliveryAddress extends Activity {
         }
 
     }
+
+
+    class getCity extends AsyncTask<String, Void, String> {
+        String zip_code;
+        int stat;
+
+        String web_p1 = "http://maps.googleapis.com/maps/api/geocode/json?components=postal_code:32030";
+
+        public getCity(String vinno, int stat) {
+            this.zip_code = vinno;
+            this.stat = stat;
+
+        }
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected String doInBackground(String... params) {
+            String json = "", jsonStr = "";
+
+            try {
+                String virtual_url = web_p1 + zip_code;
+                Log.e("tag", "<---urlll--->" + zip_code);
+                Log.e("tag", "<---urlll--->" + virtual_url);
+                JSONObject jsonobject = HttpUtils.getCity(web_p1);
+                Log.d("tag", "" + jsonobject.toString());
+                if (jsonobject.toString() == "sam") {
+                    new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oops!")
+                            .setContentText("Try Check your Network")
+                            .setConfirmText("OK")
+                            .show();
+                }
+                json = jsonobject.toString();
+                return json;
+            } catch (Exception e) {
+                Log.e("InputStream", "" + e.getLocalizedMessage());
+                jsonStr = "";
+            }
+            return jsonStr;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----outttttt---->" + jsonStr);
+            super.onPostExecute(jsonStr);
+
+            try {
+                JSONObject jo = new JSONObject(jsonStr);
+
+                Log.e("tag", "" + jo.getString("status"));
+
+                if (jo.getString("status").equals("OK")) {
+
+                    Log.e("tag", "inside");
+
+                    JSONArray jsona = jo.getJSONArray("results");
+
+                    Log.e("tag", "inside " + jsona);
+
+                    JSONObject jos = jsona.getJSONObject(0);
+
+                    Log.e("tag", "" + jos.toString());
+
+                    JSONArray jsoar = jos.getJSONArray("types");
+
+                    for (int i = 0; i < jsoar.length(); i++) {
+
+                        Log.e("tag", "" + jsoar.getString(i).toString());
+
+                        if (jsoar.getString(i).contains("postal_code")) {
+
+                            String address = jos.getString("formatted_address");
+                            Log.e("tag", "" + address);
+                            String[] parts = address.split(",");
+                            String city = parts[0];
+                            Log.e("tag", "" + city);
+                            if (stat == 0) {
+                                et_loc_city.setText(city);
+                                et_loc_phone.requestFocus();
+                            } else if (stat == 1) {
+                                et_int_city.setText(city);
+                                et_int_phone.requestFocus();
+                            }
+
+                        }
+                    }
+
+
+                } else {
+                    if (stat == 0) {
+                        et_loc_city.requestFocus();
+                    } else if (stat == 1) {
+                        et_int_city.requestFocus();
+                    }
+
+                }
+
+
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+
+
 
 
 }

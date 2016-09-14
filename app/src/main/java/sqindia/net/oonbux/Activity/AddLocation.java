@@ -1,12 +1,10 @@
 package sqindia.net.oonbux.Activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -15,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,36 +28,31 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import sqindia.net.oonbux.config.Config;
-import sqindia.net.oonbux.config.DbC;
+import sqindia.net.oonbux.Adapter.GridAdapterNig;
+import sqindia.net.oonbux.Adapter.GridAdapterUs;
+import sqindia.net.oonbux.Dialog.Dialog_Anim_Loading;
 import sqindia.net.oonbux.Dialog.Dialog_Msg;
 import sqindia.net.oonbux.Dialog.Dialog_new;
-import sqindia.net.oonbux.Adapter.Gridview_adapter;
-import sqindia.net.oonbux.Adapter.Gridview_adapter1;
-import sqindia.net.oonbux.config.HttpUtils;
 import sqindia.net.oonbux.Profile.ProfileDashboard;
 import sqindia.net.oonbux.Profile.ProfilePhysicalDeliveryAddress;
 import sqindia.net.oonbux.R;
+import sqindia.net.oonbux.config.Config;
+import sqindia.net.oonbux.config.DbC;
+import sqindia.net.oonbux.config.HttpUtils;
 
 
-/**
- * Created by Salman on 4/22/2016.
- */
-//asfd
 public class AddLocation extends Activity {
 
-   public static String _id = "vir_addr_id";
+    public static String _id = "vir_addr_id";
     public static String addr1 = "vir_addr_line1";
     public static String addr2 = "vir_addr_line2";
     public static String city = "vir_addr_city";
     public static String state = "vir_addr_state";
     public static String zip = "vir_addr_zip";
     public static String country = "vir_addr_country";
-    //com.rey.material.widget.LinearLayout lt_back;
     ImageView btn_back;
     Button btn_submit;
     GridView grid1, grid2;
-    Intent intent = getIntent();
     int status;
     String str_session_id, vir_sts;
     TextView tv_header, tv_sub_header1, tv_sub_header2;
@@ -66,24 +60,19 @@ public class AddLocation extends Activity {
     ArrayList<HashMap<String, String>> nig_lists;
     DbC dbclass;
     Context context = this;
-    Dialog loading_dialog;
+    Dialog_Anim_Loading dialog_loading;
     private SQLiteDatabase db;
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-
         if (vir_sts == "0") {
-
             Intent inte = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
             startActivity(inte);
             finish();
         } else {
-            Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+            Intent inte = new Intent(getApplicationContext(), Dashboard.class);
             startActivity(inte);
         }
-
-
     }
 
     @Override
@@ -101,7 +90,6 @@ public class AddLocation extends Activity {
         status = getData.getIntExtra("sts", 0);
         Log.d("tag", "" + status);
 
-        //lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         btn_submit = (Button) findViewById(R.id.button_submit);
         btn_back = (ImageView) findViewById(R.id.btn_back);
         tv_header = (TextView) findViewById(R.id.tv_hd_txt);
@@ -112,7 +100,6 @@ public class AddLocation extends Activity {
         grid2 = (GridView) findViewById(R.id.grd_nig);
 
         Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/prox.otf");
-
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
 
         tv_header.setTypeface(tf);
@@ -157,7 +144,7 @@ public class AddLocation extends Activity {
                     startActivity(inte);
                     finish();
                 } else {
-                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    Intent inte = new Intent(getApplicationContext(), Dashboard.class);
                     startActivity(inte);
                 }
 
@@ -170,7 +157,6 @@ public class AddLocation extends Activity {
 
 
                 if (vir_sts == "") {
-                    btn_submit.setText("Next");
 
                   /*  SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
                     String getvirtual = sharedPreferences.getString("virtual_address","");
@@ -178,7 +164,6 @@ public class AddLocation extends Activity {
                     String[] playlists = getvirtual.split(",");
 
                     Log.d("tag",""+playlists[0] + "\t" +playlists[1])*/
-                    ;
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
                     String getvirtual1 = sharedPreferences.getString("virtual_address1", "");
                     String getvirtual2 = sharedPreferences.getString("virtual_address2", "");
@@ -193,31 +178,28 @@ public class AddLocation extends Activity {
                         startActivity(inte);
                     }
 
-
-
-
-                    /*Intent inte = new Intent(getApplicationContext(), ProfileDashboard.class);
-                    startActivity(inte);*/
                 } else {
                     btn_submit.setText("Submit");
-                   /* Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
-                    startActivity(inte);*/
 
-                    new Virtual_Address_Task().execute();
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddLocation.this);
+                    String getvirtual1 = sharedPreferences.getString("virtual_address1", "");
+                    String getvirtual2 = sharedPreferences.getString("virtual_address2", "");
+
+                    if (getvirtual1.equals("") && getvirtual2.equals("")) {
+                        Log.d("tag", "" + getvirtual1 + "\t" + getvirtual2);
+                        Toast.makeText(getApplicationContext(), "Choose Virtual Address", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Log.d("tag", "1" + getvirtual1 + "\t" + getvirtual2);
+                        new Virtual_Address_Task().execute();
+                    }
+
+
                 }
 
             }
         });
-
-
-
-       /* grid1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("tag","onclick");
-            }
-        });*/
-
 
     }
 
@@ -228,7 +210,6 @@ public class AddLocation extends Activity {
         db.execSQL("CREATE TABLE IF NOT EXISTS virtual(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, addr_id VARCHAR, addr_line1 VARCHAR, addr_line2 VARCHAR, city VARCHAR, state VARCHAR, zip VARCHAR, country VARCHAR, loc VARCHAR );");
 
     }
-
 
     protected void deleteDatabase() {
 
@@ -249,12 +230,17 @@ public class AddLocation extends Activity {
     class GetVirutal extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            loading_dialog = new Dialog(AddLocation.this);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+
+            dialog_loading = new Dialog_Anim_Loading(AddLocation.this);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount = 1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
         }
 
         protected String doInBackground(String... params) {
@@ -282,6 +268,7 @@ public class AddLocation extends Activity {
             } catch (Exception e) {
                 Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
+                dialog_loading.dismiss();
             }
             return jsonStr;
 
@@ -291,7 +278,7 @@ public class AddLocation extends Activity {
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
 
 
             try {
@@ -374,9 +361,9 @@ public class AddLocation extends Activity {
                     }
 
 
-                    Gridview_adapter adapter1 = new Gridview_adapter(getApplicationContext(), us_lists);
+                    GridAdapterUs adapter1 = new GridAdapterUs(getApplicationContext(), us_lists);
 
-                    Gridview_adapter1 adapter2 = new Gridview_adapter1(getApplicationContext(), nig_lists);
+                    GridAdapterNig adapter2 = new GridAdapterNig(getApplicationContext(), nig_lists);
 
                     grid1.setAdapter(adapter1);
 
@@ -386,12 +373,19 @@ public class AddLocation extends Activity {
 
                 } else {
 
+                    Dialog_Msg dialog_fail = new Dialog_Msg(AddLocation.this, "Network Error!,\nPlease Try Again Later.");
+                    dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                    dialog_fail.show();
+
                 }
 
 
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+                Dialog_Msg dialog_fail = new Dialog_Msg(AddLocation.this, "Network Error!,\nPlease Try Again Later.");
+                dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog_fail.show();
             }
 
         }
@@ -404,12 +398,15 @@ public class AddLocation extends Activity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            loading_dialog = new Dialog(AddLocation.this);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+            dialog_loading = new Dialog_Anim_Loading(AddLocation.this);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount = 1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
         }
 
@@ -425,17 +422,14 @@ public class AddLocation extends Activity {
             try {
 
                 JSONObject jsonObject = new JSONObject();
-
-
                 jsonObject.accumulate("selected_location", getvirtual1);
                 jsonObject.accumulate("selected_location", getvirtual2);
-
-
                 // 4. convert JSONObject to JSON to String
                 json = jsonObject.toString();
                 return jsonStr = HttpUtils.makeRequest2(Config.SER_URL + "virtualaddr/update", json, str_session_id);
             } catch (Exception e) {
                 Log.d("InputStream", e.getLocalizedMessage());
+                dialog_loading.dismiss();
             }
 
             return null;
@@ -447,7 +441,7 @@ public class AddLocation extends Activity {
             Log.d("tag", "<-----rerseres---->" + s);
             super.onPostExecute(s);
 
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
 
             try {
                 JSONObject jo = new JSONObject(s);
@@ -468,12 +462,15 @@ public class AddLocation extends Activity {
                     editor.putString("virtul_addr", "success");
                     editor.commit();
 
-                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
+                    Intent inte = new Intent(getApplicationContext(), Dashboard.class);
                     startActivity(inte);
+                    finish();
 
 
                 } else if (status.equals(null)) {
-                    Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();
+                    Dialog_Msg dialog_fail = new Dialog_Msg(AddLocation.this, "Network Error!,\nPlease Try Again Later.");
+                    dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                    dialog_fail.show();
                 } else if (status.equals("fail")) {
                     Log.d("tag", "<-----Status----->" + msg);
 
@@ -483,15 +480,22 @@ public class AddLocation extends Activity {
                     editor.putString("virtul_addr", "success");
                     editor.commit();
 
-                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
-                    startActivity(inte);
+                    Dialog_Msg dialog_fail = new Dialog_Msg(AddLocation.this, "Network Error!,\nPlease Try Again Later.");
+                    dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                    dialog_fail.show();
 
+
+                } else {
 
                 }
 
 
             } catch (JSONException e) {
                 e.printStackTrace();
+
+                Dialog_Msg dialog_fail = new Dialog_Msg(AddLocation.this, "Network Error!,\nPlease Try Again Later.");
+                dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog_fail.show();
             }
 
         }

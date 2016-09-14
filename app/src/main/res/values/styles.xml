@@ -80,6 +80,17 @@
         <item name="cbd_animDuration">@android:integer/config_mediumAnimTime</item>
     </style>
 
+    <style name="checkbox2">
+        <item name="cbd_width">25dp</item>
+        <item name="cbd_height">25dp</item>
+        <item name="cbd_boxSize">24dp</item>
+        <item name="cbd_cornerRadius">1dp</item>
+        <item name="cbd_strokeColor">@color/bottom_page</item>
+        <item name="cbd_strokeSize">1.5dp</item>
+        <item name="cbd_tickColor">@color/text_color</item>
+        <item name="cbd_animDuration">@android:integer/config_mediumAnimTime</item>
+    </style>
+
 
     <style name="chkbox">
         <item name="cbd_width">32dp</item>

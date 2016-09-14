@@ -16,8 +16,8 @@ import android.widget.ImageView;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 
-import sqindia.net.oonbux.Activity.DashBoardActivity;
-import sqindia.net.oonbux.Activity.NewLoginActivity;
+import sqindia.net.oonbux.Activity.Dashboard;
+import sqindia.net.oonbux.Activity.Login;
 import sqindia.net.oonbux.Profile.ProfileDashboard;
 import sqindia.net.oonbux.Profile.ProfileInfo;
 import sqindia.net.oonbux.R;
@@ -126,7 +126,7 @@ public class Dialog_new extends Dialog {
             public void onClick(View v) {
 
                 if (i == 0) {
-                    Intent goD = new Intent(c.getApplicationContext(), NewLoginActivity.class);
+                    Intent goD = new Intent(c.getApplicationContext(), Login.class);
                     c.startActivity(goD);
                     c.finish();
                     dismiss();
@@ -139,7 +139,7 @@ public class Dialog_new extends Dialog {
                         c.finish();
                         dismiss();
                     } else {
-                        Intent goD = new Intent(c.getApplicationContext(), DashBoardActivity.class);
+                        Intent goD = new Intent(c.getApplicationContext(), Dashboard.class);
                         c.startActivity(goD);
                         c.finish();
                         dismiss();
@@ -147,7 +147,7 @@ public class Dialog_new extends Dialog {
 
 
                 } else if (i == 2) {
-                    Intent goD = new Intent(c.getApplicationContext(), DashBoardActivity.class);
+                    Intent goD = new Intent(c.getApplicationContext(), Dashboard.class);
                     c.startActivity(goD);
                     c.finish();
                     dismiss();
@@ -165,7 +165,7 @@ public class Dialog_new extends Dialog {
                     dismiss();
                 }
                 else {
-                    Intent goD = new Intent(c.getApplicationContext(), DashBoardActivity.class);
+                    Intent goD = new Intent(c.getApplicationContext(), Dashboard.class);
                     c.startActivity(goD);
                     c.finish();
                     dismiss();

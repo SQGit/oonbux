@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import me.iwf.photopicker.PhotoPagerActivity;
 import me.iwf.photopicker.R;
-import sqindia.net.oonbux.Activity.DashBoardActivity;
+import sqindia.net.oonbux.Activity.Dashboard;
 
 /**
  * Created by donglua on 15/5/31.
@@ -64,8 +64,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 intent.putExtra(PhotoPagerActivity.EXTRA_CURRENT_ITEM, position);
                 intent.putExtra(PhotoPagerActivity.EXTRA_PHOTOS, photoPaths);
                 intent.putExtra(PhotoPagerActivity.EXTRA_SHOW_DELETE, true);
-                if (mContext instanceof DashBoardActivity) {
-                    ((DashBoardActivity) mContext).previewPhoto(intent);
+                if (mContext instanceof Dashboard) {
+                    ((Dashboard) mContext).previewPhoto(intent);
                 }
             }
         });

@@ -1,43 +1,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:orientation="horizontal">
 
 
-
-        <TextView
-            android:id="@+id/txt_msg"
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="11dp"
-            android:textSize="18sp"
-            android:paddingLeft="20dp"
-            android:background="@drawable/chat_right"
-            android:maxWidth="200dp"
-            android:layout_marginTop="5dp"
-            android:textColor="#ffffff" />
+            android:paddingBottom="@dimen/_4sdp"
+            android:paddingLeft="@dimen/_4sdp">
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/image_profile"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/photo_ico"
+                app:siBorderColor="#32325A"
+                app:siBorderWidth="1.5dp" />
 
 
+            <TextView
+                android:id="@+id/txt_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/chat_right"
+                android:maxWidth="@dimen/_180sdp"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/_18sdp" />
 
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:id="@+id/image_profile"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/photo_ico"
-            app:siBorderColor="#32325A"
-            app:siBorderWidth="1.5dp" />
-
-
+        </FrameLayout>
     </LinearLayout>
-
 </RelativeLayout>

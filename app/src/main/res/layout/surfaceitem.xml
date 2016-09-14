@@ -11,10 +11,10 @@
         android:weightSum="1">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/img_delete"
             style="@style/Material.Drawable.Ripple.Wave"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center|center_horizontal|center_vertical"
             android:padding="@dimen/_24sdp"
             android:src="@drawable/del"/>
@@ -42,15 +42,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/_8sdp"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingBottom="@dimen/_4sdp">
-        <!--What you want to show in SurfaceView-->
+        android:paddingBottom="@dimen/_4sdp"
+        android:paddingLeft="@dimen/_2sdp"
+        android:paddingTop="@dimen/_4sdp">
+        <!--What you want to show in Cart-->
         <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/_4sdp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/_4sdp">
 
 
             <com.rey.material.widget.CheckBox
@@ -63,33 +63,80 @@
                 android:padding="@dimen/_8sdp" />
 
 
-            <LinearLayout
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|end|center_vertical"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:alpha="5"
+                    android:padding="@dimen/_3sdp"
+                    android:rotation="90"
+                    android:src="@drawable/down_ico" />
+
+
+                <LinearLayout
                 android:id="@+id/linearlayout"
-                android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_weight="1"
                 android:background="@drawable/cart_bg"
-                android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:paddingLeft="@dimen/_5sdp">
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_10sdp">
 
 
-                <com.github.siyamed.shapeimageview.CircularImageView
+                    <com.github.siyamed.shapeimageview.CircularImageView
                     android:id="@+id/imgview"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_marginLeft="@dimen/_13sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
                     android:background="@drawable/photo_ico"
                     app:siBorderColor="@color/colorAccent"
                     app:siBorderWidth="0.5dp" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_8sdp"
                     android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1sdp">
+
+                        <com.rey.material.widget.TextView
+                            android:id="@+id/tv_pickup_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:gravity="left"
+                            android:text="Cart Id : "
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/_15sdp" />
+
+                        <com.rey.material.widget.TextView
+                            android:id="@+id/tv_pickup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:gravity="left"
+                            android:text=""
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/_11sdp" />
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -110,47 +157,18 @@
                             android:id="@+id/tv_size"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_22sdp"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/_23sdp"
                             android:gravity="left"
                             android:text="SMALL"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
                     </LinearLayout>
+
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/_1sdp"
-                        android:layout_height="wrap_content">
-
-                        <com.rey.material.widget.TextView
-                            android:id="@+id/tv_pickup_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/_8sdp"
-                            android:gravity="left"
-                            android:text="Pickup : "
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_15sdp" />
-
-                        <com.rey.material.widget.TextView
-                            android:id="@+id/tv_pickup"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="left"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:text="NO"
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_14sdp" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/_1sdp"
                         android:layout_height="wrap_content">
 
                         <com.rey.material.widget.TextView
@@ -169,28 +187,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/_16sdp"
                             android:gravity="left"
-                            android:layout_marginLeft="@dimen/_15sdp"
                             android:text="$ 4.99"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
 
-                        <com.rey.material.widget.TextView
-                            android:id="@+id/tv_op"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="left"
 
-                            android:text=""
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
 
 
                 </LinearLayout>
-            </LinearLayout>
+
+
+                </LinearLayout>
+
+            </FrameLayout>
 
 
         </LinearLayout>

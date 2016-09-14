@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#121323"
+        android:gravity="center|center_vertical|center_horizontal"
+        android:paddingBottom="@dimen/_15sdp"
+        android:paddingTop="@dimen/_15sdp">
+
+        <ImageView
+            android:id="@+id/nav_header_propic"
+            style="@style/Material.Drawable.Ripple.Wave.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/tick_ico" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ll1"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/tv_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Choose Pal"
+            android:textColor="#424242"
+            android:textSize="@dimen/_22sdp" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:id="@+id/lview"
+                android:layout_width="match_parent"
+
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginTop="@dimen/_5sdp"></ListView>
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/tv_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll1"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:text="Choose Pal"
+                android:textColor="#424242"
+                android:textSize="@dimen/_18sdp" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/_3sdp">
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/tv_add_pickup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll1"
+                android:layout_gravity="center_vertical|center"
+                android:gravity="center|center_vertical"
+                android:paddingLeft="1dp"
+                android:paddingRight="15dp"
+                android:text="Add to Pickup"
+                android:textColor="#121323"
+                android:textSize="@dimen/_18sdp" />
+
+            <com.rey.material.widget.CheckBox
+                android:id="@+id/checkbox_pickup"
+                style="@style/checkbox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/_3sdp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+
+            <com.rey.material.widget.Button
+                android:id="@+id/button_ok"
+                style="@style/Material.Drawable.Ripple.Wave.Light"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/login_reg_button"
+                android:text="Ok"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/button_yes"
+                    style="@style/Material.Drawable.Ripple.Wave.Light"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginLeft="@dimen/_25sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_reg_button"
+                    android:text="Yes"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/button_no"
+                    style="@style/Material.Drawable.Ripple.Wave.Light"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginLeft="@dimen/_30sdp"
+                    android:layout_marginRight="@dimen/_25sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_reg_button"
+                    android:text="No"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

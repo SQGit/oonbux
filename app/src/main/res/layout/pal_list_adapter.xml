@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/_8sdp"
         android:layout_marginRight="@dimen/_8sdp"
-        android:background="#606060"
+        android:background="@drawable/cart_bg"
         android:padding="@dimen/_4sdp">
 
         <com.github.siyamed.shapeimageview.CircularImageView
@@ -151,20 +151,20 @@
 
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:background="@drawable/login_reg_button"
         android:id="@+id/layout_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:padding="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_13sdp"
         android:layout_marginRight="@dimen/_13sdp"
         android:layout_marginTop="@dimen/_25sdp"
-        android:layout_marginBottom="@dimen/_13sdp"
-        android:layout_height="wrap_content">
+        android:background="@drawable/login_reg_button"
+        android:padding="@dimen/_8sdp">
 
         <com.rey.material.widget.TextView
 
-            android:layout_width="wrap_content"
             android:id="@+id/tv_request"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:gravity="center"
@@ -187,10 +187,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearlayout"
         android:layout_gravity="center"
-        android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="@dimen/_18sdp"
         android:layout_marginRight="@dimen/_18sdp"
+        android:layout_marginTop="3dp"
         android:background="@drawable/backo"
         android:padding="1dp">
 

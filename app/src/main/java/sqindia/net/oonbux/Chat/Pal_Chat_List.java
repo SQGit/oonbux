@@ -1,10 +1,10 @@
 package sqindia.net.oonbux.Chat;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +12,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
+
+import com.rey.material.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,12 +24,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import sqindia.net.oonbux.Adapter.Adapter_PalLists;
-import sqindia.net.oonbux.config.Config;
-import sqindia.net.oonbux.Activity.DashBoardActivity;
+import sqindia.net.oonbux.Activity.Dashboard;
+import sqindia.net.oonbux.Dialog.Dialog_Anim_Loading;
 import sqindia.net.oonbux.Dialog.Dialog_Msg;
-import sqindia.net.oonbux.config.HttpUtils;
 import sqindia.net.oonbux.R;
+import sqindia.net.oonbux.config.Config;
+import sqindia.net.oonbux.config.HttpUtils;
 
 
 public class Pal_Chat_List extends Activity {
@@ -36,7 +39,12 @@ public class Pal_Chat_List extends Activity {
     HashMap<String, String> map ;
     ArrayList<HashMap<String, String>> pal_datas;
     com.rey.material.widget.LinearLayout lt_back;
-    Dialog loading_dialog;
+    // Dialog loading_dialog;
+    Dialog_Anim_Loading dialog_loading;
+
+    TextView tv_header;
+    Typeface tf;
+    String photo_path;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,13 @@ public class Pal_Chat_List extends Activity {
 
         lv_mypals = (ListView) findViewById(R.id.lview);
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
+        tv_header = (TextView) findViewById(R.id.tv_hd_txt);
+
+        photo_path = sharedPreferences.getString("photo_path", "");
+
+        tf = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
+
+        tv_header.setTypeface(tf);
 
         pal_datas = new ArrayList<>();
         //map = new HashMap<String, String>();
@@ -62,8 +77,19 @@ public class Pal_Chat_List extends Activity {
         lt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
-                startActivity(inte);
+                Intent inte = new Intent(getApplicationContext(), Dashboard.class);
+
+                ActivityOptions options = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    options = ActivityOptions.makeScaleUpAnimation(lt_back, 0,
+                            0, lt_back.getWidth(),
+                            lt_back.getHeight());
+                    startActivity(inte, options.toBundle());
+                } else {
+                    inte.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(inte);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                }
                 finish();
             }
         });
@@ -79,12 +105,16 @@ public class Pal_Chat_List extends Activity {
     class getPalLists extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            loading_dialog = new Dialog(Pal_Chat_List.this);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+
+            dialog_loading = new Dialog_Anim_Loading(Pal_Chat_List.this);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount = 1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         }
 
         protected String doInBackground(String... params) {
@@ -122,7 +152,7 @@ public class Pal_Chat_List extends Activity {
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
 
 
 
@@ -175,9 +205,11 @@ public class Pal_Chat_List extends Activity {
                             Log.e("tag",""+pal_datas.get(i));
 
                         }
-                        Adapter_PalLists staff_adapter = new Adapter_PalLists(Pal_Chat_List.this,getApplicationContext(), pal_datas, count,4);
+                        //  Adapter_PalLists staff_adapter = new Adapter_PalLists(Pal_Chat_List.this,getApplicationContext(), pal_datas, count,4);
 
-                        lv_mypals.setAdapter(staff_adapter);
+                        Pal_Chat_Adapter adapter = new Pal_Chat_Adapter(Pal_Chat_List.this, pal_datas, count);
+
+                        lv_mypals.setAdapter(adapter);
                     } else {
 
                     }

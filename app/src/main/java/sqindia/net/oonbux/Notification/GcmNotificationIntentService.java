@@ -25,9 +25,9 @@ import org.json.JSONObject;
 import java.util.List;
 
 import sqindia.net.oonbux.Chat.Pal_Chat;
-import sqindia.net.oonbux.config.DbC;
 import sqindia.net.oonbux.Pal.PalAccept;
 import sqindia.net.oonbux.R;
+import sqindia.net.oonbux.config.DbC;
 
 /**
  * Created by Salman on 6/16/2016.
@@ -36,17 +36,11 @@ public class GcmNotificationIntentService extends IntentService {
     // Sets an ID for the notification, so it can be updated
     public static final int notifyID = 9001;
     public static final String TAG = "GCMNotificationIntentService";
+    public String ct_from_id, ct_to_id, ct_message, ct_time, ct_message_id, receiver;
     NotificationCompat.Builder builder;
-
     String notifi_body, notifi_title, gcm_data, from;
     GcmListenerService gcmget;
     String sts, message, simage, str_oonbux_id,pal_photo;
-
-
-    public String ct_from_id,ct_to_id,ct_message,ct_time,ct_message_id,receiver;
-
-
-
     DbC dbclass;
     Context context = this;
 
@@ -282,7 +276,7 @@ public class GcmNotificationIntentService extends IntentService {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(notifi_title)
-                .setContentText("Pal Request from - " + from)
+                .setContentText("Pal Request from - " + simage)
                 .setSmallIcon(R.mipmap.launcher);
         mNotifyBuilder.setContentIntent(resultPendingIntent);
         int defaults = 0;

@@ -17,11 +17,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +38,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import sqindia.net.oonbux.R;
 import sqindia.net.oonbux.config.Config;
 import sqindia.net.oonbux.config.DbC;
 import sqindia.net.oonbux.config.HttpUtils;
-import sqindia.net.oonbux.R;
 
 
 public class Pal_Chat extends Activity {
@@ -67,6 +71,8 @@ public class Pal_Chat extends Activity {
     SharedPreferences sharedPreferences;
     ChatMessage chatMessage;
     String str_sessionid, my_image, user_image;
+    String photo_path;
+    ProgressBar bar;
     private SQLiteDatabase db;
     private List<ChatMessage> chatMessages;
     BroadcastReceiver appendChatScreenMsgReceiver = new BroadcastReceiver() {
@@ -96,7 +102,7 @@ public class Pal_Chat extends Activity {
             sender = 1;
 
             ct_to_id = sharedPreferences.getString("pal_oonbuxid", "");
-
+            photo_path = sharedPreferences.getString("photo_path", "");
 
             receiver = ct_from_id;
 
@@ -108,6 +114,13 @@ public class Pal_Chat extends Activity {
         }
     };
 
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +136,8 @@ public class Pal_Chat extends Activity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_sessionid = sharedPreferences.getString("sessionid", "");
 
+        photo_path = sharedPreferences.getString("photo_path", "");
+
 
         lt_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         lt_setting = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_settings);
@@ -134,6 +149,12 @@ public class Pal_Chat extends Activity {
         // txt = (TextView) findViewById(R.id.txt);
 
         lview = (ListView) findViewById(R.id.lview);
+        bar = (ProgressBar) findViewById(R.id.progress);
+
+        bar.setVisibility(View.GONE);
+
+
+        //bar.setProgressDrawable(getResources().getDrawable(R.color.white));
 
         tv_header.setTypeface(tf1);
         et_message.setTypeface(tf);
@@ -223,9 +244,10 @@ public class Pal_Chat extends Activity {
         lt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getApplicationContext(), Pal_Chat_List.class);
+                /*Intent inte = new Intent(getApplicationContext(), Pal_Chat_List.class);
                 startActivity(inte);
-                finish();
+                finish();*/
+                onBackPressed();
             }
         });
 
@@ -304,14 +326,22 @@ public class Pal_Chat extends Activity {
                 if (et_message.getText().toString().trim().equals("")) {
                     Toast.makeText(Pal_Chat.this, "Please input some text...", Toast.LENGTH_SHORT).show();
                 } else {
+
+
+                    InputMethodManager inputManager = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.RESULT_HIDDEN);
+
                     new Send_Message().execute();
                 }
             }
         });
 
 
-    }
+        setupUI(findViewById(R.id.top));
 
+    }
 
     @Override
     protected void onStop() {
@@ -326,7 +356,6 @@ public class Pal_Chat extends Activity {
         db.execSQL("CREATE TABLE IF NOT EXISTS chat(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, sender VARCHAR, from_id VARCHAR, to_id VARCHAR, message VARCHAR, time VARCHAR, message_id VARCHAR, receiver VARCHAR );");
 
     }
-
 
     public void insert_data() {
 
@@ -343,7 +372,6 @@ public class Pal_Chat extends Activity {
         get_data();
 
     }
-
 
     public void get_data() {
         Log.e("tag", "get_data");
@@ -385,7 +413,7 @@ public class Pal_Chat extends Activity {
                         chatMessage.setMessage_id(msg_id);
                         chatMessage.setMessegeBy("me");
                         chat_list.add(chatMessage);
-                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_OUTGOING, msg_id, my_image, pal_photo);
+                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_OUTGOING, msg_id, photo_path, pal_photo);
 
                     } else {
 
@@ -399,7 +427,7 @@ public class Pal_Chat extends Activity {
                         chatMessage.setMessage_id(msg_id);
                         chatMessage.setMessegeBy("user");
                         chat_list.add(chatMessage);
-                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_INCOMING, msg_id, user_image, pal_photo);
+                        messageAdapter.addMessage(chatMessage, MsgAdminAdapter.DIRECTION_INCOMING, msg_id, photo_path, pal_photo);
                         //  Log.e("tag", "get" + get_msg.size()+"\t"+ct_message_id);
                     }
                 } while (c.moveToNext());
@@ -413,6 +441,23 @@ public class Pal_Chat extends Activity {
 
     }
 
+    public void setupUI(View view) {
+
+        if (!(view instanceof com.rey.material.widget.EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(Pal_Chat.this);
+                    return false;
+                }
+            });
+        }
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -491,6 +536,11 @@ public class Pal_Chat extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
 
+            btn_send.setEnabled(false);
+
+            //bar.setVisibility(View.VISIBLE);
+
+
             /*sweetDialog = new SweetAlertDialog(Pal_Chat.this, SweetAlertDialog.PROGRESS_TYPE);
             sweetDialog.getProgressHelper().setBarColor(Color.parseColor("#FFE64A19"));
             sweetDialog.setTitleText("Loading");
@@ -527,7 +577,18 @@ public class Pal_Chat extends Activity {
             Log.e("tag", "<-----rerseres---->" + s);
             super.onPostExecute(s);
           //  sweetDialog.dismiss();
+            btn_send.setEnabled(true);
+            et_message.setText("");
 
+            //  bar.setVisibility(View.GONE);
+
+            /*getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            if(imm != null){
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }*/
 
             try {
                 JSONObject jo = new JSONObject(s);
@@ -545,7 +606,7 @@ public class Pal_Chat extends Activity {
                     ct_time = jo.getString("sent_utc_time");
                     sender = 0;
                     insert_data();
-                    et_message.setText("");
+
 
                 } else if (status.equals(null)) {
                     Toast.makeText(getApplicationContext(), "network not available", Toast.LENGTH_LONG).show();

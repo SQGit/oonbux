@@ -282,7 +282,7 @@ public class GcmNotificationIntentService extends IntentService {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(notifi_title)
-                .setContentText("Pal Request from - " + from)
+                .setContentText("Pal Request from - " + simage)
                 .setSmallIcon(R.mipmap.launcher);
         mNotifyBuilder.setContentIntent(resultPendingIntent);
         int defaults = 0;

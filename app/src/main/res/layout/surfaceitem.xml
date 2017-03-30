@@ -42,10 +42,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/_8sdp"
+        android:paddingLeft="@dimen/_2sdp"
         android:paddingTop="@dimen/_4sdp"
         android:paddingBottom="@dimen/_4sdp">
-        <!--What you want to show in SurfaceView-->
+        <!--What you want to show in Cart-->
         <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,9 +63,28 @@
                 android:padding="@dimen/_8sdp" />
 
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/down_ico"
+                    android:rotation="90"
+                    android:padding="@dimen/_3sdp"
+                    android:alpha="5"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_gravity="right|end|center_vertical"/>
+
+
+
+
             <LinearLayout
                 android:id="@+id/linearlayout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_weight="1"
@@ -75,21 +94,54 @@
                 android:paddingLeft="@dimen/_5sdp">
 
 
+
+
                 <com.github.siyamed.shapeimageview.CircularImageView
                     android:id="@+id/imgview"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_marginLeft="@dimen/_13sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
                     android:background="@drawable/photo_ico"
                     app:siBorderColor="@color/colorAccent"
                     app:siBorderWidth="0.5dp" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_8sdp"
                     android:orientation="vertical">
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:layout_height="wrap_content">
+
+                        <com.rey.material.widget.TextView
+                            android:id="@+id/tv_pickup_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:gravity="left"
+                            android:text="Cart Id : "
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/_15sdp" />
+
+                        <com.rey.material.widget.TextView
+                            android:id="@+id/tv_pickup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="left"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:text=""
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/_11sdp" />
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -110,47 +162,18 @@
                             android:id="@+id/tv_size"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_22sdp"
+                            android:layout_marginLeft="@dimen/_23sdp"
                             android:layout_gravity="center_vertical"
                             android:gravity="left"
                             android:text="SMALL"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
                     </LinearLayout>
+
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/_1sdp"
-                        android:layout_height="wrap_content">
-
-                        <com.rey.material.widget.TextView
-                            android:id="@+id/tv_pickup_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/_8sdp"
-                            android:gravity="left"
-                            android:text="Pickup : "
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_15sdp" />
-
-                        <com.rey.material.widget.TextView
-                            android:id="@+id/tv_pickup"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="left"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:text="NO"
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_14sdp" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/_1sdp"
                         android:layout_height="wrap_content">
 
                         <com.rey.material.widget.TextView
@@ -170,27 +193,24 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:gravity="left"
-                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_16sdp"
                             android:text="$ 4.99"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
 
-                        <com.rey.material.widget.TextView
-                            android:id="@+id/tv_op"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="left"
 
-                            android:text=""
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
 
 
                 </LinearLayout>
+
+
+
+
             </LinearLayout>
+
+            </FrameLayout>
 
 
         </LinearLayout>

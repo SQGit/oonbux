@@ -1,6 +1,6 @@
 package sqindia.net.oonbux.Profile;
 
-import android.app.Dialog;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,12 +19,14 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -41,8 +43,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
+import sqindia.net.oonbux.Activity.Dashboard;
+import sqindia.net.oonbux.Dialog.Dialog_Anim_Loading;
 import sqindia.net.oonbux.config.Config;
-import sqindia.net.oonbux.Activity.DashBoardActivity;
 import sqindia.net.oonbux.Dialog.DialogYesNo;
 import sqindia.net.oonbux.Dialog.Dialog_Msg;
 import sqindia.net.oonbux.Dialog.Dialog_new;
@@ -52,7 +55,7 @@ import sqindia.net.oonbux.R;
 
 public class ProfileDashboard extends FragmentActivity implements OnMapReadyCallback {
 
-    LinearLayout phy_layout, prof_layout;
+    LinearLayout phy_layout, prof_layout,pers_layout;
     ImageButton btn_back;
     TextView tv_oonbuxid_txt, tv_oonbux_id, tv_location, tv_phone, tv_fname, tv_lname, tv_phy_adr, tv_prof, tv_pers, tv_ver;
     com.rey.material.widget.TextView tv_header;
@@ -76,7 +79,9 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
     Typeface tf,tf1;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    Dialog loading_dialog;
+    //Dialog loading_dialog;
+
+    Dialog_Anim_Loading dialog_loading;
 
 
     @Override
@@ -84,8 +89,24 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         if ((get_profile_sts.equals(""))) {
             super.onBackPressed();
         } else {
-            Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
-            startActivity(inte);
+            Intent inte = new Intent(getApplicationContext(), Dashboard.class);
+
+
+            ActivityOptions options = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                options = ActivityOptions.makeScaleUpAnimation(lt_back, 0,
+                        0, lt_back.getWidth(),
+                        lt_back.getHeight());
+                startActivity(inte, options.toBundle());
+            } else {
+                inte.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(inte);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
+            finish();
+
+
+
         }
     }
 
@@ -98,6 +119,10 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         tf1 = Typeface.createFromAsset(getAssets(), "fonts/nexa.otf");
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
+        editor = sharedPreferences.edit();
+
+
+
         get_profile_sts = sharedPreferences.getString("profile", "");
         str_fname = sharedPreferences.getString("fname", "");
         str_lname = sharedPreferences.getString("lname", "");
@@ -118,6 +143,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
 
         phy_layout = (LinearLayout) findViewById(R.id.pda_layout);
         prof_layout = (LinearLayout) findViewById(R.id.pi_layout);
+        pers_layout = (LinearLayout) findViewById(R.id.pers_layout);
         btn_back = (ImageButton) findViewById(R.id.btn_back);
         tv_header = (com.rey.material.widget.TextView) findViewById(R.id.tv_hd_txt);
         tv_oonbuxid_txt = (TextView) findViewById(R.id.textview_id_txt);
@@ -158,7 +184,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         tv_fname.setText(str_fname);
         tv_lname.setText(str_lname);
 
-        getLatlongtoImage();
+       // getLatlongtoImage();
 
 
         Log.e("tag",""+sharedPreferences.getString("photo_path", ""));
@@ -201,7 +227,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
             public void onClick(View v) {
 
 
-                DialogYesNo dialog_logout = new DialogYesNo(ProfileDashboard.this, "Do You Want to Logout ?",0);
+                DialogYesNo dialog_logout = new DialogYesNo(ProfileDashboard.this, "Do You Want to Logout ?",0,str_session_id);
                 dialog_logout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog_logout.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                 dialog_logout.show();
@@ -215,8 +241,21 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
                 if ((get_profile_sts.equals(""))) {
                     onBackPressed();
                 } else {
-                    Intent inte = new Intent(getApplicationContext(), DashBoardActivity.class);
-                    startActivity(inte);
+                    Intent inte = new Intent(getApplicationContext(), Dashboard.class);
+
+
+                    ActivityOptions options = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        options = ActivityOptions.makeScaleUpAnimation(lt_back, 0,
+                                0, lt_back.getWidth(),
+                                lt_back.getHeight());
+                        startActivity(inte, options.toBundle());
+                    } else {
+                        inte.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(inte);
+                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    }
+                    finish();
                 }
             }
         });
@@ -224,8 +263,28 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         phy_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                editor.putString("from_profile", "yes");
+                editor.commit();
+
+
+
                 Intent goPhy = new Intent(getApplicationContext(), ProfilePhysicalDeliveryAddress.class);
-                startActivity(goPhy);
+
+                ActivityOptions options = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    options = ActivityOptions.makeScaleUpAnimation(phy_layout, 0,
+                            0, phy_layout.getWidth(),
+                            phy_layout.getHeight());
+                    startActivity(goPhy, options.toBundle());
+                } else {
+                    goPhy.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(goPhy);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                }
+               // finish();
+
             }
         });
 
@@ -233,10 +292,52 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         prof_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+                editor.putString("from_profile", "yes");
+                editor.commit();
+
+
+
                 Intent goPhy = new Intent(getApplicationContext(), ProfileInfo.class);
-                startActivity(goPhy);
+
+                ActivityOptions options = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    options = ActivityOptions.makeScaleUpAnimation(prof_layout, 0,
+                            0, prof_layout.getWidth(),
+                            prof_layout.getHeight());
+                    startActivity(goPhy, options.toBundle());
+                } else {
+                    goPhy.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(goPhy);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                }
+               // finish();
+
             }
         });
+
+
+        pers_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent goSet = new Intent(getApplicationContext(), Personal_Preferences.class);
+
+                ActivityOptions options = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    options = ActivityOptions.makeScaleUpAnimation(pers_layout, 0,
+                            0, pers_layout.getWidth(),
+                            pers_layout.getHeight());
+                    startActivity(goSet, options.toBundle());
+                } else {
+                    goSet.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(goSet);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                }
+            }
+        });
+
 
         btn_finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,7 +397,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        getLatlongtoImage();
+        //getLatlongtoImage();
         // Add a marker in Sydney, Australia, and move the camera.
         LatLng sydney = new LatLng(lat, lon);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -334,12 +435,16 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         protected void onPreExecute() {
             super.onPreExecute();
 
-            loading_dialog = new Dialog(ProfileDashboard.this);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+
+            dialog_loading = new Dialog_Anim_Loading(ProfileDashboard.this);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount=1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
 
         }
@@ -373,7 +478,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
             Log.d("tag", "<-----rerseres---->" + s);
             super.onPostExecute(s);
 
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
 
             try {
                 JSONObject jo = new JSONObject(s);
@@ -433,12 +538,15 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         protected void onPreExecute() {
             super.onPreExecute();
 
-            loading_dialog = new Dialog(ProfileDashboard.this);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+            dialog_loading = new Dialog_Anim_Loading(ProfileDashboard.this);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount=1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
         }
 
@@ -476,8 +584,9 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
                 jsonObject.accumulate("int_phone", sharedPreferences.getString("int_phone", ""));
                 jsonObject.accumulate("int_delivery_note", sharedPreferences.getString("int_note", ""));
                 jsonObject.accumulate("int_addr_country", sharedPreferences.getString("int_country", ""));
+                jsonObject.accumulate("int_addr_country", sharedPreferences.getString("int_country", ""));
 
-                jsonObject.accumulate("default_loc", sharedPreferences.getString("default_adr", ""));
+                jsonObject.accumulate("user_privacy","PUBLIC");
 
 
                 // 4. convert JSONObject to JSON to String
@@ -495,7 +604,8 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
         protected void onPostExecute(String s) {
             Log.d("tag", "<-----rerseres---->" + s);
             super.onPostExecute(s);
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
+
 
             if(s!=null) {
                 try {
@@ -512,6 +622,7 @@ public class ProfileDashboard extends FragmentActivity implements OnMapReadyCall
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ProfileDashboard.this);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("profile", "SUCCESS");
+                        editor.putString("visible", "PUBLIC");
                         editor.commit();
                     } else if (status.equals(null)) {
                         Dialog_new cdd = new Dialog_new(ProfileDashboard.this, "Profile not uploaded", 4);

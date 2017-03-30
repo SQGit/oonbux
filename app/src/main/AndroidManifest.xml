@@ -63,7 +63,7 @@
 
 
         <activity
-            android:name=".Activity.SplashActivity"
+            android:name=".Activity.Splash"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -74,18 +74,19 @@
         </activity>
 
         <activity
-            android:name=".Activity.RegisterClassNew" android:screenOrientation="sensorPortrait"
+            android:name=".Activity.Register"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
 
         <activity
-            android:name=".Activity.NewLoginActivity"
+            android:name=".Activity.Login"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
 
 
-        <activity android:name=".Activity.DashBoardActivity" />
+        <activity android:name=".Activity.Dashboard" />
 
-        <activity android:name=".Activity.HowItWorks" />
+        <activity android:name=".Activity.HowitWorks" />
 
 
         <activity
@@ -97,21 +98,35 @@
 
         <activity android:name=".Activity.ChooseAddress" />
 
-        <activity android:name=".Profile.ProfileInfo" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".Profile.ProfileDashboard" android:screenOrientation="sensorPortrait"/>
-        <activity android:name=".Profile.ProfilePhysicalDeliveryAddress" android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".Profile.ProfileInfo"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".Profile.ProfileDashboard"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Profile.ProfilePhysicalDeliveryAddress"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".Profile.Personal_Preferences"
+            android:screenOrientation="sensorPortrait"/>
 
 
-        <activity android:name=".SurfaceView" />
+        <activity android:name=".Cart" />
 
         <activity android:name=".Activity.ManageAddress" />
 
-        <activity android:name=".Pal.PalAccept" android:screenOrientation="sensorPortrait"/>
+        <activity
+            android:name=".Pal.PalAccept"
+            android:screenOrientation="sensorPortrait" />
 
         <activity android:name=".Pal.MyPalLists" />
         <activity android:name=".Chat.Pal_Chat_List" />
-        <activity android:name=".Chat.Pal_Chat" />
-        <activity android:name=".Activity.ChoosePal_1" />
+        <activity android:name=".Chat.Pal_Chat" android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
+
 
 
         <meta-data

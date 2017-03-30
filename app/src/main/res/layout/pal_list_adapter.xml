@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/_8sdp"
         android:layout_marginRight="@dimen/_8sdp"
-        android:background="#606060"
+        android:background="@drawable/cart_bg"
         android:padding="@dimen/_4sdp">
 
         <com.github.siyamed.shapeimageview.CircularImageView

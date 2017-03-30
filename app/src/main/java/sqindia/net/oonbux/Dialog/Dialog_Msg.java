@@ -50,7 +50,7 @@ public class Dialog_Msg extends Dialog {
             @Override
             public void onClick(View v) {
                 // hide();
-                //c.finish();
+                c.finish();
                 dismiss();
 
             }

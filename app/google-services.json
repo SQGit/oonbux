@@ -1,20 +1,35 @@
 {
   "project_info": {
-    "project_number": "600977208793",
-    "project_id": "oonbux5353"
+    "project_number": "385973506509",
+    "firebase_url": "https://oonbux-b0253.firebaseio.com",
+    "project_id": "oonbux-b0253",
+    "storage_bucket": "oonbux-b0253.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:600977208793:android:94c302fad6707305",
+        "mobilesdk_app_id": "1:385973506509:android:94c302fad6707305",
         "android_client_info": {
           "package_name": "sqindia.net.oonbux"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "385973506509-sji9a6tn6rdtq1qipttfoo6igbv1onck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sqindia.net.oonbux",
+            "certificate_hash": "3278785C85A1C5E8D34E976AE003226DFD05D952"
+          }
+        },
+        {
+          "client_id": "385973506509-lvq7c80bilfgnuk915i60krl30vuu098.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyA7phpfj1m_MTmWc_k_KzJVd1NumbP_a-Y"
+          "current_key": "AIzaSyABfmnWS1djXuPH8I9V23GNCE8pFQI3dPM"
         }
       ],
       "services": {
@@ -22,11 +37,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385973506509-lvq7c80bilfgnuk915i60krl30vuu098.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

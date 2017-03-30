@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/top"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
 
 
     <LinearLayout
@@ -69,15 +68,13 @@
     </LinearLayout>
 
 
-
-
     <ListView
         android:id="@+id/lview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/layout_send"
-        android:background="@drawable/bg_dash"
         android:layout_below="@+id/ll1"
+        android:background="@drawable/bg_dash"
         android:divider="@android:color/transparent">
 
     </ListView>
@@ -110,16 +107,29 @@
             android:textColorHint="#FFFFFF"
             android:textSize="@dimen/_16sdp" />
 
-
-
-        <com.rey.material.widget.ImageButton
-            android:id="@+id/btn_send"
-            style="@style/Material.Drawable.Ripple"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/circl_bg"
-            android:padding="@dimen/_13sdp"
-            android:src="@drawable/arrow_ico" />
+            android:layout_height="wrap_content">
+
+
+            <com.rey.material.widget.ImageButton
+                android:id="@+id/btn_send"
+                style="@style/Material.Drawable.Ripple"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/circl_bg"
+                android:padding="@dimen/_13sdp"
+                android:src="@drawable/arrow_ico" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                />
+
+        </FrameLayout>
+
 
     </LinearLayout>
 

@@ -110,17 +110,21 @@
         <com.rey.material.widget.Button
             android:id="@+id/button_submit"
             style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_gravity="center"
+            android:gravity="center"
             android:background="@drawable/login_reg_button"
-            android:drawablePadding="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_16sdp"
             android:drawableRight="@drawable/arrow_ico"
-            android:paddingLeft="@dimen/_30sdp"
-            android:paddingRight="@dimen/_20sdp"
+            android:inputType="textCapCharacters"
             android:text="Submit"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/_18sdp" />
+            android:textSize="@dimen/_18sdp"
+            android:textColor="#FFFFFF" />
+
+
+
 
         <LinearLayout
             android:id="@+id/linear_login_text"

@@ -1,6 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#070b23">
+
+        <FrameLayout
+            android:id="@+id/bck_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/tv_hd_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical|center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Settings"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/layout_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingBottom="@dimen/_12sdp"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingRight="@dimen/_40sdp"
+                android:paddingTop="@dimen/_12sdp"
+                android:src="@drawable/back_ico" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_dash"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_20sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_20sdp">
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/tv_prof_visi_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile Visibility"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_18sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp">
+
+
+                <Switch
+                    android:id="@+id/sw_prof_public"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Public"
+                    android:checked="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/_17sdp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp">
+
+
+                <Switch
+                    android:id="@+id/sw_prof_private"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:text="Private"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/_17sdp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="#383a49" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_20sdp">
+
+
+            <Switch
+                android:id="@+id/sw_gcm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Gcm notifications"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_18sdp" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="#383a49" />
+
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.rey.material.widget.TextView;
 
-import sqindia.net.oonbux.Activity.DashBoardActivity;
+import sqindia.net.oonbux.Activity.Dashboard;
 import sqindia.net.oonbux.R;
 
 /**
@@ -47,7 +47,7 @@ public class Dialog_Palreq extends Dialog {
         imgok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(c, DashBoardActivity.class);
+                Intent inte = new Intent(c, Dashboard.class);
                 c.startActivity(inte);
                 dismiss();
                 c.finish();

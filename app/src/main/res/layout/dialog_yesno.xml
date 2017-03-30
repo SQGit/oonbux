@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/_250sdp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,8 +11,8 @@
         android:layout_alignParentTop="true"
         android:background="#121323"
         android:gravity="center|center_vertical|center_horizontal"
-        android:paddingBottom="25dp"
-        android:paddingTop="25dp">
+        android:paddingBottom="@dimen/_15sdp"
+        android:paddingTop="@dimen/_15sdp">
 
         <ImageView
             android:id="@+id/nav_header_propic"
@@ -30,7 +30,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingBottom="20dp">
+        android:paddingBottom="@dimen/_5sdp">
 
         <com.rey.material.widget.TextView
             android:id="@+id/tv_cont"
@@ -38,13 +38,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll1"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
             android:text="Do you want to Logout App ?"
             android:textColor="#424242"
-            android:textSize="22sp" />
+            android:textSize="@dimen/_20sdp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,9 +62,9 @@
                 android:background="@drawable/login_reg_button"
                 android:layout_weight="1"
                 android:text="Yes"
-                android:layout_margin="15dp"
+                android:layout_margin="@dimen/_5sdp"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_18sdp" />
 
             <com.rey.material.widget.Button
                 android:id="@+id/button_no"
@@ -74,9 +74,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_reg_button"
                 android:text="No"
-                android:layout_margin="15dp"
+                android:layout_margin="@dimen/_5sdp"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_18sdp" />
 
         </LinearLayout>
     </LinearLayout>

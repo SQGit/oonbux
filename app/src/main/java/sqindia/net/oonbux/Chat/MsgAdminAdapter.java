@@ -104,15 +104,13 @@ public class MsgAdminAdapter extends BaseAdapter {
 
         if (convertView == null) {
             int res = 0;
-            if (direction == DIRECTION_INCOMING) {
-                res = R.layout.item_chat_right_admin;
-
-
-
-            } else if (direction == DIRECTION_OUTGOING) {
+            if (direction == DIRECTION_OUTGOING) {
                 res = R.layout.item_chat_left_admin;
+            } else if (direction == DIRECTION_INCOMING) {
+                res = R.layout.item_chat_right_admin;
             }
             convertView = layoutInflater.inflate(res, viewGroup, false);
+            my_img = sharedPreferences.getString("photo_path", "");
         }
         final ChatMessage message = messages.get(i).first;
 ///        final ChatMessage messageids = message_id.get(i).first;
@@ -122,7 +120,9 @@ public class MsgAdminAdapter extends BaseAdapter {
 
         ImageView user_image = (ImageView) convertView.findViewById(R.id.image_profile);
 
-        Log.e("tag",""+my_photo+"\t"+pal_photo);
+        Log.e("tag","my_photo"+my_photo);
+
+        Log.e("tag","pal_photo"+pal_photo);
 
 
 
@@ -136,7 +136,7 @@ public class MsgAdminAdapter extends BaseAdapter {
 
         } else if (direction == DIRECTION_OUTGOING) {
             Picasso.with(context)
-                    .load(my_img)
+                    .load(my_photo)
                     .fit()
                     .into(user_image);
         }

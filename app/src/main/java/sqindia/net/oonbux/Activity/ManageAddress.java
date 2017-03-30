@@ -1,7 +1,6 @@
 package sqindia.net.oonbux.Activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -13,9 +12,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.rey.material.widget.TextView;
 
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import sqindia.net.oonbux.Dialog.Dialog_Anim_Loading;
 import sqindia.net.oonbux.Profile.ProfilePhysicalDeliveryAddress;
 import sqindia.net.oonbux.config.Config;
 import sqindia.net.oonbux.Dialog.Dialog_Add_Address;
@@ -34,7 +34,7 @@ import sqindia.net.oonbux.Dialog.Dialog_Msg;
 import sqindia.net.oonbux.Dialog.Dialog_new;
 import sqindia.net.oonbux.config.HttpUtils;
 import sqindia.net.oonbux.R;
-import sqindia.net.oonbux.listview_adapter;
+import sqindia.net.oonbux.Adapter.listview_adapter;
 
 
 /**
@@ -53,7 +53,9 @@ public class ManageAddress extends Activity {
     TextView tv_header;
     HashMap<String, List<String>> list_datas = new HashMap<String, List<String>>();
     ArrayList<String> daa = new ArrayList<>();
-    Dialog loading_dialog;
+   // Dialog loading_dialog;
+
+    Dialog_Anim_Loading dialog_loading;
 
 
     HashMap<String, List<String>> list_datas1 = new HashMap<String, List<String>>();
@@ -102,7 +104,6 @@ public class ManageAddress extends Activity {
 
 
 
-        // expandableListDetail = exp_adr1.getData();
 
 
         if (!Config.isNetworkAvailable(ManageAddress.this)) {
@@ -120,103 +121,23 @@ public class ManageAddress extends Activity {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    /*    expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new listview_adapter(this, expandableListTitle, expandableListDetail);
-        elv_addresList.setAdapter(expandableListAdapter);*/
-
-
-   /*     elv_addresList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Log.e("tag", "itemclick");
-
-                Button b = (Button) view.findViewById(R.id.open);
-
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.d("tag", "insidebutt");
-                        elv_addresList.expandGroup(0);
-                    }
-                });
-            }
-        });
-
-
-        elv_addresList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Expanded.",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        elv_addresList.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Collapsed.",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        elv_addresList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        expandableListTitle.get(groupPosition)
-                                + " -> "
-                                + expandableListDetail.get(
-                                expandableListTitle.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT
-                ).show();
-                return false;
-            }
-        });
-
-
-        elv_addresList.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-
-                Log.e("tag", "" + "longpres" + elv_addresList.getExpandableListPosition(0));
-                return false;
-            }
-        });*/
-
-
     }
 
 
     class getAddress extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            loading_dialog = new Dialog(ManageAddress.this);
-            loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loading_dialog.setContentView(R.layout.dialog_loading);
-            loading_dialog.setCancelable(false);
-            loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loading_dialog.show();
+
+
+            dialog_loading = new Dialog_Anim_Loading(ManageAddress.this);
+            dialog_loading.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialog_loading.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog_loading.setCancelable(false);
+            dialog_loading.show();
+            WindowManager.LayoutParams lp = dialog_loading.getWindow().getAttributes();
+            lp.dimAmount=1.80f;
+            dialog_loading.getWindow().setAttributes(lp);
+            dialog_loading.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         }
 
         protected String doInBackground(String... params) {
@@ -244,6 +165,7 @@ public class ManageAddress extends Activity {
             } catch (Exception e) {
                 Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
+                dialog_loading.dismiss();
             }
             return jsonStr;
 
@@ -253,7 +175,7 @@ public class ManageAddress extends Activity {
         protected void onPostExecute(String jsonStr) {
             Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
-            loading_dialog.dismiss();
+            dialog_loading.dismiss();
 
 
             try {
@@ -321,10 +243,7 @@ public class ManageAddress extends Activity {
 
                         list_datas1.put(address_zip + " - " + address_country, address_headers);
 
-
-
                     }
-
                     }
                     else {
 
@@ -356,6 +275,10 @@ public class ManageAddress extends Activity {
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+
+                Dialog_Msg dialog_fail = new Dialog_Msg(ManageAddress.this, "Try Again Later");
+                dialog_fail.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog_fail.show();
             }
 
         }

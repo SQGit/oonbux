@@ -11,17 +11,17 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/img_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/_20sdp"
-            android:id="@+id/img_back"
-            android:paddingRight="@dimen/_20sdp"
-            android:paddingTop="@dimen/_20sdp"
-            android:paddingBottom="@dimen/_20sdp"
             android:layout_gravity="left|center_vertical"
             android:layout_marginRight="@dimen/_10sdp"
-            android:src="@drawable/arrow"
-            android:rotation="180" />
+            android:paddingBottom="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingTop="@dimen/_20sdp"
+            android:rotation="180"
+            android:src="@drawable/arrow" />
 
 
         <com.rey.material.widget.TextView

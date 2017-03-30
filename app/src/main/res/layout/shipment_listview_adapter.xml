@@ -80,10 +80,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:checked="false"
-                        android:textSize="@dimen/_13sdp"
                         android:drawablePadding="@dimen/_8sdp"
                         android:gravity="center_vertical"
-                        android:text="Small" />
+                        android:text="Small"
+                        android:textSize="@dimen/_13sdp" />
 
                     <com.rey.material.widget.CheckBox
                         android:id="@+id/cb_medium"
@@ -91,10 +91,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:textSize="@dimen/_13sdp"
                         android:drawablePadding="@dimen/_8sdp"
                         android:gravity="center_vertical"
-                        android:text="Medium" />
+                        android:text="Medium"
+                        android:textSize="@dimen/_13sdp" />
 
                     <com.rey.material.widget.CheckBox
                         android:id="@+id/cb_large"
@@ -102,10 +102,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:textSize="@dimen/_13sdp"
                         android:drawablePadding="@dimen/_8sdp"
                         android:gravity="center_vertical"
-                        android:text="Large" />
+                        android:text="Large"
+                        android:textSize="@dimen/_13sdp" />
                 </RadioGroup>
 
             </LinearLayout>
@@ -167,9 +167,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:drawablePadding="@dimen/_8sdp"
-            android:textSize="@dimen/_13sdp"
             android:gravity="center_vertical"
-            android:text="Add to Pickup" />
+            android:text="Add to Pickup"
+            android:textSize="@dimen/_13sdp" />
 
 
     </LinearLayout>
